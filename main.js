@@ -663,8 +663,22 @@ document.addEventListener('click', (e) => {
   const row = e.target.closest && e.target.closest('#programmi .compare-row:not(.compare-row--head)');
   if (!row) return;
 
+  const table = row.closest('.compare-table');
   const expanded = row.getAttribute('aria-expanded') === 'true';
+
+  if (table) {
+    table.querySelectorAll('.compare-row:not(.compare-row--head)').forEach((item) => {
+      if (item === row) return;
+      item.setAttribute('aria-expanded', 'false');
+      item.classList.remove('is-open');
+
+      const itemDetails = item.querySelector('.compare-details');
+      if (itemDetails) itemDetails.hidden = true;
+    });
+  }
+
   row.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  row.classList.toggle('is-open', !expanded);
 
   const details = row.querySelector('.compare-details');
   if (details) details.hidden = expanded;
@@ -1403,3 +1417,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
   mq.addEventListener ? mq.addEventListener('change', compute) : mq.addListener(compute);
 })();
+
+/* === ZIP-135: Mobile compare segmented focus (Base/Premium) === */
+document.addEventListener('click', (e) => {
+  const headCell = e.target.closest && e.target.closest('#programmi .compare-row--head .compare-cell');
+  if (!headCell) return;
+
+  const table = headCell.closest('.compare-table');
+  if (!table) return;
+
+  const row = headCell.parentElement;
+  const cells = Array.from(row.children);
+  const idx = cells.indexOf(headCell);
+
+  if (idx === 1) {
+    table.classList.remove('focus-premium');
+    table.classList.add('focus-base');
+  } else if (idx === 2) {
+    table.classList.remove('focus-base');
+    table.classList.add('focus-premium');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const table = document.querySelector('#programmi .mobile-compare .compare-table');
+  if (table && !table.classList.contains('focus-base') && !table.classList.contains('focus-premium')) {
+    table.classList.add('focus-premium');
+  }
+});
+
+/* === ZIP-136: Mobile plan card switcher (Base / Premium) === */
+document.addEventListener('DOMContentLoaded', () => {
+  const wrap = document.querySelector('#programmi [data-plan-switch]');
+  if (!wrap) return;
+
+  const tabs = Array.from(wrap.querySelectorAll('[data-plan-target]'));
+  const cards = Array.from(wrap.querySelectorAll('[data-plan-card]'));
+
+  const setActive = (target) => {
+    tabs.forEach((tab) => {
+      const on = tab.dataset.planTarget === target;
+      tab.classList.toggle('is-active', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    cards.forEach((card) => {
+      const on = card.dataset.planCard === target;
+      card.classList.toggle('is-active', on);
+      card.hidden = !on;
+    });
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => setActive(tab.dataset.planTarget));
+  });
+});

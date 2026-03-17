@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LS Coaching App | Presentazione</title>
+<link href="style.css" rel="stylesheet"/>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="app-page">
+<header class="site-header">
+<div class="container header-inner">
+<a class="logo" href="index.html">
+<div class="logo-image-wrapper">
+<img alt="Leonardo Santini Logo" class="logo-image" src="logo-ls.png"/>
+</div>
+<div class="logo-text-group">
+<span class="logo-text">Leonardo Santini</span>
+<span class="logo-sub">Online Fitness Coaching</span>
+</div>
+</a>
+<nav class="main-nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="chi-sono.html">Chi sono</a></li>
+<li><a href="#come-funziona">Come funziona</a></li>
+<li><a href="#programmi">Programmi</a></li>
+<li><a href="contenuti-gratuiti.html">Contenuti gratuiti</a></li>
+<li><a aria-current="page" class="active" href="app.html">App</a></li>
+<li><a class="btn-nav" href="consulenza.html">Consulenza gratuita</a></li>
+</ul>
+</nav>
+<button aria-label="Apri menù" class="burger">
+<span></span><span></span><span></span>
+</button>
+</div>
+</header><div aria-hidden="true" class="app-scroll-cue"><span>Scorri per esplorare</span><i></i></div>
+<aside aria-label="Navigazione slide" class="app-dots"><button <="" aria-label="Slide 1" button="" class="dot active" data-label="Tutto in App" data-slide="0"><button <="" aria-label="Slide 2" button="" class="dot" data-label="Il coaching è nei dettagli" data-slide="1"><button <="" aria-label="Slide 3" button="" class="dot" data-label="Focus totale sull’allenamento" data-slide="2"><button <="" aria-label="Slide 4" button="" class="dot" data-label="Registra carichi e video" data-slide="3"><button <="" aria-label="Slide 5" button="" class="dot" data-label="Forza sotto controllo" data-slide="4"><button <="" aria-label="Slide 6" button="" class="dot" data-label="Feedback reali, non automatici" data-slide="5"><button <="" aria-label="Slide 7" button="" class="dot" data-label="I numeri raccontano la storia" data-slide="6"><button <="" aria-label="Slide 8" button="" class="dot" data-label="I progressi si vedono e si misurano" data-slide="7"><button <="" aria-label="Slide 9" button="" class="dot" data-label="Agente AI" data-slide="8"><button <="" aria-label="Slide 10" button="" class="dot" data-label="Il tuo piano alimentare integrato" data-slide="9"><button <="" aria-label="Slide 11" button="" class="dot" data-label="Online, ma fatto come si deve" data-slide="10"></button></button></button></button></button></button></button></button></button></button></button></aside><div aria-hidden="true" class="app-progress"><span class="app-progress-bar"></span></div>
+<div aria-hidden="true" class="app-cinema-bg"></div><main class="app-deck" id="app-deck"><section aria-label="App: funzioni in anteprima" class="app-mobile-deck-onephone">
+<div class="container-wide app-mobile-op-inner">
+<div aria-label="Funzioni app (scorri lateralmente)" class="app-mobile-op-track" role="region">
+<article class="app-mobile-op-card" data-card="0">
+<p class="app-mobile-op-eyebrow">Applicazione inclusa nel coaching</p>
+<h2 class="app-mobile-op-title">Tutto in App</h2>
+<p class="app-mobile-op-desc">Applicazione inclusa nel coaching</p>
+</article>
+<article class="app-mobile-op-card" data-card="1">
+<p class="app-mobile-op-eyebrow">Funzione 02</p>
+<h2 class="app-mobile-op-title">Il coaching è nei dettagli</h2>
+<p class="app-mobile-op-desc">Allenamenti organizzati, bilanciati e periodizzati in base al tuo obiettivo. Niente schede copia e incolla: ogni programma è costruito su di te.</p>
+</article>
+<article class="app-mobile-op-card" data-card="2">
+<p class="app-mobile-op-eyebrow">Funzione 03</p>
+<h2 class="app-mobile-op-title">Focus totale sull’allenamento</h2>
+<p class="app-mobile-op-desc">Timer già pre-calibrato per l’esercizio. Descrizione tecnica, video esecuzioni e note personalizzate del coach per ogni esercizio.</p>
+</article>
+<article class="app-mobile-op-card" data-card="3">
+<p class="app-mobile-op-eyebrow">Funzione 04</p>
+<h2 class="app-mobile-op-title">Registra carichi e video</h2>
+<p class="app-mobile-op-desc">Impara, monitora, cresci: tieni traccia dei carichi e salva le tue esecuzioni.</p>
+</article>
+<article class="app-mobile-op-card" data-card="4">
+<p class="app-mobile-op-eyebrow">Funzione 05</p>
+<h2 class="app-mobile-op-title">Forza sotto controllo</h2>
+<p class="app-mobile-op-desc">Ogni carico è registrato, ogni progresso è tracciabile. Sai sempre dove sei e dove stai andando.</p>
+</article>
+<article class="app-mobile-op-card" data-card="5">
+<p class="app-mobile-op-eyebrow">Funzione 06</p>
+<h2 class="app-mobile-op-title">Feedback reali, non automatici</h2>
+<p class="app-mobile-op-desc">Carichi il video, ricevi correzioni tecniche personalizzate dal tuo coach. Esecuzioni sempre corrette e controllate.</p>
+</article>
+<article class="app-mobile-op-card" data-card="6">
+<p class="app-mobile-op-eyebrow">Funzione 07</p>
+<h2 class="app-mobile-op-title">I numeri raccontano la storia</h2>
+<p class="app-mobile-op-desc">Misure tracciate nel tempo per verificare se la strategia sta funzionando davvero.</p>
+</article>
+<article class="app-mobile-op-card" data-card="7">
+<p class="app-mobile-op-eyebrow">Funzione 08</p>
+<h2 class="app-mobile-op-title">I progressi si vedono e si misurano</h2>
+<p class="app-mobile-op-desc">Check fotografici strutturati per valutare ricomposizione corporea reale. Commento tecnico ad ogni nuovo check.</p>
+</article>
+<article class="app-mobile-op-card" data-card="8">
+<p class="app-mobile-op-eyebrow">Funzione 09</p>
+<h2 class="app-mobile-op-title">Agente AI</h2>
+<p class="app-mobile-op-desc">Un agente addestrato sul mio metodo sempre a portata di mano per chiarimenti immediati su allenamento e nutrizione.</p>
+</article>
+<article class="app-mobile-op-card" data-card="9">
+<p class="app-mobile-op-eyebrow">Funzione 10</p>
+<h2 class="app-mobile-op-title">Il tuo piano alimentare integrato</h2>
+<p class="app-mobile-op-desc">Tutto in un’unica app: notifiche, aggiornamenti dal coach, integrazione allenamento + alimentazione per massimizzare i risultati.</p>
+</article>
+<article class="app-mobile-op-card" data-card="10">
+<p class="app-mobile-op-eyebrow">Funzione 11</p>
+<h2 class="app-mobile-op-title">Online, ma fatto come si deve</h2>
+<p class="app-mobile-op-desc">Metodo. Dati. Comunicazione. Risultati.</p>
+</article>
+</div>
+<div aria-hidden="true" class="app-mobile-op-phone">
+<div aria-hidden="true" class="device device--mobileop tilt">
+<div class="device-frame device-frame--lite">
+<div class="device-notch"></div>
+<div class="device-op-stack"><img alt="" class="device-op-layer is-active" data-layer="0" loading="eager" src="app-assets/mockups/mockup-01.png"/><img alt="" class="device-op-layer" data-layer="1" loading="eager" src="app-assets/mockups/mockup-02.png"/><img alt="" class="device-op-layer" data-layer="2" loading="eager" src="app-assets/mockups/mockup-03.png"/><img alt="" class="device-op-layer" data-layer="3" loading="eager" src="app-assets/mockups/mockup-04.png"/><img alt="" class="device-op-layer" data-layer="4" loading="eager" src="app-assets/mockups/mockup-05.png"/><img alt="" class="device-op-layer" data-layer="5" loading="eager" src="app-assets/mockups/mockup-06.png"/><img alt="" class="device-op-layer" data-layer="6" loading="eager" src="app-assets/mockups/mockup-07.png"/><img alt="" class="device-op-layer" data-layer="7" loading="eager" src="app-assets/mockups/mockup-08.png"/><img alt="" class="device-op-layer" data-layer="8" loading="eager" src="app-assets/mockups/mockup-09.png"/><img alt="" class="device-op-layer" data-layer="9" loading="eager" src="app-assets/mockups/mockup-10.png"/><img alt="" class="device-op-layer" data-layer="10" loading="eager" src="app-assets/mockups/mockup-11.png"/></div>
+<div class="device-glare"></div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="app-mobile-op-dots"><span class="op-dot active"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span><span class="op-dot"></span></div>
+</div>
+</section><section class="app-showcase"><div class="container-wide app-showcase-inner"><div class="app-chapters"><article class="app-chapter is-hero" data-index="0" data-screen="0" is-active=""><p class="app-eyebrow">Applicazione inclusa nel coaching</p><h1 class="app-title">Tutto in App</h1><p class="app-desc">Applicazione inclusa nel coaching</p>
+<div class="app-chips">
+<span class="chip">Metodo</span>
+<span class="chip">Dati</span>
+<span class="chip">Feedback</span>
+<span class="chip">Risultati</span>
+</div>
+</article><article class="app-chapter" data-index="1" data-screen="1"><p class="app-eyebrow">Funzione 02</p><h2 class="app-title">Il coaching è nei dettagli</h2><p class="app-desc">Allenamenti organizzati, bilanciati e periodizzati in base al tuo obiettivo. Niente schede copia e incolla: ogni programma è costruito su di te.</p></article><article class="app-chapter" data-index="2" data-screen="2"><p class="app-eyebrow">Funzione 03</p><h2 class="app-title">Focus totale sull’allenamento</h2><p class="app-desc">Timer già pre-calibrato per l’esercizio. Descrizione tecnica, video esecuzioni e note personalizzate del coach per ogni esercizio.</p></article><article class="app-chapter" data-index="3" data-screen="3"><p class="app-eyebrow">Funzione 04</p><h2 class="app-title">Registra carichi e video</h2><p class="app-desc">Impara, monitora, cresci: tieni traccia dei carichi e salva le tue esecuzioni.</p></article><article class="app-chapter" data-index="4" data-screen="4"><p class="app-eyebrow">Funzione 05</p><h2 class="app-title">Forza sotto controllo</h2><p class="app-desc">Ogni carico è registrato, ogni progresso è tracciabile. Sai sempre dove sei e dove stai andando.</p></article><article class="app-chapter" data-index="5" data-screen="5"><p class="app-eyebrow">Funzione 06</p><h2 class="app-title">Feedback reali, non automatici</h2><p class="app-desc">Carichi il video, ricevi correzioni tecniche personalizzate dal tuo coach. Esecuzioni sempre corrette e controllate.</p></article><article class="app-chapter" data-index="6" data-screen="6"><p class="app-eyebrow">Funzione 07</p><h2 class="app-title">I numeri raccontano la storia</h2><p class="app-desc">Misure tracciate nel tempo per verificare se la strategia sta funzionando davvero.</p></article><article class="app-chapter" data-index="7" data-screen="7"><p class="app-eyebrow">Funzione 08</p><h2 class="app-title">I progressi si vedono e si misurano</h2><p class="app-desc">Check fotografici strutturati per valutare ricomposizione corporea reale. Commento tecnico ad ogni nuovo check.</p></article><article class="app-chapter" data-index="8" data-screen="8"><p class="app-eyebrow">Funzione 09</p><h2 class="app-title">Agente AI</h2><p class="app-desc">Un agente addestrato sul mio metodo sempre a portata di mano per chiarimenti immediati su allenamento e nutrizione.</p></article><article class="app-chapter" data-index="9" data-screen="9"><p class="app-eyebrow">Funzione 10</p><h2 class="app-title">Il tuo piano alimentare integrato</h2><p class="app-desc">Tutto in un’unica app: notifiche, aggiornamenti dal coach, integrazione allenamento + alimentazione per massimizzare i risultati.</p></article><article class="app-chapter" data-index="10" data-screen="10"><p class="app-eyebrow">Funzione 11</p><h2 class="app-title">Online, ma fatto come si deve</h2><p class="app-desc">Metodo. Dati. Comunicazione. Risultati.</p></article></div><div aria-hidden="true" class="app-device-sticky">
+<div class="device device--sticky">
+<div class="device-frame">
+<div class="device-notch"></div>
+<div class="device-stack"><img alt="Schermata 1: Tutto in App" class="device-screen-layer" data-layer="0" is-active="" loading="lazy" src="app-assets/mockups/mockup-01.png"/><img alt="Schermata 2: Il coaching è nei dettagli" class="device-screen-layer" data-layer="1" loading="lazy" src="app-assets/mockups/mockup-02.png"/><img alt="Schermata 3: Focus totale sull’allenamento" class="device-screen-layer" data-layer="2" loading="lazy" src="app-assets/mockups/mockup-03.png"/><img alt="Schermata 4: Registra carichi e video" class="device-screen-layer" data-layer="3" loading="lazy" src="app-assets/mockups/mockup-04.png"/><img alt="Schermata 5: Forza sotto controllo" class="device-screen-layer" data-layer="4" loading="lazy" src="app-assets/mockups/mockup-05.png"/><img alt="Schermata 6: Feedback reali, non automatici" class="device-screen-layer" data-layer="5" loading="lazy" src="app-assets/mockups/mockup-06.png"/><img alt="Schermata 7: I numeri raccontano la storia" class="device-screen-layer" data-layer="6" loading="lazy" src="app-assets/mockups/mockup-07.png"/><img alt="Schermata 8: I progressi si vedono e si misurano" class="device-screen-layer" data-layer="7" loading="lazy" src="app-assets/mockups/mockup-08.png"/><img alt="Schermata 9: Agente AI" class="device-screen-layer" data-layer="8" loading="lazy" src="app-assets/mockups/mockup-09.png"/><img alt="Schermata 10: Il tuo piano alimentare integrato" class="device-screen-layer" data-layer="9" loading="lazy" src="app-assets/mockups/mockup-10.png"/><img alt="Schermata 11: Online, ma fatto come si deve" class="device-screen-layer" data-layer="10" loading="lazy" src="app-assets/mockups/mockup-11.png"/></div>
+<div class="device-glare"></div>
+</div>
+</div>
+</div></div></section></main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<p>© 2025 Leonardo Santini. Tutti i diritti riservati.</p>
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="index.html#programmi">Programmi</a>
+<a href="consulenza.html">Consulenza gratuita</a>
+</div>
+</div>
+</footer>
+<script src="main.js"></script>
+<script>
+(function(){
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const showcase = document.querySelector('.app-showcase') || document.querySelector('.app-main') || document.body;
+  const chapters = Array.from(document.querySelectorAll('.app-chapter'));
+  const layers = Array.from(document.querySelectorAll('.device-screen-layer'));
+  const dots = Array.from(document.querySelectorAll('.app-dots .dot'));
+  const progressBar = document.querySelector('.app-progress-bar');
+  const deviceCol = document.querySelector('.app-device-sticky');
+
+  layers.forEach((img) => { const i = new Image(); i.src = img.src; });
+
+  let currentIndex = 0;
+  const clampIndex = (i) => Math.max(0, Math.min(i, chapters.length - 1));
+
+  function setActive(idx, instant=false){
+    idx = clampIndex(idx);
+
+    dots.forEach(d => d.classList.remove('active'));
+    if (dots[idx]) dots[idx].classList.add('active');
+
+    chapters.forEach(c => c.classList.remove('is-active'));
+    if (chapters[idx]) chapters[idx].classList.add('is-active');
+
+    const prev = layers[currentIndex];
+    const next = layers[idx];
+
+    if (next && next !== prev){
+      next.classList.add('is-active');
+      next.classList.add('is-incoming');
+      next.getBoundingClientRect();
+
+      if (instant){
+        if (prev) prev.classList.remove('is-active');
+        next.classList.remove('is-incoming');
+      } else {
+        window.setTimeout(() => {
+          if (currentIndex === idx){
+            if (prev) prev.classList.remove('is-active');
+            next.classList.remove('is-incoming');
+          }
+        }, 260);
+      }
+    }
+
+    currentIndex = idx;
+
+    if (progressBar){
+      const pct = ((idx)/(chapters.length-1 || 1)) * 100;
+      progressBar.style.width = pct + '%';
+    }
+
+    const df = document.querySelector('.device-frame');
+    if (df){
+      df.classList.add('is-switching');
+      clearTimeout(df._sw);
+      df._sw = setTimeout(()=>df.classList.remove('is-switching'), 420);
+    }
+  }
+
+  if (chapters.length){
+    setActive(0, true);
+  } else {
+    if (layers[0]) layers[0].classList.add('is-active');
+  }
+
+  if (deviceCol && window.innerWidth >= 981){
+    ScrollTrigger.create({
+      trigger: showcase,
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: deviceCol,
+      pinSpacing: true
+    });
+  }
+
+  chapters.forEach((chapter) => {
+    const targets = chapter.querySelectorAll('.app-eyebrow, .app-title, .app-desc, .app-chips');
+    if (!targets.length) return;
+    gsap.fromTo(targets,
+      { y: 22, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.06,
+        scrollTrigger: {
+          trigger: chapter,
+          start: 'top 70%',
+          end: 'bottom 40%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  });
+
+  chapters.forEach((chapter, i) => {
+    ScrollTrigger.create({
+      trigger: chapter,
+      start: 'top center',
+      end: 'bottom center',
+      onEnter: () => setActive(i),
+      onEnterBack: () => setActive(i),
+    });
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const idx = Number(dot.dataset.slide);
+      const target = chapters[idx];
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+
+  // MOBILE ONEPHONE: horizontal swipe updates a single phone (image swaps inside) — no white flash
+  const opTrack = document.querySelector('.app-mobile-op-track');
+  const opDots = Array.from(document.querySelectorAll('.op-dot'));
+  const opLayers = Array.from(document.querySelectorAll('.device-op-layer'));
+  if (opTrack && opLayers.length){
+    opLayers.forEach((img)=>{ const i=new Image(); i.src = img.src; });
+    let opCurrent = 0;
+
+    const setOp = (idx) => {
+      idx = Math.max(0, Math.min(idx, opLayers.length - 1));
+      if (idx === opCurrent) return;
+
+      const prev = opLayers[opCurrent];
+      const next = opLayers[idx];
+
+      const finalize = () => {
+        if (prev && prev !== next) prev.classList.remove('is-active');
+        if (next) next.classList.remove('is-incoming');
+      };
+
+      if (next){
+        next.classList.add('is-incoming');
+        next.classList.add('is-active');
+        next.getBoundingClientRect();
+
+        if (next.complete){
+          window.setTimeout(finalize, 260);
+        } else {
+          next.addEventListener('load', () => window.setTimeout(finalize, 180), { once: true });
+        }
+      }
+
+      opDots.forEach(d=>d.classList.remove('active'));
+      if (opDots[idx]) opDots[idx].classList.add('active');
+
+      if (progressBar){
+        const pct = (idx / (opLayers.length - 1 || 1)) * 100;
+        progressBar.style.width = pct + '%';
+      }
+
+      opCurrent = idx;
+    };
+
+    const calcIdx = () => {
+      const cards = Array.from(opTrack.children);
+      if (!cards.length) return 0;
+      const cardW = cards[0].getBoundingClientRect().width + 14;
+      return Math.round(opTrack.scrollLeft / cardW);
+    };
+
+    opTrack.addEventListener('scroll', () => window.requestAnimationFrame(()=> setOp(calcIdx())), { passive: true });
+
+    // initial
+    if (opLayers[0]) opLayers[0].classList.add('is-active');
+  }
+
+})();
+</script>
+</body>
+</html>

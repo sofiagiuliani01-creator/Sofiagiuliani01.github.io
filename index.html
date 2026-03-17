@@ -240,48 +240,35 @@
 <div class="mobile-compare" data-animate="fade-up">
 <div class="mobile-compare-head">
 <h3>Confronta i percorsi</h3>
-<p class="mobile-compare-sub">Tocca una riga per vedere i dettagli.</p>
 </div>
-<div aria-label="Confronto percorsi Base e Premium" class="compare-table" role="table">
-<div class="compare-row compare-row--head" role="row">
-<div class="compare-cell compare-cell--feature" role="columnheader">Cosa include</div>
-<div class="compare-cell" role="columnheader">Base</div>
-<div class="compare-cell" role="columnheader">Premium</div>
+<div class="mobile-plan-switch" data-plan-switch>
+<div class="mobile-plan-tabs" role="tablist" aria-label="Seleziona percorso">
+<button class="mobile-plan-tab is-active" type="button" role="tab" aria-selected="true" data-plan-target="base">Coaching Base</button>
+<button class="mobile-plan-tab" type="button" role="tab" aria-selected="false" data-plan-target="premium">Coaching Premium</button>
 </div>
-<button aria-expanded="false" class="compare-row" type="button">
-<div class="compare-cell compare-cell--feature">Piano di allenamento</div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-details" hidden="">Programmazione personalizzata e progressioni adattate ai tuoi obiettivi.</div>
-</button>
-<button aria-expanded="false" class="compare-row" type="button">
-<div class="compare-cell compare-cell--feature">Linee guida nutrizionali</div>
-<div class="compare-cell">—</div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-details" hidden="">Nel Premium la nutrizione è parte del percorso: piano, strategie e aggiornamenti in base ai feedback.</div>
-</button>
-<button aria-expanded="false" class="compare-row" type="button">
-<div class="compare-cell compare-cell--feature">Frequenza aggiornamenti</div>
-<div class="compare-cell">Standard</div>
-<div class="compare-cell"><span class="pill">Alta</span></div>
-<div class="compare-details" hidden="">Nel Premium gli aggiustamenti sono più frequenti e reattivi, in base ai feedback.</div>
-</button>
-<button aria-expanded="false" class="compare-row" type="button">
-<div class="compare-cell compare-cell--feature">Video analisi tecnica</div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-details" hidden="">Feedback tecnico tramite video per correggere dettagli e rendere il lavoro più efficace.</div>
-</button>
-<button aria-expanded="false" class="compare-row" type="button">
-<div class="compare-cell compare-cell--feature">Priorità risposta</div>
-<div class="compare-cell">—</div>
-<div class="compare-cell"><span class="check">✓</span></div>
-<div class="compare-details" hidden="">Canale più rapido per domande e aggiustamenti quando serve.</div>
-</button>
+<article class="mobile-plan-card is-active" data-plan-card="base" aria-live="polite">
+<h4>Coaching Base</h4>
+<p class="mobile-plan-price">Percorso Allenamento</p>
+<ul class="mobile-plan-list">
+<li>Piano di allenamento personalizzato.</li>
+<li>Progressioni e adattamenti programmati.</li>
+<li>Check periodici e revisione del carico.</li>
+<li>Analisi tecnica video e feedback essenziali.</li>
+</ul>
+<a class="btn btn-outline mobile-plan-btn" href="coaching-base.html">Scopri il Coaching Base</a>
+</article>
+<article class="mobile-plan-card" data-plan-card="premium" hidden="" aria-live="polite">
+<h4>Coaching Premium</h4>
+<p class="mobile-plan-price">Allenamento + Nutrizione</p>
+<ul class="mobile-plan-list">
+<li>Allenamento personalizzato con aggiornamenti più frequenti.</li>
+<li>Nutrizione: piano, strategie e aggiustamenti.</li>
+<li>Video analisi tecnica e feedback mirati.</li>
+<li>Monitoraggio ravvicinato e priorità risposta.</li>
+</ul>
+<a class="btn btn-primary mobile-plan-btn" href="coaching-premium.html">Voglio il Premium</a>
+</article>
 </div>
-<div class="mobile-compare-cta">
-<a class="btn btn-outline" href="coaching-base.html">Vedi Base</a>
-<a class="btn btn-primary" href="coaching-premium.html">Vedi Premium</a>
 </div>
 </div>
 </div>

@@ -12228,3 +12228,64 @@ body.app-page {
     margin-top: -10px !important;
   }
 }
+
+/* =========================
+   ZIP-140: Center home mobile cards (mobile only)
+   ========================= */
+@media (max-width: 980px){
+  #programmi .mobile-plan-switch{
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #programmi .mobile-plan-card{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* =========================
+   ZIP-141: Center cards in section after marquee (mobile only)
+   ========================= */
+@media (max-width: 980px){
+  #leonardo-diverso .different-right,
+  #leonardo-diverso .theia-mobile-stack,
+  #leonardo-diverso .theia-mobile-stack .stack-sticky,
+  #leonardo-diverso .theia-mobile-stack .stack-cards,
+  #leonardo-diverso .theia-diff-grid{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #leonardo-diverso .different-right{
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  #leonardo-diverso .theia-mobile-stack .theia-diff-card,
+  #leonardo-diverso .theia-diff-card,
+  #leonardo-diverso .stack-item{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* =========================
+   ZIP-142: True center alignment for post-marquee mobile stack cards
+   ========================= */
+@media (max-width: 980px){
+  #leonardo-diverso .theia-mobile-stack .stack-cards{
+    display: block !important;
+  }
+
+  #leonardo-diverso .theia-mobile-stack .theia-diff-card{
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    width: min(92vw, 560px) !important;
+    transform: translate3d(-50%, -50%, 0) var(--cardTransform, translate3d(0,0,0) scale(1)) !important;
+  }
+}

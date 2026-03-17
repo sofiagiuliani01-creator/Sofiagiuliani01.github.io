@@ -12289,3 +12289,122 @@ body.app-page {
     transform: translate3d(-50%, -50%, 0) var(--cardTransform, translate3d(0,0,0) scale(1)) !important;
   }
 }
+
+/* =========================
+   ZIP-143: Full-bleed oversized marquee (desktop + mobile)
+   ========================= */
+#leonardo-diverso .marquee-wrapper{
+  position: relative;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 14px 0 !important;
+  border-radius: 0 !important;
+}
+
+#leonardo-diverso .marquee{
+  width: max-content;
+  min-width: 100%;
+}
+
+#leonardo-diverso .marquee span{
+  font-size: clamp(1.2rem, 2.6vw, 2.1rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: .04em !important;
+  line-height: 1.1 !important;
+  padding-right: 18px;
+}
+
+@media (max-width: 980px){
+  #leonardo-diverso .marquee-wrapper{
+    padding: 10px 0 !important;
+  }
+
+  #leonardo-diverso .marquee span{
+    font-size: clamp(1.05rem, 5vw, 1.45rem) !important;
+    letter-spacing: .03em !important;
+    padding-right: 12px;
+  }
+}
+
+/* =========================
+   ZIP-144: Ensure marquee is visible while keeping full-bleed
+   ========================= */
+#leonardo-diverso .marquee-wrapper{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: 58px;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+#leonardo-diverso .marquee{
+  display: flex !important;
+  align-items: center;
+  white-space: nowrap;
+  width: max-content;
+  min-width: 100%;
+}
+
+#leonardo-diverso .marquee span{
+  display: inline-flex !important;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+/* =========================
+   ZIP-145: Restore pinned marquee behavior + keep full-bleed visibility
+   ========================= */
+#leonardo-diverso .marquee-wrapper{
+  position: sticky !important;
+  top: 95px !important;
+  z-index: 8 !important;
+  left: auto !important;
+  transform: none !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+@media (max-width: 980px){
+  #leonardo-diverso .marquee-wrapper{
+    top: 92px !important;
+  }
+}
+
+/* =========================
+   ZIP-146: Make marquee much bigger (size-only tweak)
+   ========================= */
+#leonardo-diverso .marquee span{
+  font-size: clamp(1.8rem, 4.6vw, 3.4rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: .05em !important;
+  line-height: 1 !important;
+}
+
+#leonardo-diverso .marquee-wrapper{
+  padding: 18px 0 !important;
+  min-height: 86px !important;
+}
+
+@media (max-width: 980px){
+  #leonardo-diverso .marquee span{
+    font-size: clamp(1.45rem, 9vw, 2.35rem) !important;
+  }
+
+  #leonardo-diverso .marquee-wrapper{
+    padding: 14px 0 !important;
+    min-height: 72px !important;
+  }
+}

@@ -1019,6 +1019,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let maxShift = 0;
   function measure(){
+    // guarantee visible movement even when text almost fits viewport
+    const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
+    const fallbackShift = (window.innerWidth || 390) * 0.45;
+    maxShift = Math.max(overflowShift, fallbackShift);
     // use full overflow distance so movement is always visible while scrolling
     maxShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
   }

@@ -5,7 +5,7 @@ const mainNav = document.querySelector('.main-nav');
 if (burger && mainNav) {
   burger.addEventListener('click', () => {
     mainNav.classList.toggle('open');
-burger.classList.toggle("is-open");
+    burger.classList.toggle('is-open');
   });
 }
 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let diffTriggers = [];
 
   const clearTriggers = () => {
-    diffTriggers.forEach(t => t.kill());
+    diffTriggers.forEach((t) => t.kill());
     diffTriggers = [];
   };
 
@@ -158,17 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // --- DESKTOP ---
-  mm.add("(min-width: 901px)", () => {
+  mm.add('(min-width: 901px)', () => {
     clearTriggers();
     setStates(0);
 
     cards.forEach((card, index) => {
       const trig = ScrollTrigger.create({
         trigger: card,
-        start: "top center",
-        end: "bottom center",
+        start: 'top center',
+        end: 'bottom center',
         onEnter: () => setStates(index),
-        onEnterBack: () => setStates(index)
+        onEnterBack: () => setStates(index),
       });
       diffTriggers.push(trig);
 
@@ -180,17 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- MOBILE ---
-  mm.add("(max-width: 900px)", () => {
+  mm.add('(max-width: 900px)', () => {
     clearTriggers();
     setStates(0);
 
     cards.forEach((card, index) => {
       const trig = ScrollTrigger.create({
         trigger: card,
-        start: "top top+=300",
-        end: "bottom top+=200",
+        start: 'top top+=300',
+        end: 'bottom top+=200',
         onEnter: () => setStates(index),
-        onEnterBack: () => setStates(index)
+        onEnterBack: () => setStates(index),
       });
 
       diffTriggers.push(trig);
@@ -574,8 +574,8 @@ if (timelineEl) {
 /* ================================================
    PARALLAX TOUCH REFLECTION — BASE + PREMIUM
    ================================================ */
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll("#programmi .plan-card");
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('#programmi .plan-card');
 
   if (!cards.length) return;
 
@@ -589,13 +589,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cards.forEach((card) => {
     // TOUCH MOVE
-    card.addEventListener("touchmove", (e) => {
+    card.addEventListener('touchmove', (e) => {
       const t = e.touches[0];
       updateReflection(card, t.clientX, t.clientY);
     });
 
     // MOUSE MOVE (utile per vedere l'effetto da desktop)
-    card.addEventListener("mousemove", (e) => {
+    card.addEventListener('mousemove', (e) => {
       updateReflection(card, e.clientX, e.clientY);
     });
   });
@@ -1018,16 +1018,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const clamp01 = (v) => Math.max(0, Math.min(1, v));
 
   let maxShiftX = 0;
-  function measure(){
+  function measure() {
     const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
     const fallbackShift = (window.innerWidth || 390) * 0.45;
+
+    // Garantisce movimento anche quando il testo quasi combacia con la viewport.
     maxShiftX = Math.max(overflowShift, fallbackShift);
-    // guarantee visible movement even when text almost fits viewport
-    const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
-    const fallbackShift = (window.innerWidth || 390) * 0.45;
-    maxShift = Math.max(overflowShift, fallbackShift);
-    // use full overflow distance so movement is always visible while scrolling
-    maxShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
   }
 
   function compute(){

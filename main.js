@@ -1023,6 +1023,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
     const fallbackShift = (window.innerWidth || 390) * 0.45;
     maxShift = Math.max(overflowShift, fallbackShift);
+    // use full overflow distance so movement is always visible while scrolling
+    maxShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
   }
 
   function compute(){

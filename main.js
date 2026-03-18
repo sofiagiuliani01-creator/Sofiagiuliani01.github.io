@@ -1019,8 +1019,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let maxShift = 0;
   function measure(){
-    // shift about half of the marquee width (it usually contains duplicate text)
-    maxShift = Math.max(0, (marquee.scrollWidth / 2) - (marquee.clientWidth / 2));
+    // use full overflow distance so movement is always visible while scrolling
+    maxShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
   }
 
   function compute(){

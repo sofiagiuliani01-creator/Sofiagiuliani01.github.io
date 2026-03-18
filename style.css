@@ -12408,3 +12408,37 @@ body.app-page {
     min-height: 72px !important;
   }
 }
+
+/* =========================
+   ZIP-147: Restore original pin logic (pin only on mobile)
+   ========================= */
+@media (min-width: 981px){
+  #leonardo-diverso .marquee-wrapper{
+    position: relative !important;
+    top: auto !important;
+    z-index: 1 !important;
+  }
+}
+
+@media (max-width: 980px){
+  #leonardo-diverso .marquee-wrapper{
+    position: sticky !important;
+    top: 92px !important;
+    z-index: 8 !important;
+  }
+}
+
+/* =========================
+   ZIP-148: Marquee layering + desktop flow fix
+   ========================= */
+@media (min-width: 981px){
+  #leonardo-diverso .marquee-wrapper{
+    z-index: 1 !important;
+    top: auto !important;
+  }
+
+  #leonardo-diverso .different-right{
+    position: relative;
+    z-index: 2;
+  }
+}

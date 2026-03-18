@@ -12447,6 +12447,231 @@ body.app-page {
 /* =========================
    ZIP-149: Leonardo è diverso — align section to provided reference
    ========================= */
+#recensioni.section-trustpilot {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8fc 100%);
+  color: #111827;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+}
+
+.trustpilot-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.trustpilot-kicker {
+  margin: 0 0 0.65rem;
+  color: #00b67a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.trustpilot-intro h2 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.trustpilot-subtitle {
+  margin: 0.8rem 0 0;
+  max-width: 680px;
+  color: #4b5563;
+}
+
+.trustpilot-summary-card {
+  min-width: 220px;
+  padding: 1.1rem 1.2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.trustpilot-summary-label {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: #6b7280;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.trustpilot-summary-score {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+}
+
+.trustpilot-star-badge {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #00b67a;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.trustpilot-summary-score strong {
+  color: #111827;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.trustpilot-summary-card p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.trustpilot-cards {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(340px, 430px);
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.4rem 0 0.85rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+.trustpilot-cards::-webkit-scrollbar {
+  height: 10px;
+}
+
+.trustpilot-cards::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.18);
+  border-radius: 999px;
+}
+
+.trustpilot-card {
+  scroll-snap-align: start;
+  min-height: 100%;
+  padding: 1.35rem;
+  border-radius: 28px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+}
+
+.trustpilot-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.trustpilot-avatar {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--review-accent, #dbe4ec);
+  color: #1f2937;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.trustpilot-card-head h3,
+.trustpilot-card-write h3 {
+  margin: 0;
+  color: #111827;
+}
+
+.trustpilot-card-head p {
+  margin: 0.18rem 0 0;
+  color: #6b7280;
+}
+
+.trustpilot-stars {
+  display: inline-flex;
+  gap: 0.18rem;
+  margin-bottom: 1rem;
+}
+
+.trustpilot-stars span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #00b67a;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.trustpilot-card-title {
+  margin: 0 0 0.75rem;
+  color: #111827;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.trustpilot-card-body {
+  margin: 0;
+  color: #374151;
+  line-height: 1.65;
+}
+
+.trustpilot-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+
+.trustpilot-card-meta span {
+  padding: 0.38rem 0.7rem;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.trustpilot-card-write {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  border-color: rgba(25, 218, 213, 0.25);
+  color: #f8fafc;
+}
+
+.trustpilot-card-write h3,
+.trustpilot-card-write .trustpilot-card-body,
+.trustpilot-card-write .trustpilot-kicker {
+  color: #f8fafc;
+}
+
+.trustpilot-card-write .trustpilot-kicker {
+  margin-bottom: 0;
+}
+
+@media (max-width: 980px) {
+  .trustpilot-intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .trustpilot-summary-card {
+    width: 100%;
+  }
+
+  .trustpilot-cards {
+    grid-auto-columns: minmax(86vw, 86vw);
+  }
+}
+
 #leonardo-diverso{
   background: #141418 !important;
   padding-top: 42px !important;
@@ -12464,21 +12689,28 @@ body.app-page {
 
 #leonardo-diverso .marquee-wrapper{
   background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
   min-height: 0 !important;
   padding: 0 0 28px !important;
   z-index: 1 !important;
 }
 
 #leonardo-diverso .marquee{
+  gap: 0 !important;
   align-items: center !important;
 }
 
 #leonardo-diverso .marquee span{
   color: #f8fafc !important;
-  font-size: clamp(4.4rem, 9vw, 8.9rem) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  font-family: "Inter", "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
+  font-size: clamp(4.8rem, 10vw, 9.4rem) !important;
   font-weight: 500 !important;
-  line-height: 0.9 !important;
-  letter-spacing: -0.06em !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.055em !important;
   padding-right: 28px !important;
 }
 
@@ -12520,8 +12752,8 @@ body.app-page {
   }
 
   #leonardo-diverso .marquee span{
-    font-size: clamp(2.9rem, 16vw, 5.2rem) !important;
-    line-height: 0.92 !important;
+    font-size: clamp(3.2rem, 17vw, 5.4rem) !important;
+    line-height: 0.9 !important;
     padding-right: 18px !important;
   }
 

@@ -12068,6 +12068,9 @@ body.app-page {
   }
 
   #programmi .mobile-plan-tab{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 44px;
     border: 0;
     border-radius: 999px;
@@ -12076,6 +12079,7 @@ body.app-page {
     font-size: .84rem;
     font-weight: 700;
     letter-spacing: .01em;
+    text-decoration: none;
   }
 
   #programmi .mobile-plan-tab.is-active{
@@ -12440,5 +12444,97 @@ body.app-page {
   #leonardo-diverso .different-right{
     position: relative;
     z-index: 2;
+  }
+}
+
+/* =========================
+   ZIP-149: Leonardo è diverso — align section to provided reference
+   ========================= */
+#leonardo-diverso{
+  background: #141418 !important;
+  padding-top: 42px !important;
+  padding-bottom: 72px !important;
+  overflow: clip;
+}
+
+#leonardo-diverso .different-layout{
+  display: block !important;
+}
+
+#leonardo-diverso .different-left{
+  display: none !important;
+}
+
+#leonardo-diverso .marquee-wrapper{
+  background: transparent !important;
+  min-height: 0 !important;
+  padding: 0 0 28px !important;
+  z-index: 1 !important;
+}
+
+#leonardo-diverso .marquee{
+  align-items: center !important;
+}
+
+#leonardo-diverso .marquee span{
+  color: #f8fafc !important;
+  font-size: clamp(4.4rem, 9vw, 8.9rem) !important;
+  font-weight: 500 !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.06em !important;
+  padding-right: 28px !important;
+}
+
+#leonardo-diverso .marquee span::after{
+  width: clamp(86px, 8vw, 174px) !important;
+  height: clamp(42px, 4vw, 82px) !important;
+  border-radius: 999px !important;
+  background: #d6ea4a !important;
+  margin: 0 20px !important;
+  box-shadow: none !important;
+}
+
+#leonardo-diverso .different-right{
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: 6px !important;
+}
+
+#leonardo-diverso .theia-diff-grid{
+  gap: 22px !important;
+  padding-top: 0 !important;
+}
+
+#leonardo-diverso .theia-diff-card,
+#leonardo-diverso .different-item{
+  background: #ffffff !important;
+  border-radius: 30px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18) !important;
+}
+
+@media (max-width: 980px){
+  #leonardo-diverso{
+    padding-top: 24px !important;
+    padding-bottom: 28px !important;
+  }
+
+  #leonardo-diverso .marquee-wrapper{
+    padding: 0 0 18px !important;
+  }
+
+  #leonardo-diverso .marquee span{
+    font-size: clamp(2.9rem, 16vw, 5.2rem) !important;
+    line-height: 0.92 !important;
+    padding-right: 18px !important;
+  }
+
+  #leonardo-diverso .marquee span::after{
+    width: 78px !important;
+    height: 38px !important;
+    margin: 0 14px !important;
+  }
+
+  #leonardo-diverso .different-right{
+    margin-top: 2px !important;
   }
 }

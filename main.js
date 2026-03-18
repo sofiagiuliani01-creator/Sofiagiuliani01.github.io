@@ -1017,8 +1017,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const clamp01 = (v) => Math.max(0, Math.min(1, v));
 
-  let maxShift = 0;
+  let maxShiftX = 0;
   function measure(){
+    const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
+    const fallbackShift = (window.innerWidth || 390) * 0.45;
+    maxShiftX = Math.max(overflowShift, fallbackShift);
     // guarantee visible movement even when text almost fits viewport
     const overflowShift = Math.max(0, marquee.scrollWidth - marquee.clientWidth);
     const fallbackShift = (window.innerWidth || 390) * 0.45;
@@ -1034,8 +1037,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const passed = (vh - r.top);
     const p = clamp01(passed / total);
 
-    // move left as you scroll down; stays fixed if you stop scrolling
-    const x = -p * maxShift;
+    // move horizontally with scroll so the marquee tracks section progress
+    const x = -p * maxShiftX;
     marquee.style.setProperty('--marqueeX', x.toFixed(2) + 'px');
   }
 
@@ -1473,6 +1476,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   tabs.forEach((tab) => {
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
+      setActive(tab.dataset.planTarget);
+    });
     tab.addEventListener('click', () => setActive(tab.dataset.planTarget));
   });
 });

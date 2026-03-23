@@ -695,7 +695,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstCard = track.querySelector('.trustpilot-card');
     if (!firstCard) return 420;
 
-    const gap = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap || '0');
+    const trackStyles = window.getComputedStyle(track);
+    const gap = parseFloat(trackStyles.columnGap || trackStyles.gap || '0');
     return firstCard.getBoundingClientRect().width + gap;
   };
 

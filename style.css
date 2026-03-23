@@ -12499,15 +12499,6 @@ body.app-page {
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
 }
 
-.trustpilot-summary-label {
-  display: none;
-  margin-bottom: 0;
-  color: #6b7280;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
 .trustpilot-summary-score {
   display: flex;
   align-items: center;
@@ -12566,6 +12557,30 @@ body.app-page {
   background: linear-gradient(180deg, rgba(25, 218, 213, 0.18) 0%, rgba(212, 217, 231, 0.65) 100%);
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.08);
   text-align: center;
+}
+
+.trustpilot-card--slate {
+  --review-accent: #8aa5b5;
+}
+
+.trustpilot-card--mint {
+  --review-accent: #c8f5c8;
+}
+
+.trustpilot-card--sand {
+  --review-accent: #fff0b0;
+}
+
+.trustpilot-card--violet {
+  --review-accent: #8b27bc;
+}
+
+.trustpilot-card--peach {
+  --review-accent: #ffd9a6;
+}
+
+.trustpilot-card--blush {
+  --review-accent: #f7cddd;
 }
 
 .trustpilot-card-head {

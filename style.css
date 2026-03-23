@@ -21,9 +21,7 @@
 
   --radius-lg: 20px;
   --radius-md: 12px;
-  --radius-sm: 14px;
   --radius-pill: 999px;
-  --radius-xl: 22px;
 
   --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.8);
 
@@ -108,23 +106,25 @@ a {
   border-bottom: 1px solid rgba(148, 163, 184, 0.4);
 }
 
-.header-inner,
-.logo,
-.logo-image-wrapper,
-.main-nav ul {
+.header-inner {
   display: flex;
   align-items: center;
-}
-
-.header-inner {
   justify-content: space-between;
   padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 /* LOGO IMMAGINE SENZA CERCHIO */
 .logo-image-wrapper {
   width: 70px;   /* logo più grande */
   height: 70px;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -132,6 +132,7 @@ a {
   width: 100%;
   height: auto;
   object-fit: contain;
+  display: block;
 }
 
 /* Nel caso ci fosse ancora il vecchio cerchio, lo nascondiamo */
@@ -159,7 +160,9 @@ a {
 
 .main-nav ul {
   list-style: none;
+  display: flex;
   gap: 1.4rem;
+  align-items: center;
   margin: 0;
   padding: 0;
 }
@@ -200,7 +203,7 @@ a {
 .burger span {
   width: 22px;
   height: 2px;
-  border-radius: var(--radius-pill);
+  border-radius: 999px;
   background: #e5e7eb;
 }
 
@@ -271,7 +274,7 @@ a {
 }
 
 .hero-photo {
-  border-radius: var(--radius-xl);
+  border-radius: 22px;
   min-height: 260px;
   background: radial-gradient(circle at top, #28344a, #05060a);
   border: 1px solid rgba(148, 163, 184, 0.7);
@@ -286,20 +289,20 @@ a {
   left: 8%;
   padding: 0.9rem 1.1rem;
   background: linear-gradient(135deg, var(--surface-light-soft), #cfd4e8);
-  border-radius: var(--radius-sm);
+  border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.7);
   box-shadow:
     0 16px 30px rgba(15, 23, 42, 0.6),
     0 0 24px rgba(255, 255, 255, 0.55);
   max-width: 270px;
-  color: var(--text-dark);
+  color: #111827;
 }
 
 .hero-note-title {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--text-dark);
+  color: #111827;
   margin-bottom: 0.25rem;
 }
 

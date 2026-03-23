@@ -684,7 +684,6 @@ document.addEventListener('click', (e) => {
   if (details) details.hidden = expanded;
 });
 
-
 /* === TIMELINE SCROLL OBSERVER === */
 document.addEventListener('DOMContentLoaded', () => {
   const timeline = document.querySelector('.timeline');

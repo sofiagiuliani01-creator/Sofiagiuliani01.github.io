@@ -292,7 +292,7 @@ a {
     0 16px 30px rgba(15, 23, 42, 0.6),
     0 0 24px rgba(255, 255, 255, 0.55);
   max-width: 270px;
-  color: var(--text-dark);
+  color: #111827;
 }
 
 .hero-note-title {

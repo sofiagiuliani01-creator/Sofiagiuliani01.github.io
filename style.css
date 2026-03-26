@@ -295,7 +295,7 @@ a {
     0 16px 30px rgba(15, 23, 42, 0.6),
     0 0 24px rgba(255, 255, 255, 0.55);
   max-width: 270px;
-color: #111827;
+  color: #111827;
 }
 
 .hero-note-title {
@@ -12450,6 +12450,7 @@ body.app-page {
 /* =========================
    ZIP-149: Leonardo è diverso — align section to provided reference
    ========================= */
+
 #leonardo-diverso{
   background: #141418 !important;
   padding-top: 42px !important;
@@ -12467,21 +12468,28 @@ body.app-page {
 
 #leonardo-diverso .marquee-wrapper{
   background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
   min-height: 0 !important;
   padding: 0 0 28px !important;
   z-index: 1 !important;
 }
 
 #leonardo-diverso .marquee{
+  gap: 0 !important;
   align-items: center !important;
 }
 
 #leonardo-diverso .marquee span{
   color: #f8fafc !important;
-  font-size: clamp(4.4rem, 9vw, 8.9rem) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  font-family: "Inter", "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
+  font-size: clamp(4.8rem, 10vw, 9.4rem) !important;
   font-weight: 500 !important;
-  line-height: 0.9 !important;
-  letter-spacing: -0.06em !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.055em !important;
   padding-right: 28px !important;
 }
 
@@ -12523,8 +12531,8 @@ body.app-page {
   }
 
   #leonardo-diverso .marquee span{
-    font-size: clamp(2.9rem, 16vw, 5.2rem) !important;
-    line-height: 0.92 !important;
+    font-size: clamp(3.2rem, 17vw, 5.4rem) !important;
+    line-height: 0.9 !important;
     padding-right: 18px !important;
   }
 

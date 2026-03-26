@@ -88,6 +88,10 @@
   gap: 1.6rem;
   overflow-x: auto;
   padding: 0.4rem 0 0.85rem;
+  grid-auto-columns: minmax(380px, 660px);
+  gap: 1.6rem;
+  overflow-x: auto;
+  padding: 0.4rem 1.5rem 0.85rem;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -110,6 +114,16 @@
   background: linear-gradient(180deg, rgba(25, 218, 213, 0.22) 0%, rgba(229, 233, 247, 0.92) 100%);
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.08);
   text-align: left;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 2.2rem 1.7rem;
+  border-radius: 44px;
+  border: 0;
+  background: linear-gradient(180deg, rgba(25, 218, 213, 0.18) 0%, rgba(212, 217, 231, 0.65) 100%);
+  box-shadow: 0 24px 54px rgba(15, 23, 42, 0.08);
+  text-align: center;
 }
 
 .trustpilot-card--slate {
@@ -144,6 +158,12 @@
   justify-content: flex-start;
   margin-bottom: 1.1rem;
   padding-top: 0;
+  order: 4;
+  align-items: center;
+  gap: 0.9rem;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 1.6rem;
 }
 
 .trustpilot-avatar {
@@ -162,6 +182,7 @@
 .trustpilot-card-write h3 {
   margin: 0;
   color: #111827;
+  text-align: left;
 }
 
 .trustpilot-card-head p {
@@ -173,6 +194,7 @@
 .trustpilot-stars {
   display: inline-flex;
   order: 2;
+  order: 1;
   gap: 0.18rem;
   margin-bottom: 1rem;
 }
@@ -193,6 +215,10 @@
   margin: 0 0 0.75rem;
   color: #111827;
   font-size: 1.75rem;
+  order: 2;
+  margin: 0 0 0.75rem;
+  color: #111827;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.15;
 }
@@ -208,6 +234,12 @@
   padding-right: 0.15rem;
   font-size: 1rem;
   line-height: 1.55;
+  order: 3;
+  margin: 0;
+  color: #374151;
+  max-width: 32ch;
+  font-size: 1.02rem;
+  line-height: 1.6;
 }
 
 .trustpilot-card-meta {
@@ -215,6 +247,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  justify-content: center;
   gap: 0.55rem;
   margin-top: 1rem;
 }
@@ -292,6 +325,12 @@
   .trustpilot-card {
     height: 500px;
     padding: 1.45rem 1.2rem 1.2rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .trustpilot-card {
+    padding: 1.7rem 1.35rem 1.45rem;
     border-radius: 34px;
   }
 
@@ -301,6 +340,18 @@
 
   .trustpilot-card-body {
     font-size: 0.98rem;
+  }
+
+    font-size: 1.55rem;
+  }
+
+  .trustpilot-card-body {
+    max-width: none;
+    font-size: 0.98rem;
+  }
+
+  .trustpilot-card-head {
+    padding-top: 1.2rem;
   }
 
   .trustpilot-controls {

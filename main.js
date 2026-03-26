@@ -1475,6 +1475,5 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
       setActive(tab.dataset.planTarget);
     });
-    tab.addEventListener('click', () => setActive(tab.dataset.planTarget));
   });
 });

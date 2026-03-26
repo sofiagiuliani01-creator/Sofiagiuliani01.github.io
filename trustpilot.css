@@ -264,8 +264,12 @@
 .trustpilot-card-write {
   position: relative;
   align-items: center;
-  justify-content: center;
-  gap: 0.95rem;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  padding-top: 2.1rem;
+  padding-bottom: 2rem;
+  min-height: clamp(560px, 52vw, 680px);
+  height: auto;
   overflow: hidden;
   background:
     radial-gradient(120% 120% at 80% -10%, rgba(25, 218, 213, 0.25) 0%, rgba(25, 218, 213, 0) 56%),
@@ -329,7 +333,7 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.45rem;
   max-width: 34ch;
 }
 
@@ -358,7 +362,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
-  margin-top: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.35rem;
 }
 
 .trustpilot-card-write .trustpilot-card-body {
@@ -495,6 +500,12 @@
 
   .trustpilot-write-points li {
     font-size: 0.9rem;
+  }
+
+  .trustpilot-card-write {
+    min-height: 560px;
+    padding-top: 1.9rem;
+    padding-bottom: 1.7rem;
   }
 
 }

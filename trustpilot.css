@@ -400,8 +400,8 @@
 
 .trustpilot-direct-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 26px rgba(25, 218, 213, 0.2);
-  background: linear-gradient(135deg, rgba(25, 218, 213, 0.45), rgba(25, 218, 213, 0.16));
+  box-shadow: 0 16px 30px rgba(25, 218, 213, 0.3);
+  background: linear-gradient(135deg, rgba(72, 232, 226, 0.68), rgba(29, 224, 217, 0.34));
 }
 
 .trustpilot-controls {

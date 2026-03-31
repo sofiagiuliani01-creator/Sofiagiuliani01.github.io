@@ -1477,3 +1477,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+/* === 2026-03 Home timeline: progressive line + card reveal by scroll === */
+(function(){
+  const section = document.querySelector('#come-funziona');
+  const timeline = section && section.querySelector('.timeline[data-timeline]');
+  const line = timeline && timeline.querySelector('.timeline-line-active');
+  const steps = timeline ? Array.from(timeline.querySelectorAll('.timeline-step')) : [];
+  if (!section || !timeline || !line || !steps.length) return;
+
+  let raf = 0;
+
+  function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+  function update(){
+    const vh = window.innerHeight || 800;
+    const triggerY = vh * 0.64;
+
+    let activeIdx = 0;
+    let progressed = 0;
+
+    if (steps.length === 1){
+      progressed = 1;
+    } else {
+      let segment = 0;
+      for (let i = 0; i < steps.length - 1; i++) {
+        const a = steps[i].getBoundingClientRect();
+        const b = steps[i + 1].getBoundingClientRect();
+        const ac = a.top + (a.height / 2);
+        const bc = b.top + (b.height / 2);
+
+        if (triggerY >= bc) {
+          segment = i + 1;
+          continue;
+        }
+
+        const span = Math.max(1, bc - ac);
+        const part = clamp((triggerY - ac) / span, 0, 1);
+        progressed = (i + part) / (steps.length - 1);
+        break;
+      }
+
+      if (triggerY >= (steps.at(-1).getBoundingClientRect().top + steps.at(-1).getBoundingClientRect().height / 2)) {
+        progressed = 1;
+      } else if (triggerY <= (steps[0].getBoundingClientRect().top + steps[0].getBoundingClientRect().height / 2)) {
+        progressed = 0;
+      } else if (!progressed) {
+        progressed = segment / (steps.length - 1);
+      }
+
+      activeIdx = Math.round(progressed * (steps.length - 1));
+    }
+
+    timeline.style.setProperty('--tl-progress', progressed.toFixed(4));
+
+    steps.forEach((step, idx) => {
+      const isVisible = idx <= activeIdx;
+      step.classList.toggle('is-visible', isVisible);
+      step.classList.toggle('is-active', idx === activeIdx);
+      step.classList.toggle('is-revealed', isVisible);
+    });
+  }
+
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      update();
+    });
+  }
+
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+})();

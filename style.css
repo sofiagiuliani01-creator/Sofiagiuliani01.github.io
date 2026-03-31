@@ -13028,6 +13028,7 @@ body.app-page {
 }
 
 #come-funziona .step-meta p:not(.step-kicker){
+#come-funziona .step-meta p{
   margin-top: 10px;
   max-width: 44ch;
   color: rgba(231, 242, 244, .86);

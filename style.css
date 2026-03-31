@@ -13027,6 +13027,7 @@ body.app-page {
   letter-spacing: -.02em;
 }
 
+#come-funziona .step-meta p:not(.step-kicker){
 #come-funziona .step-meta p{
   margin-top: 10px;
   max-width: 44ch;

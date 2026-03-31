@@ -12888,6 +12888,7 @@ body.app-page {
     font-size: clamp(2.1rem, 12vw, 3.2rem);
   }
   #come-funziona .timeline-step:nth-child(even) .step-number{
+    left: auto;
     right: 10px;
   }
   #come-funziona .step-kicker{

@@ -12908,165 +12908,167 @@ body.app-page {
   position: relative;
 }
 
+#come-funziona .timeline-steps{
+  display: grid;
+  gap: 74px !important;
+  padding: 30px 0;
+}
+
+#come-funziona .timeline-line{
+  width: 2px !important;
+}
+
+#come-funziona .timeline-line-base,
+#come-funziona .timeline-line-active{
+  width: 2px !important;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+#come-funziona .timeline-line-base{
+  background: rgba(198, 220, 88, .45) !important;
+}
+
 #come-funziona .timeline-line-active{
   height: calc(100% * var(--tl-progress)) !important;
+  background: #d0ea52 !important;
+  box-shadow: 0 0 18px rgba(208, 234, 82, .34);
   transition: height .26s ease-out;
 }
 
 #come-funziona .timeline-step{
   position: relative;
-  opacity: .36;
-  transform: translateY(20px) scale(.985);
-  transition: opacity .35s ease, transform .35s ease, filter .35s ease;
-  filter: saturate(.82);
-}
-
-#come-funziona .timeline-steps{
-  gap: 58px !important;
-}
-
-#come-funziona .timeline-line{
-  width: 6px !important;
-}
-
-#come-funziona .timeline-line-base{
-  width: 4px !important;
-  opacity: .92;
-  background: linear-gradient(180deg, rgba(240, 255, 255, .18) 0%, rgba(115, 179, 184, .38) 46%, rgba(240, 255, 255, .16) 100%) !important;
-}
-
-#come-funziona .timeline-line-active{
-  width: 4px !important;
-  background: linear-gradient(180deg, rgba(126, 245, 233, .9) 0%, rgba(70, 197, 197, .88) 52%, rgba(149, 252, 242, .9) 100%) !important;
-  box-shadow: 0 0 14px rgba(36, 187, 185, .26) !important;
-}
-
-#come-funziona .timeline-step::before{
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1px solid rgba(170, 240, 236, .45);
-  background: radial-gradient(circle at 35% 35%, rgba(222, 255, 250, .84), rgba(48, 158, 160, .72));
-  box-shadow: 0 0 0 4px rgba(25, 218, 213, .08);
-  z-index: 3;
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  opacity: .4;
+  transform: translateY(24px) scale(.98);
+  transition: opacity .35s ease, transform .35s ease;
 }
 
 #come-funziona .timeline-step.is-visible{
-  opacity: .74;
+  opacity: .78;
   transform: translateY(0) scale(1);
 }
 
 #come-funziona .timeline-step.is-active{
   opacity: 1;
-  filter: none;
-  transform: translateY(0) scale(1.015);
+  transform: translateY(0) scale(1.01);
 }
 
-#come-funziona .timeline-step.is-active::before{
-  border-color: rgba(186, 253, 248, .9);
-  transform: translate(-50%, -50%) scale(1.12);
-  box-shadow: 0 0 0 6px rgba(33, 215, 206, .15), 0 0 20px rgba(33, 215, 206, .28);
-}
-
-#come-funziona .step-number{
+#come-funziona .timeline-step::before,
+#come-funziona .timeline-step::after{
+  content: "";
   position: absolute;
-  top: -32px !important;
-  left: -24px !important;
-  right: auto !important;
-  z-index: 1 !important;
-  display: block;
-  width: auto;
-  height: auto;
-  font-size: clamp(4.6rem, 8.2vw, 7.4rem);
-  line-height: .86;
-  letter-spacing: -.04em;
-  font-weight: 900;
-  color: rgba(137, 213, 209, .15);
-  text-shadow: none;
-  pointer-events: none;
+  left: 50%;
+  width: 2px;
+  background: #d0ea52;
+  transform: translateX(-50%);
+  opacity: .9;
 }
 
-#come-funziona .timeline-step:nth-child(even) .step-number{
-  left: auto !important;
-  right: -24px !important;
-}
+#come-funziona .timeline-step::before{ top: -44px; height: 44px; }
+#come-funziona .timeline-step::after{ bottom: -44px; height: 44px; }
+#come-funziona .timeline-step:first-child::before,
+#come-funziona .timeline-step:last-child::after{ display:none; }
+
+#come-funziona .step-number{ display: none !important; }
 
 #come-funziona .step-content{
   position: relative;
-  z-index: 2;
   overflow: hidden;
-  background: linear-gradient(160deg, rgba(17, 27, 32, .9), rgba(9, 16, 20, .95)) !important;
-  border: 1px solid rgba(136, 194, 196, .24) !important;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, .24), 0 2px 0 rgba(255, 255, 255, .02) inset !important;
-  transition: border-color .35s ease, box-shadow .35s ease, background .35s ease, transform .35s ease;
+  border-radius: 40px;
+  padding: clamp(26px, 4.2vw, 56px);
+  background:
+    radial-gradient(120% 140% at 10% 0%, rgba(31,48,76,.4), rgba(11,16,26,0) 56%),
+    #0b0f18 !important;
+  border: 2px solid rgba(208, 234, 82, .9) !important;
+  box-shadow: 0 26px 54px rgba(3, 7, 14, .55);
 }
 
-#come-funziona .timeline-step.is-active .step-content{
-  border-color: rgba(159, 236, 232, .38) !important;
-  box-shadow: 0 22px 44px rgba(0, 0, 0, .3), 0 0 0 1px rgba(92, 212, 206, .16), 0 10px 26px rgba(33, 184, 182, .12) !important;
+#come-funziona .step-row{
+  display: grid;
+  grid-template-columns: minmax(280px, 460px) 1fr;
+  align-items: center;
+  gap: clamp(26px, 3vw, 58px);
+}
+
+#come-funziona .step-illu{
+  width: 100%;
+  max-width: 430px;
+  height: auto;
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.25));
 }
 
 #come-funziona .step-kicker{
-  margin: 0 0 10px;
-  font-size: .72rem;
+  margin: 0 0 14px;
+  font-size: .82rem;
+  letter-spacing: .18em;
+  color: rgba(208, 234, 82, .9);
   font-weight: 700;
-  letter-spacing: .2em;
-  color: rgba(150, 240, 235, .86);
 }
 
 #come-funziona .step-meta h3{
   margin: 0;
-  font-size: clamp(1.55rem, 2vw, 2rem);
-  line-height: 1.14;
+  color: #f4f6fa;
+  font-size: clamp(2rem, 3.2vw, 3.6rem);
+  line-height: 1.06;
   letter-spacing: -.02em;
+  max-width: 18ch;
 }
 
-#come-funziona .step-meta p:not(.step-kicker){
 #come-funziona .step-meta p{
-  margin-top: 10px;
-  max-width: 44ch;
-  color: rgba(231, 242, 244, .86);
+  margin-top: 18px;
+  color: rgba(240, 244, 252, .9);
+  font-size: clamp(1.03rem, 1.25vw, 1.92rem);
+  line-height: 1.42;
+  max-width: 40ch;
 }
 
-#come-funziona .step-illu{ filter: drop-shadow(0 8px 18px rgba(25,218,213,.18)); }
-#come-funziona .step-illu .s-accent,
+#come-funziona .step-illu .s-dot,
 #come-funziona .step-illu .s-spark,
-#come-funziona .step-illu .s-dot{
+#come-funziona .step-illu .s-accent{
+  transform-origin: center;
   animation: stepPulse 2.8s ease-in-out infinite;
-  transform-origin:center;
 }
-#come-funziona .step-illu .s-spark{ animation-delay:.2s; }
-#come-funziona .step-illu .s-dot{ animation-delay:.45s; }
+#come-funziona .step-illu .s-spark{ animation-delay: .2s; }
+#come-funziona .step-illu .s-accent{ animation-delay: .4s; }
 
 @keyframes stepPulse{
-  0%,100%{ opacity:.72; transform:scale(.92); }
-  50%{ opacity:1; transform:scale(1.08); }
+  0%,100%{ transform:scale(.94); opacity:.78; }
+  50%{ transform:scale(1.08); opacity:1; }
 }
 
 @media (max-width: 980px){
-  #come-funziona .timeline-steps{
-    gap: 68px !important;
+  #come-funziona .timeline-steps{ gap: 56px !important; }
+
+  #come-funziona .timeline-step::before,
+  #come-funziona .timeline-step::after{ height: 30px; }
+  #come-funziona .timeline-step::before{ top: -30px; }
+  #come-funziona .timeline-step::after{ bottom: -30px; }
+
+  #come-funziona .step-content{
+    border-radius: 26px;
+    padding: 22px 18px;
   }
 
-  #come-funziona .timeline-step::before{
-    display: none;
+  #come-funziona .step-row{
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: left;
   }
 
-  #come-funziona .step-number{
-    top: -14px !important;
-    left: 12px !important;
-    right: auto !important;
-    font-size: clamp(2.4rem, 12vw, 3.5rem);
+  #come-funziona .step-illu{
+    max-width: 320px;
+    margin: 0 auto;
   }
 
-  #come-funziona .timeline-step:nth-child(even) .step-number{
-    left: auto !important;
-    right: 12px !important;
+  #come-funziona .step-meta h3{
+    font-size: clamp(1.8rem, 8.2vw, 2.5rem);
+  }
+
+  #come-funziona .step-meta p{
+    font-size: 1.03rem;
+    max-width: 100%;
   }
 }
+

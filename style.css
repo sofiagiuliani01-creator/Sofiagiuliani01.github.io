@@ -12904,12 +12904,12 @@ body.app-page {
 }
 
 #come-funziona .timeline{
-  --tl-progress: 0.08;
+  --tl-progress: 0;
   position: relative;
 }
 
 #come-funziona .timeline-line-active{
-  height: calc(8% + (84% * var(--tl-progress))) !important;
+  height: calc(100% * var(--tl-progress)) !important;
   transition: height .22s ease-out;
 }
 

@@ -12767,3 +12767,131 @@ body.app-page {
     margin-top: 2px !important;
   }
 }
+
+/* =========================
+   ZIP-132: Home timeline visual rhythm upgrade
+   ========================= */
+#come-funziona .timeline-guided-read{
+  margin: 10px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-size: 1.02rem;
+  color: rgba(255,255,255,0.78);
+}
+
+#come-funziona .timeline-line{
+  width: 8px;
+}
+
+#come-funziona .timeline-line-base{
+  width: 8px;
+  opacity: 0.42;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(25,218,213,0.34) 50%, rgba(255,255,255,0.16) 100%);
+}
+
+#come-funziona .timeline-line::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.52) 0 2px, transparent 3px);
+  background-size: 16px 72px;
+  background-repeat: repeat-y;
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+#come-funziona .timeline-line-active{
+  width: 8px;
+  background: linear-gradient(180deg, #22f0df 0%, #19dad5 55%, #86fff0 100%);
+  box-shadow: 0 0 22px rgba(25,218,213,0.62), 0 0 44px rgba(25,218,213,0.38);
+}
+
+#come-funziona .timeline-step{
+  position: relative;
+  overflow: visible;
+  transition: opacity .35s ease, transform .35s ease, box-shadow .35s ease, border-color .35s ease, background-color .35s ease;
+}
+
+#come-funziona .timeline-step.is-visible:not(.is-active){
+  opacity: 0.74 !important;
+}
+
+#come-funziona .timeline-step.is-active{
+  opacity: 1 !important;
+  border-color: rgba(25,218,213,0.58);
+  background: linear-gradient(160deg, rgba(255,255,255,0.11), rgba(255,255,255,0.03));
+  box-shadow: 0 16px 48px rgba(0,0,0,0.28), 0 0 0 1px rgba(25,218,213,0.22), 0 0 26px rgba(25,218,213,0.24);
+}
+
+#come-funziona .step-number{
+  position: absolute;
+  top: -24px;
+  left: -26px;
+  font-size: clamp(3.2rem, 7.2vw, 5.8rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: rgba(255,255,255,0.2);
+  pointer-events: none;
+}
+
+#come-funziona .timeline-step:nth-child(even) .step-number{
+  left: auto;
+  right: -24px;
+}
+
+#come-funziona .step-kicker{
+  margin: 0 0 10px;
+  font-size: 0.74rem;
+  letter-spacing: 0.19em;
+  font-weight: 700;
+  color: rgba(25,218,213,0.92);
+}
+
+#come-funziona .step-meta h3{
+  font-size: clamp(1.6rem, 2.3vw, 2.05rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+#come-funziona .step-meta p{
+  max-width: 46ch;
+}
+
+@media (min-width: 981px){
+  #come-funziona .timeline-steps{
+    gap: 72px;
+  }
+
+  #come-funziona .timeline-step:nth-child(even) .step-row{
+    grid-template-columns: 1fr 110px;
+  }
+
+  #come-funziona .timeline-step:nth-child(even) .step-meta{
+    order: 1;
+  }
+
+  #come-funziona .timeline-step:nth-child(even) .step-illu{
+    order: 2;
+    justify-self: center;
+    transform: translateX(-8px);
+  }
+}
+
+@media (max-width: 980px){
+  #come-funziona .step-number{
+    top: -12px;
+    left: 10px;
+    font-size: clamp(2.1rem, 12vw, 3.2rem);
+  }
+  #come-funziona .timeline-step:nth-child(even) .step-number{
+    right: 10px;
+  }
+  #come-funziona .step-kicker{
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+  }
+}

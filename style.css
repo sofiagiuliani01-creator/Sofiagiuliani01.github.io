@@ -12934,7 +12934,7 @@ body.app-page {
 }
 
 #come-funziona .timeline-line-base{
-  display: none !important;
+  background: transparent !important;
 }
 
 #come-funziona .timeline-line-active{

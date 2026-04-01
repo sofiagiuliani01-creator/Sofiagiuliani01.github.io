@@ -13236,6 +13236,8 @@ body.app-page {
   width: min(220px, 43vw);
   z-index: 2;
   transition: transform 1.2s cubic-bezier(.22,.7,0,1), opacity 0.8s ease;
+  width: min(220px, 45vw);
+  animation: preloaderPulse 1.2s ease-in-out infinite alternate;
 }
 
 .preloader-logo {
@@ -13315,6 +13317,12 @@ body.app-page {
 @keyframes panelShrink {
   0% { opacity: 1; transform: scale(1); border-radius: 30px; }
   100% { opacity: 0; transform: scale(0.5); border-radius: 999px; }
+  filter: drop-shadow(0 20px 42px rgba(255, 255, 255, 0.2));
+}
+
+@keyframes preloaderPulse {
+  from { transform: scale(0.88); opacity: 0.65; }
+  to { transform: scale(1.03); opacity: 1; }
 }
 
 .site-header-home {
@@ -13337,8 +13345,48 @@ body.app-page {
   transform: translateY(-105%);
 }
 
+.hero-headroom {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 9rem 0 4rem;
+  background: radial-gradient(circle at 50% 10%, #1f2537 0%, #080a13 45%, #030407 100%);
+}
+
+.hero-headroom .hero-inner {
+  grid-template-columns: 1fr;
+}
+
+.hero-headroom .hero-text {
+  max-width: 780px;
+}
+
+.hero-headroom h1 {
+  font-size: clamp(2.5rem, 6vw, 5.4rem);
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 1rem;
+}
+
+.hero-headroom .hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  max-width: 700px;
+}
+
+.hero-headroom .hero-actions {
+  margin-top: 1.6rem;
+}
+
+.hero-headroom .hero-media {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .site-header-home {
     background: rgba(5, 7, 16, 0.9);
+  }
+
+  .hero-headroom {
+    min-height: auto;
+    padding-top: 7.8rem;
   }
 }

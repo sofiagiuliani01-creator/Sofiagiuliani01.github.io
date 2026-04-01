@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.remove('is-loading');
       }, 1150);
     }, 3300);
+
+  if (preloader) {
+    window.setTimeout(() => {
+      preloader.classList.add('is-hidden');
+      body.classList.remove('is-loading');
+    }, 1500);
   }
 
   if (homeHeader) {

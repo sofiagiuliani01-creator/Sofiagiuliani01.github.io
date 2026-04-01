@@ -1551,3 +1551,62 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 })();
+
+/* === 2026-04 hard fix: home timeline single-line progressive animation === */
+(function () {
+  const section = document.querySelector('#come-funziona');
+  const timeline = section && section.querySelector('.timeline[data-timeline]');
+  const line = timeline && timeline.querySelector('.timeline-line-active');
+  const steps = timeline ? Array.from(timeline.querySelectorAll('.timeline-step')) : [];
+  if (!section || !timeline || !line || !steps.length) return;
+
+  let raf = 0;
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  function progressByScroll() {
+    const vh = window.innerHeight || 800;
+    const triggerY = vh * 0.58;
+    const centers = steps.map((step) => {
+      const r = step.getBoundingClientRect();
+      return r.top + r.height / 2;
+    });
+
+    if (steps.length === 1) return { progress: 1, active: 0 };
+    if (triggerY <= centers[0]) return { progress: 0, active: 0 };
+    if (triggerY >= centers[centers.length - 1]) return { progress: 1, active: centers.length - 1 };
+
+    for (let i = 0; i < centers.length - 1; i += 1) {
+      const a = centers[i];
+      const b = centers[i + 1];
+      if (triggerY >= a && triggerY <= b) {
+        const t = clamp((triggerY - a) / Math.max(1, b - a), 0, 1);
+        const p = (i + t) / (centers.length - 1);
+        return { progress: p, active: Math.round((centers.length - 1) * p) };
+      }
+    }
+    return { progress: 0, active: 0 };
+  }
+
+  function paint() {
+    const { progress, active } = progressByScroll();
+    timeline.style.setProperty('--tl-progress', progress.toFixed(4));
+
+    steps.forEach((step, idx) => {
+      step.classList.toggle('is-visible', idx <= active);
+      step.classList.toggle('is-revealed', idx <= active);
+      step.classList.toggle('is-active', idx === active);
+    });
+  }
+
+  function onScroll() {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      paint();
+    });
+  }
+
+  paint();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+})();

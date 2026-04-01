@@ -1,35 +1,65 @@
-// HOME: preloader + header behavior in stile headroom
+// HOME: intro/loading sequence + header behavior
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
-  const preloader = document.querySelector('.site-preloader');
+  const preloader = document.getElementById('sitePreloader');
   const homeHeader = document.querySelector('.site-header-home');
-  const loaderIcons = Array.from(document.querySelectorAll('[data-loader-icon]'));
+
+  const unlockPage = () => {
+    body.classList.remove('is-loading');
+  };
 
   if (preloader) {
-    let iconIndex = 0;
+    const topline = preloader.querySelector('.preloader-topline-fill');
+    const wipe = preloader.querySelector('.preloader-wipe');
+    const canvas = preloader.querySelector('.preloader-canvas');
+    const orbit = preloader.querySelector('.preloader-orbit');
+    const seed = preloader.querySelector('.preloader-seed');
+    const core = preloader.querySelector('.preloader-core');
+    const nodes = preloader.querySelectorAll('.node');
+    const modules = preloader.querySelectorAll('.module');
 
-    const iconTimer = window.setInterval(() => {
-      if (!loaderIcons.length) return;
-      loaderIcons.forEach((icon) => icon.classList.remove('is-active'));
-      iconIndex = (iconIndex + 1) % loaderIcons.length;
-      loaderIcons[iconIndex].classList.add('is-active');
-    }, 760);
+    const hasGSAP = typeof window.gsap !== 'undefined';
 
-    window.setTimeout(() => {
-      window.clearInterval(iconTimer);
-      preloader.classList.add('is-complete');
+    if (hasGSAP) {
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
+      tl.set([wipe, canvas], { transformOrigin: '50% 0' })
+        // Fase 0: hero visibile per un attimo
+        .to({}, { duration: 0.2 })
+        // Fase 1: top loading line
+        .to(topline, { scaleX: 1, duration: 0.38, ease: 'none' })
+        // Fase 2: wipe/reset
+        .to(wipe, { scaleY: 1, duration: 0.32 }, '<')
+        // Fase 3: blank suspended state
+        .to(canvas, { autoAlpha: 1, duration: 0.2 })
+        .fromTo(orbit, { autoAlpha: 0, scale: 0.84 }, { autoAlpha: 1, scale: 1, duration: 0.24 })
+        .to({}, { duration: 0.56 })
+        // Fase 4: seed activation
+        .to(seed, { backgroundColor: '#1557ff', duration: 0.2, ease: 'power1.inOut' })
+        .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.045 }, '-=0.04')
+        // Fase 5 + 6: modular build
+        .to(core, { scale: 1.05, duration: 0.3, ease: 'power2.inOut' })
+        .to(core, { scale: 1, duration: 0.22, ease: 'power2.out' })
+        .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.24, stagger: 0.055, ease: 'power2.out' }, '-=0.12')
+        .to({}, { duration: 0.38 })
+        // Fase 7: transition to final hero
+        .to([canvas, wipe], { autoAlpha: 0, duration: 0.34, ease: 'power1.inOut' })
+        .to(preloader, {
+          autoAlpha: 0,
+          duration: 0.22,
+          onComplete: () => {
+            preloader.classList.add('is-hidden');
+            unlockPage();
+          },
+        });
+    } else {
       window.setTimeout(() => {
         preloader.classList.add('is-hidden');
-        body.classList.remove('is-loading');
-      }, 1150);
-    }, 3300);
-
-  if (preloader) {
-    window.setTimeout(() => {
-      preloader.classList.add('is-hidden');
-      body.classList.remove('is-loading');
-    }, 1500);
+        unlockPage();
+      }, 1900);
+    }
+  } else {
+    unlockPage();
   }
 
   if (homeHeader) {

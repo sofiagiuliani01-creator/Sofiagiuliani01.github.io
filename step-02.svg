@@ -1,31 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Checklist anamnesi completata">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Anamnesi e obiettivi raccolti">
   <defs>
-    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#101a2d"/>
-      <stop offset="1" stop-color="#14243b"/>
+    <linearGradient id="aqua02" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8af9eb"/>
+      <stop offset="1" stop-color="#4ddcd1"/>
     </linearGradient>
     <style>
-      .pulse{animation:pulse 2.4s ease-in-out infinite}
-      .draw{stroke-dasharray:220;stroke-dashoffset:220;animation:draw 2.8s ease-in-out infinite}
-      .dot{animation:dot .9s ease-in-out infinite alternate}
-      @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
-      @keyframes draw{0%,12%{stroke-dashoffset:220}35%,100%{stroke-dashoffset:0}}
-      @keyframes dot{from{opacity:.5}to{opacity:1}}
+      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#eaf8ff;stroke-width:15}
+      .a{stroke:url(#aqua02);stroke-width:15}
+      .d{stroke-dasharray:260;stroke-dashoffset:260;animation:draw 3s ease-in-out infinite}
+      .f{animation:float 4.2s ease-in-out infinite}
+      @keyframes draw{0%,15%{stroke-dashoffset:260}45%,100%{stroke-dashoffset:0}}
+      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
     </style>
   </defs>
-  <rect width="720" height="520" rx="34" fill="url(#bg2)"/>
-  <g class="pulse" transform-origin="292px 250px">
-    <rect x="110" y="110" width="360" height="292" rx="44" fill="#eef2ff"/>
-    <rect x="138" y="150" width="304" height="24" rx="12" fill="#b9c4ff"/>
-    <rect x="138" y="193" width="248" height="18" rx="9" fill="#b9c4ff"/>
-    <rect x="138" y="228" width="274" height="18" rx="9" fill="#b9c4ff"/>
-    <rect x="138" y="263" width="220" height="18" rx="9" fill="#b9c4ff"/>
-    <rect x="138" y="298" width="180" height="18" rx="9" fill="#b9c4ff"/>
+
+  <g class="f" transform-origin="278 260">
+    <rect x="120" y="128" width="316" height="264" rx="34" class="ln w"/>
+    <path d="M170 192h216M170 238h176M170 284h192M170 330h126" class="ln a"/>
   </g>
-  <g transform-origin="520px 224px" class="pulse">
-    <circle cx="520" cy="224" r="122" fill="#cde15e"/>
-    <circle cx="520" cy="224" r="88" fill="#22314b"/>
-    <path class="draw" d="M482 228l24 24 48-56" stroke="#d7ef74" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g transform-origin="510 254" class="f" style="animation-delay:.2s">
+    <circle cx="510" cy="254" r="88" class="ln w"/>
+    <path d="M468 256l28 28 56-64" class="ln a d"/>
   </g>
-  <circle class="dot" cx="188" cy="94" r="15" fill="#cde15e"/>
+
+  <circle cx="568" cy="130" r="10" fill="#8af9eb"/>
 </svg>

@@ -1,28 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Fase autonoma con piano validato">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Nuova fase autonoma con risultati mantenuti">
   <defs>
-    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#12243c"/>
-      <stop offset="1" stop-color="#0f1728"/>
+    <linearGradient id="aqua05" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#90faed"/>
+      <stop offset="1" stop-color="#49d8ce"/>
     </linearGradient>
     <style>
-      .tick{stroke-dasharray:80;stroke-dashoffset:80;animation:tick 2.4s ease-in-out infinite}
-      .spin{animation:spin 6s linear infinite}
-      .spark{animation:spark 2s ease-in-out infinite}
-      @keyframes tick{0%,20%{stroke-dashoffset:80}45%,100%{stroke-dashoffset:0}}
-      @keyframes spin{to{transform:rotate(360deg)}}
-      @keyframes spark{0%,100%{opacity:.55}50%{opacity:1}}
+      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#eaf8ff;stroke-width:15}
+      .a{stroke:url(#aqua05);stroke-width:15}
+      .u{animation:up 4.2s ease-in-out infinite}
+      .g{animation:glow 1.9s ease-in-out infinite}
+      @keyframes up{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}
     </style>
   </defs>
-  <rect width="720" height="520" rx="34" fill="url(#bg5)"/>
-  <circle cx="250" cy="260" r="136" fill="#b9c4ff"/>
-  <circle cx="250" cy="260" r="96" fill="#eef2ff"/>
-  <g class="spin" transform-origin="250px 260px">
-    <path d="M250 260V190M250 260l48 30" stroke="#1f2d45" stroke-width="14" stroke-linecap="round"/>
+
+  <g class="u" transform-origin="262 256">
+    <path d="M126 316l98-98 68 68 106-126" class="ln w"/>
+    <path d="M372 160h72v72" class="ln a"/>
+    <circle cx="126" cy="316" r="10" fill="#90faed"/>
+    <circle cx="224" cy="218" r="10" fill="#90faed"/>
+    <circle cx="292" cy="286" r="10" fill="#90faed"/>
+    <circle cx="398" cy="160" r="10" fill="#90faed"/>
   </g>
-  <circle cx="250" cy="260" r="16" fill="#1f2d45"/>
-  <rect x="390" y="120" width="220" height="240" rx="30" fill="#21314c"/>
-  <path d="M428 174h144M428 222h112M428 270h86" stroke="#a9b8e2" stroke-width="10" stroke-linecap="round"/>
-  <circle cx="548" cy="302" r="28" fill="#cde15e"/>
-  <path class="tick" d="M536 302l10 10 18-21" stroke="#1e2b10" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path class="spark" d="M106 120l12 22 22 12-22 12-12 22-12-22-22-12 22-12z" fill="#cde15e"/>
+
+  <g transform-origin="530 258" class="u" style="animation-delay:.2s">
+    <rect x="456" y="184" width="148" height="148" rx="30" class="ln w"/>
+    <path d="M488 260l30 30 54-62" class="ln a"/>
+  </g>
+
+  <path class="g" d="M612 110l8 16 16 8-16 8-8 16-8-16-16-8 16-8z" fill="#49d8ce"/>
 </svg>

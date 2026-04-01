@@ -15,9 +15,39 @@
 <!-- LOTTIE PLAYER -->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
-<body class="page-home">
+<body class="page-home is-loading">
+<div aria-hidden="true" class="site-preloader">
+<div class="preloader-stage">
+<div class="preloader-lines-wrap">
+<div class="preloader-lines"></div>
+<div class="preloader-icon-set">
+<svg class="preloader-icon is-active" data-loader-icon="0" viewBox="0 0 64 64">
+<circle cx="22" cy="16" r="7"></circle>
+<path d="M16 31l10-8 8 6 11 1"></path>
+<path d="M30 28l-6 13m10-8 8 10m-20-1-8 8m31-10 7 8"></path>
+</svg>
+<svg class="preloader-icon" data-loader-icon="1" viewBox="0 0 64 64">
+<rect x="8" y="30" width="11" height="8" rx="1.5"></rect>
+<rect x="45" y="30" width="11" height="8" rx="1.5"></rect>
+<line x1="19" y1="34" x2="45" y2="34"></line>
+<circle cx="32" cy="22" r="5"></circle>
+<path d="M32 27v15"></path>
+</svg>
+<svg class="preloader-icon" data-loader-icon="2" viewBox="0 0 64 64">
+<path d="M14 18h36"></path>
+<path d="M32 18v30"></path>
+<path d="M20 30c4-4 8-4 12 0 4 4 8 4 12 0"></path>
+<path d="M16 48c5-5 9-5 14 0 5 5 9 5 14 0"></path>
+</svg>
+</div>
+</div>
+<div class="preloader-logo-wrap">
+<img alt="LS Coaching Logo" class="preloader-logo" src="logo-ls.png"/>
+</div>
+</div>
+</div>
 <!-- HEADER (IDENTICO AL TUO) -->
-<header class="site-header">
+<header class="site-header site-header-home">
 <div class="container header-inner">
 <a class="logo" href="index.html">
 <div class="logo-image-wrapper">
@@ -46,26 +76,25 @@
 </header>
 <main>
 <!-- HERO -->
-<section class="hero" data-mobile-theme="hero">
+<section class="hero hero-headroom" data-mobile-theme="hero">
 <div class="container hero-inner">
 <div class="hero-text">
-<p class="eyebrow">Coaching online personalizzato</p>
+<p class="eyebrow">LS Coaching</p>
 <h1>
-            Hai già fatto il primo passo.<br/>
-            Ora costruiamo un percorso chiaro fino al traguardo.
+            Online Fitness Coaching<br/>
+            pensato per i tuoi risultati.
           </h1>
 <p class="hero-subtitle">
-            Ti aiuto a migliorare forma fisica e stile di vita con allenamento,
-            nutrizione e supporto pensati per chi ha poco tempo ma vuole risultati reali.
+            Allenamento, nutrizione e supporto continuo in un percorso premium costruito su di te.
           </p>
 <div class="hero-actions">
-<a class="btn btn-primary" href="#consulenza">Prenota una consulenza gratuita</a>
-<a class="btn btn-outline" href="#come-funziona">Scopri come funziona</a>
+<a class="btn btn-primary" href="#consulenza">Start your transformation</a>
+<a class="btn btn-outline" href="#come-funziona">Scopri il metodo</a>
 </div>
 <div class="hero-tags">
-<span>Allenamenti su misura</span>
-<span>Nutrizione ragionata</span>
-<span>Supporto continuo</span>
+<span>1:1 Coaching</span>
+<span>Performance</span>
+<span>Body Recomposition</span>
 </div>
 </div>
 <!-- SLOT FOTO HERO -->

@@ -12993,6 +12993,7 @@ body.app-page {
 #come-funziona .step-row{
   display: grid;
   grid-template-columns: minmax(360px, 1fr) minmax(420px, 1fr);
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
   align-items: center;
   gap: clamp(42px, 4vw, 88px);
 }
@@ -13004,6 +13005,26 @@ body.app-page {
   justify-content: center;
 }
 
+#come-funziona .step-visual{
+  position: relative;
+  margin: 0;
+  border-radius: 30px;
+  padding: clamp(10px, 1.2vw, 14px);
+  background: linear-gradient(145deg, rgba(229, 236, 255, .88), rgba(170, 187, 234, .58));
+  box-shadow:
+    0 18px 30px rgba(2, 6, 14, .42),
+    inset 0 0 0 1px rgba(255, 255, 255, .5);
+}
+
+#come-funziona .step-visual::after{
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 22px;
+  border: 1px solid rgba(208, 234, 82, .55);
+  pointer-events: none;
+}
+
 #come-funziona .step-illu{
   display: block;
   width: 100%;
@@ -13011,6 +13032,11 @@ body.app-page {
   aspect-ratio: 16 / 10;
   object-fit: contain;
   filter: drop-shadow(0 18px 36px rgba(0,0,0,.3));
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 22px;
+  background: #101826;
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.25));
 }
 
 #come-funziona .step-kicker{
@@ -13082,6 +13108,7 @@ body.app-page {
 
   #come-funziona .step-illu{
     max-width: min(480px, 100%);
+    max-width: 100%;
     margin: 0 auto;
   }
 

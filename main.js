@@ -3,8 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const preloader = document.getElementById('sitePreloader');
   const homeHeader = document.querySelector('.site-header-home');
+  let hasUnlockedPage = false;
+  let forceUnlockTimer = null;
 
   const unlockPage = () => {
+    if (hasUnlockedPage) return;
+    hasUnlockedPage = true;
+
+    if (forceUnlockTimer) {
+      window.clearTimeout(forceUnlockTimer);
+      forceUnlockTimer = null;
+    }
+
     body.classList.remove('is-loading');
   };
 
@@ -20,38 +30,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const hasGSAP = typeof window.gsap !== 'undefined';
 
-    if (hasGSAP) {
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    forceUnlockTimer = window.setTimeout(() => {
+      preloader.classList.add('is-hidden');
+      unlockPage();
+    }, 4200);
 
-      tl.set([wipe, canvas], { transformOrigin: '50% 0' })
-        // Fase 0: hero visibile per un attimo
-        .to({}, { duration: 0.2 })
-        // Fase 1: top loading line
-        .to(topline, { scaleX: 1, duration: 0.38, ease: 'none' })
-        // Fase 2: wipe/reset
-        .to(wipe, { scaleY: 1, duration: 0.32 }, '<')
-        // Fase 3: blank suspended state
-        .to(canvas, { autoAlpha: 1, duration: 0.2 })
-        .fromTo(orbit, { autoAlpha: 0, scale: 0.84 }, { autoAlpha: 1, scale: 1, duration: 0.24 })
-        .to({}, { duration: 0.56 })
-        // Fase 4: seed activation
-        .to(seed, { backgroundColor: '#1557ff', duration: 0.2, ease: 'power1.inOut' })
-        .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.045 }, '-=0.04')
-        // Fase 5 + 6: modular build
-        .to(core, { scale: 1.05, duration: 0.3, ease: 'power2.inOut' })
-        .to(core, { scale: 1, duration: 0.22, ease: 'power2.out' })
-        .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.24, stagger: 0.055, ease: 'power2.out' }, '-=0.12')
-        .to({}, { duration: 0.38 })
-        // Fase 7: transition to final hero
-        .to([canvas, wipe], { autoAlpha: 0, duration: 0.34, ease: 'power1.inOut' })
-        .to(preloader, {
-          autoAlpha: 0,
-          duration: 0.22,
-          onComplete: () => {
-            preloader.classList.add('is-hidden');
-            unlockPage();
-          },
-        });
+    if (hasGSAP) {
+      try {
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+        tl.set([wipe, canvas], { transformOrigin: '50% 0' })
+          // Fase 0: hero visibile per un attimo
+          .to({}, { duration: 0.2 })
+          // Fase 1: top loading line
+          .to(topline, { scaleX: 1, duration: 0.38, ease: 'none' })
+          // Fase 2: wipe/reset
+          .to(wipe, { scaleY: 1, duration: 0.32 }, '<')
+          // Fase 3: blank suspended state
+          .to(canvas, { autoAlpha: 1, duration: 0.2 })
+          .fromTo(orbit, { autoAlpha: 0, scale: 0.84 }, { autoAlpha: 1, scale: 1, duration: 0.24 })
+          .to({}, { duration: 0.56 })
+          // Fase 4: seed activation
+          .to(seed, { backgroundColor: '#1557ff', duration: 0.2, ease: 'power1.inOut' })
+          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.045 }, '-=0.04')
+          // Fase 5 + 6: modular build
+          .to(core, { scale: 1.05, duration: 0.3, ease: 'power2.inOut' })
+          .to(core, { scale: 1, duration: 0.22, ease: 'power2.out' })
+          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.24, stagger: 0.055, ease: 'power2.out' }, '-=0.12')
+          .to({}, { duration: 0.38 })
+          // Fase 7: transition to final hero
+          .to([canvas, wipe], { autoAlpha: 0, duration: 0.34, ease: 'power1.inOut' })
+          .to(preloader, {
+            autoAlpha: 0,
+            duration: 0.22,
+            onComplete: () => {
+              preloader.classList.add('is-hidden');
+              unlockPage();
+            },
+          });
+      } catch (error) {
+        preloader.classList.add('is-hidden');
+        unlockPage();
+      }
     } else {
       window.setTimeout(() => {
         preloader.classList.add('is-hidden');

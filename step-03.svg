@@ -1,32 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Progetto su misura in costruzione">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Progetto su misura costruito con strategia">
   <defs>
-    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#11233a"/>
-      <stop offset="1" stop-color="#0f1728"/>
+    <linearGradient id="aqua03" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8cf8eb"/>
+      <stop offset="1" stop-color="#44d3c9"/>
     </linearGradient>
     <style>
-      .armL{animation:armL 2.6s ease-in-out infinite}
-      .armR{animation:armR 2.6s ease-in-out infinite}
-      .ring{animation:ring 3s linear infinite}
-      @keyframes armL{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-8deg)}}
-      @keyframes armR{0%,100%{transform:rotate(0deg)}50%{transform:rotate(8deg)}}
-      @keyframes ring{0%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.04)}100%{opacity:.55;transform:scale(.9)}}
+      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#eaf8ff;stroke-width:15}
+      .a{stroke:url(#aqua03);stroke-width:15}
+      .m{animation:move 4s ease-in-out infinite}
+      @keyframes move{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
     </style>
   </defs>
-  <rect width="720" height="520" rx="34" fill="url(#bg3)"/>
-  <circle cx="300" cy="250" r="130" fill="#b9c4ff"/>
-  <ellipse cx="300" cy="236" rx="60" ry="62" fill="#ffdcbf"/>
-  <path d="M244 226c18-43 77-56 117-19 13 11 20 26 19 41-39-16-91-23-136-22z" fill="#241d1a"/>
-  <path d="M270 282c18 15 45 15 63 0" stroke="#312827" stroke-width="6" stroke-linecap="round" fill="none"/>
-  <rect x="228" y="312" width="150" height="108" rx="28" fill="#23344d"/>
-  <g class="armL" transform-origin="190px 278px">
-    <path d="M190 278l-50 50" stroke="#ffdcbf" stroke-width="34" stroke-linecap="round"/>
+
+  <g class="m" transform-origin="246 262">
+    <rect x="112" y="170" width="268" height="184" rx="28" class="ln w"/>
+    <path d="M160 308l54-72 48 48 70-90" class="ln a"/>
+    <circle cx="160" cy="308" r="7" fill="#8cf8eb"/>
+    <circle cx="214" cy="236" r="7" fill="#8cf8eb"/>
+    <circle cx="262" cy="284" r="7" fill="#8cf8eb"/>
+    <circle cx="332" cy="194" r="7" fill="#8cf8eb"/>
   </g>
-  <g class="armR" transform-origin="370px 288px">
-    <path d="M370 288l56 52" stroke="#ffdcbf" stroke-width="30" stroke-linecap="round"/>
+
+  <g class="m" transform-origin="510 240" style="animation-delay:.25s">
+    <path d="M456 166h106l32 58-32 58H456l-32-58z" class="ln w"/>
+    <path d="M468 224h84" class="ln a"/>
+    <path d="M502 194v60" class="ln a"/>
   </g>
-  <g class="ring" transform-origin="500px 174px">
-    <path d="M450 130c24-18 56-12 76 12 22 26 19 62-8 86-21 18-47 20-66 13" stroke="#6fd0d9" stroke-width="10" fill="none" stroke-linecap="round"/>
-    <circle cx="500" cy="174" r="26" fill="none" stroke="#6fd0d9" stroke-width="8"/>
-  </g>
+
+  <path d="M382 236h58" class="ln a"/>
 </svg>

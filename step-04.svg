@@ -1,26 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Monitoraggio andamento e feedback">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Monitoraggio andamento del percorso">
   <defs>
-    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#101d32"/>
-      <stop offset="1" stop-color="#11253f"/>
+    <linearGradient id="aqua04" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8cf9eb"/>
+      <stop offset="1" stop-color="#46d8cc"/>
     </linearGradient>
     <style>
-      .graph{stroke-dasharray:340;stroke-dashoffset:340;animation:graph 3s ease-in-out infinite}
-      .face{animation:face 3.2s ease-in-out infinite}
-      @keyframes graph{0%,15%{stroke-dashoffset:340}45%,100%{stroke-dashoffset:0}}
-      @keyframes face{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#eaf8ff;stroke-width:15}
+      .a{stroke:url(#aqua04);stroke-width:15}
+      .n{animation:nudge 3.6s ease-in-out infinite}
+      @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
     </style>
   </defs>
-  <rect width="720" height="520" rx="34" fill="url(#bg4)"/>
-  <rect x="82" y="126" width="320" height="214" rx="26" fill="#eef2ff"/>
-  <path class="graph" d="M128 294l62-76 54 46 78-92" stroke="#7d8ec5" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="190" cy="218" r="10" fill="#cde15e"/>
-  <circle cx="244" cy="264" r="10" fill="#cde15e"/>
-  <circle cx="324" cy="172" r="10" fill="#cde15e"/>
-  <g class="face" transform-origin="520px 242px">
-    <circle cx="520" cy="242" r="124" fill="#b9c4ff"/>
-    <ellipse cx="520" cy="228" rx="58" ry="62" fill="#ffdcbf"/>
-    <path d="M468 218c18-46 77-57 119-21 14 12 22 27 22 44-38-15-90-23-141-23z" fill="#221c1a"/>
-    <path d="M490 286c18 14 44 14 62 0" stroke="#312827" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <g transform-origin="248 258">
+    <rect x="116" y="138" width="264" height="240" rx="30" class="ln w"/>
+    <path d="M164 322v-78M224 322v-122M284 322v-56" class="ln a"/>
+    <path d="M152 204h196" class="ln w" style="stroke-width:11;opacity:.75"/>
   </g>
+
+  <g class="n" transform-origin="510 250">
+    <circle cx="510" cy="250" r="96" class="ln w"/>
+    <path d="M510 196v58l42 26" class="ln a"/>
+    <circle cx="510" cy="250" r="9" fill="#8cf9eb"/>
+  </g>
+
+  <circle cx="588" cy="130" r="10" fill="#46d8cc"/>
 </svg>

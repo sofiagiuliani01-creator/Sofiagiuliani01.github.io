@@ -13232,12 +13232,91 @@ body.app-page {
 }
 
 .preloader-logo-wrap {
+  position: absolute;
+  width: min(220px, 43vw);
+  z-index: 2;
+  transition: transform 1.2s cubic-bezier(.22,.7,0,1), opacity 0.8s ease;
   width: min(220px, 45vw);
   animation: preloaderPulse 1.2s ease-in-out infinite alternate;
 }
 
 .preloader-logo {
   width: 100%;
+  filter: drop-shadow(0 24px 42px rgba(255, 255, 255, 0.18));
+}
+
+.preloader-stage {
+  position: relative;
+  width: min(640px, 86vw);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.preloader-lines-wrap {
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.preloader-lines {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 38% 56%, transparent 0 18%, rgba(255, 255, 255, 0.05) 19% 21%, transparent 22%),
+    repeating-linear-gradient(
+      0deg,
+      #f4f7ff 0 2px,
+      transparent 2px 12px
+    );
+  mask-image: linear-gradient(180deg, rgba(0,0,0,.75), #000);
+  animation: lineWaves 2.4s ease-in-out infinite;
+}
+
+.preloader-icon-set {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.preloader-icon {
+  position: absolute;
+  width: min(190px, 34vw);
+  stroke: #ffffff;
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.preloader-icon.is-active {
+  opacity: 0.94;
+  transform: scale(1);
+}
+
+.site-preloader.is-complete .preloader-lines-wrap {
+  animation: panelShrink 1.1s cubic-bezier(.22,.7,0,1) forwards;
+}
+
+.site-preloader.is-complete .preloader-logo-wrap {
+  transform: translateY(calc(-50vh + 96px)) scale(0.42);
+}
+
+@keyframes lineWaves {
+  0% { transform: perspective(600px) rotateX(0deg) translateY(0); }
+  50% { transform: perspective(600px) rotateX(8deg) translateY(6px); }
+  100% { transform: perspective(600px) rotateX(0deg) translateY(0); }
+}
+
+@keyframes panelShrink {
+  0% { opacity: 1; transform: scale(1); border-radius: 30px; }
+  100% { opacity: 0; transform: scale(0.5); border-radius: 999px; }
   filter: drop-shadow(0 20px 42px rgba(255, 255, 255, 0.2));
 }
 

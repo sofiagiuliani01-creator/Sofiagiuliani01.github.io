@@ -12993,6 +12993,15 @@ body.app-page {
 #come-funziona .step-row{
   display: grid;
   grid-template-columns: minmax(360px, 1fr) minmax(420px, 1fr);
+  align-items: center;
+  gap: clamp(42px, 4vw, 88px);
+}
+
+#come-funziona .step-visual{
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
   align-items: center;
   gap: clamp(42px, 4vw, 88px);
@@ -13119,5 +13128,48 @@ body.app-page {
   #come-funziona .step-meta p{
     font-size: 1.03rem;
     max-width: 100%;
+  }
+}
+
+/* --- Follow-up hard fix: desktop timeline must stay wide like Theia reference --- */
+@media (min-width: 981px){
+  #come-funziona .timeline-step .step-content{
+    min-height: clamp(460px, 52vw, 700px) !important;
+    display: flex;
+    align-items: center;
+  }
+
+  #come-funziona .timeline-step .step-row{
+    width: 100%;
+    grid-template-columns: minmax(520px, 1.05fr) minmax(520px, 1fr) !important;
+    gap: clamp(44px, 5vw, 108px) !important;
+    align-items: center !important;
+  }
+
+  #come-funziona .timeline-step .step-row .step-illu{
+    width: min(620px, 100%) !important;
+    max-width: none !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    justify-self: center;
+  }
+
+  #come-funziona .timeline-step .step-meta{
+    width: 100%;
+    max-width: 760px;
+    justify-self: start;
+  }
+
+  #come-funziona .timeline-step .step-meta h3{
+    max-width: 14ch;
+    font-size: clamp(3rem, 3.8vw, 4.5rem) !important;
+    line-height: 1.06 !important;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  #come-funziona .timeline-step .step-meta p{
+    max-width: 34ch;
+    font-size: clamp(1.25rem, 1.6vw, 2rem) !important;
   }
 }

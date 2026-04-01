@@ -12920,6 +12920,10 @@ body.app-page {
   width: 2px !important;
 }
 
+#come-funziona .timeline-line::before{
+  content: none !important;
+}
+
 #come-funziona .timeline-line-base,
 #come-funziona .timeline-line-active{
   width: 2px !important;
@@ -12930,7 +12934,7 @@ body.app-page {
 }
 
 #come-funziona .timeline-line-base{
-  background: rgba(198, 220, 88, .45) !important;
+  background: transparent !important;
 }
 
 #come-funziona .timeline-line-active{

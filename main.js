@@ -39,30 +39,37 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-        tl.set([wipe, canvas], { transformOrigin: '50% 0' })
-          // Fase 0: hero visibile per un attimo
-          .to({}, { duration: 0.2 })
-          // Fase 1: top loading line
-          .to(topline, { scaleX: 1, duration: 0.38, ease: 'none' })
-          // Fase 2: wipe/reset
-          .to(wipe, { scaleY: 1, duration: 0.32 }, '<')
-          // Fase 3: blank suspended state
-          .to(canvas, { autoAlpha: 1, duration: 0.2 })
-          .fromTo(orbit, { autoAlpha: 0, scale: 0.84 }, { autoAlpha: 1, scale: 1, duration: 0.24 })
-          .to({}, { duration: 0.56 })
-          // Fase 4: seed activation
-          .to(seed, { backgroundColor: '#1557ff', duration: 0.2, ease: 'power1.inOut' })
-          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.045 }, '-=0.04')
-          // Fase 5 + 6: modular build
-          .to(core, { scale: 1.05, duration: 0.3, ease: 'power2.inOut' })
-          .to(core, { scale: 1, duration: 0.22, ease: 'power2.out' })
-          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.24, stagger: 0.055, ease: 'power2.out' }, '-=0.12')
-          .to({}, { duration: 0.38 })
-          // Fase 7: transition to final hero
-          .to([canvas, wipe], { autoAlpha: 0, duration: 0.34, ease: 'power1.inOut' })
+        tl.set(preloader, { backgroundColor: 'rgba(246, 248, 252, 0)' })
+          .set([wipe, canvas], { transformOrigin: '50% 0' })
+          .set(topline, { scaleX: 0 })
+          .set([orbit, nodes, modules], { autoAlpha: 0 })
+          .set(core, { scale: 0.88, autoAlpha: 0 })
+          .set(seed, { scale: 0.86, backgroundColor: '#d4dced' })
+          // F01-F02: hero visibile, stabile
+          .to({}, { duration: 0.42 })
+          // F03: top blue bar trigger
+          .to(topline, { scaleX: 1, duration: 0.36, ease: 'none' })
+          // F04-F05: reset tecnico verso canvas chiaro
+          .to(preloader, { backgroundColor: 'rgba(246, 248, 252, 1)', duration: 0.12 }, '<')
+          .to(wipe, { scaleY: 1, duration: 0.28, ease: 'power1.inOut' }, '<')
+          .to(canvas, { autoAlpha: 1, duration: 0.16 })
+          // F06-F10: stato sospeso minimal
+          .to(core, { autoAlpha: 1, scale: 0.94, duration: 0.24 })
+          .to(orbit, { autoAlpha: 0.55, duration: 0.18 })
+          .to({}, { duration: 0.62 })
+          // F11-F13: attivazione seed + nodi in arco
+          .to(seed, { backgroundColor: '#1557ff', scale: 1, duration: 0.2, ease: 'power1.inOut' })
+          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.18, stagger: 0.06 }, '-=0.04')
+          // F14-F18: crescita controllata modulo centrale
+          .to(core, { scale: 1.02, duration: 0.28, ease: 'power2.inOut' })
+          // F19-F30: moduli coaching in build progressivo
+          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, stagger: 0.07, ease: 'power2.out' }, '-=0.12')
+          .to({}, { duration: 0.46 })
+          // F32-F35: la struttura genera la hero finale
+          .to([canvas, wipe], { autoAlpha: 0, duration: 0.3, ease: 'power1.inOut' })
           .to(preloader, {
             autoAlpha: 0,
-            duration: 0.22,
+            duration: 0.2,
             onComplete: () => {
               preloader.classList.add('is-hidden');
               unlockPage();

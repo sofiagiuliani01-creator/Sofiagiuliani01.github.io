@@ -1,4 +1,55 @@
- // MENÙ MOBILE
+// HOME: preloader + header behavior in stile headroom
+document.addEventListener('DOMContentLoaded', () => {
+  const body = document.body;
+  const preloader = document.querySelector('.site-preloader');
+  const homeHeader = document.querySelector('.site-header-home');
+  const loaderIcons = Array.from(document.querySelectorAll('[data-loader-icon]'));
+
+  if (preloader) {
+    let iconIndex = 0;
+
+    const iconTimer = window.setInterval(() => {
+      if (!loaderIcons.length) return;
+      loaderIcons.forEach((icon) => icon.classList.remove('is-active'));
+      iconIndex = (iconIndex + 1) % loaderIcons.length;
+      loaderIcons[iconIndex].classList.add('is-active');
+    }, 760);
+
+    window.setTimeout(() => {
+      window.clearInterval(iconTimer);
+      preloader.classList.add('is-complete');
+
+      window.setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        body.classList.remove('is-loading');
+      }, 1150);
+    }, 3300);
+  }
+
+  if (homeHeader) {
+    let lastY = window.scrollY;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const goingDown = y > lastY;
+
+      homeHeader.classList.toggle('is-scrolled', y > 24);
+
+      if (y > 130 && goingDown) {
+        homeHeader.classList.add('is-hidden');
+      } else {
+        homeHeader.classList.remove('is-hidden');
+      }
+
+      lastY = y;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+});
+
+// MENÙ MOBILE
 const burger = document.querySelector('.burger');
 const mainNav = document.querySelector('.main-nav');
 

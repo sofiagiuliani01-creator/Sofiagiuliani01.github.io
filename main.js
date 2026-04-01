@@ -1,8 +1,9 @@
 // HOME: intro/loading sequence + header behavior
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
-  const preloader = document.getElementById('sitePreloader');
+  const preloader = document.getElementById('lsPreload');
   const homeHeader = document.querySelector('.site-header-home');
+  const headerLogoReal = document.querySelector('.header-logo-real');
   let hasUnlockedPage = false;
   let forceUnlockTimer = null;
 
@@ -15,18 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
       forceUnlockTimer = null;
     }
 
-    body.classList.remove('is-loading');
+    body.classList.remove('is-preloading');
   };
 
   if (preloader) {
-    const topline = preloader.querySelector('.preloader-topline-fill');
-    const wipe = preloader.querySelector('.preloader-wipe');
-    const canvas = preloader.querySelector('.preloader-canvas');
-    const orbit = preloader.querySelector('.preloader-orbit');
-    const seed = preloader.querySelector('.preloader-seed');
-    const core = preloader.querySelector('.preloader-core');
-    const nodes = preloader.querySelectorAll('.node');
-    const modules = preloader.querySelectorAll('.module');
+    const topline = preloader.querySelector('.ls-preload-topline');
+    const topmark = preloader.querySelector('.ls-preload-topmark');
+    const seed = preloader.querySelector('.ls-seed');
+    const core = preloader.querySelector('.ls-core');
+    const corePatterns = preloader.querySelectorAll('.ls-core-pattern');
+    const nodes = preloader.querySelectorAll('.ls-node');
+    const modules = preloader.querySelectorAll('.ls-module');
+    const logoOverlay = preloader.querySelector('.ls-logo-overlay');
 
     const hasGSAP = typeof window.gsap !== 'undefined';
 
@@ -38,38 +39,61 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasGSAP) {
       try {
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        const logoBounds = headerLogoReal?.getBoundingClientRect();
+        const logoCenterX = logoBounds ? logoBounds.left + logoBounds.width / 2 : window.innerWidth / 2;
+        const logoCenterY = logoBounds ? logoBounds.top + logoBounds.height / 2 : 56;
+        const moveX = logoCenterX - window.innerWidth / 2;
+        const moveY = logoCenterY - window.innerHeight / 2;
+        const scaleToHeader = logoBounds ? logoBounds.width / 220 : 0.6;
 
-        tl.set(preloader, { backgroundColor: 'rgba(246, 248, 252, 0)' })
-          .set([wipe, canvas], { transformOrigin: '50% 0' })
+        tl.set(preloader, { autoAlpha: 1, backgroundColor: '#f5f7fb' })
           .set(topline, { scaleX: 0 })
-          .set([orbit, nodes, modules], { autoAlpha: 0 })
+          .set(topmark, { autoAlpha: 0 })
+          .set([nodes, modules], { autoAlpha: 0 })
           .set(core, { scale: 0.88, autoAlpha: 0 })
-          .set(seed, { scale: 0.86, backgroundColor: '#d4dced' })
-          // F01-F02: hero visibile, stabile
-          .to({}, { duration: 0.42 })
-          // F03: top blue bar trigger
-          .to(topline, { scaleX: 1, duration: 0.36, ease: 'none' })
-          // F04-F05: reset tecnico verso canvas chiaro
-          .to(preloader, { backgroundColor: 'rgba(246, 248, 252, 1)', duration: 0.12 }, '<')
-          .to(wipe, { scaleY: 1, duration: 0.28, ease: 'power1.inOut' }, '<')
-          .to(canvas, { autoAlpha: 1, duration: 0.16 })
-          // F06-F10: stato sospeso minimal
-          .to(core, { autoAlpha: 1, scale: 0.94, duration: 0.24 })
-          .to(orbit, { autoAlpha: 0.55, duration: 0.18 })
-          .to({}, { duration: 0.62 })
-          // F11-F13: attivazione seed + nodi in arco
+          .set(corePatterns, { autoAlpha: 0, scale: 0.92 })
+          .set(seed, { scale: 0.9, backgroundColor: '#d8dfec' })
+          .set(logoOverlay, { autoAlpha: 0, x: 0, y: 0, scale: 0.84 })
+          .set(headerLogoReal, { autoAlpha: 0 })
+          // STEP 1
+          .to({}, { duration: 0.2 })
+          // STEP 2
+          .to(topline, { scaleX: 1, duration: 0.34, ease: 'none' })
+          // STEP 3
+          .to('.page-content', { opacity: 0.9, duration: 0.22 }, '<')
+          // STEP 4
+          .to(topmark, { autoAlpha: 1, duration: 0.18 })
+          .to({}, { duration: 0.2 })
+          // STEP 5
           .to(seed, { backgroundColor: '#1557ff', scale: 1, duration: 0.2, ease: 'power1.inOut' })
-          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.18, stagger: 0.06 }, '-=0.04')
-          // F14-F18: crescita controllata modulo centrale
-          .to(core, { scale: 1.02, duration: 0.28, ease: 'power2.inOut' })
-          // F19-F30: moduli coaching in build progressivo
-          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, stagger: 0.07, ease: 'power2.out' }, '-=0.12')
-          .to({}, { duration: 0.46 })
-          // F32-F35: la struttura genera la hero finale
-          .to([canvas, wipe], { autoAlpha: 0, duration: 0.3, ease: 'power1.inOut' })
+          // STEP 6
+          .to(core, { autoAlpha: 1, scale: 1, duration: 0.26 })
+          // STEP 7
+          .to(corePatterns[0], { autoAlpha: 0.6, scale: 1, duration: 0.14 })
+          .to(corePatterns[1], { autoAlpha: 0.78, scale: 1, duration: 0.14 })
+          .to(corePatterns[2], { autoAlpha: 0.9, scale: 1, duration: 0.14 })
+          // STEP 8
+          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.2, stagger: 0.04 })
+          // STEP 9
+          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.2, stagger: 0.06 })
+          // STEP 10
+          .to({}, { duration: 0.24 })
+          // STEP 11
+          .to([...nodes, ...modules], { x: (i) => (i % 2 ? -12 : 12), y: (i) => (i < 5 ? 9 : -9), scale: 0.92, duration: 0.34, stagger: 0.01 })
+          .to(core, { scale: 0.94, duration: 0.28 }, '<')
+          // STEP 12
+          .to(logoOverlay, { autoAlpha: 1, scale: 1, duration: 0.28 })
+          // STEP 13
+          .to({}, { duration: 0.22 })
+          // STEP 14-15
+          .to(logoOverlay, { x: moveX, y: moveY, scale: scaleToHeader, duration: 0.62, ease: 'power2.inOut' })
+          // STEP 16
+          .to(headerLogoReal, { autoAlpha: 1, duration: 0.18 }, '-=0.12')
+          .to(logoOverlay, { autoAlpha: 0, duration: 0.16 }, '<')
+          // STEP 17
           .to(preloader, {
             autoAlpha: 0,
-            duration: 0.2,
+            duration: 0.24,
             onComplete: () => {
               preloader.classList.add('is-hidden');
               unlockPage();

@@ -13209,3 +13209,105 @@ body.app-page {
   outline: 0 !important;
   box-shadow: none !important;
 }
+
+/* ================= HOME LOADER + HERO REWORK ================= */
+.page-home.is-loading {
+  overflow: hidden;
+}
+
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #040507;
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+
+.site-preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-logo-wrap {
+  width: min(220px, 45vw);
+  animation: preloaderPulse 1.2s ease-in-out infinite alternate;
+}
+
+.preloader-logo {
+  width: 100%;
+  filter: drop-shadow(0 20px 42px rgba(255, 255, 255, 0.2));
+}
+
+@keyframes preloaderPulse {
+  from { transform: scale(0.88); opacity: 0.65; }
+  to { transform: scale(1.03); opacity: 1; }
+}
+
+.site-header-home {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transform: translateY(0);
+  transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+  background: rgba(5, 7, 16, 0.2);
+  border-bottom-color: rgba(148, 163, 184, 0.15);
+}
+
+.site-header-home.is-scrolled {
+  background: rgba(5, 7, 16, 0.94);
+  border-bottom-color: rgba(148, 163, 184, 0.4);
+}
+
+.site-header-home.is-hidden {
+  transform: translateY(-105%);
+}
+
+.hero-headroom {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 9rem 0 4rem;
+  background: radial-gradient(circle at 50% 10%, #1f2537 0%, #080a13 45%, #030407 100%);
+}
+
+.hero-headroom .hero-inner {
+  grid-template-columns: 1fr;
+}
+
+.hero-headroom .hero-text {
+  max-width: 780px;
+}
+
+.hero-headroom h1 {
+  font-size: clamp(2.5rem, 6vw, 5.4rem);
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 1rem;
+}
+
+.hero-headroom .hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  max-width: 700px;
+}
+
+.hero-headroom .hero-actions {
+  margin-top: 1.6rem;
+}
+
+.hero-headroom .hero-media {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .site-header-home {
+    background: rgba(5, 7, 16, 0.9);
+  }
+
+  .hero-headroom {
+    min-height: auto;
+    padding-top: 7.8rem;
+  }
+}

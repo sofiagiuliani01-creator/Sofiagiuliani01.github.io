@@ -1,13 +1,37 @@
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 720 520'>
-  <rect width='720' height='520' fill='none'/>
-  <circle cx='350' cy='250' r='140' fill='#b9c4ff'/>
-  <circle cx='350' cy='250' r='108' fill='#eef2ff'/>
-  <rect x='88' y='182' width='230' height='120' rx='24' fill='#cde15e'/>
-  <path d='M120 216h166M120 246h148' stroke='#6d7c2e' stroke-width='6' stroke-linecap='round'/>
-  <ellipse cx='350' cy='235' rx='56' ry='58' fill='#ffdcbf'/>
-  <path d='M298 224c20-44 75-56 114-20 12 11 18 24 18 40-36-14-86-20-132-20z' fill='#1f1b1a'/>
-  <path d='M318 280c20 16 51 16 70 0' stroke='#2a2322' stroke-width='6' stroke-linecap='round' fill='none'/>
-  <rect x='244' y='314' width='220' height='116' rx='56' fill='#24334e'/>
-  <circle cx='546' cy='140' r='14' fill='#cde15e'/>
-  <path d='M586 120l12 22 22 12-22 12-12 22-12-22-22-12 22-12z' fill='#cde15e' opacity='.86'/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Coach che analizza la partenza del percorso">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#182640"/>
+      <stop offset="1" stop-color="#0f1828"/>
+    </linearGradient>
+    <linearGradient id="lime" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d9f56a"/>
+      <stop offset="1" stop-color="#bfdc43"/>
+    </linearGradient>
+    <style>
+      .float{animation:float 4.2s ease-in-out infinite}
+      .spark{animation:blink 2.1s ease-in-out infinite}
+      .msg{animation:pop 3.3s ease-in-out infinite}
+      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes blink{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.08)}}
+      @keyframes pop{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+    </style>
+  </defs>
+  <rect width="720" height="520" rx="34" fill="url(#bg1)"/>
+  <g class="float" transform-origin="350px 250px">
+    <circle cx="350" cy="250" r="142" fill="#b9c4ff"/>
+    <circle cx="350" cy="250" r="112" fill="#eef2ff"/>
+    <ellipse cx="350" cy="236" rx="58" ry="60" fill="#ffdcbf"/>
+    <path d="M294 225c18-45 80-57 121-20 13 11 20 26 20 44-38-16-95-24-141-24z" fill="#1d1716"/>
+    <path d="M320 282c21 17 54 17 75 0" stroke="#2a2222" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <rect x="244" y="314" width="220" height="118" rx="57" fill="#24334e"/>
+  </g>
+  <g class="msg" transform-origin="202px 242px">
+    <rect x="88" y="182" width="238" height="126" rx="25" fill="url(#lime)"/>
+    <path d="M122 216h170M122 246h148" stroke="#6d7c2e" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g class="spark" transform-origin="586px 145px">
+    <circle cx="546" cy="140" r="14" fill="#d7ef6a"/>
+    <path d="M586 120l12 22 22 12-22 12-12 22-12-22-22-12 22-12z" fill="#cde15e"/>
+  </g>
 </svg>

@@ -13167,3 +13167,45 @@ body.app-page {
     font-size: clamp(1.1rem, 1.35vw, 1.6rem) !important;
   }
 }
+
+/* === 2026-04 hard fix: timeline aqua + single animated line (Theia-like) === */
+#come-funziona .timeline{
+  --tl-acqua: #24d8e8;
+  --tl-acqua-soft: rgba(36, 216, 232, 0.28);
+}
+
+#come-funziona .timeline-line::before,
+#come-funziona .timeline-line-base,
+#come-funziona .timeline-step::before,
+#come-funziona .timeline-step::after{
+  content: none !important;
+  display: none !important;
+}
+
+#come-funziona .timeline-line{
+  width: 2px !important;
+}
+
+#come-funziona .timeline-line-active{
+  width: 2px !important;
+  background: linear-gradient(180deg, #57eeff 0%, var(--tl-acqua) 55%, #7df7ff 100%) !important;
+  box-shadow: 0 0 16px var(--tl-acqua-soft), 0 0 30px rgba(36, 216, 232, 0.2) !important;
+}
+
+#come-funziona .timeline-step .step-content{
+  border: 2px solid rgba(36, 216, 232, 0.78) !important;
+  box-shadow: 0 24px 60px rgba(3, 7, 14, .55), 0 0 0 1px rgba(36, 216, 232, 0.16) inset !important;
+}
+
+#come-funziona .timeline-step.is-active .step-content{
+  border-color: #44e8f7 !important;
+  box-shadow: 0 28px 70px rgba(3, 7, 14, .62), 0 0 0 1px rgba(68, 232, 247, 0.32) inset, 0 0 24px rgba(68, 232, 247, 0.18) !important;
+}
+
+#come-funziona .step-visual,
+#come-funziona .step-illu{
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}

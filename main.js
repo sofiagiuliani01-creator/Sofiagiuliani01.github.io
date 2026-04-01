@@ -28,16 +28,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const nodes = preloader.querySelectorAll('.ls-node');
     const modules = preloader.querySelectorAll('.ls-module');
     const logoOverlay = preloader.querySelector('.ls-logo-overlay');
+    const topline = preloader.querySelector('.preloader-topline-fill');
+    const wipe = preloader.querySelector('.preloader-wipe');
+    const canvas = preloader.querySelector('.preloader-canvas');
+    const signal = preloader.querySelector('.preloader-signal');
+    const system = preloader.querySelector('.preloader-system');
+    const seed = preloader.querySelector('.preloader-seed');
+    const coreLayers = preloader.querySelectorAll('.core-layer');
+    const nodes = preloader.querySelectorAll('.node');
+    const fragments = preloader.querySelectorAll('.fragment');
+    const logoOverlay = preloader.querySelector('#preloaderLogoOverlay');
+    const headerLogo = document.querySelector('.site-header-home .logo');
 
     const hasGSAP = typeof window.gsap !== 'undefined';
 
     forceUnlockTimer = window.setTimeout(() => {
       preloader.classList.add('is-hidden');
       unlockPage();
-    }, 4200);
+    }, 7000);
 
     if (hasGSAP) {
       try {
+        const resolveLogoDelta = () => {
+          if (!logoOverlay || !headerLogo) return { x: 0, y: 0, scale: 1 };
+          const from = logoOverlay.getBoundingClientRect();
+          const to = headerLogo.getBoundingClientRect();
+
+          return {
+            x: to.left + to.width * 0.18 - (from.left + from.width * 0.5),
+            y: to.top + to.height * 0.5 - (from.top + from.height * 0.5),
+            scale: Math.max(0.48, Math.min(0.86, to.height / from.height)),
+          };
+        };
+
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
         const logoBounds = headerLogoReal?.getBoundingClientRect();
         const logoCenterX = logoBounds ? logoBounds.left + logoBounds.width / 2 : window.innerWidth / 2;
@@ -91,6 +114,61 @@ document.addEventListener('DOMContentLoaded', () => {
           .to(headerLogoReal, { autoAlpha: 1, duration: 0.18 }, '-=0.12')
           .to(logoOverlay, { autoAlpha: 0, duration: 0.16 }, '<')
           // STEP 17
+
+        tl.set(topline, { scaleX: 0 })
+          .set([wipe, canvas], { transformOrigin: '50% 0' })
+          .set(canvas, { autoAlpha: 0 })
+          .set(system, { autoAlpha: 0, scale: 0.9 })
+          .set(seed, { scale: 0.84, backgroundColor: '#c7d5ef' })
+          .set(signal, { autoAlpha: 0.36, scaleX: 0.45 })
+          .set(coreLayers, { autoAlpha: 0, y: 6 })
+          .set(nodes, { autoAlpha: 0, scale: 0.6 })
+          .set(fragments, { autoAlpha: 0, x: 0, y: 0 })
+          .set(logoOverlay, { autoAlpha: 0, scale: 0.38, x: 0, y: 0, rotate: 0 })
+          .to({}, { duration: 0.35 })
+          .to(topline, { scaleX: 1, duration: 0.34, ease: 'none' })
+          .to(wipe, { scaleY: 1, duration: 0.28, ease: 'power1.inOut' }, '<')
+          .to(canvas, { autoAlpha: 1, duration: 0.16 }, '-=0.03')
+          .to(system, { autoAlpha: 1, scale: 0.96, duration: 0.24 })
+          .to({}, { duration: 0.2 })
+          .to(seed, { scale: 1, backgroundColor: '#1a4eff', duration: 0.22, ease: 'power1.inOut' })
+          .to(signal, { autoAlpha: 0.68, scaleX: 1, duration: 0.22 }, '<')
+          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.2, stagger: 0.04 }, '-=0.05')
+          .to(coreLayers, { autoAlpha: 1, y: 0, duration: 0.24, stagger: 0.035 }, '-=0.06')
+          .to(system, { scale: 1.06, duration: 0.28, ease: 'power2.inOut' })
+          .to(system, { scale: 1, duration: 0.24, ease: 'power2.out' })
+          .to(fragments, {
+            autoAlpha: 1,
+            duration: 0.2,
+            stagger: 0.03,
+            onStart: () => {
+              gsap.to('.fragment-a,.fragment-b,.fragment-f', { x: 125, duration: 0.48, ease: 'power2.inOut' });
+              gsap.to('.fragment-c,.fragment-d,.fragment-e', { x: -125, duration: 0.48, ease: 'power2.inOut' });
+            },
+          })
+          .to([coreLayers, nodes, fragments, seed, signal], {
+            duration: 0.34,
+            autoAlpha: 0,
+            scale: 0.9,
+            ease: 'power2.inOut',
+          }, '-=0.08')
+          .to(logoOverlay, { autoAlpha: 1, scale: 1, duration: 0.34, ease: 'power3.out' }, '-=0.2')
+          .to({}, { duration: 0.2 })
+          .add(() => {
+            const delta = resolveLogoDelta();
+            gsap.to(logoOverlay, {
+              x: delta.x,
+              y: delta.y,
+              scale: delta.scale,
+              duration: 0.52,
+              ease: 'power2.inOut',
+            });
+            if (headerLogo) {
+              gsap.to(headerLogo, { autoAlpha: 1, duration: 0.26, delay: 0.26 });
+            }
+          })
+          .to({}, { duration: 0.56 })
+          .to([canvas, wipe], { autoAlpha: 0, duration: 0.28, ease: 'power1.inOut' })
           .to(preloader, {
             autoAlpha: 0,
             duration: 0.24,
@@ -107,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.setTimeout(() => {
         preloader.classList.add('is-hidden');
         unlockPage();
-      }, 1900);
+      }, 2100);
     }
   } else {
     unlockPage();

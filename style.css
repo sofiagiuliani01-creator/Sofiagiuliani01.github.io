@@ -13235,6 +13235,17 @@ body.app-page {
   color: #0f172a;
   pointer-events: auto;
   transition: opacity 0.45s ease, visibility 0.45s ease;
+.page-home.is-loading .site-header-home .logo {
+  opacity: 0;
+}
+
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: transparent;
+  pointer-events: none;
+  transition: opacity 0.56s ease, visibility 0.56s ease;
 }
 
 .ls-preload.is-hidden {
@@ -13252,6 +13263,17 @@ body.app-page {
   background: linear-gradient(90deg, rgba(26, 90, 255, 0.12), rgba(26, 90, 255, 0.7), rgba(26, 90, 255, 0.12));
   transform: scaleX(0);
   transform-origin: 0 50%;
+  background: rgba(20, 78, 255, 0.09);
+  overflow: hidden;
+}
+
+.preloader-topline-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #1b4cff, #3b7dff 58%, #8ab4ff);
 }
 
 .ls-preload-topmark {
@@ -13264,6 +13286,10 @@ body.app-page {
   margin-left: -13px;
   background: rgba(21, 87, 255, 0.78);
   opacity: 0;
+  inset: 0;
+  background: linear-gradient(180deg, #f4f7ff 0%, #eef2fc 100%);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
 }
 
 .ls-preload-stage {
@@ -13274,6 +13300,7 @@ body.app-page {
 }
 
 .ls-seed {
+.preloader-signal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13302,6 +13329,23 @@ body.app-page {
   width: 100%;
   height: 100%;
   background: linear-gradient(145deg, #f7f9fe 0%, #ebf0fb 100%);
+  width: 22px;
+  height: 2px;
+  margin-left: -11px;
+  background: rgba(20, 78, 255, 0.18);
+}
+
+.preloader-system {
+  position: relative;
+  width: clamp(150px, 21vmin, 220px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(14, 26, 52, 0.2);
+  background:
+    linear-gradient(0deg, rgba(30, 74, 178, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 74, 178, 0.04) 1px, transparent 1px),
+    #f7f9ff;
+  background-size: 14px 14px, 14px 14px, auto;
+  overflow: hidden;
 }
 
 .ls-core-pattern {
@@ -13442,6 +13486,69 @@ body.app-page {
   transform: translate(-50%, -50%) scale(0.84);
   opacity: 0;
   z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+  background: #c7d5ef;
+}
+
+.core-layer {
+  position: absolute;
+  opacity: 0;
+}
+
+.core-frame {
+  inset: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+}
+
+.core-cut { background: #f7f9ff; }
+.core-cut-a { top: 19%; right: 0; width: 22%; height: 9%; }
+.core-cut-b { left: 0; bottom: 16%; width: 18%; height: 11%; }
+
+.core-bar { height: 2px; background: rgba(20, 78, 255, 0.72); }
+.core-bar-a { top: 28%; left: 14%; width: 72%; }
+.core-bar-b { top: 50%; left: 20%; width: 54%; }
+.core-bar-c { top: 68%; left: 26%; width: 36%; }
+
+.core-step {
+  border: 1px solid rgba(20, 78, 255, 0.46);
+  background: rgba(20, 78, 255, 0.07);
+}
+.core-step-a { top: 56%; right: 17%; width: 16%; height: 8%; }
+.core-step-b { top: 48%; right: 8%; width: 9%; height: 16%; }
+
+.core-cluster {
+  left: 16%;
+  top: 40%;
+  width: 24%;
+  height: 22%;
+  background: linear-gradient(90deg, rgba(12, 30, 73, 0.3) 24%, transparent 24% 40%, rgba(12, 30, 73, 0.3) 40% 62%, transparent 62% 78%, rgba(12, 30, 73, 0.3) 78%);
+}
+
+.core-grid {
+  border: 1px solid rgba(20, 78, 255, 0.34);
+  background: repeating-linear-gradient(0deg, rgba(20, 78, 255, 0.14), rgba(20, 78, 255, 0.14) 1px, transparent 1px, transparent 5px);
+}
+.core-grid-a { top: 16%; left: 16%; width: 18%; height: 16%; }
+.core-grid-b { bottom: 14%; right: 20%; width: 18%; height: 14%; }
+
+.core-pill {
+  border: 1px solid rgba(15, 23, 42, 0.36);
+  border-radius: 999px;
+  height: 10px;
+}
+.core-pill-a { top: 79%; left: 28%; width: 28%; }
+.core-pill-b { top: 79%; left: 58%; width: 14%; }
+
+.core-pulse {
+  width: 42%;
+  height: 2px;
+  left: 42%;
+  top: 40%;
+  background: linear-gradient(90deg, transparent 0 16%, rgba(20, 78, 255, 0.7) 16% 46%, transparent 46% 58%, rgba(20, 78, 255, 0.7) 58% 80%, transparent 80%);
 }
 
 .ls-logo-overlay img {
@@ -13451,6 +13558,32 @@ body.app-page {
 }
 
 .header-logo-real {
+.node {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #0d3cbe;
+  opacity: 0;
+}
+
+.node-a { top: 18%; left: 44%; }
+.node-b { top: 24%; left: 70%; }
+.node-c { top: 36%; left: 80%; }
+.node-d { top: 74%; left: 74%; }
+.node-e { top: 82%; left: 46%; }
+.node-f { top: 76%; left: 22%; }
+.node-g { top: 52%; left: 13%; }
+.node-h { top: 30%; left: 18%; }
+
+.preloader-fragments {
+  position: absolute;
+  inset: 0;
+}
+
+.fragment {
+  position: absolute;
+  height: 2px;
+  background: rgba(20, 78, 255, 0.66);
   opacity: 0;
   transition: opacity 0.36s ease;
 }
@@ -13473,6 +13606,34 @@ body.app-page {
   .ls-module-checkin { left: calc(50% + 102px); }
   .ls-module-method { left: calc(50% + 84px); }
   .ls-logo-overlay { width: 180px; }
+.fragment-a { width: 90px; top: 39%; left: calc(50% - 240px); }
+.fragment-b { width: 58px; top: 45%; left: calc(50% - 206px); }
+.fragment-c { width: 68px; top: 55%; right: calc(50% - 230px); }
+.fragment-d { width: 48px; top: 63%; right: calc(50% - 202px); }
+.fragment-e { width: 34px; top: 34%; right: calc(50% - 250px); }
+.fragment-f { width: 36px; top: 67%; left: calc(50% - 226px); }
+
+.preloader-logo-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(74px, 9vw, 104px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+}
+
+.preloader-logo-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .preloader-topline { height: 1px; }
+  .preloader-signal { top: 10vh; }
+  .preloader-system { width: clamp(140px, 34vmin, 188px); }
 }
 
 .site-header-home {

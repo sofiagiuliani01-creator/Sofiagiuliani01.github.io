@@ -15,9 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (preloader) {
-    const logoLeft = preloader.querySelector('.preloader-logo-slice--left');
-    const logoRight = preloader.querySelector('.preloader-logo-slice--right');
-    const logoFull = preloader.querySelector('.preloader-logo-full');
+    const logoPieces = preloader.querySelectorAll('.preloader-logo-piece');
     const logoWord = preloader.querySelector('.preloader-word');
     const glow = preloader.querySelector('.preloader-glow');
 
@@ -30,22 +28,28 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.set(headerLogoReal, { autoAlpha: 0 })
-          .set([logoLeft, logoRight], { autoAlpha: 1, scale: 1, filter: 'brightness(1.1)' })
-          .set(logoFull, { autoAlpha: 0, scale: 0.96 })
-          .set(logoWord, { autoAlpha: 0, x: 14 })
+          .set(logoPieces, { autoAlpha: 0, filter: 'brightness(1.2)' })
+          .set(logoWord, { autoAlpha: 0, x: 12, y: 10 })
           .set(glow, { autoAlpha: 0, scale: 0.55 })
-          .to([logoLeft, logoRight], {
-            x: (index) => (index === 0 ? -30 : 30),
+          .to(logoPieces, {
+            autoAlpha: 1,
+            x: (index) => [-50, -26, -10, 12, 30, 52][index] || 0,
+            y: (index) => [24, -18, 20, -14, 18, -22][index] || 0,
             duration: 0,
           })
-          .to([logoLeft, logoRight], {
+          .to(logoPieces, {
             x: 0,
-            duration: 0.85,
+            y: 0,
+            duration: 0.9,
             ease: 'power2.out',
+            stagger: 0.08,
           })
-          .to(logoFull, { autoAlpha: 1, scale: 1, duration: 0.25 }, '-=0.15')
-          .to([logoLeft, logoRight], { autoAlpha: 0, duration: 0.3 }, '<')
-          .to(logoWord, { autoAlpha: 1, x: 0, duration: 0.35 }, '-=0.05')
+          .to(logoPieces, {
+            filter: 'brightness(1)',
+            duration: 0.3,
+            stagger: 0.04,
+          }, '-=0.35')
+          .to(logoWord, { autoAlpha: 1, x: 0, y: 0, duration: 0.35 }, '-=0.15')
           .to(glow, { autoAlpha: 1, scale: 1, duration: 0.42 }, '-=0.2')
           .to(glow, { autoAlpha: 0.45, duration: 0.25 })
           .to({}, { duration: 0.2 })

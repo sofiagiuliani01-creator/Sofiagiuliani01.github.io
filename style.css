@@ -13352,6 +13352,29 @@ body.app-page {
   opacity: 0;
 }
 
+}
+
+.page-home .pixel-seed {
+  width: 10px;
+  height: 10px;
+  background: #98a2b3;
+}
+
+.page-home .pixel-core {
+  width: clamp(82px, 9.2vmin, 128px);
+  height: clamp(82px, 9.2vmin, 128px);
+  background: #1c4cff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+  opacity: 0;
+}
+
+.page-home .pixel-dot {
+  width: 9px;
+  height: 9px;
+  background: #1c4cff;
+  opacity: 0;
+}
+
 .page-home .dot-a { transform: translate(calc(-50% - 130px), calc(-50% - 130px)); }
 .page-home .dot-b { transform: translate(calc(-50% + 130px), calc(-50% - 130px)); }
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
@@ -13394,6 +13417,67 @@ body.app-page {
 .page-home .dot-b { transform: translate(calc(-50% + 130px), calc(-50% - 130px)); }
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
 .page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
+
+.page-home .pixel-figure {
+  width: clamp(170px, 24vmin, 260px);
+  height: auto;
+  opacity: 0;
+  display: block;
+  filter: saturate(1.1) contrast(1.06);
+}
+
+.page-home .pixel-scanlines {
+  position: absolute;
+  inset: 12% 14%;
+  background: repeating-linear-gradient(180deg, rgba(28, 76, 255, .35) 0 1px, transparent 1px 7px);
+  mix-blend-mode: multiply;
+  opacity: .2;
+}
+
+.page-home .hero-headroom {
+  background: radial-gradient(circle at 24% 18%, #171b27 0%, #090c14 48%, #06080f 100%);
+}
+
+.page-home .hero-headroom .hero-inner {
+  grid-template-columns: 1.06fr .94fr;
+  align-items: center;
+  gap: clamp(24px, 5vw, 68px);
+}
+
+.page-home .hero-headroom .hero-media {
+  display: block;
+}
+
+.page-home .hero-sequence {
+  display: grid;
+  place-items: center;
+  min-height: 390px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+  border: 1px solid rgba(148, 163, 184, .22);
+}
+
+.page-home .hero-sequence-stage {
+  width: min(85%, 340px);
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.page-home .hero-sequence-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: heroFigures 9s steps(1, end) infinite;
+  opacity: 0;
+  display: block;
+  padding: 12%;
+}
+
+.page-home .hero-sequence-card.is-training { animation-delay: 3s; }
+.page-home .hero-sequence-card.is-nutrition { animation-delay: 6s; }
+
 
 .page-home .pixel-figure {
   width: clamp(110px, 13.5vmin, 170px);

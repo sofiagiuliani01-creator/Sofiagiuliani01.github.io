@@ -12709,11 +12709,12 @@ body.app-page {
   display: inline-flex !important;
   align-items: center !important;
   flex: 0 0 auto !important;
-  font-family: "Inter", "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
-  font-size: clamp(4.8rem, 10vw, 9.4rem) !important;
-  font-weight: 500 !important;
-  line-height: 0.88 !important;
-  letter-spacing: -0.055em !important;
+  font-family: "Arial Black", "Arial", "Inter", "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
+  text-transform: uppercase !important;
+  font-size: clamp(2.8rem, 6.4vw, 5.8rem) !important;
+  font-weight: 800 !important;
+  line-height: 0.94 !important;
+  letter-spacing: 0.01em !important;
   padding-right: 28px !important;
 }
 
@@ -12755,8 +12756,8 @@ body.app-page {
   }
 
   #leonardo-diverso .marquee span{
-    font-size: clamp(3.2rem, 17vw, 5.4rem) !important;
-    line-height: 0.9 !important;
+    font-size: clamp(2.1rem, 10.5vw, 3.9rem) !important;
+    line-height: 0.95 !important;
     padding-right: 18px !important;
   }
 

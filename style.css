@@ -13964,6 +13964,10 @@ body.app-page {
   display: grid;
   place-items: center;
   position: relative;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .page-home .preloader-logo-lockup {

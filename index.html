@@ -16,49 +16,20 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body class="page-home is-preloading">
-<body class="page-home is-loading">
 <div aria-hidden="true" class="site-preloader" id="sitePreloader">
 <div class="preloader-topline"><span class="preloader-topline-fill"></span></div>
-<div class="preloader-wipe"></div>
 <div class="preloader-canvas">
-<div class="preloader-signal" aria-hidden="true"></div>
-<div class="preloader-system" aria-hidden="true">
-<div class="preloader-seed"></div>
-<div class="core-layer core-frame"></div>
-<div class="core-layer core-cut core-cut-a"></div>
-<div class="core-layer core-cut core-cut-b"></div>
-<div class="core-layer core-bar core-bar-a"></div>
-<div class="core-layer core-bar core-bar-b"></div>
-<div class="core-layer core-bar core-bar-c"></div>
-<div class="core-layer core-step core-step-a"></div>
-<div class="core-layer core-step core-step-b"></div>
-<div class="core-layer core-cluster"></div>
-<div class="core-layer core-grid core-grid-a"></div>
-<div class="core-layer core-grid core-grid-b"></div>
-<div class="core-layer core-pill core-pill-a"></div>
-<div class="core-layer core-pill core-pill-b"></div>
-<div class="core-layer core-pulse"></div>
-<div class="preloader-nodes" aria-hidden="true">
-<span class="node node-a"></span>
-<span class="node node-b"></span>
-<span class="node node-c"></span>
-<span class="node node-d"></span>
-<span class="node node-e"></span>
-<span class="node node-f"></span>
-<span class="node node-g"></span>
-<span class="node node-h"></span>
-</div>
-</div>
-<div class="preloader-fragments" aria-hidden="true">
-<span class="fragment fragment-a"></span>
-<span class="fragment fragment-b"></span>
-<span class="fragment fragment-c"></span>
-<span class="fragment fragment-d"></span>
-<span class="fragment fragment-e"></span>
-<span class="fragment fragment-f"></span>
-</div>
-<div class="preloader-logo-overlay" id="preloaderLogoOverlay" aria-hidden="true">
-<img src="logo-ls.png" alt="" />
+<div class="preloader-stage">
+<span class="pixel pixel-seed"></span>
+<div class="pixel-core"></div>
+<span class="pixel-dot dot-a"></span>
+<span class="pixel-dot dot-b"></span>
+<span class="pixel-dot dot-c"></span>
+<span class="pixel-dot dot-d"></span>
+<div class="pixel-figure figure-runner"></div>
+<div class="pixel-figure figure-training"></div>
+<div class="pixel-figure figure-nutrition"></div>
+<div class="pixel-scanlines"></div>
 </div>
 </div>
 </div>
@@ -115,8 +86,12 @@
 </div>
 <!-- SLOT FOTO HERO -->
 <div class="hero-media">
-<div class="hero-photo">
-<!-- Sostituisci con la tua immagine -->
+<div class="hero-photo hero-sequence">
+<div class="hero-sequence-stage">
+<div class="hero-sequence-card is-runner"></div>
+<div class="hero-sequence-card is-training"></div>
+<div class="hero-sequence-card is-nutrition"></div>
+</div>
 </div>
 <div class="hero-note">
 <p class="hero-note-title">Coaching 100% online</p>
@@ -771,32 +746,6 @@
 </div>
 </section>
 </main>
-<div aria-hidden="true" class="ls-preload" id="lsPreload">
-<div class="ls-preload-topline"></div>
-<div class="ls-preload-topmark"></div>
-<div class="ls-preload-stage">
-<div class="ls-seed"></div>
-<div class="ls-core">
-<div class="ls-core-bg"></div>
-<div class="ls-core-pattern ls-core-pattern-a"></div>
-<div class="ls-core-pattern ls-core-pattern-b"></div>
-<div class="ls-core-pattern ls-core-pattern-c"></div>
-</div>
-<div class="ls-node ls-node-1"></div>
-<div class="ls-node ls-node-2"></div>
-<div class="ls-node ls-node-3"></div>
-<div class="ls-node ls-node-4"></div>
-<div class="ls-module ls-module-train"></div>
-<div class="ls-module ls-module-nutrition"></div>
-<div class="ls-module ls-module-progress"></div>
-<div class="ls-module ls-module-checkin"></div>
-<div class="ls-module ls-module-support"></div>
-<div class="ls-module ls-module-method"></div>
-<div class="ls-logo-overlay">
-<img alt="" src="logo-ls.png"/>
-</div>
-</div>
-</div>
 <!-- FOOTER -->
 <footer class="site-footer">
 <div class="container footer-inner">

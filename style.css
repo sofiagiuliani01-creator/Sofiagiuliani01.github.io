@@ -14032,3 +14032,27 @@ body.app-page {
     letter-spacing: 0.2em;
   }
 }
+
+/* === Home hero solo headline (2026-04) === */
+.page-home .hero-headroom {
+  min-height: calc(100vh - var(--header-height, 88px));
+  display: flex;
+  align-items: center;
+}
+
+.page-home .hero-headroom .hero-inner {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.page-home .hero-headroom .hero-typewriter {
+  margin: 0 auto;
+  text-align: center;
+  max-width: min(980px, 92vw);
+}
+
+.page-home .hero-headroom .hero-typewriter-line {
+  font-size: clamp(2rem, 6.1vw, 6rem);
+  line-height: 1.03;
+}

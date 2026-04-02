@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const homeHeader = document.querySelector('.site-header-home');
   const body = document.body;
   const preloader = document.getElementById('sitePreloader');
-  const homeHeader = document.querySelector('.site-header-home');
   const headerLogoReal = document.querySelector('.header-logo-real');
   let unlocked = false;
 
@@ -15,53 +14,43 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (preloader) {
-    const topLine = preloader.querySelector('.preloader-topline-fill');
-    const seed = preloader.querySelector('.pixel-seed');
-    const core = preloader.querySelector('.pixel-core');
-    const dots = preloader.querySelectorAll('.pixel-dot');
-    const figures = preloader.querySelectorAll('.pixel-figure');
+    const logoLeft = preloader.querySelector('.preloader-logo-slice--left');
+    const logoRight = preloader.querySelector('.preloader-logo-slice--right');
+    const logoFull = preloader.querySelector('.preloader-logo-full');
+    const glow = preloader.querySelector('.preloader-glow');
 
     const fallback = window.setTimeout(() => {
       preloader.classList.add('is-hidden');
       unlockPage();
-    }, 5600);
+    }, 4200);
 
     if (typeof window.gsap !== 'undefined') {
       try {
-        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.set(headerLogoReal, { autoAlpha: 0 })
-          .set(topLine, { scaleX: 0 })
-          .set(seed, { autoAlpha: 1, scale: 1 })
-          .set(core, { autoAlpha: 0, scale: 0.1 })
-          .set(dots, { autoAlpha: 0, scale: 0.2 })
-          .set(figures, { autoAlpha: 0 })
-          .to(topLine, { scaleX: 1, duration: 0.45, ease: 'none' })
-          .to(core, { autoAlpha: 1, scale: 0.55, duration: 0.22 })
-          .to(core, { scale: 1, duration: 0.3 })
-          .to(dots, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.08 })
-          .to(seed, { autoAlpha: 0, duration: 0.15 }, '<')
-          .to(core, { autoAlpha: 0.16, duration: 0.16 }, '<')
-          .to('.figure-runner', { autoAlpha: 1, duration: 0.22 })
-          .to('.figure-runner-2', { autoAlpha: 1, duration: 0.1 }, '+=0.08')
-          .to('.figure-runner', { autoAlpha: 0, duration: 0.08 }, '<')
-          .to('.figure-runner', { autoAlpha: 1, duration: 0.08 }, '+=0.08')
-          .to('.figure-runner-2', { autoAlpha: 0, duration: 0.08 }, '<')
-          .to({}, { duration: 0.3 })
-          .to(['.figure-runner', '.figure-runner-2'], { autoAlpha: 0, duration: 0.12 })
-          .to(core, { autoAlpha: 1, scale: 1, duration: 0.36 })
-          .to(dots, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.08 })
-          .to(seed, { autoAlpha: 0, duration: 0.15 }, '<')
-          .to('.figure-runner', { autoAlpha: 1, duration: 0.22 })
-          .to({}, { duration: 0.44 })
-          .to('.figure-runner', { autoAlpha: 0, duration: 0.14 })
-          .to('.figure-training', { autoAlpha: 1, duration: 0.2 })
-          .to({}, { duration: 0.4 })
-          .to('.figure-training', { autoAlpha: 0, duration: 0.14 })
-          .to('.figure-nutrition', { autoAlpha: 1, duration: 0.2 })
-          .to({}, { duration: 0.45 })
+          .set([logoLeft, logoRight], { autoAlpha: 0, scale: 0.86, filter: 'brightness(0.8)' })
+          .set(logoFull, { autoAlpha: 0, scale: 0.96 })
+          .set(glow, { autoAlpha: 0, scale: 0.55 })
+          .to([logoLeft, logoRight], {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.08,
+          })
+          .to([logoLeft, logoRight], {
+            x: (index) => (index === 0 ? -22 : 22),
+            duration: 0.35,
+            yoyo: true,
+            repeat: 1,
+          }, '-=0.12')
+          .to(logoFull, { autoAlpha: 1, scale: 1, duration: 0.45 }, '-=0.1')
+          .to([logoLeft, logoRight], { autoAlpha: 0, duration: 0.3 }, '<')
+          .to(glow, { autoAlpha: 1, scale: 1, duration: 0.42 }, '-=0.22')
+          .to(glow, { autoAlpha: 0.45, duration: 0.25 })
+          .to({}, { duration: 0.2 })
           .to(preloader, {
             autoAlpha: 0,
-            duration: 0.32,
+            duration: 0.35,
             onComplete: () => {
               preloader.classList.add('is-hidden');
               gsap.set(headerLogoReal, { autoAlpha: 1 });

@@ -13366,6 +13366,7 @@ body.app-page {
   background: #1c4cff;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
   opacity: 0;
+  z-index: 1;
 }
 
 .page-home .pixel-dot {
@@ -13373,6 +13374,110 @@ body.app-page {
   height: 9px;
   background: #1c4cff;
   opacity: 0;
+}
+
+.page-home .dot-a { transform: translate(calc(-50% - 130px), calc(-50% - 130px)); }
+.page-home .dot-b { transform: translate(calc(-50% + 130px), calc(-50% - 130px)); }
+.page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
+.page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
+
+.page-home .pixel-figure {
+  width: clamp(220px, 34vmin, 340px);
+  height: auto;
+  opacity: 0;
+  display: block;
+  filter: saturate(1.1) contrast(1.06);
+  z-index: 3;
+}
+
+.page-home .figure-runner {
+  animation: runnerStride .34s linear infinite;
+}
+
+.page-home .figure-runner-2 {
+  animation: runnerStrideAlt .34s linear infinite;
+}
+
+.page-home .figure-training,
+.page-home .figure-nutrition {
+  animation: figureBreath .9s ease-in-out infinite;
+}
+
+.page-home .pixel-scanlines {
+  position: absolute;
+  inset: 12% 14%;
+  background: repeating-linear-gradient(180deg, rgba(28, 76, 255, .35) 0 1px, transparent 1px 7px);
+  mix-blend-mode: multiply;
+  opacity: .2;
+  z-index: 2;
+}
+
+.page-home .hero-headroom {
+  background: radial-gradient(circle at 24% 18%, #171b27 0%, #090c14 48%, #06080f 100%);
+}
+
+.page-home .hero-headroom .hero-inner {
+  grid-template-columns: 1.06fr .94fr;
+  align-items: center;
+  gap: clamp(24px, 5vw, 68px);
+}
+
+.page-home .hero-headroom .hero-media {
+  display: block;
+}
+
+.page-home .hero-sequence {
+  display: grid;
+  place-items: center;
+  min-height: 390px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+  border: 1px solid rgba(148, 163, 184, .22);
+}
+
+.page-home .hero-sequence-stage {
+  width: min(85%, 340px);
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.page-home .hero-sequence-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: heroFigures 9s steps(1, end) infinite;
+  opacity: 0;
+  display: block;
+  padding: 12%;
+}
+
+.page-home .hero-sequence-card.is-training { animation-delay: 3s; }
+.page-home .hero-sequence-card.is-nutrition { animation-delay: 6s; }
+
+@keyframes heroFigures {
+  0%, 31% { opacity: 1; }
+  33%, 100% { opacity: 0; }
+}
+
+@keyframes runnerStride {
+  0% { transform: translate(-50%, -50%) translateX(-2px); }
+  50% { transform: translate(-50%, -50%) translateX(2px); }
+  100% { transform: translate(-50%, -50%) translateX(-2px); }
+}
+
+@keyframes runnerStrideAlt {
+  0% { transform: translate(-50%, -50%) translateX(2px); }
+  50% { transform: translate(-50%, -50%) translateX(-2px); }
+  100% { transform: translate(-50%, -50%) translateX(2px); }
+}
+
+@keyframes figureBreath {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.015); }
+}
+
 }
 
 .page-home .dot-a { transform: translate(calc(-50% - 130px), calc(-50% - 130px)); }

@@ -16,8 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (preloader) {
     const logoPieces = preloader.querySelectorAll('.preloader-logo-piece');
-    const logoWord = preloader.querySelector('.preloader-word');
     const glow = preloader.querySelector('.preloader-glow');
+
+    if (!logoPieces.length) {
+      preloader.classList.add('is-hidden');
+      unlockPage();
+      return;
+    }
 
     const fallback = window.setTimeout(() => {
       preloader.classList.add('is-hidden');
@@ -28,31 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.set(headerLogoReal, { autoAlpha: 0 })
-          .set(logoPieces, { autoAlpha: 0, filter: 'brightness(1.2)' })
-          .set(logoWord, { autoAlpha: 0, x: 12, y: 10 })
-          .set(glow, { autoAlpha: 0, scale: 0.55 })
+          .set(logoPieces, {
+            autoAlpha: 0,
+            y: (index) => [20, -16, 16, -12, 14, -18][index] || 0,
+            x: (index) => [-32, -18, -8, 8, 18, 30][index] || 0,
+            filter: 'brightness(1.2)',
+          })
+          .set(glow, { autoAlpha: 0, scale: 0.65 })
           .to(logoPieces, {
             autoAlpha: 1,
-            x: (index) => [-50, -26, -10, 12, 30, 52][index] || 0,
-            y: (index) => [24, -18, 20, -14, 18, -22][index] || 0,
-            duration: 0,
-          })
-          .to(logoPieces, {
             x: 0,
             y: 0,
-            duration: 0.9,
+            duration: 0.72,
             ease: 'power2.out',
-            stagger: 0.08,
+            stagger: 0.06,
           })
-          .to(logoPieces, {
-            filter: 'brightness(1)',
-            duration: 0.3,
-            stagger: 0.04,
-          }, '-=0.35')
-          .to(logoWord, { autoAlpha: 1, x: 0, y: 0, duration: 0.35 }, '-=0.15')
-          .to(glow, { autoAlpha: 1, scale: 1, duration: 0.42 }, '-=0.2')
-          .to(glow, { autoAlpha: 0.45, duration: 0.25 })
-          .to({}, { duration: 0.2 })
+          .to(glow, { autoAlpha: 0.92, scale: 1.05, duration: 0.5 }, '-=0.4')
+          .to(logoPieces, { filter: 'brightness(1)', duration: 0.24, stagger: 0.02 }, '-=0.28')
+          .to(glow, { autoAlpha: 0.45, duration: 0.22 })
+          .to({}, { duration: 0.15 })
           .to(preloader, {
             autoAlpha: 0,
             duration: 0.35,

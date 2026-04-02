@@ -1,191 +1,77 @@
 // HOME: intro/loading sequence + header behavior
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
-  const preloader = document.getElementById('lsPreload');
+  const preloader = document.getElementById('sitePreloader');
   const homeHeader = document.querySelector('.site-header-home');
   const headerLogoReal = document.querySelector('.header-logo-real');
-  let hasUnlockedPage = false;
-  let forceUnlockTimer = null;
+  let unlocked = false;
 
   const unlockPage = () => {
-    if (hasUnlockedPage) return;
-    hasUnlockedPage = true;
-
-    if (forceUnlockTimer) {
-      window.clearTimeout(forceUnlockTimer);
-      forceUnlockTimer = null;
-    }
-
+    if (unlocked) return;
+    unlocked = true;
     body.classList.remove('is-preloading');
+    body.classList.remove('is-loading');
   };
 
   if (preloader) {
-    const topline = preloader.querySelector('.ls-preload-topline');
-    const topmark = preloader.querySelector('.ls-preload-topmark');
-    const seed = preloader.querySelector('.ls-seed');
-    const core = preloader.querySelector('.ls-core');
-    const corePatterns = preloader.querySelectorAll('.ls-core-pattern');
-    const nodes = preloader.querySelectorAll('.ls-node');
-    const modules = preloader.querySelectorAll('.ls-module');
-    const logoOverlay = preloader.querySelector('.ls-logo-overlay');
-    const topline = preloader.querySelector('.preloader-topline-fill');
-    const wipe = preloader.querySelector('.preloader-wipe');
-    const canvas = preloader.querySelector('.preloader-canvas');
-    const signal = preloader.querySelector('.preloader-signal');
-    const system = preloader.querySelector('.preloader-system');
-    const seed = preloader.querySelector('.preloader-seed');
-    const coreLayers = preloader.querySelectorAll('.core-layer');
-    const nodes = preloader.querySelectorAll('.node');
-    const fragments = preloader.querySelectorAll('.fragment');
-    const logoOverlay = preloader.querySelector('#preloaderLogoOverlay');
-    const headerLogo = document.querySelector('.site-header-home .logo');
+    const topLine = preloader.querySelector('.preloader-topline-fill');
+    const seed = preloader.querySelector('.pixel-seed');
+    const core = preloader.querySelector('.pixel-core');
+    const dots = preloader.querySelectorAll('.pixel-dot');
+    const figures = preloader.querySelectorAll('.pixel-figure');
 
-    const hasGSAP = typeof window.gsap !== 'undefined';
-
-    forceUnlockTimer = window.setTimeout(() => {
+    const fallback = window.setTimeout(() => {
       preloader.classList.add('is-hidden');
       unlockPage();
-    }, 7000);
+    }, 5600);
 
-    if (hasGSAP) {
+    if (typeof window.gsap !== 'undefined') {
       try {
-        const resolveLogoDelta = () => {
-          if (!logoOverlay || !headerLogo) return { x: 0, y: 0, scale: 1 };
-          const from = logoOverlay.getBoundingClientRect();
-          const to = headerLogo.getBoundingClientRect();
-
-          return {
-            x: to.left + to.width * 0.18 - (from.left + from.width * 0.5),
-            y: to.top + to.height * 0.5 - (from.top + from.height * 0.5),
-            scale: Math.max(0.48, Math.min(0.86, to.height / from.height)),
-          };
-        };
-
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-        const logoBounds = headerLogoReal?.getBoundingClientRect();
-        const logoCenterX = logoBounds ? logoBounds.left + logoBounds.width / 2 : window.innerWidth / 2;
-        const logoCenterY = logoBounds ? logoBounds.top + logoBounds.height / 2 : 56;
-        const moveX = logoCenterX - window.innerWidth / 2;
-        const moveY = logoCenterY - window.innerHeight / 2;
-        const scaleToHeader = logoBounds ? logoBounds.width / 220 : 0.6;
-
-        tl.set(preloader, { autoAlpha: 1, backgroundColor: '#f5f7fb' })
-          .set(topline, { scaleX: 0 })
-          .set(topmark, { autoAlpha: 0 })
-          .set([nodes, modules], { autoAlpha: 0 })
-          .set(core, { scale: 0.88, autoAlpha: 0 })
-          .set(corePatterns, { autoAlpha: 0, scale: 0.92 })
-          .set(seed, { scale: 0.9, backgroundColor: '#d8dfec' })
-          .set(logoOverlay, { autoAlpha: 0, x: 0, y: 0, scale: 0.84 })
-          .set(headerLogoReal, { autoAlpha: 0 })
-          // STEP 1
-          .to({}, { duration: 0.2 })
-          // STEP 2
-          .to(topline, { scaleX: 1, duration: 0.34, ease: 'none' })
-          // STEP 3
-          .to('.page-content', { opacity: 0.9, duration: 0.22 }, '<')
-          // STEP 4
-          .to(topmark, { autoAlpha: 1, duration: 0.18 })
-          .to({}, { duration: 0.2 })
-          // STEP 5
-          .to(seed, { backgroundColor: '#1557ff', scale: 1, duration: 0.2, ease: 'power1.inOut' })
-          // STEP 6
-          .to(core, { autoAlpha: 1, scale: 1, duration: 0.26 })
-          // STEP 7
-          .to(corePatterns[0], { autoAlpha: 0.6, scale: 1, duration: 0.14 })
-          .to(corePatterns[1], { autoAlpha: 0.78, scale: 1, duration: 0.14 })
-          .to(corePatterns[2], { autoAlpha: 0.9, scale: 1, duration: 0.14 })
-          // STEP 8
-          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.2, stagger: 0.04 })
-          // STEP 9
-          .to(modules, { autoAlpha: 1, y: 0, scale: 1, duration: 0.2, stagger: 0.06 })
-          // STEP 10
-          .to({}, { duration: 0.24 })
-          // STEP 11
-          .to([...nodes, ...modules], { x: (i) => (i % 2 ? -12 : 12), y: (i) => (i < 5 ? 9 : -9), scale: 0.92, duration: 0.34, stagger: 0.01 })
-          .to(core, { scale: 0.94, duration: 0.28 }, '<')
-          // STEP 12
-          .to(logoOverlay, { autoAlpha: 1, scale: 1, duration: 0.28 })
-          // STEP 13
-          .to({}, { duration: 0.22 })
-          // STEP 14-15
-          .to(logoOverlay, { x: moveX, y: moveY, scale: scaleToHeader, duration: 0.62, ease: 'power2.inOut' })
-          // STEP 16
-          .to(headerLogoReal, { autoAlpha: 1, duration: 0.18 }, '-=0.12')
-          .to(logoOverlay, { autoAlpha: 0, duration: 0.16 }, '<')
-          // STEP 17
-
-        tl.set(topline, { scaleX: 0 })
-          .set([wipe, canvas], { transformOrigin: '50% 0' })
-          .set(canvas, { autoAlpha: 0 })
-          .set(system, { autoAlpha: 0, scale: 0.9 })
-          .set(seed, { scale: 0.84, backgroundColor: '#c7d5ef' })
-          .set(signal, { autoAlpha: 0.36, scaleX: 0.45 })
-          .set(coreLayers, { autoAlpha: 0, y: 6 })
-          .set(nodes, { autoAlpha: 0, scale: 0.6 })
-          .set(fragments, { autoAlpha: 0, x: 0, y: 0 })
-          .set(logoOverlay, { autoAlpha: 0, scale: 0.38, x: 0, y: 0, rotate: 0 })
-          .to({}, { duration: 0.35 })
-          .to(topline, { scaleX: 1, duration: 0.34, ease: 'none' })
-          .to(wipe, { scaleY: 1, duration: 0.28, ease: 'power1.inOut' }, '<')
-          .to(canvas, { autoAlpha: 1, duration: 0.16 }, '-=0.03')
-          .to(system, { autoAlpha: 1, scale: 0.96, duration: 0.24 })
-          .to({}, { duration: 0.2 })
-          .to(seed, { scale: 1, backgroundColor: '#1a4eff', duration: 0.22, ease: 'power1.inOut' })
-          .to(signal, { autoAlpha: 0.68, scaleX: 1, duration: 0.22 }, '<')
-          .to(nodes, { autoAlpha: 1, scale: 1, duration: 0.2, stagger: 0.04 }, '-=0.05')
-          .to(coreLayers, { autoAlpha: 1, y: 0, duration: 0.24, stagger: 0.035 }, '-=0.06')
-          .to(system, { scale: 1.06, duration: 0.28, ease: 'power2.inOut' })
-          .to(system, { scale: 1, duration: 0.24, ease: 'power2.out' })
-          .to(fragments, {
-            autoAlpha: 1,
-            duration: 0.2,
-            stagger: 0.03,
-            onStart: () => {
-              gsap.to('.fragment-a,.fragment-b,.fragment-f', { x: 125, duration: 0.48, ease: 'power2.inOut' });
-              gsap.to('.fragment-c,.fragment-d,.fragment-e', { x: -125, duration: 0.48, ease: 'power2.inOut' });
-            },
-          })
-          .to([coreLayers, nodes, fragments, seed, signal], {
-            duration: 0.34,
-            autoAlpha: 0,
-            scale: 0.9,
-            ease: 'power2.inOut',
-          }, '-=0.08')
-          .to(logoOverlay, { autoAlpha: 1, scale: 1, duration: 0.34, ease: 'power3.out' }, '-=0.2')
-          .to({}, { duration: 0.2 })
-          .add(() => {
-            const delta = resolveLogoDelta();
-            gsap.to(logoOverlay, {
-              x: delta.x,
-              y: delta.y,
-              scale: delta.scale,
-              duration: 0.52,
-              ease: 'power2.inOut',
-            });
-            if (headerLogo) {
-              gsap.to(headerLogo, { autoAlpha: 1, duration: 0.26, delay: 0.26 });
-            }
-          })
-          .to({}, { duration: 0.56 })
-          .to([canvas, wipe], { autoAlpha: 0, duration: 0.28, ease: 'power1.inOut' })
+        tl.set(headerLogoReal, { autoAlpha: 0 })
+          .set(topLine, { scaleX: 0 })
+          .set(seed, { autoAlpha: 1, scale: 1 })
+          .set(core, { autoAlpha: 0, scale: 0.1 })
+          .set(dots, { autoAlpha: 0, scale: 0.2 })
+          .set(figures, { autoAlpha: 0 })
+          .to(topLine, { scaleX: 1, duration: 0.45, ease: 'none' })
+          .to(core, { autoAlpha: 1, scale: 0.55, duration: 0.22 })
+          .to(core, { scale: 1, duration: 0.3 })
+          .to(dots, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.08 })
+          .to(seed, { autoAlpha: 0, duration: 0.15 }, '<')
+          .to(core, { autoAlpha: 0.16, duration: 0.16 }, '<')
+          .to('.figure-runner', { autoAlpha: 1, duration: 0.22 })
+          .to('.figure-runner-2', { autoAlpha: 1, duration: 0.1 }, '+=0.08')
+          .to('.figure-runner', { autoAlpha: 0, duration: 0.08 }, '<')
+          .to('.figure-runner', { autoAlpha: 1, duration: 0.08 }, '+=0.08')
+          .to('.figure-runner-2', { autoAlpha: 0, duration: 0.08 }, '<')
+          .to({}, { duration: 0.3 })
+          .to(['.figure-runner', '.figure-runner-2'], { autoAlpha: 0, duration: 0.12 })
+          .to('.figure-training', { autoAlpha: 1, duration: 0.2 })
+          .to({}, { duration: 0.4 })
+          .to('.figure-training', { autoAlpha: 0, duration: 0.14 })
+          .to('.figure-nutrition', { autoAlpha: 1, duration: 0.2 })
+          .to({}, { duration: 0.45 })
           .to(preloader, {
             autoAlpha: 0,
-            duration: 0.24,
+            duration: 0.32,
             onComplete: () => {
               preloader.classList.add('is-hidden');
+              gsap.set(headerLogoReal, { autoAlpha: 1 });
+              window.clearTimeout(fallback);
               unlockPage();
             },
           });
       } catch (error) {
         preloader.classList.add('is-hidden');
+        window.clearTimeout(fallback);
         unlockPage();
       }
     } else {
       window.setTimeout(() => {
         preloader.classList.add('is-hidden');
         unlockPage();
-      }, 2100);
+      }, 1800);
     }
   } else {
     unlockPage();

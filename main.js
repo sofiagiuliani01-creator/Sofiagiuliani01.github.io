@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     unlocked = true;
     body.classList.remove('is-preloading');
     body.classList.remove('is-loading');
+    window.dispatchEvent(new CustomEvent('home:preload-complete'));
   };
 
   if (preloader) {
@@ -1725,15 +1726,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let index = 0;
-  const writeNext = () => {
-    index += 1;
-    output.textContent = text.slice(0, index);
-    if (index < text.length) {
-      const isPunctuation = /[.,!?]/.test(text[index - 1]);
-      const delay = isPunctuation ? 120 : 45;
-      window.setTimeout(writeNext, delay);
-    }
+  let started = false;
+
+  const startTyping = () => {
+    if (started) return;
+    started = true;
+
+    const writeNext = () => {
+      index += 1;
+      output.textContent = text.slice(0, index);
+      if (index < text.length) {
+        const isPunctuation = /[.,!?]/.test(text[index - 1]);
+        const delay = isPunctuation ? 220 : 90;
+        window.setTimeout(writeNext, delay);
+      }
+    };
+
+    window.setTimeout(writeNext, 600);
   };
 
-  window.setTimeout(writeNext, 360);
+  if (document.body.classList.contains('is-preloading')) {
+    window.addEventListener('home:preload-complete', startTyping, { once: true });
+    return;
+  }
+
+  startTyping();
 });

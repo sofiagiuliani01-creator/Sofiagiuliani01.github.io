@@ -13959,17 +13959,23 @@ body.app-page {
 
 .page-home .preloader-canvas,
 .page-home .preloader-stage {
-  width: min(72vw, 560px);
-  aspect-ratio: 787 / 337;
+  width: min(80vw, 560px);
+  min-height: 130px;
   display: grid;
   place-items: center;
   position: relative;
 }
 
+.page-home .preloader-logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 22px);
+}
+
 .page-home .preloader-logo-split {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: clamp(130px, 25vw, 195px);
+  aspect-ratio: 1 / 1;
 }
 
 .page-home .preloader-logo-slice,
@@ -13982,16 +13988,26 @@ body.app-page {
 }
 
 .page-home .preloader-logo-slice--left {
-  clip-path: polygon(0 0, 54% 0, 44% 100%, 0 100%);
+  clip-path: inset(0 50% 0 0);
 }
 
 .page-home .preloader-logo-slice--right {
-  clip-path: polygon(57% 0, 100% 0, 100% 100%, 47% 100%);
+  clip-path: inset(0 0 0 50%);
 }
 
 .page-home .preloader-logo-full {
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.55))
     drop-shadow(0 0 30px rgba(255, 255, 255, 0.35));
+}
+
+.page-home .preloader-word {
+  font-family: "Inter", "Poppins", sans-serif;
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .page-home .preloader-glow {
@@ -14000,4 +14016,15 @@ body.app-page {
   background: radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 62%);
   filter: blur(16px);
   pointer-events: none;
+}
+
+@media (max-width: 680px) {
+  .page-home .preloader-logo-lockup {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .page-home .preloader-word {
+    letter-spacing: 0.2em;
+  }
 }

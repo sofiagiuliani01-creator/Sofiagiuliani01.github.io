@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoLeft = preloader.querySelector('.preloader-logo-slice--left');
     const logoRight = preloader.querySelector('.preloader-logo-slice--right');
     const logoFull = preloader.querySelector('.preloader-logo-full');
+    const logoWord = preloader.querySelector('.preloader-word');
     const glow = preloader.querySelector('.preloader-glow');
 
     const fallback = window.setTimeout(() => {
@@ -28,24 +29,23 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.set(headerLogoReal, { autoAlpha: 0 })
-          .set([logoLeft, logoRight], { autoAlpha: 0, scale: 0.86, filter: 'brightness(0.8)' })
+          .set([logoLeft, logoRight], { autoAlpha: 1, scale: 1, filter: 'brightness(1.1)' })
           .set(logoFull, { autoAlpha: 0, scale: 0.96 })
+          .set(logoWord, { autoAlpha: 0, x: 14 })
           .set(glow, { autoAlpha: 0, scale: 0.55 })
           .to([logoLeft, logoRight], {
-            autoAlpha: 1,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.08,
+            x: (index) => (index === 0 ? -30 : 30),
+            duration: 0,
           })
           .to([logoLeft, logoRight], {
-            x: (index) => (index === 0 ? -22 : 22),
-            duration: 0.35,
-            yoyo: true,
-            repeat: 1,
-          }, '-=0.12')
-          .to(logoFull, { autoAlpha: 1, scale: 1, duration: 0.45 }, '-=0.1')
+            x: 0,
+            duration: 0.85,
+            ease: 'power2.out',
+          })
+          .to(logoFull, { autoAlpha: 1, scale: 1, duration: 0.25 }, '-=0.15')
           .to([logoLeft, logoRight], { autoAlpha: 0, duration: 0.3 }, '<')
-          .to(glow, { autoAlpha: 1, scale: 1, duration: 0.42 }, '-=0.22')
+          .to(logoWord, { autoAlpha: 1, x: 0, duration: 0.35 }, '-=0.05')
+          .to(glow, { autoAlpha: 1, scale: 1, duration: 0.42 }, '-=0.2')
           .to(glow, { autoAlpha: 0.45, duration: 0.25 })
           .to({}, { duration: 0.2 })
           .to(preloader, {

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect x="104" y="84" width="112" height="152" fill="#c9ccd1" opacity=".42"/>
+  <g stroke="#1f4dff" stroke-width="2" stroke-linecap="round">
+    <path d="M166 50h18"/>
+    <path d="M160 58h30"/>
+    <path d="M154 66h40"/>
+    <path d="M148 74h46"/>
+    <path d="M142 82h52"/>
+    <path d="M134 90h64"/>
+    <path d="M128 98h68"/>
+    <path d="M122 106h76"/>
+    <path d="M118 114h84"/>
+    <path d="M114 122h90"/>
+    <path d="M118 130h84"/>
+    <path d="M124 138h78"/>
+    <path d="M132 146h74"/>
+    <path d="M140 154h70"/>
+    <path d="M146 162h66"/>
+    <path d="M148 170h70"/>
+    <path d="M144 178h82"/>
+    <path d="M136 186h92"/>
+    <path d="M126 194h104"/>
+    <path d="M114 202h116"/>
+    <path d="M102 210h124"/>
+    <path d="M94 218h126"/>
+    <path d="M106 226h110"/>
+    <path d="M124 234h90"/>
+    <path d="M140 242h70"/>
+    <path d="M152 250h52"/>
+    <path d="M162 258h36"/>
+    <path d="M170 266h24"/>
+    <path d="M56 144h46M230 112h40"/>
+    <path d="M48 160h56M242 134h44"/>
+    <path d="M44 240h60M236 222h60"/>
+    <path d="M34 258h46M220 258h50"/>
+  </g>
+</svg>

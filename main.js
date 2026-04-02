@@ -1,6 +1,88 @@
 // HOME: intro/loading sequence + header behavior
 document.addEventListener('DOMContentLoaded', () => {
   const homeHeader = document.querySelector('.site-header-home');
+  const body = document.body;
+  const preloader = document.getElementById('sitePreloader');
+  const homeHeader = document.querySelector('.site-header-home');
+  const headerLogoReal = document.querySelector('.header-logo-real');
+  let unlocked = false;
+
+  const unlockPage = () => {
+    if (unlocked) return;
+    unlocked = true;
+    body.classList.remove('is-preloading');
+    body.classList.remove('is-loading');
+  };
+
+  if (preloader) {
+    const topLine = preloader.querySelector('.preloader-topline-fill');
+    const seed = preloader.querySelector('.pixel-seed');
+    const core = preloader.querySelector('.pixel-core');
+    const dots = preloader.querySelectorAll('.pixel-dot');
+    const figures = preloader.querySelectorAll('.pixel-figure');
+
+    const fallback = window.setTimeout(() => {
+      preloader.classList.add('is-hidden');
+      unlockPage();
+    }, 5600);
+
+    if (typeof window.gsap !== 'undefined') {
+      try {
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+        tl.set(headerLogoReal, { autoAlpha: 0 })
+          .set(topLine, { scaleX: 0 })
+          .set(seed, { autoAlpha: 1, scale: 1 })
+          .set(core, { autoAlpha: 0, scale: 0.1 })
+          .set(dots, { autoAlpha: 0, scale: 0.2 })
+          .set(figures, { autoAlpha: 0 })
+          .to(topLine, { scaleX: 1, duration: 0.45, ease: 'none' })
+          .to(core, { autoAlpha: 1, scale: 0.55, duration: 0.22 })
+          .to(core, { scale: 1, duration: 0.3 })
+          .to(dots, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.08 })
+          .to(seed, { autoAlpha: 0, duration: 0.15 }, '<')
+          .to(core, { autoAlpha: 0.16, duration: 0.16 }, '<')
+          .to('.figure-runner', { autoAlpha: 1, duration: 0.22 })
+          .to('.figure-runner-2', { autoAlpha: 1, duration: 0.1 }, '+=0.08')
+          .to('.figure-runner', { autoAlpha: 0, duration: 0.08 }, '<')
+          .to('.figure-runner', { autoAlpha: 1, duration: 0.08 }, '+=0.08')
+          .to('.figure-runner-2', { autoAlpha: 0, duration: 0.08 }, '<')
+          .to({}, { duration: 0.3 })
+          .to(['.figure-runner', '.figure-runner-2'], { autoAlpha: 0, duration: 0.12 })
+          .to(core, { autoAlpha: 1, scale: 1, duration: 0.36 })
+          .to(dots, { autoAlpha: 1, scale: 1, duration: 0.22, stagger: 0.08 })
+          .to(seed, { autoAlpha: 0, duration: 0.15 }, '<')
+          .to('.figure-runner', { autoAlpha: 1, duration: 0.22 })
+          .to({}, { duration: 0.44 })
+          .to('.figure-runner', { autoAlpha: 0, duration: 0.14 })
+          .to('.figure-training', { autoAlpha: 1, duration: 0.2 })
+          .to({}, { duration: 0.4 })
+          .to('.figure-training', { autoAlpha: 0, duration: 0.14 })
+          .to('.figure-nutrition', { autoAlpha: 1, duration: 0.2 })
+          .to({}, { duration: 0.45 })
+          .to(preloader, {
+            autoAlpha: 0,
+            duration: 0.32,
+            onComplete: () => {
+              preloader.classList.add('is-hidden');
+              gsap.set(headerLogoReal, { autoAlpha: 1 });
+              window.clearTimeout(fallback);
+              unlockPage();
+            },
+          });
+      } catch (error) {
+        preloader.classList.add('is-hidden');
+        window.clearTimeout(fallback);
+        unlockPage();
+      }
+    } else {
+      window.setTimeout(() => {
+        preloader.classList.add('is-hidden');
+        unlockPage();
+      }, 1800);
+    }
+  } else {
+    unlockPage();
+  }
 
   if (homeHeader) {
     let lastY = window.scrollY;

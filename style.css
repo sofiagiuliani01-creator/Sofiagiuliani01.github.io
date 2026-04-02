@@ -1395,7 +1395,7 @@ textarea:focus {
 
 .faq-item.is-open .faq-icon::after {
   transform: scaleY(0);
-  opacity: 0;
+  opacity: 1;
 }
 
 /* contenuto risposta */
@@ -1404,7 +1404,7 @@ textarea:focus {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
-  opacity: 0;
+  opacity: 1;
 }
 
 .faq-item.is-open .faq-answer {
@@ -13974,42 +13974,33 @@ body.app-page {
 .page-home .preloader-logo-lockup {
   display: inline-flex;
   align-items: center;
-  gap: clamp(12px, 2vw, 22px);
 }
 
 .page-home .preloader-logo-split {
+  --preloader-slices: 6;
   position: relative;
-  width: clamp(130px, 25vw, 195px);
+  width: clamp(150px, 28vw, 220px);
   aspect-ratio: 1 / 1;
+  display: flex;
 }
 
 .page-home .preloader-logo-piece {
-  position: absolute;
-  inset: 0;
-  width: 100%;
+  position: relative;
+  width: calc(100% / var(--preloader-slices));
   height: 100%;
-  object-fit: contain;
-  opacity: 0;
+  overflow: hidden;
+  opacity: 1;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.55))
     drop-shadow(0 0 30px rgba(255, 255, 255, 0.35));
 }
 
-.page-home .preloader-logo-piece--1 { clip-path: inset(0 83.5% 0 0); }
-.page-home .preloader-logo-piece--2 { clip-path: inset(0 67% 0 16.5%); }
-.page-home .preloader-logo-piece--3 { clip-path: inset(0 50% 0 33%); }
-.page-home .preloader-logo-piece--4 { clip-path: inset(0 33% 0 50%); }
-.page-home .preloader-logo-piece--5 { clip-path: inset(0 16.5% 0 67%); }
-.page-home .preloader-logo-piece--6 { clip-path: inset(0 0 0 83.5%); }
-
-.page-home .preloader-word {
-  font-family: "Inter", "Poppins", sans-serif;
-  font-size: clamp(18px, 2.2vw, 28px);
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: #fff;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transform: translateY(10px);
+.page-home .preloader-logo-mark {
+  position: absolute;
+  top: 0;
+  left: calc(var(--slice) * -100%);
+  width: calc(var(--preloader-slices) * 100%);
+  height: 100%;
+  object-fit: contain;
 }
 
 .page-home .preloader-glow {
@@ -14020,12 +14011,6 @@ body.app-page {
   pointer-events: none;
 }
 
-@media (max-width: 680px) {
-  .page-home .preloader-word {
-    font-size: clamp(14px, 4.2vw, 20px);
-    letter-spacing: 0.2em;
-  }
-}
 
 /* === Home hero solo headline (2026-04) === */
 .page-home .hero-headroom {

@@ -1,5 +1,6 @@
 // HOME: intro/loading sequence + header behavior
 document.addEventListener('DOMContentLoaded', () => {
+  const homeHeader = document.querySelector('.site-header-home');
   const body = document.body;
   const preloader = document.getElementById('sitePreloader');
   const homeHeader = document.querySelector('.site-header-home');

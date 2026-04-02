@@ -1708,3 +1708,32 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 })();
+
+// HERO HOME: headline typing intro
+document.addEventListener('DOMContentLoaded', () => {
+  const typedBox = document.querySelector('.hero-typewriter[data-hero-typed-text]');
+  const output = typedBox && typedBox.querySelector('[data-hero-typed-output]');
+  if (!typedBox || !output) return;
+
+  const text = (typedBox.getAttribute('data-hero-typed-text') || '').trim();
+  if (!text) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    output.textContent = text;
+    return;
+  }
+
+  let index = 0;
+  const writeNext = () => {
+    index += 1;
+    output.textContent = text.slice(0, index);
+    if (index < text.length) {
+      const isPunctuation = /[.,!?]/.test(text[index - 1]);
+      const delay = isPunctuation ? 120 : 45;
+      window.setTimeout(writeNext, delay);
+    }
+  };
+
+  window.setTimeout(writeNext, 360);
+});

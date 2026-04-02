@@ -13215,6 +13215,55 @@ body.app-page {
 
 /* === 2026-04 hero refresh (home only, pre-timeline) === */
 /* === 2026-04 preload + hero refresh (home only, pre-timeline) === */
+
+/* === 2026-04 hero typewriter intro (home) === */
+.page-home .hero-typewriter {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin: 0 auto 0.6rem;
+  max-width: 980px;
+}
+
+.page-home .hero-typewriter-kicker {
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(212, 217, 231, 0.88);
+  font-size: clamp(0.68rem, 1.15vw, 0.8rem);
+}
+
+.page-home .hero-typewriter-line {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: clamp(2rem, 5.6vw, 4.3rem);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #f7f8ff;
+  text-shadow: 0 14px 44px rgba(25, 218, 213, 0.22);
+}
+
+.page-home .hero-typewriter-caret {
+  display: inline-block;
+  width: 0.09em;
+  height: 0.95em;
+  transform: translateY(0.08em);
+  margin-left: 0.08em;
+  border-radius: 2px;
+  background: #19dad5;
+  animation: heroCaretBlink 0.9s steps(1, end) infinite;
+}
+
+@keyframes heroCaretBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .page-home .hero-typewriter {
+    margin-bottom: 0.2rem;
+  }
+}
 .page-home.is-preloading {
   overflow: hidden;
 }

@@ -30,5 +30,10 @@
     <path d="M170 262h30"/>
     <path d="M196 58l20-16"/>
     <path d="M58 234h40M230 236h42"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" fill="none">
+  <rect x="84" y="70" width="96" height="120" fill="#c9ccd1" opacity=".55"/>
+  <g stroke="#1f4dff" stroke-width="6" stroke-linecap="square">
+    <path d="M132 44h20M126 58h32M118 72h48M110 86h64M102 100h80M96 116h92M94 132h94M98 148h88M106 164h72M116 180h54M124 196h38"/>
+    <path d="M178 52l18-14M52 204h38M176 204h42M200 96h26"/>
   </g>
 </svg>

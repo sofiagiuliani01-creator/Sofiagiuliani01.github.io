@@ -1879,7 +1879,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 0.84,
-    curtainToMid: 2.04,
+    curtainToMid: 2.8,
     midpointHold: 0.72,
     fullBlackTakeover: 1.08,
     convergeRoles: 1.34,
@@ -1959,7 +1959,6 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.curtainToMid,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
-        onStart: () => { ptCopy.style.textAlign = 'left'; },
       }, 'stage2')
       .to(ptTitle, {
         fontSize: 'var(--hero-role-balanced-size)',
@@ -2129,33 +2128,14 @@ document.addEventListener('DOMContentLoaded', () => {
         },
       }, 'stage5');
 
-    const timelineDuration = tl.duration() || 1;
-    const snapStops = [
-      tl.labels.stage1 || 0,
-      tl.labels.stage2Land || 0,
-      tl.labels.stage3Land || 0,
-      tl.labels.stage4Land || 0,
-      timelineDuration,
-    ]
-      .map((time) => Math.max(0, Math.min(1, time / timelineDuration)))
-      .filter((value, index, arr) => arr.indexOf(value) === index)
-      .sort((a, b) => a - b);
-
     const cinematicTrigger = ScrollTrigger.create({
       trigger: hero,
       start: 'top top',
-      end: '+=410%',
+      end: '+=470%',
       pin,
       animation: tl,
-      scrub: 0.6,
+      scrub: 1.1,
       anticipatePin: 1,
-      snap: {
-        snapTo: (value) => gsap.utils.snap(snapStops, value),
-        duration: { min: 0.16, max: 0.48 },
-        delay: 0.06,
-        ease: 'power2.out',
-        inertia: false,
-      },
     });
 
     return () => {

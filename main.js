@@ -1879,11 +1879,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 1,
-    curtainToMid: 1.55,
-    midpointHold: 0.35,
-    fullBlackTakeover: 1.1,
-    convergeRoles: 0.95,
-    distillToLS: 1.1,
+    curtainToMid: 1.82,
+    midpointHold: 0.5,
+    fullBlackTakeover: 1.2,
+    convergeRoles: 1.2,
+    distillToLS: 1.28,
     typingReveal: 1.45,
   };
 
@@ -1956,7 +1956,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 0.63,
+        scale: 0.92,
         duration: stageDurations.curtainToMid,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
@@ -1970,13 +1970,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        y: 52,
-        scale: 1.14,
+        y: 58,
+        scale: 1.08,
       }, {
         autoAlpha: 1,
         y: 0,
-        scale: 1,
-        duration: stageDurations.curtainToMid * 0.86,
+        scale: 0.98,
+        duration: stageDurations.curtainToMid * 0.9,
         ease: 'power2.out',
       }, 'stage2+=0.08')
       .to(nutritionTitle, {
@@ -2005,13 +2005,13 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.fullBlackTakeover * 0.6,
       }, 'stage3+=0.2')
       .to(ptCopy, {
-        scale: 0.58,
+        scale: 0.84,
         duration: stageDurations.fullBlackTakeover,
       }, 'stage3')
       .to(nutritionCopy, {
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        scale: 0.92,
+        scale: 0.9,
         duration: stageDurations.fullBlackTakeover,
         ease: 'power2.inOut',
       }, 'stage3')
@@ -2025,36 +2025,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage3')
       .addLabel('stage3b')
       .to(nutritionCopy, {
-        y: sceneTargets.pt.y + (sceneTargets.nutrition.y - sceneTargets.pt.y) * 0.54,
-        x: sceneTargets.pt.x + (sceneTargets.nutrition.x - sceneTargets.pt.x) * 0.78,
+        y: sceneTargets.pt.y + (sceneTargets.nutrition.y - sceneTargets.pt.y) * 0.35,
+        x: sceneTargets.pt.x + (sceneTargets.nutrition.x - sceneTargets.pt.x) * 0.62,
         duration: stageDurations.convergeRoles,
         ease: 'power2.inOut',
       }, 'stage3b')
       .to(ptCopy, {
-        y: sceneTargets.pt.y - 12,
+        y: sceneTargets.pt.y - 2,
         duration: stageDurations.convergeRoles,
         ease: 'power2.inOut',
       }, 'stage3b')
+      .to([ptCopy, nutritionCopy], {
+        scale: (index, target) => (target === ptCopy ? 0.8 : 0.86),
+        duration: stageDurations.convergeRoles * 0.84,
+        ease: 'power1.inOut',
+      }, 'stage3b+=0.02')
+      .to({}, { duration: stageDurations.convergeRoles * 0.18 })
       .addLabel('stage4')
       .to([...ptChars.filter((char) => !char.classList.contains('hero-char-key')), ...nutritionChars.filter((char) => !char.classList.contains('hero-char-key'))], {
         autoAlpha: 0,
-        filter: 'blur(3px)',
-        duration: stageDurations.distillToLS * 0.48,
-        ease: 'power1.out',
+        filter: 'blur(2px)',
+        duration: stageDurations.distillToLS * 0.62,
+        ease: 'power2.out',
+        stagger: {
+          each: 0.01,
+          from: 'center',
+        },
       }, 'stage4')
       .to([ptTitle, nutritionTitle], {
-        letterSpacing: '0.08em',
-        duration: stageDurations.distillToLS * 0.4,
+        letterSpacing: '0.09em',
+        duration: stageDurations.distillToLS * 0.5,
       }, 'stage4')
       .fromTo(lsStage, {
         autoAlpha: 0,
-        y: 38,
+        y: 30,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.distillToLS * 0.75,
+        duration: stageDurations.distillToLS * 0.82,
         ease: 'power2.out',
-      }, 'stage4+=0.16')
+      }, 'stage4+=0.24')
       .fromTo(lsLetterL, (() => {
         const charRect = ptKeyChar ? ptKeyChar.getBoundingClientRect() : null;
         const targetRect = lsLetterL.getBoundingClientRect();
@@ -2067,9 +2077,9 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         y: 0,
         autoAlpha: 1,
-        duration: stageDurations.distillToLS * 0.7,
+        duration: stageDurations.distillToLS * 0.78,
         ease: 'power2.out',
-      }, 'stage4+=0.2')
+      }, 'stage4+=0.3')
       .fromTo(lsLetterS, (() => {
         const charRect = nutritionKeyChar ? nutritionKeyChar.getBoundingClientRect() : null;
         const targetRect = lsLetterS.getBoundingClientRect();
@@ -2082,18 +2092,18 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         y: 0,
         autoAlpha: 1,
-        duration: stageDurations.distillToLS * 0.7,
+        duration: stageDurations.distillToLS * 0.78,
         ease: 'power2.out',
-      }, 'stage4+=0.2')
+      }, 'stage4+=0.3')
       .to(lsCoaching, {
         autoAlpha: 1,
         x: 0,
-        duration: stageDurations.distillToLS * 0.5,
-      }, 'stage4+=0.45')
+        duration: stageDurations.distillToLS * 0.54,
+      }, 'stage4+=0.7')
       .to([ptCopy, nutritionCopy], {
         autoAlpha: 0,
-        duration: stageDurations.distillToLS * 0.45,
-      }, 'stage4+=0.5')
+        duration: stageDurations.distillToLS * 0.52,
+      }, 'stage4+=0.72')
       .addLabel('stage5')
       .to(typingOutput, {
         autoAlpha: 1,

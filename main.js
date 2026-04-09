@@ -1882,13 +1882,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 0.9,
-    curtainDualMessage: 2.5,
-    dualHold: 1.1,
-    blackTakeover: 1.1,
-    isolateRoles: 1.05,
-    roleHold: 0.5,
-    distillToLetters: 0.95,
-    lsLockup: 1.05,
+    curtainDualMessage: 2.35,
+    dualHold: 0.9,
+    blackTakeover: 1,
+    roleHold: 0.42,
+    distillToLetters: 0.9,
+    lsLockup: 0.95,
     payoffReveal: 0.72,
   };
 
@@ -1926,7 +1925,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 1,
+        scale: 0.96,
         duration: stageDurations.curtainDualMessage,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
@@ -1937,14 +1936,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        x: 300,
+        x: 180,
         y: 0,
-        scale: 1,
+        scale: 0.96,
       }, {
         autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
+        x: sceneTargets.nutrition.x,
+        y: sceneTargets.nutrition.y,
+        scale: 0.96,
         duration: stageDurations.curtainDualMessage * 0.93,
         ease: 'power2.out',
       }, 'stage2+=0.03')
@@ -1978,28 +1977,11 @@ document.addEventListener('DOMContentLoaded', () => {
         filter: 'drop-shadow(0 14px 36px rgba(0, 0, 0, 0.48))',
         duration: stageDurations.blackTakeover * 0.75,
       }, 'stage3+=0.1')
-      .addLabel('stage3b')
-      .to(ptCopy, {
-        x: sceneTargets.pt.x + 230,
-        y: sceneTargets.pt.y + 140,
-        duration: stageDurations.isolateRoles,
-        ease: 'power2.inOut',
-      }, 'stage3b')
-      .to(nutritionCopy, {
-        x: sceneTargets.nutrition.x - 140,
-        y: sceneTargets.nutrition.y - 150,
-        duration: stageDurations.isolateRoles,
-        ease: 'power2.inOut',
-      }, 'stage3b')
       .to([ptLead, nutritionLead], {
         autoAlpha: 0,
-        duration: stageDurations.isolateRoles * 0.85,
+        duration: stageDurations.blackTakeover * 0.7,
         ease: 'power1.out',
-      }, 'stage3b+=0.02')
-      .to([ptRole, nutritionRole], {
-        fontSize: 'var(--hero-role-isolated-size)',
-        duration: stageDurations.isolateRoles * 0.88,
-      }, 'stage3b')
+      }, 'stage3+=0.12')
       .to({}, { duration: stageDurations.roleHold })
       .addLabel('stage3Land')
       .addLabel('stage4')
@@ -2017,11 +1999,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage4')
       .fromTo(lsStage, {
         autoAlpha: 0,
-        y: 18,
+        y: 0,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.distillToLetters * 0.5,
+        duration: stageDurations.distillToLetters * 0.48,
         ease: 'power2.out',
       }, 'stage4+=0.4')
       .fromTo(lsLetterL, (() => {
@@ -2056,7 +2038,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage4+=0.45')
       .to([ptCopy, nutritionCopy], {
         autoAlpha: 0,
-        duration: stageDurations.lsLockup * 0.3,
+        duration: stageDurations.lsLockup * 0.24,
       }, 'stage4+=0.56')
       .to(lsCoaching, {
         autoAlpha: 1,

@@ -1771,6 +1771,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const artLayers = Array.from(hero.querySelectorAll('[data-hero-art-layer]'));
+  const fallbackLayers = artLayers.length
+    ? []
+    : Array.from(hero.querySelectorAll('.hero-dual-panel-pt .hero-dual-content, .hero-dual-panel-nutrition .hero-dual-content'));
 
   let rafId = null;
   let scrollPct = 0;
@@ -1790,10 +1793,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let pointerXRatio = 0;
   let pointerYRatio = 0;
 
-  const layerRegistry = artLayers.map((layer) => {
+  const layerRegistry = (artLayers.length ? artLayers : fallbackLayers).map((layer) => {
     const layerName = (layer.getAttribute('data-hero-art-layer') || '').trim();
     const depthValue = Number.parseFloat(layer.getAttribute('data-hero-depth'));
-    const depth = Number.isFinite(depthValue) ? depthValue : 1;
+    const fallbackDepth = layer.classList.contains('hero-dual-content') ? 0.35 : 1;
+    const depth = Number.isFinite(depthValue) ? depthValue : fallbackDepth;
     const isFloatingLayer = layerName === 'float-a' || layerName === 'float-b';
 
     if (!isFloatingLayer) return { target: layer, depth };
@@ -1817,17 +1821,23 @@ document.addEventListener('DOMContentLoaded', () => {
     return { target: wrapper, depth };
   });
 
-  const setParallax = (xRatio, yRatio) => {
-    if (!layerRegistry.length || window.innerWidth <= 900) return;
+  const resetParallax = () => {
+    if (!layerRegistry.length) return;
+    layerRegistry.forEach(({ target }) => {
+      gsap.set(target, { x: 0, y: 0 });
+    });
+  };
 
-    layerRegistry.forEach(({ target, depth }) => {
-      gsap.to(target, {
-        x: xRatio * parallaxStrength * depth,
-        y: yRatio * parallaxStrength * depth,
-        duration: reducedMotion ? 0 : 0.45,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
+  const setParallax = (xRatio, yRatio) => {
+    if (!layerRegistry.length) return;
+    if (window.innerWidth <= 900) {
+      resetParallax();
+      return;
+    }
+
+    layerControllers.forEach(({ depth, setX, setY }) => {
+      setX(xRatio * parallaxStrength * depth);
+      setY(yRatio * parallaxStrength * depth);
     });
   };
 
@@ -1881,6 +1891,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pointerActive = false;
     pointerXRatio = 0;
     pointerYRatio = 0;
+    setParallax(0, 0);
   });
 
   const mm = gsap.matchMedia();
@@ -1914,6 +1925,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pointerActive = false;
       pointerXRatio = 0;
       pointerYRatio = 0;
+      resetParallax();
       if (pointerTimeoutId) {
         window.clearTimeout(pointerTimeoutId);
         pointerTimeoutId = null;
@@ -1923,6 +1935,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rafId = null;
       }
       setReveal(DIVIDER_MIN);
+      resetParallax();
     };
   });
 });

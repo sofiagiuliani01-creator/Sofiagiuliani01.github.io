@@ -1755,3 +1755,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startTyping();
 });
+
+// HOME HERO DESKTOP: pin + switch Personal Trainer / Nutrizionista
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (!document.body.classList.contains('page-home')) return;
+
+  const hero = document.querySelector('.hero-dual[data-mobile-theme="hero"]');
+  const track = hero && hero.querySelector('[data-hero-dual-track]');
+  const handle = hero && hero.querySelector('[data-hero-dual-handle]');
+  if (!hero || !track || !handle) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let dragging = false;
+  let hasUserOverride = false;
+
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const setSwitch = (percent) => {
+    const safePercent = clamp(percent, 0, 100);
+    hero.style.setProperty('--hero-switch', `${safePercent.toFixed(2)}%`);
+  };
+
+  const updateFromPointer = (clientX) => {
+    const rect = track.getBoundingClientRect();
+    const raw = ((clientX - rect.left) / Math.max(1, rect.width)) * 100;
+    setSwitch(raw);
+  };
+
+  const stopDrag = () => {
+    dragging = false;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+  };
+
+  const onPointerMove = (event) => {
+    if (!dragging) return;
+    updateFromPointer(event.clientX);
+  };
+
+  const onPointerUp = () => {
+    stopDrag();
+  };
+
+  handle.addEventListener('pointerdown', (event) => {
+    if (window.innerWidth <= 900) return;
+    dragging = true;
+    hasUserOverride = true;
+    handle.setPointerCapture(event.pointerId);
+    updateFromPointer(event.clientX);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', onPointerUp, { passive: true });
+  });
+
+  track.addEventListener('pointerdown', (event) => {
+    if (window.innerWidth <= 900) return;
+    if (event.target === handle || handle.contains(event.target)) return;
+    hasUserOverride = true;
+    setSwitch((((event.clientX - track.getBoundingClientRect().left) / track.getBoundingClientRect().width) * 100));
+  });
+
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 901px)', () => {
+    setSwitch(0);
+
+    const trigger = ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: '+=110%',
+      pin: hero.querySelector('[data-hero-dual]'),
+      scrub: true,
+      onUpdate: (self) => {
+        if (hasUserOverride || dragging) return;
+        setSwitch(self.progress * 100);
+      },
+    });
+
+    return () => {
+      trigger.kill();
+      stopDrag();
+      hasUserOverride = false;
+      setSwitch(0);
+    };
+  });
+});

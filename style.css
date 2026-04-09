@@ -14031,14 +14031,15 @@ body.app-page {
   --hero-lead-size: clamp(0.95rem, 1.35vw, 1.2rem);
   --hero-role-size: clamp(2.9rem, 7.4vw, 8.3rem);
   --hero-role-balanced-size: clamp(2.3rem, 4.9vw, 5.2rem);
+  --hero-role-center-size: clamp(2.8rem, 6.1vw, 6.4rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
-  --hero-pt-target-x: 5vw;
-  --hero-pt-target-y: 41vh;
+  --hero-pt-target-x: 50vw;
+  --hero-pt-target-y: 38vh;
   --hero-nut-target-x: 50vw;
-  --hero-nut-target-y: 56vh;
+  --hero-nut-target-y: 58vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 26vh;
   --hero-type-y: 58vh;
@@ -14279,10 +14280,10 @@ body.app-page {
     --hero-ls-size: clamp(2rem, 10vw, 3rem);
     --hero-coaching-size: clamp(0.76rem, 3.1vw, 1rem);
     --hero-final-size: clamp(0.96rem, 4.1vw, 1.25rem);
-    --hero-pt-target-x: 6vw;
+    --hero-pt-target-x: 50vw;
     --hero-pt-target-y: 40vh;
-    --hero-nut-target-x: 51vw;
-    --hero-nut-target-y: 57vh;
+    --hero-nut-target-x: 50vw;
+    --hero-nut-target-y: 58vh;
     --hero-ls-y: 24vh;
     --hero-type-y: 53vh;
   }

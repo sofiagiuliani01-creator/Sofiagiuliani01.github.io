@@ -1764,12 +1764,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const hero = document.querySelector('.hero-dual[data-mobile-theme="hero"]');
   const track = hero && hero.querySelector('[data-hero-dual-track]');
   const handle = hero && hero.querySelector('[data-hero-dual-handle]');
+  const parallaxLayers = hero ? hero.querySelectorAll('[data-hero-art-layer]') : [];
+  const drawablePaths = hero ? hero.querySelectorAll('[data-hero-draw]') : [];
   if (!hero || !track || !handle) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
   let dragging = false;
   let hasUserOverride = false;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parallaxStrength = window.matchMedia('(max-width: 900px)').matches ? 8 : 20;
+
+  if (!reducedMotion && drawablePaths.length) {
+    drawablePaths.forEach((path) => {
+      const pathLength = path.getTotalLength();
+      path.style.strokeDasharray = `${pathLength}`;
+      path.style.strokeDashoffset = `${pathLength}`;
+      gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.8,
+        delay: 0.12,
+        ease: 'power2.out',
+      });
+    });
+  } else {
+    drawablePaths.forEach((path) => {
+      path.style.strokeDasharray = 'none';
+      path.style.strokeDashoffset = '0';
+    });
+  }
 
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const setSwitch = (percent) => {
@@ -1782,6 +1805,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const raw = ((clientX - rect.left) / Math.max(1, rect.width)) * 100;
     setSwitch(raw);
   };
+
+  const setParallax = (xRatio, yRatio) => {
+    if (reducedMotion || !parallaxLayers.length) return;
+    parallaxLayers.forEach((layer) => {
+      const depth = layer.dataset.heroArtLayer === 'soft' ? 0.35 : layer.dataset.heroArtLayer === 'float-b' ? 0.75 : 0.58;
+      gsap.to(layer, {
+        x: xRatio * parallaxStrength * depth,
+        y: yRatio * parallaxStrength * depth,
+        duration: 0.8,
+        overwrite: true,
+        ease: 'sine.out',
+      });
+    });
+  };
+
+  track.addEventListener('pointermove', (event) => {
+    if (window.innerWidth <= 900 || reducedMotion) return;
+    const rect = track.getBoundingClientRect();
+    const xRatio = ((event.clientX - rect.left) / Math.max(1, rect.width)) - 0.5;
+    const yRatio = ((event.clientY - rect.top) / Math.max(1, rect.height)) - 0.5;
+    setParallax(xRatio, yRatio);
+  });
+
+  track.addEventListener('pointerleave', () => {
+    setParallax(0, 0);
+  });
 
   const stopDrag = () => {
     dragging = false;
@@ -1832,6 +1881,11 @@ document.addEventListener('DOMContentLoaded', () => {
       onUpdate: (self) => {
         if (hasUserOverride || dragging) return;
         setSwitch(self.progress * 100);
+        if (!reducedMotion) {
+          const xRatio = (self.progress - 0.5) * 0.65;
+          const yRatio = (0.5 - self.progress) * 0.2;
+          setParallax(xRatio, yRatio);
+        }
       },
     });
 

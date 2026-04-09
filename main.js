@@ -1911,6 +1911,11 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: pinContainer,
       scrub: reducedMotion ? false : 0.5,
       onUpdate: (self) => {
+        if (!reducedMotion) {
+          const xRatio = (self.progress - 0.5) * 0.65;
+          const yRatio = (0.5 - self.progress) * 0.2;
+          setParallax(xRatio, yRatio);
+        }
         scrollPct = clamp(self.progress * 100, DIVIDER_MIN, DIVIDER_MAX);
       },
     });

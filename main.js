@@ -1771,6 +1771,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const artLayers = Array.from(hero.querySelectorAll('[data-hero-art-layer]'));
+  const fallbackLayers = artLayers.length
+    ? []
+    : Array.from(hero.querySelectorAll('.hero-dual-panel-pt .hero-dual-content, .hero-dual-panel-nutrition .hero-dual-content'));
 
   let rafId = null;
   let scrollPct = 0;
@@ -1790,10 +1793,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let pointerXRatio = 0;
   let pointerYRatio = 0;
 
-  const layerRegistry = artLayers.map((layer) => {
+  const layerRegistry = (artLayers.length ? artLayers : fallbackLayers).map((layer) => {
     const layerName = (layer.getAttribute('data-hero-art-layer') || '').trim();
     const depthValue = Number.parseFloat(layer.getAttribute('data-hero-depth'));
-    const depth = Number.isFinite(depthValue) ? depthValue : 1;
+    const fallbackDepth = layer.classList.contains('hero-dual-content') ? 0.35 : 1;
+    const depth = Number.isFinite(depthValue) ? depthValue : fallbackDepth;
     const isFloatingLayer = layerName === 'float-a' || layerName === 'float-b';
 
     if (!isFloatingLayer) return { target: layer, depth };
@@ -1817,17 +1821,29 @@ document.addEventListener('DOMContentLoaded', () => {
     return { target: wrapper, depth };
   });
 
-  const setParallax = (xRatio, yRatio) => {
-    if (!layerRegistry.length || window.innerWidth <= 900) return;
+  const layerControllers = layerRegistry.map(({ target, depth }) => ({
+    target,
+    depth,
+    setX: gsap.quickTo(target, 'x', { duration: reducedMotion ? 0 : 0.45, ease: 'power2.out' }),
+    setY: gsap.quickTo(target, 'y', { duration: reducedMotion ? 0 : 0.45, ease: 'power2.out' }),
+  }));
 
-    layerRegistry.forEach(({ target, depth }) => {
-      gsap.to(target, {
-        x: xRatio * parallaxStrength * depth,
-        y: yRatio * parallaxStrength * depth,
-        duration: reducedMotion ? 0 : 0.45,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
+  const resetParallax = () => {
+    layerControllers.forEach(({ setX, setY }) => {
+      setX(0);
+      setY(0);
+    });
+  };
+
+  const setParallax = (xRatio, yRatio) => {
+    if (!layerControllers.length || window.innerWidth <= 900) {
+      resetParallax();
+      return;
+    }
+
+    layerControllers.forEach(({ depth, setX, setY }) => {
+      setX(xRatio * parallaxStrength * depth);
+      setY(yRatio * parallaxStrength * depth);
     });
   };
 
@@ -1852,37 +1868,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, POINTER_DECAY_MS);
   };
 
-  const setParallax = (xRatio, yRatio) => {
-    if (reducedMotion || !parallaxLayers.length) return;
-    parallaxLayers.forEach((layer) => {
-      const depth = layer.dataset.heroArtLayer === 'soft' ? 0.35 : layer.dataset.heroArtLayer === 'float-b' ? 0.75 : 0.58;
-      gsap.to(layer, {
-        x: xRatio * parallaxStrength * depth,
-        y: yRatio * parallaxStrength * depth,
-        duration: 0.8,
-        overwrite: true,
-        ease: 'sine.out',
-      });
-    });
-  };
-
-  track.addEventListener('pointermove', (event) => {
-    if (window.innerWidth <= 900 || reducedMotion) return;
-    const rect = track.getBoundingClientRect();
-    const xRatio = ((event.clientX - rect.left) / Math.max(1, rect.width)) - 0.5;
-    const yRatio = ((event.clientY - rect.top) / Math.max(1, rect.height)) - 0.5;
-    setParallax(xRatio, yRatio);
-  });
-
-  track.addEventListener('pointerleave', () => {
-    setParallax(0, 0);
-  });
-
-  const stopDrag = () => {
-    dragging = false;
-    window.removeEventListener('pointermove', onPointerMove);
-    window.removeEventListener('pointerup', onPointerUp);
-  };
   const tick = () => {
     targetPct = pointerActive ? pointerPct : scrollPct;
     currentPct += (targetPct - currentPct) * (reducedMotion ? 1 : SMOOTHING);
@@ -1912,6 +1897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pointerActive = false;
     pointerXRatio = 0;
     pointerYRatio = 0;
+    setParallax(0, 0);
   });
 
   const mm = gsap.matchMedia();
@@ -1931,13 +1917,6 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: pinContainer,
       scrub: reducedMotion ? false : 0.5,
       onUpdate: (self) => {
-        if (hasUserOverride || dragging) return;
-        setSwitch(self.progress * 100);
-        if (!reducedMotion) {
-          const xRatio = (self.progress - 0.5) * 0.65;
-          const yRatio = (0.5 - self.progress) * 0.2;
-          setParallax(xRatio, yRatio);
-        }
         scrollPct = clamp(self.progress * 100, DIVIDER_MIN, DIVIDER_MAX);
       },
     });
@@ -1956,6 +1935,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rafId = null;
       }
       setReveal(DIVIDER_MIN);
+      resetParallax();
     };
   });
 });

@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = gsap.utils.toArray('[data-different-card]');
   if (!cards.length) return;
 
+
   const mm = gsap.matchMedia();
   let diffTriggers = [];
 
@@ -477,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!document.body.classList.contains('page-home')) return;
 
   gsap.registerPlugin(ScrollTrigger);
+
 
   const mm = gsap.matchMedia();
 
@@ -1773,186 +1775,132 @@ document.addEventListener('DOMContentLoaded', () => {
   startTyping();
 });
 
-// HOME HERO DESKTOP: premium dual identity reveal (scroll + mouse controlled divider)
+// HOME HERO: cinematic 3-stage pinned storytelling rebuild
+
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
   if (!document.body.classList.contains('page-home')) return;
 
-  const hero = document.querySelector('.hero-dual[data-mobile-theme="hero"]');
-  const pinContainer = hero && hero.querySelector('[data-hero-dual]');
-  const track = hero && hero.querySelector('[data-hero-dual-track]');
-  if (!hero || !pinContainer || !track) return;
+  const hero = document.querySelector('.hero-cinematic[data-mobile-theme="hero"]');
+  const pin = hero && hero.querySelector('[data-hero-cinematic-pin]');
+  const diagonalLayer = hero && hero.querySelector('[data-hero-layer="diagonal"]');
+  const finalLayer = hero && hero.querySelector('[data-hero-layer="final"]');
+  const ptCopy = hero && hero.querySelector('[data-hero-copy="pt"]');
+  const ptLabel = ptCopy && ptCopy.querySelector('.hero-copy-label');
+  const ptTitle = ptCopy && ptCopy.querySelector('h1');
+  const nutritionCopy = hero && hero.querySelector('[data-hero-copy="nutrition"]');
+  const finalCopy = hero && hero.querySelector('[data-hero-copy="final"]');
+  const parallaxLayers = hero ? Array.from(hero.querySelectorAll('[data-hero-parallax]')) : [];
+  if (!hero || !pin || !diagonalLayer || !finalLayer || !ptCopy || !ptTitle || !nutritionCopy || !finalCopy) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const artLayers = Array.from(hero.querySelectorAll('[data-hero-art-layer]'));
-  const fallbackLayers = artLayers.length
-    ? []
-    : Array.from(hero.querySelectorAll('.hero-dual-panel-pt .hero-dual-content, .hero-dual-panel-nutrition .hero-dual-content'));
+  if (reducedMotion) return;
 
-  let rafId = null;
-  let scrollPct = 0;
-  let pointerPct = 0;
-  let pointerActive = false;
-  let currentPct = 0;
-  let targetPct = 0;
-
-  const DIVIDER_MIN = 2;
-  const DIVIDER_MAX = 98;
-  const DOMINANT_THRESHOLD = 54;
-  const SMOOTHING = 0.14;
-  const POINTER_DECAY_MS = 1300;
-  const parallaxStrength = 22;
-
-  let pointerTimeoutId = null;
-  let pointerXRatio = 0;
-  let pointerYRatio = 0;
-
-  const layerRegistry = (artLayers.length ? artLayers : fallbackLayers).map((layer) => {
-    const layerName = (layer.getAttribute('data-hero-art-layer') || '').trim();
-    const depthValue = Number.parseFloat(layer.getAttribute('data-hero-depth'));
-    const fallbackDepth = layer.classList.contains('hero-dual-content') ? 0.35 : 1;
-    const depth = Number.isFinite(depthValue) ? depthValue : fallbackDepth;
-    const isFloatingLayer = layerName === 'float-a' || layerName === 'float-b';
-
-    if (!isFloatingLayer) return { target: layer, depth };
-
-    const parent = layer.parentElement;
-    if (parent && parent.hasAttribute('data-hero-parallax-wrap')) {
-      return { target: parent, depth };
-    }
-
-    const wrapper = document.createElement('span');
-    wrapper.className = 'hero-art-parallax-wrap';
-    wrapper.setAttribute('data-hero-parallax-wrap', '');
-    wrapper.style.position = 'absolute';
-    wrapper.style.inset = '0';
-    wrapper.style.display = 'block';
-    wrapper.style.pointerEvents = 'none';
-
-    layer.parentNode.insertBefore(wrapper, layer);
-    wrapper.appendChild(layer);
-
-    return { target: wrapper, depth };
-  });
-
-  const resetParallax = () => {
-    if (!layerRegistry.length) return;
-    layerRegistry.forEach(({ target }) => {
-      gsap.set(target, { x: 0, y: 0 });
-    });
+  const toNumber = (value, fallback) => {
+    const n = Number.parseFloat(value);
+    return Number.isFinite(n) ? n : fallback;
   };
 
-  const setParallax = (xRatio, yRatio) => {
-    if (!layerRegistry.length) return;
-    if (window.innerWidth <= 900) {
-      resetParallax();
-      return;
-    }
+  const parallaxData = parallaxLayers.map((layer) => ({
+    layer,
+    depth: toNumber(layer.getAttribute('data-hero-parallax'), 0.4),
+  }));
 
-    layerControllers.forEach(({ depth, setX, setY }) => {
-      setX(xRatio * parallaxStrength * depth);
-      setY(yRatio * parallaxStrength * depth);
-    });
-  };
+  const aquaParallax = toNumber(getComputedStyle(hero).getPropertyValue('--hero-parallax-a'), 42);
+  const blackParallax = toNumber(getComputedStyle(hero).getPropertyValue('--hero-parallax-b'), 75);
 
-  const setReveal = (percent) => {
-    const safe = clamp(percent, DIVIDER_MIN, DIVIDER_MAX);
-    currentPct = safe;
-    hero.style.setProperty('--hero-reveal', `${safe.toFixed(2)}%`);
-    hero.setAttribute('data-active-identity', safe >= DOMINANT_THRESHOLD ? 'nutrition' : 'pt');
-  };
-
-  const updatePointerPercent = (clientX) => {
-    const rect = track.getBoundingClientRect();
-    if (rect.width <= 0) return;
-    const relative = ((clientX - rect.left) / rect.width) * 100;
-    pointerPct = clamp(relative, DIVIDER_MIN, DIVIDER_MAX);
-    pointerXRatio = clamp((clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1);
-    pointerActive = true;
-
-    if (pointerTimeoutId) window.clearTimeout(pointerTimeoutId);
-    pointerTimeoutId = window.setTimeout(() => {
-      pointerActive = false;
-    }, POINTER_DECAY_MS);
-  };
-
-  const tick = () => {
-    targetPct = pointerActive ? pointerPct : scrollPct;
-    currentPct += (targetPct - currentPct) * (reducedMotion ? 1 : SMOOTHING);
-
-    if (Math.abs(targetPct - currentPct) < 0.08) {
-      currentPct = targetPct;
-    }
-
-    setReveal(currentPct);
-    const scrollRatio = ((currentPct - 50) / 50) * 0.55;
-    const parallaxX = pointerActive ? pointerXRatio : scrollRatio;
-    const parallaxY = pointerActive ? pointerYRatio : 0;
-    setParallax(parallaxX, parallaxY);
-    rafId = window.requestAnimationFrame(tick);
-  };
-
-  track.addEventListener('mousemove', (event) => {
-    if (window.innerWidth <= 900) return;
-    const rect = track.getBoundingClientRect();
-    if (rect.height > 0) {
-      pointerYRatio = clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1);
-    }
-    updatePointerPercent(event.clientX);
-  });
-
-  track.addEventListener('mouseleave', () => {
-    pointerActive = false;
-    pointerXRatio = 0;
-    pointerYRatio = 0;
-    setParallax(0, 0);
-  });
 
   const mm = gsap.matchMedia();
   mm.add('(min-width: 901px)', () => {
-    scrollPct = DIVIDER_MIN;
-    pointerPct = DIVIDER_MIN;
-    currentPct = DIVIDER_MIN;
-    setReveal(DIVIDER_MIN);
-
-    if (rafId) window.cancelAnimationFrame(rafId);
-    rafId = window.requestAnimationFrame(tick);
-
-    const trigger = ScrollTrigger.create({
-      trigger: hero,
-      start: 'top top',
-      end: '+=150%',
-      pin: pinContainer,
-      scrub: reducedMotion ? false : 0.5,
-      onUpdate: (self) => {
-        if (!reducedMotion) {
-          const xRatio = (self.progress - 0.5) * 0.65;
-          const yRatio = (0.5 - self.progress) * 0.2;
-          setParallax(xRatio, yRatio);
-        }
-        scrollPct = clamp(self.progress * 100, DIVIDER_MIN, DIVIDER_MAX);
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: '+=220%',
+        pin,
+        scrub: 0.7,
+        anticipatePin: 1,
       },
     });
 
+    tl.addLabel('stage1', 0)
+      .to(parallaxData.map((d) => d.layer), {
+        y: (index) => -(aquaParallax * parallaxData[index].depth),
+        x: (index) => aquaParallax * 0.2 * parallaxData[index].depth,
+        opacity: (index, target) => target.classList.contains('hero-abstract-b') ? 0.28 : 0.4,
+        duration: 1,
+      }, 'stage1')
+      .addLabel('stage2', 1)
+      .to(diagonalLayer, {
+        xPercent: -108,
+        duration: 1.2,
+        ease: 'power2.inOut',
+      }, 'stage2')
+      .to(ptCopy, {
+        x: () => -((window.innerWidth * 0.5) - (window.innerWidth * 0.14)),
+        y: () => -((window.innerHeight * 0.5) - (window.innerHeight * 0.14)),
+        duration: 1.2,
+        ease: 'power2.inOut',
+        onStart: () => {
+          ptCopy.style.textAlign = 'left';
+        },
+      }, 'stage2')
+      .to(ptTitle, {
+        fontSize: 'var(--hero-pt-stage2-size)',
+        letterSpacing: '0.2em',
+        duration: 1.2,
+        ease: 'power2.inOut',
+      }, 'stage2')
+      .to(ptLabel, {
+        autoAlpha: 0,
+        y: -24,
+        duration: 0.55,
+        ease: 'power1.out',
+      }, 'stage2')
+      .fromTo(nutritionCopy, {
+        autoAlpha: 0,
+        y: 30,
+      }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+      }, 'stage2+=0.28')
+      .to(parallaxData.map((d) => d.layer), {
+        y: (index) => -(blackParallax * parallaxData[index].depth),
+        x: (index) => -blackParallax * 0.25 * parallaxData[index].depth,
+        duration: 1,
+      }, 'stage2')
+      .addLabel('stage3', 2.2)
+      .to(finalLayer, {
+        yPercent: -104,
+        duration: 1.05,
+        ease: 'power3.inOut',
+      }, 'stage3')
+      .to([ptCopy, nutritionCopy], {
+        autoAlpha: 0,
+        y: -26,
+        duration: 0.58,
+        ease: 'power1.out',
+      }, 'stage3+=0.04')
+      .fromTo(finalCopy, {
+        autoAlpha: 0,
+        y: 34,
+      }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+      }, 'stage3+=0.38');
+
     return () => {
-      trigger.kill();
-      pointerActive = false;
-      pointerXRatio = 0;
-      pointerYRatio = 0;
-      resetParallax();
-      if (pointerTimeoutId) {
-        window.clearTimeout(pointerTimeoutId);
-        pointerTimeoutId = null;
-      }
-      if (rafId) {
-        window.cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      setReveal(DIVIDER_MIN);
-      resetParallax();
+      tl.kill();
+      gsap.set([diagonalLayer, finalLayer, ptCopy, nutritionCopy, finalCopy, ptLabel, ptTitle, ...parallaxData.map((d) => d.layer)], {
+        clearProps: 'all',
+      });
     };
   });
 });

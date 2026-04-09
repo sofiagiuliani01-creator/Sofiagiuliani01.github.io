@@ -14066,6 +14066,7 @@ body.app-page {
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(10, 18, 28, 0.22);
   isolation: isolate;
+  border: 1px solid rgba(7, 52, 56, 0.12);
 }
 
 .page-home .hero-dual-panel {
@@ -14091,22 +14092,14 @@ body.app-page {
   max-width: min(900px, 90%);
 }
 
-.page-home .hero-dual-kicker {
-  margin: 0 0 14px;
-  font-size: clamp(0.76rem, 1.2vw, 0.95rem);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  font-weight: 700;
-  opacity: 0.75;
-}
-
 .page-home .hero-dual-panel h1,
 .page-home .hero-dual-panel h2 {
   margin: 0;
-  font-size: clamp(2.2rem, 7vw, 6.2rem);
+  font-family: "Arial Black", "Montserrat", "Inter", sans-serif;
+  font-size: clamp(2.4rem, 7.8vw, 7rem);
   line-height: 0.95;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.055em;
   font-weight: 900;
 }
 
@@ -14123,6 +14116,9 @@ body.app-page {
 .page-home .hero-dual-btn {
   margin-top: clamp(20px, 3vw, 34px);
   font-size: clamp(0.88rem, 1.25vw, 1.04rem);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding-inline: clamp(18px, 2.4vw, 32px);
 }
 
 .page-home .hero-dual-btn-nutrition {

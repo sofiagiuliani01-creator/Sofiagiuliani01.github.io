@@ -1812,7 +1812,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth <= 900) return;
     if (event.target === handle || handle.contains(event.target)) return;
     hasUserOverride = true;
-    setSwitch((((event.clientX - track.getBoundingClientRect().left) / track.getBoundingClientRect().width) * 100));
+    dragging = true;
+    track.setPointerCapture(event.pointerId);
+    updateFromPointer(event.clientX);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', onPointerUp, { passive: true });
   });
 
   const mm = gsap.matchMedia();

@@ -1926,7 +1926,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 0.88,
+        scale: 1,
         duration: stageDurations.curtainDualMessage,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
@@ -1937,12 +1937,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        y: 72,
-        scale: 1.06,
+        x: 300,
+        y: 0,
+        scale: 1,
       }, {
         autoAlpha: 1,
+        x: 0,
         y: 0,
-        scale: 0.92,
+        scale: 1,
         duration: stageDurations.curtainDualMessage * 0.93,
         ease: 'power2.out',
       }, 'stage2+=0.03')

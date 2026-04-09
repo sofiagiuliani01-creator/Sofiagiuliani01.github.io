@@ -1770,6 +1770,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const artLayers = Array.from(hero.querySelectorAll('[data-hero-art-layer]'));
 
   let rafId = null;
   let scrollPct = 0;
@@ -1783,8 +1784,52 @@ document.addEventListener('DOMContentLoaded', () => {
   const DOMINANT_THRESHOLD = 54;
   const SMOOTHING = 0.14;
   const POINTER_DECAY_MS = 1300;
+  const parallaxStrength = 22;
 
   let pointerTimeoutId = null;
+  let pointerXRatio = 0;
+  let pointerYRatio = 0;
+
+  const layerRegistry = artLayers.map((layer) => {
+    const layerName = (layer.getAttribute('data-hero-art-layer') || '').trim();
+    const depthValue = Number.parseFloat(layer.getAttribute('data-hero-depth'));
+    const depth = Number.isFinite(depthValue) ? depthValue : 1;
+    const isFloatingLayer = layerName === 'float-a' || layerName === 'float-b';
+
+    if (!isFloatingLayer) return { target: layer, depth };
+
+    const parent = layer.parentElement;
+    if (parent && parent.hasAttribute('data-hero-parallax-wrap')) {
+      return { target: parent, depth };
+    }
+
+    const wrapper = document.createElement('span');
+    wrapper.className = 'hero-art-parallax-wrap';
+    wrapper.setAttribute('data-hero-parallax-wrap', '');
+    wrapper.style.position = 'absolute';
+    wrapper.style.inset = '0';
+    wrapper.style.display = 'block';
+    wrapper.style.pointerEvents = 'none';
+
+    layer.parentNode.insertBefore(wrapper, layer);
+    wrapper.appendChild(layer);
+
+    return { target: wrapper, depth };
+  });
+
+  const setParallax = (xRatio, yRatio) => {
+    if (!layerRegistry.length || window.innerWidth <= 900) return;
+
+    layerRegistry.forEach(({ target, depth }) => {
+      gsap.to(target, {
+        x: xRatio * parallaxStrength * depth,
+        y: yRatio * parallaxStrength * depth,
+        duration: reducedMotion ? 0 : 0.45,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    });
+  };
 
   const setReveal = (percent) => {
     const safe = clamp(percent, DIVIDER_MIN, DIVIDER_MAX);
@@ -1798,6 +1843,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rect.width <= 0) return;
     const relative = ((clientX - rect.left) / rect.width) * 100;
     pointerPct = clamp(relative, DIVIDER_MIN, DIVIDER_MAX);
+    pointerXRatio = clamp((clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1);
     pointerActive = true;
 
     if (pointerTimeoutId) window.clearTimeout(pointerTimeoutId);
@@ -1815,16 +1861,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setReveal(currentPct);
+    const scrollRatio = ((currentPct - 50) / 50) * 0.55;
+    const parallaxX = pointerActive ? pointerXRatio : scrollRatio;
+    const parallaxY = pointerActive ? pointerYRatio : 0;
+    setParallax(parallaxX, parallaxY);
     rafId = window.requestAnimationFrame(tick);
   };
 
   track.addEventListener('mousemove', (event) => {
     if (window.innerWidth <= 900) return;
+    const rect = track.getBoundingClientRect();
+    if (rect.height > 0) {
+      pointerYRatio = clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1);
+    }
     updatePointerPercent(event.clientX);
   });
 
   track.addEventListener('mouseleave', () => {
     pointerActive = false;
+    pointerXRatio = 0;
+    pointerYRatio = 0;
   });
 
   const mm = gsap.matchMedia();
@@ -1851,6 +1907,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return () => {
       trigger.kill();
       pointerActive = false;
+      pointerXRatio = 0;
+      pointerYRatio = 0;
       if (pointerTimeoutId) {
         window.clearTimeout(pointerTimeoutId);
         pointerTimeoutId = null;

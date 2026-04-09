@@ -1882,8 +1882,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 0.9,
-    curtainDualMessage: 2.35,
-    dualHold: 0.9,
+    curtainDualMessage: 2.1,
+    dualHold: 1.05,
     blackTakeover: 1,
     roleHold: 0.42,
     distillToLetters: 0.9,
@@ -1918,14 +1918,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power2.inOut',
       }, 'stage2')
       .to(blackSurface, {
-        autoAlpha: 0.7,
-        duration: stageDurations.curtainDualMessage * 0.82,
-        ease: 'power1.out',
+        autoAlpha: 0.76,
+        duration: stageDurations.curtainDualMessage * 0.9,
+        ease: 'power1.inOut',
       }, 'stage2+=0.18')
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 0.96,
+        scale: 0.94,
         duration: stageDurations.curtainDualMessage,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
@@ -1933,24 +1933,25 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptRole, {
         fontSize: 'var(--hero-role-balanced-size)',
         duration: stageDurations.curtainDualMessage,
+        ease: 'power2.inOut',
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        x: 180,
-        y: 0,
-        scale: 0.96,
+        x: 140,
+        y: sceneTargets.nutrition.y,
+        scale: 0.94,
       }, {
         autoAlpha: 1,
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        scale: 0.96,
+        scale: 0.94,
         duration: stageDurations.curtainDualMessage * 0.93,
-        ease: 'power2.out',
+        ease: 'power2.inOut',
       }, 'stage2+=0.03')
       .to(nutritionRole, {
         fontSize: 'var(--hero-role-balanced-size)',
         duration: stageDurations.curtainDualMessage * 0.92,
-        ease: 'power2.out',
+        ease: 'power2.inOut',
       }, 'stage2+=0.04')
       .to(parallaxData.map((d) => d.layer), {
         y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
@@ -2003,8 +2004,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.distillToLetters * 0.48,
-        ease: 'power2.out',
+        duration: stageDurations.distillToLetters * 0.42,
+        ease: 'power2.inOut',
       }, 'stage4+=0.4')
       .fromTo(lsLetterL, (() => {
         const charRect = ptKeyChar ? ptKeyChar.getBoundingClientRect() : null;

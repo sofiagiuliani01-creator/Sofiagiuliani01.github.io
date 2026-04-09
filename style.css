@@ -13035,6 +13035,12 @@ body.app-page {
   content: none;
 }
 
+#come-funziona .step-visual picture{
+  display: block;
+  width: 100%;
+  max-width: 560px;
+}
+
 #come-funziona .step-illu{
   display: block;
   width: 100%;
@@ -13117,6 +13123,8 @@ body.app-page {
     max-width: min(480px, 100%);
     max-width: 100%;
     margin: 0 auto;
+    filter: none;
+    border-radius: 18px;
   }
 
   #come-funziona .step-meta h3{

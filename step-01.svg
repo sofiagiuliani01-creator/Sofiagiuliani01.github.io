@@ -1,34 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Valutazione iniziale personalizzata">
   <defs>
-    <linearGradient id="aqua01" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7df4e5"/>
-      <stop offset="1" stop-color="#42d7ca"/>
+    <linearGradient id="bg01" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f1f3b"/>
+      <stop offset="1" stop-color="#102a4f"/>
+    </linearGradient>
+    <linearGradient id="acc01" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7ef8ea"/>
+      <stop offset="1" stop-color="#37d3c8"/>
     </linearGradient>
     <style>
-      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-      .w{stroke:#eaf8ff;stroke-width:16}
-      .a{stroke:url(#aqua01);stroke-width:16}
-      .p{animation:float 4s ease-in-out infinite}
-      .s{animation:pulse 2s ease-in-out infinite}
-      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-      @keyframes pulse{0%,100%{opacity:.55;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
+      .stroke{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#ebf7ff;stroke-width:14}
+      .a{stroke:url(#acc01);stroke-width:14}
+      .float{animation:float 4.2s ease-in-out infinite}
+      .pulse{animation:pulse 2.1s ease-in-out infinite}
+      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes pulse{0%,100%{opacity:.6;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
     </style>
   </defs>
 
-  <g class="p" transform-origin="360 250">
-    <circle cx="270" cy="245" r="78" class="ln w"/>
-    <path d="M324 300l52 52" class="ln a"/>
+  <rect x="56" y="44" width="608" height="432" rx="44" fill="url(#bg01)"/>
+
+  <g class="float" transform-origin="250 258">
+    <rect x="126" y="134" width="248" height="248" rx="34" class="stroke w"/>
+    <path d="M172 204h156M172 254h104M172 304h128" class="stroke a"/>
   </g>
 
-  <g transform-origin="500 260" class="p" style="animation-delay:.2s">
-    <rect x="418" y="172" width="172" height="176" rx="26" class="ln w"/>
-    <path d="M450 220h108M450 262h78M450 300h96" class="ln a"/>
+  <g class="float" transform-origin="468 254" style="animation-delay:.25s">
+    <circle cx="468" cy="254" r="86" class="stroke w"/>
+    <circle cx="468" cy="254" r="34" class="stroke a"/>
+    <path d="M492 278l42 42" class="stroke a"/>
   </g>
 
-  <g class="s" transform-origin="154 144">
-    <circle cx="154" cy="144" r="11" fill="#7df4e5"/>
-  </g>
-  <g class="s" transform-origin="612 112" style="animation-delay:.5s">
-    <path d="M612 92l8 16 16 8-16 8-8 16-8-16-16-8 16-8z" fill="#42d7ca"/>
+  <g class="pulse" transform-origin="146 116">
+    <circle cx="146" cy="116" r="10" fill="#7ef8ea"/>
   </g>
 </svg>

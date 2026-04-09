@@ -1775,7 +1775,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startTyping();
 });
 
-// HOME HERO: premium cinematic 3-stage pinned storytelling (full-bleed)
+// HOME HERO: premium cinematic pinned brand transformation (full-bleed)
 
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
@@ -1783,14 +1783,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const hero = document.querySelector('.hero-cinematic[data-mobile-theme="hero"]');
   const pin = hero && hero.querySelector('[data-hero-cinematic-pin]');
-  const diagonalLayer = hero && hero.querySelector('[data-hero-layer="diagonal"]');
-  const finalLayer = hero && hero.querySelector('[data-hero-layer="final"]');
+  const curtainLayer = hero && hero.querySelector('[data-hero-layer="curtain"]');
+  const blackSurface = hero && hero.querySelector('[data-hero-layer="black"]');
   const ptCopy = hero && hero.querySelector('[data-hero-copy="pt"]');
   const ptTitle = ptCopy && ptCopy.querySelector('h1');
   const nutritionCopy = hero && hero.querySelector('[data-hero-copy="nutrition"]');
-  const finalCopy = hero && hero.querySelector('[data-hero-copy="final"]');
+  const nutritionTitle = nutritionCopy && nutritionCopy.querySelector('h2');
+  const lsStage = hero && hero.querySelector('[data-hero-copy="ls"]');
+  const lsMark = lsStage && lsStage.querySelector('.hero-ls-mark');
+  const lsLetterL = lsStage && lsStage.querySelector('[data-hero-letter="l"]');
+  const lsLetterS = lsStage && lsStage.querySelector('[data-hero-letter="s"]');
+  const lsCoaching = lsStage && lsStage.querySelector('.hero-ls-coaching');
+  const typingOutput = hero && hero.querySelector('[data-hero-typing-output]');
   const parallaxLayers = hero ? Array.from(hero.querySelectorAll('[data-hero-parallax]')) : [];
-  if (!hero || !pin || !diagonalLayer || !finalLayer || !ptCopy || !ptTitle || !nutritionCopy || !finalCopy) return;
+  if (!hero || !pin || !curtainLayer || !blackSurface || !ptCopy || !ptTitle || !nutritionCopy || !nutritionTitle || !lsStage || !lsMark || !lsLetterL || !lsLetterS || !lsCoaching || !typingOutput) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -1807,34 +1813,84 @@ document.addEventListener('DOMContentLoaded', () => {
     depth: toNum(layer.getAttribute('data-hero-parallax'), 0.4),
   }));
 
-  const getPtTarget = () => {
+  const getSceneTargets = () => {
     const stageRect = pin.getBoundingClientRect();
     const ptRect = ptCopy.getBoundingClientRect();
+    const nutritionRect = nutritionCopy.getBoundingClientRect();
+    const lsRect = lsMark.getBoundingClientRect();
     const styles = getComputedStyle(hero);
-    const targetLeft = toNum(styles.getPropertyValue('--hero-stage2-pt-left'), 5.2) / 100;
-    const targetTop = toNum(styles.getPropertyValue('--hero-stage2-pt-top'), 10.5) / 100;
-    const desiredX = stageRect.width * targetLeft;
-    const desiredY = stageRect.height * targetTop;
+    const ptLeft = toNum(styles.getPropertyValue('--hero-pt-target-x'), 5);
+    const ptTop = toNum(styles.getPropertyValue('--hero-pt-target-y'), 10);
+    const nutLeft = toNum(styles.getPropertyValue('--hero-nut-target-x'), 64);
+    const nutTop = toNum(styles.getPropertyValue('--hero-nut-target-y'), 72);
+    const lsCenterX = toNum(styles.getPropertyValue('--hero-ls-x'), 50);
+    const lsCenterY = toNum(styles.getPropertyValue('--hero-ls-y'), 26);
 
     return {
-      x: desiredX - (ptRect.left - stageRect.left),
-      y: desiredY - (ptRect.top - stageRect.top),
+      pt: {
+        x: stageRect.width * (ptLeft / 100) - (ptRect.left - stageRect.left),
+        y: stageRect.height * (ptTop / 100) - (ptRect.top - stageRect.top),
+      },
+      nutrition: {
+        x: stageRect.width * (nutLeft / 100) - (nutritionRect.left - stageRect.left),
+        y: stageRect.height * (nutTop / 100) - (nutritionRect.top - stageRect.top),
+      },
+      ls: {
+        x: stageRect.width * (lsCenterX / 100) - (lsRect.left - stageRect.left) - (lsRect.width * 0.5),
+        y: stageRect.height * (lsCenterY / 100) - (lsRect.top - stageRect.top) - (lsRect.height * 0.5),
+      },
     };
   };
 
   const stageDurations = {
-    stage1: 1.05,
-    stage2: 1.35,
-    hold: 0.45,
-    stage3: 1.15,
+    intro: 1,
+    curtainToMid: 1.45,
+    midpointHold: 0.7,
+    fullBlackTakeover: 1.2,
+    distillToLS: 1.15,
+    typingReveal: 1.45,
+  };
+
+  const typingScript = {
+    initial: 'in un unico posto...',
+    final: 'in un unico posto per la tua trasformazione definitiva',
+  };
+
+  const backspaceCount = 3;
+  const setTypingByProgress = (progress) => {
+    const clamped = Math.max(0, Math.min(1, progress));
+    const phaseA = 0.45;
+    const phaseB = 0.62;
+
+    if (clamped <= phaseA) {
+      const letters = Math.round((clamped / phaseA) * typingScript.initial.length);
+      typingOutput.textContent = typingScript.initial.slice(0, letters);
+      return;
+    }
+
+    if (clamped <= phaseB) {
+      const local = (clamped - phaseA) / (phaseB - phaseA);
+      const dotsToRemove = Math.round(local * backspaceCount);
+      typingOutput.textContent = typingScript.initial.slice(0, typingScript.initial.length - dotsToRemove);
+      return;
+    }
+
+    const base = typingScript.initial.slice(0, typingScript.initial.length - backspaceCount);
+    const addition = typingScript.final.slice(base.length);
+    const local = (clamped - phaseB) / (1 - phaseB);
+    const addCount = Math.round(local * addition.length);
+    typingOutput.textContent = `${base}${addition.slice(0, addCount)}`;
   };
 
   const mm = gsap.matchMedia();
   mm.add('(min-width: 901px)', () => {
     gsap.set(nutritionCopy, { autoAlpha: 0, y: 54 });
-    gsap.set(finalCopy, { autoAlpha: 0, y: 34 });
+    gsap.set(lsStage, { autoAlpha: 0, y: 36 });
+    gsap.set(lsCoaching, { autoAlpha: 0, x: 18 });
+    gsap.set(typingOutput, { autoAlpha: 0 });
+    typingOutput.textContent = '';
 
-    const ptTarget = getPtTarget();
+    const sceneTargets = getSceneTargets();
     const maxDepth = parallaxData.reduce((max, item) => Math.max(max, item.depth), 1);
 
     const tl = gsap.timeline({
@@ -1842,81 +1898,170 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=250%',
+        end: '+=410%',
         pin,
-        scrub: 0.75,
+        scrub: 0.6,
         anticipatePin: 1,
       },
     });
 
     tl.addLabel('stage1', 0)
       .to(parallaxData.map((d) => d.layer), {
-        y: (index) => -12 * parallaxData[index].depth,
-        x: (index) => 8 * parallaxData[index].depth,
-        duration: stageDurations.stage1,
+        y: (index) => -18 * parallaxData[index].depth,
+        x: (index) => 10 * parallaxData[index].depth,
+        duration: stageDurations.intro,
       }, 'stage1')
-      .addLabel('stage2', stageDurations.stage1)
-      .to(diagonalLayer, {
-        xPercent: -66,
-        duration: stageDurations.stage2,
+      .addLabel('stage2', stageDurations.intro)
+      .to(curtainLayer, {
+        xPercent: -96,
+        duration: stageDurations.curtainToMid,
         ease: 'power2.inOut',
       }, 'stage2')
       .to(ptCopy, {
-        x: ptTarget.x,
-        y: ptTarget.y,
-        scale: 0.3,
-        duration: stageDurations.stage2,
+        x: sceneTargets.pt.x,
+        y: sceneTargets.pt.y,
+        scale: 0.34,
+        duration: stageDurations.curtainToMid,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
         onStart: () => { ptCopy.style.textAlign = 'left'; },
       }, 'stage2')
       .to(ptTitle, {
-        fontSize: 'var(--hero-stage2-pt-size)',
+        fontSize: 'var(--hero-pt-small-size)',
+        color: '#08353a',
         letterSpacing: '0.14em',
-        duration: stageDurations.stage2,
+        duration: stageDurations.curtainToMid,
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        y: 60,
+        y: 52,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.stage2 * 0.72,
+        duration: stageDurations.curtainToMid * 0.68,
         ease: 'power2.out',
-      }, 'stage2+=0.22')
+      }, 'stage2+=0.2')
       .to(parallaxData.map((d) => d.layer), {
         y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
         x: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-soft'), 45) * (parallaxData[index].depth / maxDepth)),
-        duration: stageDurations.stage2,
+        duration: stageDurations.curtainToMid,
       }, 'stage2')
-      .to({}, { duration: stageDurations.hold })
+      .to({}, { duration: stageDurations.midpointHold })
       .addLabel('stage3')
-      .to(finalLayer, {
-        yPercent: 0,
-        duration: stageDurations.stage3,
+      .to(curtainLayer, {
+        xPercent: -170,
+        duration: stageDurations.fullBlackTakeover,
         ease: 'power3.inOut',
+      }, 'stage3+=0.03')
+      .to(blackSurface, {
+        autoAlpha: 1,
+        duration: stageDurations.fullBlackTakeover * 0.86,
       }, 'stage3')
-      .to([ptCopy, nutritionCopy], {
+      .to(ptTitle, {
+        color: '#f6f6f6',
+        duration: stageDurations.fullBlackTakeover * 0.6,
+      }, 'stage3+=0.2')
+      .to(ptCopy, {
+        scale: 0.3,
+        duration: stageDurations.fullBlackTakeover,
+      }, 'stage3')
+      .to(nutritionCopy, {
+        x: sceneTargets.nutrition.x,
+        y: sceneTargets.nutrition.y,
+        scale: 0.72,
+        duration: stageDurations.fullBlackTakeover,
+        ease: 'power2.inOut',
+      }, 'stage3')
+      .to(nutritionTitle, {
+        fontSize: 'var(--hero-nut-small-size)',
+        duration: stageDurations.fullBlackTakeover,
+      }, 'stage3')
+      .addLabel('stage4')
+      .to([ptTitle, nutritionTitle], {
         autoAlpha: 0,
-        y: -24,
-        duration: stageDurations.stage3 * 0.54,
+        duration: stageDurations.distillToLS * 0.45,
         ease: 'power1.out',
-      }, 'stage3+=0.04')
-      .fromTo(finalCopy, {
+      }, 'stage4')
+      .fromTo(lsStage, {
         autoAlpha: 0,
-        y: 34,
+        y: 38,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.stage3 * 0.72,
+        duration: stageDurations.distillToLS * 0.75,
         ease: 'power2.out',
-      }, 'stage3+=0.38');
+      }, 'stage4+=0.16')
+      .fromTo(lsLetterL, {
+        x: -18,
+      }, {
+        x: 0,
+        duration: stageDurations.distillToLS * 0.7,
+        ease: 'power2.out',
+      }, 'stage4+=0.2')
+      .fromTo(lsLetterS, {
+        x: 18,
+      }, {
+        x: 0,
+        duration: stageDurations.distillToLS * 0.7,
+        ease: 'power2.out',
+      }, 'stage4+=0.2')
+      .to(lsCoaching, {
+        autoAlpha: 1,
+        x: 0,
+        duration: stageDurations.distillToLS * 0.5,
+      }, 'stage4+=0.45')
+      .to([ptCopy, nutritionCopy], {
+        autoAlpha: 0,
+        duration: stageDurations.distillToLS * 0.4,
+      }, 'stage4+=0.35')
+      .addLabel('stage5')
+      .to(typingOutput, {
+        autoAlpha: 1,
+        duration: stageDurations.typingReveal * 0.2,
+      }, 'stage5')
+      .to({}, {
+        duration: stageDurations.typingReveal,
+        onUpdate() {
+          const progress = this.progress();
+          setTypingByProgress(progress);
+        },
+        onReverseComplete() {
+          typingOutput.textContent = '';
+        },
+      }, 'stage5');
 
     return () => {
       tl.kill();
-      gsap.set([diagonalLayer, finalLayer, ptCopy, nutritionCopy, finalCopy, ptTitle, ...parallaxData.map((d) => d.layer)], {
+      typingOutput.textContent = '';
+      gsap.set([
+        curtainLayer,
+        blackSurface,
+        ptCopy,
+        nutritionCopy,
+        ptTitle,
+        nutritionTitle,
+        lsStage,
+        lsMark,
+        lsLetterL,
+        lsLetterS,
+        lsCoaching,
+        typingOutput,
+        ...parallaxData.map((d) => d.layer),
+      ], {
         clearProps: 'all',
       });
     };
+  });
+
+  mm.add('(max-width: 900px)', () => {
+    gsap.set(blackSurface, { autoAlpha: 1 });
+    gsap.set(curtainLayer, { autoAlpha: 0 });
+    gsap.set(nutritionCopy, { autoAlpha: 1 });
+    gsap.set(ptCopy, { clearProps: 'all' });
+    gsap.set(ptTitle, { fontSize: 'var(--hero-pt-small-size)', color: '#fff' });
+    gsap.set(nutritionTitle, { fontSize: 'var(--hero-nut-small-size)' });
+    gsap.set(lsStage, { autoAlpha: 1 });
+    gsap.set(lsCoaching, { autoAlpha: 1, x: 0 });
+    typingOutput.textContent = typingScript.final;
   });
 });

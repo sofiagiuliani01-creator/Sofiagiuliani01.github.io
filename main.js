@@ -1852,6 +1852,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }, POINTER_DECAY_MS);
   };
 
+  const setParallax = (xRatio, yRatio) => {
+    if (reducedMotion || !parallaxLayers.length) return;
+    parallaxLayers.forEach((layer) => {
+      const depth = layer.dataset.heroArtLayer === 'soft' ? 0.35 : layer.dataset.heroArtLayer === 'float-b' ? 0.75 : 0.58;
+      gsap.to(layer, {
+        x: xRatio * parallaxStrength * depth,
+        y: yRatio * parallaxStrength * depth,
+        duration: 0.8,
+        overwrite: true,
+        ease: 'sine.out',
+      });
+    });
+  };
+
+  track.addEventListener('pointermove', (event) => {
+    if (window.innerWidth <= 900 || reducedMotion) return;
+    const rect = track.getBoundingClientRect();
+    const xRatio = ((event.clientX - rect.left) / Math.max(1, rect.width)) - 0.5;
+    const yRatio = ((event.clientY - rect.top) / Math.max(1, rect.height)) - 0.5;
+    setParallax(xRatio, yRatio);
+  });
+
+  track.addEventListener('pointerleave', () => {
+    setParallax(0, 0);
+  });
+
+  const stopDrag = () => {
+    dragging = false;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+  };
   const tick = () => {
     targetPct = pointerActive ? pointerPct : scrollPct;
     currentPct += (targetPct - currentPct) * (reducedMotion ? 1 : SMOOTHING);
@@ -1900,6 +1931,13 @@ document.addEventListener('DOMContentLoaded', () => {
       pin: pinContainer,
       scrub: reducedMotion ? false : 0.5,
       onUpdate: (self) => {
+        if (hasUserOverride || dragging) return;
+        setSwitch(self.progress * 100);
+        if (!reducedMotion) {
+          const xRatio = (self.progress - 0.5) * 0.65;
+          const yRatio = (0.5 - self.progress) * 0.2;
+          setParallax(xRatio, yRatio);
+        }
         scrollPct = clamp(self.progress * 100, DIVIDER_MIN, DIVIDER_MAX);
       },
     });

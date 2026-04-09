@@ -1808,6 +1808,41 @@ document.addEventListener('DOMContentLoaded', () => {
     return Number.isFinite(n) ? n : fallback;
   };
 
+  const splitTitleChars = (element, markerFn) => {
+    if (!element) return [];
+    const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!text) return [];
+
+    element.textContent = '';
+    const chars = [];
+    Array.from(text).forEach((char, index) => {
+      const span = document.createElement('span');
+      span.className = 'hero-char';
+      span.style.display = 'inline-block';
+      span.style.whiteSpace = 'pre';
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      if (markerFn(char, index, text)) {
+        span.classList.add('hero-char-key');
+      }
+      chars.push(span);
+      element.appendChild(span);
+    });
+
+    return chars;
+  };
+
+  const ptChars = splitTitleChars(ptTitle, (_char, index, text) => {
+    const personalEnd = text.indexOf(' ');
+    return personalEnd > 0 && index === personalEnd - 1;
+  });
+  const nutritionChars = splitTitleChars(nutritionTitle, (char, index, text) => {
+    const normalized = text.toUpperCase();
+    const focusIndex = normalized.lastIndexOf('S');
+    return index === focusIndex && char.toUpperCase() === 'S';
+  });
+  const ptKeyChar = ptTitle.querySelector('.hero-char-key');
+  const nutritionKeyChar = nutritionTitle.querySelector('.hero-char-key');
+
   const parallaxData = parallaxLayers.map((layer) => ({
     layer,
     depth: toNum(layer.getAttribute('data-hero-parallax'), 0.4),
@@ -1844,10 +1879,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 1,
-    curtainToMid: 1.45,
-    midpointHold: 0.7,
-    fullBlackTakeover: 1.2,
-    distillToLS: 1.15,
+    curtainToMid: 1.55,
+    midpointHold: 0.35,
+    fullBlackTakeover: 1.1,
+    convergeRoles: 0.95,
+    distillToLS: 1.1,
     typingReveal: 1.45,
   };
 
@@ -1920,27 +1956,34 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 0.34,
+        scale: 0.63,
         duration: stageDurations.curtainToMid,
         transformOrigin: 'left top',
         ease: 'power2.inOut',
         onStart: () => { ptCopy.style.textAlign = 'left'; },
       }, 'stage2')
       .to(ptTitle, {
-        fontSize: 'var(--hero-pt-small-size)',
-        color: '#08353a',
-        letterSpacing: '0.14em',
+        fontSize: 'var(--hero-role-balanced-size)',
+        color: '#0d3f43',
+        letterSpacing: '0.12em',
         duration: stageDurations.curtainToMid,
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
         y: 52,
+        scale: 1.14,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.curtainToMid * 0.68,
+        scale: 1,
+        duration: stageDurations.curtainToMid * 0.86,
         ease: 'power2.out',
-      }, 'stage2+=0.2')
+      }, 'stage2+=0.08')
+      .to(nutritionTitle, {
+        fontSize: 'var(--hero-role-balanced-size)',
+        duration: stageDurations.curtainToMid * 0.9,
+        ease: 'power2.out',
+      }, 'stage2+=0.1')
       .to(parallaxData.map((d) => d.layer), {
         y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
         x: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-soft'), 45) * (parallaxData[index].depth / maxDepth)),
@@ -1962,25 +2005,46 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.fullBlackTakeover * 0.6,
       }, 'stage3+=0.2')
       .to(ptCopy, {
-        scale: 0.3,
+        scale: 0.58,
         duration: stageDurations.fullBlackTakeover,
       }, 'stage3')
       .to(nutritionCopy, {
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        scale: 0.72,
+        scale: 0.92,
         duration: stageDurations.fullBlackTakeover,
         ease: 'power2.inOut',
       }, 'stage3')
       .to(nutritionTitle, {
-        fontSize: 'var(--hero-nut-small-size)',
+        fontSize: 'var(--hero-role-converge-size)',
         duration: stageDurations.fullBlackTakeover,
       }, 'stage3')
+      .to(ptTitle, {
+        fontSize: 'var(--hero-role-converge-size)',
+        duration: stageDurations.fullBlackTakeover,
+      }, 'stage3')
+      .addLabel('stage3b')
+      .to(nutritionCopy, {
+        y: sceneTargets.pt.y + (sceneTargets.nutrition.y - sceneTargets.pt.y) * 0.54,
+        x: sceneTargets.pt.x + (sceneTargets.nutrition.x - sceneTargets.pt.x) * 0.78,
+        duration: stageDurations.convergeRoles,
+        ease: 'power2.inOut',
+      }, 'stage3b')
+      .to(ptCopy, {
+        y: sceneTargets.pt.y - 12,
+        duration: stageDurations.convergeRoles,
+        ease: 'power2.inOut',
+      }, 'stage3b')
       .addLabel('stage4')
-      .to([ptTitle, nutritionTitle], {
+      .to([...ptChars.filter((char) => !char.classList.contains('hero-char-key')), ...nutritionChars.filter((char) => !char.classList.contains('hero-char-key'))], {
         autoAlpha: 0,
-        duration: stageDurations.distillToLS * 0.45,
+        filter: 'blur(3px)',
+        duration: stageDurations.distillToLS * 0.48,
         ease: 'power1.out',
+      }, 'stage4')
+      .to([ptTitle, nutritionTitle], {
+        letterSpacing: '0.08em',
+        duration: stageDurations.distillToLS * 0.4,
       }, 'stage4')
       .fromTo(lsStage, {
         autoAlpha: 0,
@@ -1991,17 +2055,33 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.distillToLS * 0.75,
         ease: 'power2.out',
       }, 'stage4+=0.16')
-      .fromTo(lsLetterL, {
-        x: -18,
-      }, {
+      .fromTo(lsLetterL, (() => {
+        const charRect = ptKeyChar ? ptKeyChar.getBoundingClientRect() : null;
+        const targetRect = lsLetterL.getBoundingClientRect();
+        return {
+          x: charRect ? charRect.left - targetRect.left : -28,
+          y: charRect ? charRect.top - targetRect.top : -6,
+          autoAlpha: 0.2,
+        };
+      })(), {
         x: 0,
+        y: 0,
+        autoAlpha: 1,
         duration: stageDurations.distillToLS * 0.7,
         ease: 'power2.out',
       }, 'stage4+=0.2')
-      .fromTo(lsLetterS, {
-        x: 18,
-      }, {
+      .fromTo(lsLetterS, (() => {
+        const charRect = nutritionKeyChar ? nutritionKeyChar.getBoundingClientRect() : null;
+        const targetRect = lsLetterS.getBoundingClientRect();
+        return {
+          x: charRect ? charRect.left - targetRect.left : 28,
+          y: charRect ? charRect.top - targetRect.top : 6,
+          autoAlpha: 0.2,
+        };
+      })(), {
         x: 0,
+        y: 0,
+        autoAlpha: 1,
         duration: stageDurations.distillToLS * 0.7,
         ease: 'power2.out',
       }, 'stage4+=0.2')
@@ -2012,8 +2092,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage4+=0.45')
       .to([ptCopy, nutritionCopy], {
         autoAlpha: 0,
-        duration: stageDurations.distillToLS * 0.4,
-      }, 'stage4+=0.35')
+        duration: stageDurations.distillToLS * 0.45,
+      }, 'stage4+=0.5')
       .addLabel('stage5')
       .to(typingOutput, {
         autoAlpha: 1,

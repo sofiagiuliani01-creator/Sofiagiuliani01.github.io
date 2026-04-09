@@ -105,9 +105,26 @@ const burger = document.querySelector('.burger');
 const mainNav = document.querySelector('.main-nav');
 
 if (burger && mainNav) {
+  const navLinks = Array.from(mainNav.querySelectorAll('a'));
+
+  const setMenuState = (isOpen) => {
+    mainNav.classList.toggle('open', isOpen);
+    burger.classList.toggle('is-open', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  setMenuState(false);
+
   burger.addEventListener('click', () => {
-    mainNav.classList.toggle('open');
-    burger.classList.toggle('is-open');
+    setMenuState(!mainNav.classList.contains('open'));
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => setMenuState(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenuState(false);
   });
 }
 

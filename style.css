@@ -14167,14 +14167,16 @@ body.app-page {
   box-shadow: 0 16px 32px rgba(155, 99, 35, 0.3);
 }
 
-.page-home .hero-dual[data-active-identity="pt"] [data-hero-cta="nutrition"] {
-  opacity: 0;
-  pointer-events: none;
-}
+@media (min-width: 901px) {
+  .page-home .hero-dual[data-active-identity="pt"] [data-hero-cta="nutrition"] {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-.page-home .hero-dual[data-active-identity="nutrition"] [data-hero-cta="pt"] {
-  opacity: 0;
-  pointer-events: none;
+  .page-home .hero-dual[data-active-identity="nutrition"] [data-hero-cta="pt"] {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .page-home .hero-dual-divider {

@@ -1756,54 +1756,54 @@ document.addEventListener('DOMContentLoaded', () => {
   startTyping();
 });
 
-// HOME HERO DESKTOP: pin + switch Personal Trainer / Nutrizionista
+// HOME HERO DESKTOP: premium dual identity reveal (scroll + mouse controlled divider)
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
   if (!document.body.classList.contains('page-home')) return;
 
   const hero = document.querySelector('.hero-dual[data-mobile-theme="hero"]');
+  const pinContainer = hero && hero.querySelector('[data-hero-dual]');
   const track = hero && hero.querySelector('[data-hero-dual-track]');
-  const handle = hero && hero.querySelector('[data-hero-dual-handle]');
-  const parallaxLayers = hero ? hero.querySelectorAll('[data-hero-art-layer]') : [];
-  const drawablePaths = hero ? hero.querySelectorAll('[data-hero-draw]') : [];
-  if (!hero || !track || !handle) return;
+  if (!hero || !pinContainer || !track) return;
 
   gsap.registerPlugin(ScrollTrigger);
 
-  let dragging = false;
-  let hasUserOverride = false;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const parallaxStrength = window.matchMedia('(max-width: 900px)').matches ? 8 : 20;
-
-  if (!reducedMotion && drawablePaths.length) {
-    drawablePaths.forEach((path) => {
-      const pathLength = path.getTotalLength();
-      path.style.strokeDasharray = `${pathLength}`;
-      path.style.strokeDashoffset = `${pathLength}`;
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        duration: 1.8,
-        delay: 0.12,
-        ease: 'power2.out',
-      });
-    });
-  } else {
-    drawablePaths.forEach((path) => {
-      path.style.strokeDasharray = 'none';
-      path.style.strokeDashoffset = '0';
-    });
-  }
-
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-  const setSwitch = (percent) => {
-    const safePercent = clamp(percent, 0, 100);
-    hero.style.setProperty('--hero-switch', `${safePercent.toFixed(2)}%`);
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let rafId = null;
+  let scrollPct = 0;
+  let pointerPct = 0;
+  let pointerActive = false;
+  let currentPct = 0;
+  let targetPct = 0;
+
+  const DIVIDER_MIN = 2;
+  const DIVIDER_MAX = 98;
+  const DOMINANT_THRESHOLD = 54;
+  const SMOOTHING = 0.14;
+  const POINTER_DECAY_MS = 1300;
+
+  let pointerTimeoutId = null;
+
+  const setReveal = (percent) => {
+    const safe = clamp(percent, DIVIDER_MIN, DIVIDER_MAX);
+    currentPct = safe;
+    hero.style.setProperty('--hero-reveal', `${safe.toFixed(2)}%`);
+    hero.setAttribute('data-active-identity', safe >= DOMINANT_THRESHOLD ? 'nutrition' : 'pt');
   };
 
-  const updateFromPointer = (clientX) => {
+  const updatePointerPercent = (clientX) => {
     const rect = track.getBoundingClientRect();
-    const raw = ((clientX - rect.left) / Math.max(1, rect.width)) * 100;
-    setSwitch(raw);
+    if (rect.width <= 0) return;
+    const relative = ((clientX - rect.left) / rect.width) * 100;
+    pointerPct = clamp(relative, DIVIDER_MIN, DIVIDER_MAX);
+    pointerActive = true;
+
+    if (pointerTimeoutId) window.clearTimeout(pointerTimeoutId);
+    pointerTimeoutId = window.setTimeout(() => {
+      pointerActive = false;
+    }, POINTER_DECAY_MS);
   };
 
   const setParallax = (xRatio, yRatio) => {
@@ -1837,47 +1837,43 @@ document.addEventListener('DOMContentLoaded', () => {
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerup', onPointerUp);
   };
+  const tick = () => {
+    targetPct = pointerActive ? pointerPct : scrollPct;
+    currentPct += (targetPct - currentPct) * (reducedMotion ? 1 : SMOOTHING);
 
-  const onPointerMove = (event) => {
-    if (!dragging) return;
-    updateFromPointer(event.clientX);
+    if (Math.abs(targetPct - currentPct) < 0.08) {
+      currentPct = targetPct;
+    }
+
+    setReveal(currentPct);
+    rafId = window.requestAnimationFrame(tick);
   };
 
-  const onPointerUp = () => {
-    stopDrag();
-  };
-
-  handle.addEventListener('pointerdown', (event) => {
+  track.addEventListener('mousemove', (event) => {
     if (window.innerWidth <= 900) return;
-    dragging = true;
-    hasUserOverride = true;
-    handle.setPointerCapture(event.pointerId);
-    updateFromPointer(event.clientX);
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerup', onPointerUp, { passive: true });
+    updatePointerPercent(event.clientX);
   });
 
-  track.addEventListener('pointerdown', (event) => {
-    if (window.innerWidth <= 900) return;
-    if (event.target === handle || handle.contains(event.target)) return;
-    hasUserOverride = true;
-    dragging = true;
-    track.setPointerCapture(event.pointerId);
-    updateFromPointer(event.clientX);
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerup', onPointerUp, { passive: true });
+  track.addEventListener('mouseleave', () => {
+    pointerActive = false;
   });
 
   const mm = gsap.matchMedia();
   mm.add('(min-width: 901px)', () => {
-    setSwitch(0);
+    scrollPct = DIVIDER_MIN;
+    pointerPct = DIVIDER_MIN;
+    currentPct = DIVIDER_MIN;
+    setReveal(DIVIDER_MIN);
+
+    if (rafId) window.cancelAnimationFrame(rafId);
+    rafId = window.requestAnimationFrame(tick);
 
     const trigger = ScrollTrigger.create({
       trigger: hero,
       start: 'top top',
-      end: '+=110%',
-      pin: hero.querySelector('[data-hero-dual]'),
-      scrub: true,
+      end: '+=150%',
+      pin: pinContainer,
+      scrub: reducedMotion ? false : 0.5,
       onUpdate: (self) => {
         if (hasUserOverride || dragging) return;
         setSwitch(self.progress * 100);
@@ -1886,14 +1882,22 @@ document.addEventListener('DOMContentLoaded', () => {
           const yRatio = (0.5 - self.progress) * 0.2;
           setParallax(xRatio, yRatio);
         }
+        scrollPct = clamp(self.progress * 100, DIVIDER_MIN, DIVIDER_MAX);
       },
     });
 
     return () => {
       trigger.kill();
-      stopDrag();
-      hasUserOverride = false;
-      setSwitch(0);
+      pointerActive = false;
+      if (pointerTimeoutId) {
+        window.clearTimeout(pointerTimeoutId);
+        pointerTimeoutId = null;
+      }
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      setReveal(DIVIDER_MIN);
     };
   });
 });

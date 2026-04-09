@@ -1951,10 +1951,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage1')
       .addLabel('stage2', stageDurations.intro)
       .to(curtainLayer, {
-        xPercent: -96,
+        xPercent: -108,
         duration: stageDurations.curtainToMid,
         ease: 'power2.inOut',
       }, 'stage2')
+      .to(blackSurface, {
+        autoAlpha: 0.7,
+        duration: stageDurations.curtainToMid * 0.82,
+        ease: 'power1.out',
+      }, 'stage2+=0.18')
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
@@ -1994,7 +1999,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .to({}, { duration: stageDurations.midpointHold })
       .addLabel('stage3')
       .to(curtainLayer, {
-        xPercent: -170,
+        xPercent: -198,
         duration: stageDurations.fullBlackTakeover,
         ease: 'power3.inOut',
       }, 'stage3+=0.03')

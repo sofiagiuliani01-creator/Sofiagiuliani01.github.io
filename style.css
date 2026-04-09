@@ -14043,3 +14043,140 @@ body.app-page {
   font-size: clamp(2rem, 6.1vw, 6rem);
   line-height: 1.03;
 }
+
+/* === Home hero dual role switch (2026-04) === */
+.page-home .hero-dual {
+  --hero-switch: 0%;
+  background: #7ee8d8;
+  min-height: 200vh;
+  position: relative;
+}
+
+.page-home .hero-dual .hero-dual-pin {
+  min-height: calc(100vh - var(--header-height, 88px));
+  display: flex;
+  align-items: center;
+  padding: clamp(28px, 4vh, 48px) 0;
+}
+
+.page-home .hero-dual .hero-dual-track {
+  position: relative;
+  min-height: min(76vh, 760px);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(10, 18, 28, 0.22);
+  isolation: isolate;
+}
+
+.page-home .hero-dual-panel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(24px, 5vw, 64px);
+}
+
+.page-home .hero-dual-panel-pt {
+  background: linear-gradient(135deg, #7ee8d8 0%, #6fded7 45%, #52cfc9 100%);
+}
+
+.page-home .hero-dual-panel-nutrition {
+  background: #ffffff;
+  clip-path: inset(0 0 0 calc(100% - var(--hero-switch)));
+  transition: clip-path 0.15s linear;
+}
+
+.page-home .hero-dual-content {
+  max-width: min(900px, 90%);
+}
+
+.page-home .hero-dual-kicker {
+  margin: 0 0 14px;
+  font-size: clamp(0.76rem, 1.2vw, 0.95rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.page-home .hero-dual-panel h1,
+.page-home .hero-dual-panel h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 7vw, 6.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 900;
+}
+
+.page-home .hero-dual-panel-pt h1 {
+  color: #063f43;
+  text-shadow: 0 10px 24px rgba(6, 63, 67, 0.12);
+}
+
+.page-home .hero-dual-panel-nutrition h2 {
+  color: #9c5c1a;
+  text-shadow: 0 8px 18px rgba(156, 92, 26, 0.16);
+}
+
+.page-home .hero-dual-btn {
+  margin-top: clamp(20px, 3vw, 34px);
+  font-size: clamp(0.88rem, 1.25vw, 1.04rem);
+}
+
+.page-home .hero-dual-btn-nutrition {
+  background: #d67f24;
+  border-color: #d67f24;
+}
+
+.page-home .hero-dual-btn-nutrition:hover {
+  background: #be6f1d;
+  border-color: #be6f1d;
+}
+
+.page-home .hero-dual-handle {
+  position: absolute;
+  top: 50%;
+  left: var(--hero-switch);
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #102228;
+  box-shadow: 0 8px 24px rgba(16, 34, 40, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  cursor: ew-resize;
+}
+
+.page-home .hero-dual-handle span {
+  width: 18px;
+  height: 18px;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+}
+
+@media (max-width: 900px) {
+  .page-home .hero-dual {
+    min-height: auto;
+    background: #7ee8d8;
+  }
+
+  .page-home .hero-dual .hero-dual-pin {
+    min-height: calc(100vh - var(--header-height, 88px));
+  }
+
+  .page-home .hero-dual .hero-dual-track {
+    min-height: min(72vh, 620px);
+    border-radius: 22px;
+  }
+
+  .page-home .hero-dual-panel-nutrition,
+  .page-home .hero-dual-handle {
+    display: none;
+  }
+}

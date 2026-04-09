@@ -14038,6 +14038,7 @@ body.app-page {
 }
 
 .page-home .hero-dual .hero-dual-pin {
+  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   align-items: center;

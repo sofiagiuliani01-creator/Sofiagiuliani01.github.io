@@ -1817,8 +1817,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return { target: wrapper, depth };
   });
 
+  const resetParallax = () => {
+    if (!layerRegistry.length) return;
+    layerRegistry.forEach(({ target }) => {
+      gsap.set(target, { x: 0, y: 0 });
+    });
+  };
+
   const setParallax = (xRatio, yRatio) => {
-    if (!layerRegistry.length || window.innerWidth <= 900) return;
+    if (!layerRegistry.length) return;
+    if (window.innerWidth <= 900) {
+      resetParallax();
+      return;
+    }
 
     layerRegistry.forEach(({ target, depth }) => {
       gsap.to(target, {
@@ -1947,6 +1958,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pointerActive = false;
       pointerXRatio = 0;
       pointerYRatio = 0;
+      resetParallax();
       if (pointerTimeoutId) {
         window.clearTimeout(pointerTimeoutId);
         pointerTimeoutId = null;

@@ -1878,12 +1878,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const stageDurations = {
-    intro: 1,
-    curtainToMid: 1.82,
-    midpointHold: 0.5,
-    fullBlackTakeover: 1.2,
-    convergeRoles: 1.2,
-    distillToLS: 1.28,
+    intro: 0.84,
+    curtainToMid: 2.04,
+    midpointHold: 0.72,
+    fullBlackTakeover: 1.08,
+    convergeRoles: 1.34,
+    convergeHold: 0.3,
+    distillToLS: 1.18,
+    lsLockup: 0.58,
     typingReveal: 1.45,
   };
 
@@ -1970,20 +1972,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        y: 58,
-        scale: 1.08,
+        y: 72,
+        scale: 1.06,
       }, {
         autoAlpha: 1,
         y: 0,
-        scale: 0.98,
-        duration: stageDurations.curtainToMid * 0.9,
+        scale: 0.94,
+        duration: stageDurations.curtainToMid * 0.93,
         ease: 'power2.out',
-      }, 'stage2+=0.08')
+      }, 'stage2+=0.03')
       .to(nutritionTitle, {
         fontSize: 'var(--hero-role-balanced-size)',
-        duration: stageDurations.curtainToMid * 0.9,
+        duration: stageDurations.curtainToMid * 0.92,
         ease: 'power2.out',
-      }, 'stage2+=0.1')
+      }, 'stage2+=0.04')
       .to(parallaxData.map((d) => d.layer), {
         y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
         x: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-soft'), 45) * (parallaxData[index].depth / maxDepth)),
@@ -2005,13 +2007,13 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.fullBlackTakeover * 0.6,
       }, 'stage3+=0.2')
       .to(ptCopy, {
-        scale: 0.84,
+        scale: 0.86,
         duration: stageDurations.fullBlackTakeover,
       }, 'stage3')
       .to(nutritionCopy, {
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        scale: 0.9,
+        scale: 0.88,
         duration: stageDurations.fullBlackTakeover,
         ease: 'power2.inOut',
       }, 'stage3')
@@ -2025,46 +2027,52 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage3')
       .addLabel('stage3b')
       .to(nutritionCopy, {
-        y: sceneTargets.pt.y + (sceneTargets.nutrition.y - sceneTargets.pt.y) * 0.35,
-        x: sceneTargets.pt.x + (sceneTargets.nutrition.x - sceneTargets.pt.x) * 0.62,
+        y: sceneTargets.pt.y + (sceneTargets.nutrition.y - sceneTargets.pt.y) * 0.2,
+        x: sceneTargets.pt.x + (sceneTargets.nutrition.x - sceneTargets.pt.x) * 0.55,
         duration: stageDurations.convergeRoles,
         ease: 'power2.inOut',
       }, 'stage3b')
       .to(ptCopy, {
-        y: sceneTargets.pt.y - 2,
+        y: sceneTargets.pt.y - 4,
+        x: sceneTargets.pt.x - 8,
         duration: stageDurations.convergeRoles,
         ease: 'power2.inOut',
       }, 'stage3b')
       .to([ptCopy, nutritionCopy], {
-        scale: (index, target) => (target === ptCopy ? 0.8 : 0.86),
-        duration: stageDurations.convergeRoles * 0.84,
+        scale: (index, target) => (target === ptCopy ? 0.82 : 0.84),
+        duration: stageDurations.convergeRoles * 0.88,
         ease: 'power1.inOut',
       }, 'stage3b+=0.02')
-      .to({}, { duration: stageDurations.convergeRoles * 0.18 })
+      .to({}, { duration: stageDurations.convergeHold })
       .addLabel('stage4')
       .to([...ptChars.filter((char) => !char.classList.contains('hero-char-key')), ...nutritionChars.filter((char) => !char.classList.contains('hero-char-key'))], {
         autoAlpha: 0,
-        filter: 'blur(2px)',
-        duration: stageDurations.distillToLS * 0.62,
+        filter: 'blur(0.8px)',
+        duration: stageDurations.distillToLS * 0.42,
         ease: 'power2.out',
         stagger: {
-          each: 0.01,
+          each: 0.006,
           from: 'center',
         },
       }, 'stage4')
+      .to([ptKeyChar, nutritionKeyChar].filter(Boolean), {
+        autoAlpha: 0,
+        duration: stageDurations.distillToLS * 0.22,
+        ease: 'power1.out',
+      }, 'stage4+=0.42')
       .to([ptTitle, nutritionTitle], {
         letterSpacing: '0.09em',
-        duration: stageDurations.distillToLS * 0.5,
+        duration: stageDurations.distillToLS * 0.34,
       }, 'stage4')
       .fromTo(lsStage, {
         autoAlpha: 0,
-        y: 30,
+        y: 18,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.distillToLS * 0.82,
+        duration: stageDurations.distillToLS * 0.5,
         ease: 'power2.out',
-      }, 'stage4+=0.24')
+      }, 'stage4+=0.46')
       .fromTo(lsLetterL, (() => {
         const charRect = ptKeyChar ? ptKeyChar.getBoundingClientRect() : null;
         const targetRect = lsLetterL.getBoundingClientRect();
@@ -2077,9 +2085,9 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         y: 0,
         autoAlpha: 1,
-        duration: stageDurations.distillToLS * 0.78,
+        duration: stageDurations.distillToLS * 0.48,
         ease: 'power2.out',
-      }, 'stage4+=0.3')
+      }, 'stage4+=0.5')
       .fromTo(lsLetterS, (() => {
         const charRect = nutritionKeyChar ? nutritionKeyChar.getBoundingClientRect() : null;
         const targetRect = lsLetterS.getBoundingClientRect();
@@ -2092,18 +2100,19 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         y: 0,
         autoAlpha: 1,
-        duration: stageDurations.distillToLS * 0.78,
+        duration: stageDurations.distillToLS * 0.48,
         ease: 'power2.out',
-      }, 'stage4+=0.3')
+      }, 'stage4+=0.5')
+      .to([ptCopy, nutritionCopy], {
+        autoAlpha: 0,
+        duration: stageDurations.lsLockup * 0.3,
+      }, 'stage4+=0.62')
+      .to({}, { duration: stageDurations.lsLockup * 0.28 }, 'stage4+=0.68')
       .to(lsCoaching, {
         autoAlpha: 1,
         x: 0,
-        duration: stageDurations.distillToLS * 0.54,
-      }, 'stage4+=0.7')
-      .to([ptCopy, nutritionCopy], {
-        autoAlpha: 0,
-        duration: stageDurations.distillToLS * 0.52,
-      }, 'stage4+=0.72')
+        duration: stageDurations.lsLockup * 0.42,
+      }, 'stage4+=0.9')
       .addLabel('stage5')
       .to(typingOutput, {
         autoAlpha: 1,

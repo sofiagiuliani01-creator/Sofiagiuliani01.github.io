@@ -1933,14 +1933,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: '+=410%',
-        pin,
-        scrub: 0.6,
-        anticipatePin: 1,
-      },
     });
 
     tl.addLabel('stage1', 0)
@@ -1997,6 +1989,7 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.curtainToMid,
       }, 'stage2')
       .to({}, { duration: stageDurations.midpointHold })
+      .addLabel('stage2Land')
       .addLabel('stage3')
       .to(curtainLayer, {
         xPercent: -198,
@@ -2049,6 +2042,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power1.inOut',
       }, 'stage3b+=0.02')
       .to({}, { duration: stageDurations.convergeHold })
+      .addLabel('stage3Land')
       .addLabel('stage4')
       .to([...ptChars.filter((char) => !char.classList.contains('hero-char-key')), ...nutritionChars.filter((char) => !char.classList.contains('hero-char-key'))], {
         autoAlpha: 0,
@@ -2118,6 +2112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         duration: stageDurations.lsLockup * 0.42,
       }, 'stage4+=0.9')
+      .addLabel('stage4Land')
       .addLabel('stage5')
       .to(typingOutput, {
         autoAlpha: 1,
@@ -2134,7 +2129,37 @@ document.addEventListener('DOMContentLoaded', () => {
         },
       }, 'stage5');
 
+    const timelineDuration = tl.duration() || 1;
+    const snapStops = [
+      tl.labels.stage1 || 0,
+      tl.labels.stage2Land || 0,
+      tl.labels.stage3Land || 0,
+      tl.labels.stage4Land || 0,
+      timelineDuration,
+    ]
+      .map((time) => Math.max(0, Math.min(1, time / timelineDuration)))
+      .filter((value, index, arr) => arr.indexOf(value) === index)
+      .sort((a, b) => a - b);
+
+    const cinematicTrigger = ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: '+=410%',
+      pin,
+      animation: tl,
+      scrub: 0.6,
+      anticipatePin: 1,
+      snap: {
+        snapTo: (value) => gsap.utils.snap(snapStops, value),
+        duration: { min: 0.16, max: 0.48 },
+        delay: 0.06,
+        ease: 'power2.out',
+        inertia: false,
+      },
+    });
+
     return () => {
+      cinematicTrigger.kill();
       tl.kill();
       typingOutput.textContent = '';
       gsap.set([

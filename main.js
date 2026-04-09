@@ -1882,8 +1882,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const stageDurations = {
     intro: 0.9,
-    curtainDualMessage: 2.35,
-    dualHold: 0.9,
+    curtainDualMessage: 2.1,
+    dualHold: 1.05,
     blackTakeover: 1,
     roleHold: 0.42,
     distillToLetters: 0.9,
@@ -1918,18 +1918,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power2.inOut',
       }, 'stage2')
       .to(blackSurface, {
-        autoAlpha: 0.7,
-        duration: stageDurations.curtainDualMessage * 0.82,
-        ease: 'power1.out',
+        autoAlpha: 0.76,
+        duration: stageDurations.curtainDualMessage * 0.9,
+        ease: 'power1.inOut',
       }, 'stage2+=0.18')
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        keyframes: [
-          { scale: 1.05, duration: stageDurations.curtainDualMessage * 0.28, ease: 'power1.out' },
-          { scale: 0.9, duration: stageDurations.curtainDualMessage * 0.28, ease: 'power1.inOut' },
-          { scale: 1.08, duration: stageDurations.curtainDualMessage * 0.44, ease: 'power2.out' },
-        ],
+        scale: 0.94,
         duration: stageDurations.curtainDualMessage,
         transformOrigin: 'left top',
       }, 'stage2')
@@ -1940,26 +1936,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        x: 180,
-        y: 0,
-        scale: 0.82,
+        x: 140,
+        y: sceneTargets.nutrition.y,
+        scale: 0.94,
       }, {
         autoAlpha: 1,
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        keyframes: [
-          { scale: 0.9, duration: stageDurations.curtainDualMessage * 0.26, ease: 'power1.out' },
-          { scale: 1.02, duration: stageDurations.curtainDualMessage * 0.3, ease: 'power1.inOut' },
-          { scale: 1.08, duration: stageDurations.curtainDualMessage * 0.44, ease: 'power2.out' },
-        ],
-        duration: stageDurations.curtainDualMessage * 0.96,
-        ease: 'power2.out',
-      }, 'stage2+=0.01')
+        scale: 0.94,
+        duration: stageDurations.curtainDualMessage * 0.93,
+        ease: 'power2.inOut',
+      }, 'stage2+=0.03')
       .to(nutritionRole, {
-        fontSize: 'var(--hero-role-center-size)',
-        duration: stageDurations.curtainDualMessage * 0.95,
-        ease: 'power2.out',
-      }, 'stage2+=0.02')
+        fontSize: 'var(--hero-role-balanced-size)',
+        duration: stageDurations.curtainDualMessage * 0.92,
+        ease: 'power2.inOut',
+      }, 'stage2+=0.04')
       .to(parallaxData.map((d) => d.layer), {
         y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
         x: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-soft'), 45) * (parallaxData[index].depth / maxDepth)),
@@ -2011,8 +2003,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: stageDurations.distillToLetters * 0.48,
-        ease: 'power2.out',
+        duration: stageDurations.distillToLetters * 0.42,
+        ease: 'power2.inOut',
       }, 'stage4+=0.4')
       .fromTo(lsLetterL, (() => {
         const charRect = ptKeyChar ? ptKeyChar.getBoundingClientRect() : null;

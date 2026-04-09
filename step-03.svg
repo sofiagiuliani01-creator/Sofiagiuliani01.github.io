@@ -1,32 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" role="img" aria-label="Progetto su misura costruito con strategia">
   <defs>
-    <linearGradient id="aqua03" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8cf8eb"/>
-      <stop offset="1" stop-color="#44d3c9"/>
+    <linearGradient id="bg03" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1f3a"/>
+      <stop offset="1" stop-color="#10304f"/>
+    </linearGradient>
+    <linearGradient id="acc03" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8efbee"/>
+      <stop offset="1" stop-color="#45d4ca"/>
     </linearGradient>
     <style>
-      .ln{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-      .w{stroke:#eaf8ff;stroke-width:15}
-      .a{stroke:url(#aqua03);stroke-width:15}
-      .m{animation:move 4s ease-in-out infinite}
-      @keyframes move{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+      .stroke{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+      .w{stroke:#ebf7ff;stroke-width:14}
+      .a{stroke:url(#acc03);stroke-width:14}
+      .bob{animation:bob 4s ease-in-out infinite}
+      .spin{transform-origin:508px 250px;animation:spin 8s linear infinite}
+      @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes spin{to{transform:rotate(360deg)}}
     </style>
   </defs>
 
-  <g class="m" transform-origin="246 262">
-    <rect x="112" y="170" width="268" height="184" rx="28" class="ln w"/>
-    <path d="M160 308l54-72 48 48 70-90" class="ln a"/>
-    <circle cx="160" cy="308" r="7" fill="#8cf8eb"/>
-    <circle cx="214" cy="236" r="7" fill="#8cf8eb"/>
-    <circle cx="262" cy="284" r="7" fill="#8cf8eb"/>
-    <circle cx="332" cy="194" r="7" fill="#8cf8eb"/>
+  <rect x="56" y="44" width="608" height="432" rx="44" fill="url(#bg03)"/>
+
+  <g class="bob" transform-origin="246 258">
+    <rect x="120" y="144" width="252" height="228" rx="30" class="stroke w"/>
+    <path d="M162 308l54-68 50 42 68-88" class="stroke a"/>
+    <circle cx="162" cy="308" r="8" fill="#8efbee"/>
+    <circle cx="216" cy="240" r="8" fill="#8efbee"/>
+    <circle cx="266" cy="282" r="8" fill="#8efbee"/>
+    <circle cx="334" cy="194" r="8" fill="#8efbee"/>
   </g>
 
-  <g class="m" transform-origin="510 240" style="animation-delay:.25s">
-    <path d="M456 166h106l32 58-32 58H456l-32-58z" class="ln w"/>
-    <path d="M468 224h84" class="ln a"/>
-    <path d="M502 194v60" class="ln a"/>
+  <g class="bob" transform-origin="508 250" style="animation-delay:.2s">
+    <circle cx="508" cy="250" r="86" class="stroke w"/>
+    <g class="spin">
+      <path d="M508 192v22M508 286v22M450 250h22M544 250h22" class="stroke a" style="stroke-width:10"/>
+    </g>
+    <circle cx="508" cy="250" r="28" class="stroke a"/>
   </g>
-
-  <path d="M382 236h58" class="ln a"/>
 </svg>

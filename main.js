@@ -1775,7 +1775,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startTyping();
 });
 
-// HOME HERO: cinematic 3-stage pinned storytelling rebuild
+// HOME HERO: premium cinematic 3-stage pinned storytelling (full-bleed)
 
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
@@ -1786,7 +1786,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const diagonalLayer = hero && hero.querySelector('[data-hero-layer="diagonal"]');
   const finalLayer = hero && hero.querySelector('[data-hero-layer="final"]');
   const ptCopy = hero && hero.querySelector('[data-hero-copy="pt"]');
-  const ptLabel = ptCopy && ptCopy.querySelector('.hero-copy-label');
   const ptTitle = ptCopy && ptCopy.querySelector('h1');
   const nutritionCopy = hero && hero.querySelector('[data-hero-copy="nutrition"]');
   const finalCopy = hero && hero.querySelector('[data-hero-copy="final"]');
@@ -1798,92 +1797,109 @@ document.addEventListener('DOMContentLoaded', () => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) return;
 
-  const toNumber = (value, fallback) => {
+  const toNum = (value, fallback) => {
     const n = Number.parseFloat(value);
     return Number.isFinite(n) ? n : fallback;
   };
 
   const parallaxData = parallaxLayers.map((layer) => ({
     layer,
-    depth: toNumber(layer.getAttribute('data-hero-parallax'), 0.4),
+    depth: toNum(layer.getAttribute('data-hero-parallax'), 0.4),
   }));
 
-  const aquaParallax = toNumber(getComputedStyle(hero).getPropertyValue('--hero-parallax-a'), 42);
-  const blackParallax = toNumber(getComputedStyle(hero).getPropertyValue('--hero-parallax-b'), 75);
+  const getPtTarget = () => {
+    const stageRect = pin.getBoundingClientRect();
+    const ptRect = ptCopy.getBoundingClientRect();
+    const styles = getComputedStyle(hero);
+    const targetLeft = toNum(styles.getPropertyValue('--hero-stage2-pt-left'), 5.2) / 100;
+    const targetTop = toNum(styles.getPropertyValue('--hero-stage2-pt-top'), 10.5) / 100;
+    const desiredX = stageRect.width * targetLeft;
+    const desiredY = stageRect.height * targetTop;
 
+    return {
+      x: desiredX - (ptRect.left - stageRect.left),
+      y: desiredY - (ptRect.top - stageRect.top),
+    };
+  };
+
+  const stageDurations = {
+    stage1: 1.05,
+    stage2: 1.35,
+    hold: 0.45,
+    stage3: 1.15,
+  };
 
   const mm = gsap.matchMedia();
   mm.add('(min-width: 901px)', () => {
+    gsap.set(nutritionCopy, { autoAlpha: 0, y: 54 });
+    gsap.set(finalCopy, { autoAlpha: 0, y: 34 });
+
+    const ptTarget = getPtTarget();
+    const maxDepth = parallaxData.reduce((max, item) => Math.max(max, item.depth), 1);
+
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=220%',
+        end: '+=250%',
         pin,
-        scrub: 0.7,
+        scrub: 0.75,
         anticipatePin: 1,
       },
     });
 
     tl.addLabel('stage1', 0)
       .to(parallaxData.map((d) => d.layer), {
-        y: (index) => -(aquaParallax * parallaxData[index].depth),
-        x: (index) => aquaParallax * 0.2 * parallaxData[index].depth,
-        opacity: (index, target) => target.classList.contains('hero-abstract-b') ? 0.28 : 0.4,
-        duration: 1,
+        y: (index) => -12 * parallaxData[index].depth,
+        x: (index) => 8 * parallaxData[index].depth,
+        duration: stageDurations.stage1,
       }, 'stage1')
-      .addLabel('stage2', 1)
+      .addLabel('stage2', stageDurations.stage1)
       .to(diagonalLayer, {
-        xPercent: -108,
-        duration: 1.2,
+        xPercent: -66,
+        duration: stageDurations.stage2,
         ease: 'power2.inOut',
       }, 'stage2')
       .to(ptCopy, {
-        x: () => -((window.innerWidth * 0.5) - (window.innerWidth * 0.14)),
-        y: () => -((window.innerHeight * 0.5) - (window.innerHeight * 0.14)),
-        duration: 1.2,
+        x: ptTarget.x,
+        y: ptTarget.y,
+        scale: 0.3,
+        duration: stageDurations.stage2,
+        transformOrigin: 'left top',
         ease: 'power2.inOut',
-        onStart: () => {
-          ptCopy.style.textAlign = 'left';
-        },
+        onStart: () => { ptCopy.style.textAlign = 'left'; },
       }, 'stage2')
       .to(ptTitle, {
-        fontSize: 'var(--hero-pt-stage2-size)',
-        letterSpacing: '0.2em',
-        duration: 1.2,
-        ease: 'power2.inOut',
-      }, 'stage2')
-      .to(ptLabel, {
-        autoAlpha: 0,
-        y: -24,
-        duration: 0.55,
-        ease: 'power1.out',
+        fontSize: 'var(--hero-stage2-pt-size)',
+        letterSpacing: '0.14em',
+        duration: stageDurations.stage2,
       }, 'stage2')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
-        y: 30,
+        y: 60,
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: 1,
+        duration: stageDurations.stage2 * 0.72,
         ease: 'power2.out',
-      }, 'stage2+=0.28')
+      }, 'stage2+=0.22')
       .to(parallaxData.map((d) => d.layer), {
-        y: (index) => -(blackParallax * parallaxData[index].depth),
-        x: (index) => -blackParallax * 0.25 * parallaxData[index].depth,
-        duration: 1,
+        y: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-hard'), 90) * (parallaxData[index].depth / maxDepth)),
+        x: (index) => -(toNum(getComputedStyle(hero).getPropertyValue('--hero-parallax-soft'), 45) * (parallaxData[index].depth / maxDepth)),
+        duration: stageDurations.stage2,
       }, 'stage2')
-      .addLabel('stage3', 2.2)
+      .to({}, { duration: stageDurations.hold })
+      .addLabel('stage3')
       .to(finalLayer, {
-        yPercent: -104,
-        duration: 1.05,
+        yPercent: 0,
+        duration: stageDurations.stage3,
         ease: 'power3.inOut',
       }, 'stage3')
       .to([ptCopy, nutritionCopy], {
         autoAlpha: 0,
-        y: -26,
-        duration: 0.58,
+        y: -24,
+        duration: stageDurations.stage3 * 0.54,
         ease: 'power1.out',
       }, 'stage3+=0.04')
       .fromTo(finalCopy, {
@@ -1892,13 +1908,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }, {
         autoAlpha: 1,
         y: 0,
-        duration: 0.8,
+        duration: stageDurations.stage3 * 0.72,
         ease: 'power2.out',
       }, 'stage3+=0.38');
 
     return () => {
       tl.kill();
-      gsap.set([diagonalLayer, finalLayer, ptCopy, nutritionCopy, finalCopy, ptLabel, ptTitle, ...parallaxData.map((d) => d.layer)], {
+      gsap.set([diagonalLayer, finalLayer, ptCopy, nutritionCopy, finalCopy, ptTitle, ...parallaxData.map((d) => d.layer)], {
         clearProps: 'all',
       });
     };

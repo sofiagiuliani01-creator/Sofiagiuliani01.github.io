@@ -14026,7 +14026,7 @@ body.app-page {
   --hero-black: #050505;
   --hero-scroll-length: 420vh;
   --hero-stage-height: 100svh;
-  --hero-curtain-angle: -16deg;
+  --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
   --hero-lead-size: clamp(0.95rem, 1.35vw, 1.2rem);
   --hero-role-size: clamp(2.9rem, 7.4vw, 8.3rem);
@@ -14088,7 +14088,7 @@ body.app-page {
 .page-home .hero-cinematic .hero-curtain {
   z-index: 4;
   transform-origin: right center;
-  transform: translateX(132%) skewX(var(--hero-curtain-angle));
+  transform: translateX(138%) skewX(var(--hero-curtain-angle));
   will-change: transform;
 }
 

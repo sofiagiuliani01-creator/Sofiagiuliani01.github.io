@@ -14030,17 +14030,17 @@ body.app-page {
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
   --hero-lead-size: clamp(0.95rem, 1.35vw, 1.2rem);
   --hero-role-size: clamp(2.9rem, 7.4vw, 8.3rem);
-  --hero-role-balanced-size: clamp(2.3rem, 4.9vw, 5.2rem);
+  --hero-role-balanced-size: clamp(2.7rem, 6.1vw, 6.4rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
-  --hero-pt-target-x: 5vw;
-  --hero-pt-target-y: 41vh;
+  --hero-pt-target-x: 7vw;
+  --hero-pt-target-y: 44vh;
   --hero-nut-target-x: 50vw;
-  --hero-nut-target-y: 56vh;
+  --hero-nut-target-y: 54vh;
   --hero-ls-x: 50vw;
-  --hero-ls-y: 26vh;
+  --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
   --hero-type-width: min(86vw, 920px);
   --hero-parallax-soft: 56px;
@@ -14274,16 +14274,16 @@ body.app-page {
     --hero-scroll-length: 340vh;
     --hero-lead-size: clamp(0.75rem, 2.8vw, 0.95rem);
     --hero-role-size: clamp(1.8rem, 9vw, 3.6rem);
-    --hero-role-balanced-size: clamp(1.5rem, 6.7vw, 2.4rem);
+    --hero-role-balanced-size: clamp(1.7rem, 7.2vw, 2.7rem);
     --hero-role-isolated-size: clamp(1.35rem, 6vw, 2rem);
     --hero-ls-size: clamp(2rem, 10vw, 3rem);
     --hero-coaching-size: clamp(0.76rem, 3.1vw, 1rem);
     --hero-final-size: clamp(0.96rem, 4.1vw, 1.25rem);
     --hero-pt-target-x: 6vw;
-    --hero-pt-target-y: 40vh;
+    --hero-pt-target-y: 43vh;
     --hero-nut-target-x: 51vw;
-    --hero-nut-target-y: 57vh;
-    --hero-ls-y: 24vh;
+    --hero-nut-target-y: 55vh;
+    --hero-ls-y: 47vh;
     --hero-type-y: 53vh;
   }
 }

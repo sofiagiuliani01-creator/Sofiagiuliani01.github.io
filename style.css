@@ -14030,7 +14030,8 @@ body.app-page {
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
   --hero-lead-size: clamp(0.95rem, 1.35vw, 1.2rem);
   --hero-role-size: clamp(2.9rem, 7.4vw, 8.3rem);
-  --hero-role-balanced-size: clamp(2.7rem, 6.1vw, 6.4rem);
+  --hero-role-balanced-size: clamp(2.3rem, 4.9vw, 5.2rem);
+  --hero-role-center-size: clamp(2.8rem, 6.1vw, 6.4rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);

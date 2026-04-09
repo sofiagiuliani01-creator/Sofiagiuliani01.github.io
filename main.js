@@ -1928,10 +1928,9 @@ document.addEventListener('DOMContentLoaded', () => {
         scale: 0.94,
         duration: stageDurations.curtainDualMessage,
         transformOrigin: 'left top',
-        ease: 'power2.inOut',
       }, 'stage2')
       .to(ptRole, {
-        fontSize: 'var(--hero-role-balanced-size)',
+        fontSize: 'var(--hero-role-center-size)',
         duration: stageDurations.curtainDualMessage,
         ease: 'power2.inOut',
       }, 'stage2')

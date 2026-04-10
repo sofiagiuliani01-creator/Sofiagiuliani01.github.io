@@ -1858,6 +1858,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lsRect = lsMark.getBoundingClientRect();
     const styles = getComputedStyle(hero);
     const ptLeft = toNum(styles.getPropertyValue('--hero-pt-target-x'), 5);
+    const ptMidLeft = toNum(styles.getPropertyValue('--hero-pt-mid-x'), 8);
     const ptTop = toNum(styles.getPropertyValue('--hero-pt-target-y'), 10);
     const nutLeft = toNum(styles.getPropertyValue('--hero-nut-target-x'), 64);
     const nutTop = toNum(styles.getPropertyValue('--hero-nut-target-y'), 72);
@@ -1867,6 +1868,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return {
       pt: {
         x: stageRect.width * (ptLeft / 100) - (ptRect.left - stageRect.left),
+        y: stageRect.height * (ptTop / 100) - (ptRect.top - stageRect.top),
+      },
+      ptMid: {
+        x: stageRect.width * (ptMidLeft / 100) - (ptRect.left - stageRect.left),
         y: stageRect.height * (ptTop / 100) - (ptRect.top - stageRect.top),
       },
       nutrition: {
@@ -1923,12 +1928,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power1.inOut',
       }, 'stage2+=0.18')
       .to(ptCopy, {
+        x: sceneTargets.ptMid.x,
+        y: sceneTargets.ptMid.y,
+        scale: 0.94,
+        duration: stageDurations.curtainDualMessage * 0.55,
+        transformOrigin: 'left top',
+      }, 'stage2')
+      .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
         scale: 0.94,
-        duration: stageDurations.curtainDualMessage,
+        duration: stageDurations.curtainDualMessage * 0.45,
         transformOrigin: 'left top',
-      }, 'stage2')
+      }, `stage2+=${stageDurations.curtainDualMessage * 0.55}`)
       .to(ptRole, {
         fontSize: 'var(--hero-role-center-size)',
         duration: stageDurations.curtainDualMessage,

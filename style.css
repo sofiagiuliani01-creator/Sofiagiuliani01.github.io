@@ -14038,6 +14038,7 @@ body.app-page {
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
   --hero-pt-target-x: 50vw;
   --hero-pt-target-y: 44vh;
+  --hero-pt-mid-x: 8vw;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
   --hero-nut-target-x: 50vw;
@@ -14284,6 +14285,7 @@ body.app-page {
     --hero-final-size: clamp(0.96rem, 4.1vw, 1.25rem);
     --hero-pt-target-x: 50vw;
     --hero-pt-target-y: 43vh;
+    --hero-pt-mid-x: 6vw;
     --hero-pt-reduced-x: 6vw;
     --hero-pt-reduced-y: 43vh;
     --hero-nut-target-x: 51vw;

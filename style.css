@@ -14028,10 +14028,12 @@ body.app-page {
   --hero-stage-height: 100svh;
   --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
-  --hero-lead-size: clamp(1.05rem, 1.9vw, 1.7rem);
+  --hero-lead-size: clamp(1.2rem, 2.35vw, 2.1rem);
+  --hero-lead-mid-size: clamp(1.4rem, 2.9vw, 2.55rem);
   --hero-role-size: clamp(3.2rem, 8.2vw, 9.4rem);
-  --hero-role-balanced-size: clamp(2.8rem, 6.2vw, 6.9rem);
+  --hero-role-balanced-size: clamp(3.1rem, 6.9vw, 7.8rem);
   --hero-role-center-size: clamp(4.2rem, 8.6vw, 10rem);
+  --hero-role-center-right-size: clamp(3.5rem, 7.7vw, 8.6rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
@@ -14039,10 +14041,13 @@ body.app-page {
   --hero-pt-target-x: 6vw;
   --hero-pt-target-y: 40vh;
   --hero-pt-mid-x: 7vw;
+  --hero-pt-mid-y: 30vh;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
   --hero-nut-target-x: 54vw;
   --hero-nut-target-y: 66vh;
+  --hero-nut-mid-x: 53vw;
+  --hero-nut-mid-y: 73vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
@@ -14172,9 +14177,9 @@ body.app-page {
 
 .page-home .hero-cinematic .hero-copy-lead {
   font-size: var(--hero-lead-size);
-  letter-spacing: 0.18em;
-  font-weight: 560;
-  color: rgba(15, 43, 47, 0.84);
+  letter-spacing: 0.15em;
+  font-weight: 630;
+  color: rgba(15, 43, 47, 0.92);
 }
 
 .page-home .hero-cinematic .hero-copy-role {
@@ -14202,7 +14207,9 @@ body.app-page {
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
-  max-width: min(54vw, 980px);
+  width: min(46vw, 840px);
+  max-width: min(46vw, 840px);
+  clip-path: polygon(0 0, 87% 0, 77% 100%, 0 100%);
 }
 
 .page-home .hero-cinematic .hero-copy-pt h1 {
@@ -14215,7 +14222,9 @@ body.app-page {
   transform: translate(0, 0);
   color: rgba(255, 255, 255, 0.97);
   text-align: left;
-  width: min(45vw, 820px);
+  width: min(46vw, 860px);
+  max-width: min(46vw, 860px);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
   opacity: 0;
 }
 
@@ -14276,9 +14285,11 @@ body.app-page {
 @media (max-width: 900px) {
   .page-home .hero-cinematic {
     --hero-scroll-length: 340vh;
-    --hero-lead-size: clamp(0.8rem, 3vw, 1rem);
+    --hero-lead-size: clamp(0.86rem, 3.2vw, 1.08rem);
+    --hero-lead-mid-size: clamp(0.92rem, 3.6vw, 1.26rem);
     --hero-role-size: clamp(1.8rem, 9vw, 3.6rem);
-    --hero-role-balanced-size: clamp(1.8rem, 7.5vw, 3rem);
+    --hero-role-balanced-size: clamp(1.9rem, 8.1vw, 3.4rem);
+    --hero-role-center-right-size: clamp(2rem, 8.7vw, 3.8rem);
     --hero-role-isolated-size: clamp(1.35rem, 6vw, 2rem);
     --hero-ls-size: clamp(2rem, 10vw, 3rem);
     --hero-coaching-size: clamp(0.76rem, 3.1vw, 1rem);
@@ -14286,10 +14297,13 @@ body.app-page {
     --hero-pt-target-x: 7vw;
     --hero-pt-target-y: 42vh;
     --hero-pt-mid-x: 6vw;
+    --hero-pt-mid-y: 37vh;
     --hero-pt-reduced-x: 6vw;
     --hero-pt-reduced-y: 43vh;
     --hero-nut-target-x: 52vw;
     --hero-nut-target-y: 60vh;
+    --hero-nut-mid-x: 50vw;
+    --hero-nut-mid-y: 66vh;
     --hero-ls-y: 47vh;
     --hero-type-y: 53vh;
   }

@@ -1780,8 +1780,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const ptLeft = toNum(styles.getPropertyValue('--hero-pt-target-x'), 5);
     const ptMidLeft = toNum(styles.getPropertyValue('--hero-pt-mid-x'), 8);
     const ptTop = toNum(styles.getPropertyValue('--hero-pt-target-y'), 10);
+    const ptMidTop = toNum(styles.getPropertyValue('--hero-pt-mid-y'), ptTop);
     const nutLeft = toNum(styles.getPropertyValue('--hero-nut-target-x'), 64);
     const nutTop = toNum(styles.getPropertyValue('--hero-nut-target-y'), 72);
+    const nutMidLeft = toNum(styles.getPropertyValue('--hero-nut-mid-x'), nutLeft);
+    const nutMidTop = toNum(styles.getPropertyValue('--hero-nut-mid-y'), nutTop);
     const lsCenterX = toNum(styles.getPropertyValue('--hero-ls-x'), 50);
     const lsCenterY = toNum(styles.getPropertyValue('--hero-ls-y'), 26);
 
@@ -1792,11 +1795,15 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       ptMid: {
         x: stageRect.width * (ptMidLeft / 100) - (ptRect.left - stageRect.left),
-        y: stageRect.height * (ptTop / 100) - (ptRect.top - stageRect.top),
+        y: stageRect.height * (ptMidTop / 100) - (ptRect.top - stageRect.top),
       },
       nutrition: {
         x: stageRect.width * (nutLeft / 100) - (nutritionRect.left - stageRect.left),
         y: stageRect.height * (nutTop / 100) - (nutritionRect.top - stageRect.top),
+      },
+      nutritionMid: {
+        x: stageRect.width * (nutMidLeft / 100) - (nutritionRect.left - stageRect.left),
+        y: stageRect.height * (nutMidTop / 100) - (nutritionRect.top - stageRect.top),
       },
       ls: {
         x: stageRect.width * (lsCenterX / 100) - (lsRect.left - stageRect.left) - (lsRect.width * 0.5),
@@ -1866,21 +1873,32 @@ document.addEventListener('DOMContentLoaded', () => {
         duration: stageDurations.curtainDualMessage,
         ease: 'power2.inOut',
       }, 'stage2')
+      .to(ptLead, {
+        fontSize: 'var(--hero-lead-mid-size)',
+        duration: stageDurations.curtainDualMessage * 0.7,
+        ease: 'power2.inOut',
+      }, 'stage2+=0.14')
       .fromTo(nutritionCopy, {
         autoAlpha: 0,
         x: 140,
-        y: sceneTargets.nutrition.y,
+        y: sceneTargets.nutritionMid.y,
         scale: 1.02,
       }, {
         autoAlpha: 1,
-        x: sceneTargets.nutrition.x,
-        y: sceneTargets.nutrition.y,
+        x: sceneTargets.nutritionMid.x,
+        y: sceneTargets.nutritionMid.y,
         scale: 1.02,
         duration: stageDurations.curtainDualMessage * 0.72,
         ease: 'power2.inOut',
       }, 'stage2+=0.44')
+      .to(nutritionLead, {
+        fontSize: 'var(--hero-lead-mid-size)',
+        autoAlpha: 1,
+        duration: stageDurations.curtainDualMessage * 0.62,
+        ease: 'power2.inOut',
+      }, 'stage2+=0.5')
       .to(nutritionRole, {
-        fontSize: 'var(--hero-role-balanced-size)',
+        fontSize: 'var(--hero-role-center-right-size)',
         duration: stageDurations.curtainDualMessage * 0.68,
         ease: 'power2.inOut',
       }, 'stage2+=0.46')

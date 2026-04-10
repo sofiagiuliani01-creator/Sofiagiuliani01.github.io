@@ -14224,7 +14224,7 @@ body.app-page {
   text-align: left;
   width: min(46vw, 860px);
   max-width: min(46vw, 860px);
-  padding-left: 12%;
+  padding-left: calc(min(46vw, 860px) * 0.12);
   clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
   opacity: 0;
 }

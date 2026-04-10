@@ -1850,14 +1850,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .to(ptCopy, {
         x: sceneTargets.ptMid.x,
         y: sceneTargets.ptMid.y,
-        scale: 0.94,
+        scale: 1.05,
         duration: stageDurations.curtainDualMessage * 0.55,
         transformOrigin: 'left top',
       }, 'stage2')
       .to(ptCopy, {
         x: sceneTargets.pt.x,
         y: sceneTargets.pt.y,
-        scale: 0.94,
+        scale: 1.05,
         duration: stageDurations.curtainDualMessage * 0.45,
         transformOrigin: 'left top',
       }, `stage2+=${stageDurations.curtainDualMessage * 0.55}`)
@@ -1870,12 +1870,12 @@ document.addEventListener('DOMContentLoaded', () => {
         autoAlpha: 0,
         x: 140,
         y: sceneTargets.nutrition.y,
-        scale: 0.94,
+        scale: 1.02,
       }, {
         autoAlpha: 1,
         x: sceneTargets.nutrition.x,
         y: sceneTargets.nutrition.y,
-        scale: 0.94,
+        scale: 1.02,
         duration: stageDurations.curtainDualMessage * 0.72,
         ease: 'power2.inOut',
       }, 'stage2+=0.44')

@@ -1,81 +1,6 @@
-// HOME: intro/loading sequence + header behavior
+// HOME: header behavior
 document.addEventListener('DOMContentLoaded', () => {
   const homeHeader = document.querySelector('.site-header-home');
-  const body = document.body;
-  const preloader = document.getElementById('sitePreloader');
-  const headerLogoReal = document.querySelector('.header-logo-real');
-  let unlocked = false;
-
-  const unlockPage = () => {
-    if (unlocked) return;
-    unlocked = true;
-    body.classList.remove('is-preloading');
-    body.classList.remove('is-loading');
-    window.dispatchEvent(new CustomEvent('home:preload-complete'));
-  };
-
-  if (preloader) {
-    const logoPieces = preloader.querySelectorAll('.preloader-logo-piece');
-    const glow = preloader.querySelector('.preloader-glow');
-
-    if (!logoPieces.length) {
-      preloader.classList.add('is-hidden');
-      unlockPage();
-      return;
-    }
-
-    const fallback = window.setTimeout(() => {
-      preloader.classList.add('is-hidden');
-      unlockPage();
-    }, 4200);
-
-    if (typeof window.gsap !== 'undefined') {
-      try {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        tl.set(headerLogoReal, { autoAlpha: 0 })
-          .set(logoPieces, {
-            autoAlpha: 0,
-            y: (index) => [20, -16, 16, -12, 14, -18][index] || 0,
-            x: (index) => [-32, -18, -8, 8, 18, 30][index] || 0,
-            filter: 'brightness(1.2)',
-          })
-          .set(glow, { autoAlpha: 0, scale: 0.65 })
-          .to(logoPieces, {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            duration: 0.72,
-            ease: 'power2.out',
-            stagger: 0.06,
-          })
-          .to(glow, { autoAlpha: 0.92, scale: 1.05, duration: 0.5 }, '-=0.4')
-          .to(logoPieces, { filter: 'brightness(1)', duration: 0.24, stagger: 0.02 }, '-=0.28')
-          .to(glow, { autoAlpha: 0.45, duration: 0.22 })
-          .to({}, { duration: 0.15 })
-          .to(preloader, {
-            autoAlpha: 0,
-            duration: 0.35,
-            onComplete: () => {
-              preloader.classList.add('is-hidden');
-              gsap.set(headerLogoReal, { autoAlpha: 1 });
-              window.clearTimeout(fallback);
-              unlockPage();
-            },
-          });
-      } catch (error) {
-        preloader.classList.add('is-hidden');
-        window.clearTimeout(fallback);
-        unlockPage();
-      }
-    } else {
-      window.setTimeout(() => {
-        preloader.classList.add('is-hidden');
-        unlockPage();
-      }, 1800);
-    }
-  } else {
-    unlockPage();
-  }
 
   if (homeHeader) {
     let lastY = window.scrollY;
@@ -1766,11 +1691,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.setTimeout(writeNext, 600);
   };
-
-  if (document.body.classList.contains('is-preloading')) {
-    window.addEventListener('home:preload-complete', startTyping, { once: true });
-    return;
-  }
 
   startTyping();
 });

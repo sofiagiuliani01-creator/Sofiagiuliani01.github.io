@@ -14028,26 +14028,26 @@ body.app-page {
   --hero-stage-height: 100svh;
   --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
-  --hero-lead-size: clamp(1.42rem, 2.9vw, 2.55rem);
-  --hero-lead-mid-size: clamp(1.4rem, 2.9vw, 2.55rem);
+  --hero-lead-size: clamp(1.7rem, 3.35vw, 3.05rem);
+  --hero-lead-mid-size: clamp(1.75rem, 3.45vw, 3.15rem);
   --hero-role-size: clamp(3.6rem, 9.6vw, 10.8rem);
   --hero-role-balanced-size: clamp(3.1rem, 6.9vw, 7.8rem);
-  --hero-role-center-size: clamp(4.9rem, 10.1vw, 11.8rem);
-  --hero-role-center-right-size: clamp(4.4rem, 9.1vw, 10.6rem);
+  --hero-role-center-size: clamp(6rem, 11.4vw, 13.5rem);
+  --hero-role-center-right-size: clamp(5.4rem, 10.3vw, 12.2rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
-  --hero-pt-target-x: 4.5vw;
-  --hero-pt-target-y: 17vh;
-  --hero-pt-mid-x: 5.4vw;
-  --hero-pt-mid-y: 16vh;
+  --hero-pt-target-x: 4.2vw;
+  --hero-pt-target-y: 11.2vh;
+  --hero-pt-mid-x: 4.4vw;
+  --hero-pt-mid-y: 10.8vh;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
-  --hero-nut-target-x: 52.2vw;
-  --hero-nut-target-y: 21vh;
-  --hero-nut-mid-x: 52vw;
-  --hero-nut-mid-y: 24vh;
+  --hero-nut-target-x: 50.8vw;
+  --hero-nut-target-y: 25vh;
+  --hero-nut-mid-x: 50.5vw;
+  --hero-nut-mid-y: 29vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
@@ -14168,7 +14168,7 @@ body.app-page {
   margin: 0;
   display: inline-flex;
   flex-direction: column;
-  gap: clamp(0.24rem, 0.8vw, 0.9rem);
+  gap: clamp(0.4rem, 1.15vw, 1.35rem);
   letter-spacing: 0.05em;
   line-height: 1.02;
   font-weight: 780;
@@ -14179,6 +14179,7 @@ body.app-page {
   font-size: var(--hero-lead-size);
   letter-spacing: 0.15em;
   font-weight: 630;
+  line-height: 1.05;
   color: rgba(15, 43, 47, 0.92);
 }
 
@@ -14205,14 +14206,14 @@ body.app-page {
 
 .page-home .hero-cinematic .hero-copy-pt {
   top: var(--hero-pt-target-y);
-  left: 7vw;
+  left: var(--hero-pt-target-x);
   transform: translate(0, 0);
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
-  width: min(88vw, 1420px);
-  max-width: min(88vw, 1420px);
-  clip-path: none;
+  width: min(50.4vw, 980px);
+  max-width: min(50.4vw, 980px);
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
 }
 
 .page-home .hero-cinematic .hero-copy-pt h1 {
@@ -14221,17 +14222,20 @@ body.app-page {
   text-shadow: 0 18px 42px rgba(3, 52, 58, 0.24);
 }
 
+.page-home .hero-cinematic .hero-copy-pt .hero-copy-lead {
+  max-width: 18.5ch;
+}
+
 .page-home .hero-cinematic .hero-copy-nutrition {
   top: var(--hero-nut-target-y);
   left: var(--hero-nut-target-x);
   transform: translate(0, 0);
   color: rgba(255, 255, 255, 0.97);
   text-align: left;
-  width: min(46vw, 860px);
-  max-width: min(46vw, 860px);
-  /* Align with clip-path notch: 0.12 * border-box width (content-box sizing). */
-  padding-left: calc(min(46vw, 860px) * 0.1363636364);
-  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  width: min(49.2vw, 940px);
+  max-width: min(49.2vw, 940px);
+  padding-left: calc(min(49.2vw, 940px) * 0.11);
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
   opacity: 0;
 }
 
@@ -14248,7 +14252,11 @@ body.app-page {
 }
 
 .page-home .hero-cinematic .hero-copy-nutrition .hero-copy-role {
-  margin-top: 0.14em;
+  margin-top: 0.2em;
+}
+
+.page-home .hero-cinematic .hero-copy-nutrition .hero-copy-lead {
+  max-width: 17.5ch;
 }
 
 .page-home .hero-cinematic .hero-ls-stage {

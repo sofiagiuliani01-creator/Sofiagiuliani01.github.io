@@ -14029,25 +14029,25 @@ body.app-page {
   --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
   --hero-lead-size: clamp(1.2rem, 2.35vw, 2.1rem);
-  --hero-lead-mid-size: clamp(1.4rem, 2.9vw, 2.55rem);
+  --hero-lead-mid-size: clamp(1.8rem, 3.8vw, 3.4rem);
   --hero-role-size: clamp(3.2rem, 8.2vw, 9.4rem);
   --hero-role-balanced-size: clamp(3.1rem, 6.9vw, 7.8rem);
-  --hero-role-center-size: clamp(4.2rem, 8.6vw, 10rem);
-  --hero-role-center-right-size: clamp(3.5rem, 7.7vw, 8.6rem);
+  --hero-role-center-size: clamp(4.9rem, 10.1vw, 11.8rem);
+  --hero-role-center-right-size: clamp(4.4rem, 9.1vw, 10.6rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
-  --hero-pt-target-x: 6vw;
-  --hero-pt-target-y: 40vh;
-  --hero-pt-mid-x: 7vw;
-  --hero-pt-mid-y: 30vh;
+  --hero-pt-target-x: 4.5vw;
+  --hero-pt-target-y: 17vh;
+  --hero-pt-mid-x: 5.4vw;
+  --hero-pt-mid-y: 16vh;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
-  --hero-nut-target-x: 54vw;
-  --hero-nut-target-y: 66vh;
-  --hero-nut-mid-x: 53vw;
-  --hero-nut-mid-y: 73vh;
+  --hero-nut-target-x: 52.2vw;
+  --hero-nut-target-y: 21vh;
+  --hero-nut-mid-x: 52vw;
+  --hero-nut-mid-y: 24vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
@@ -14201,15 +14201,15 @@ body.app-page {
 }
 
 .page-home .hero-cinematic .hero-copy-pt {
-  top: 44%;
+  top: 18%;
   left: 7vw;
-  transform: translate(0, -50%);
+  transform: translate(0, 0);
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
-  width: min(46vw, 840px);
-  max-width: min(46vw, 840px);
-  clip-path: polygon(0 0, 87% 0, 77% 100%, 0 100%);
+  width: min(50vw, 980px);
+  max-width: min(50vw, 980px);
+  clip-path: polygon(0 0, 90% 0, 76% 100%, 0 100%);
 }
 
 .page-home .hero-cinematic .hero-copy-pt h1 {
@@ -14222,16 +14222,27 @@ body.app-page {
   transform: translate(0, 0);
   color: rgba(255, 255, 255, 0.97);
   text-align: left;
-  width: min(46vw, 860px);
-  max-width: min(46vw, 860px);
-  padding-left: calc(min(46vw, 860px) * 0.12);
-  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  width: min(47.5vw, 920px);
+  max-width: min(47.5vw, 920px);
+  padding-left: calc(min(47.5vw, 920px) * 0.13);
+  clip-path: polygon(13% 0, 100% 0, 100% 100%, 0 100%);
   opacity: 0;
 }
 
 .page-home .hero-cinematic .hero-copy-nutrition h2 {
   text-shadow: 0 20px 48px rgba(0, 0, 0, 0.72);
   align-items: flex-start;
+}
+
+.page-home .hero-cinematic .hero-copy-pt .hero-copy-role,
+.page-home .hero-cinematic .hero-copy-nutrition .hero-copy-role {
+  display: block;
+  max-inline-size: 100%;
+  line-height: 0.92;
+}
+
+.page-home .hero-cinematic .hero-copy-nutrition .hero-copy-role {
+  margin-top: 0.14em;
 }
 
 .page-home .hero-cinematic .hero-ls-stage {

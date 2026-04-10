@@ -14028,21 +14028,21 @@ body.app-page {
   --hero-stage-height: 100svh;
   --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
-  --hero-lead-size: clamp(0.95rem, 1.35vw, 1.2rem);
+  --hero-lead-size: clamp(1rem, 1.6vw, 1.45rem);
   --hero-role-size: clamp(2.9rem, 7.4vw, 8.3rem);
   --hero-role-balanced-size: clamp(2.3rem, 4.9vw, 5.2rem);
-  --hero-role-center-size: clamp(2.8rem, 6.1vw, 6.4rem);
+  --hero-role-center-size: clamp(3.4rem, 7vw, 7.5rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
   --hero-pt-target-x: 6vw;
-  --hero-pt-target-y: 34vh;
+  --hero-pt-target-y: 42vh;
   --hero-pt-mid-x: 7vw;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
-  --hero-nut-target-x: 50vw;
-  --hero-nut-target-y: 54vh;
+  --hero-nut-target-x: 54vw;
+  --hero-nut-target-y: 61vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
@@ -14202,7 +14202,7 @@ body.app-page {
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
-  max-width: min(44vw, 760px);
+  max-width: min(50vw, 860px);
 }
 
 .page-home .hero-cinematic .hero-copy-pt h1 {
@@ -14215,7 +14215,7 @@ body.app-page {
   transform: translate(0, 0);
   color: rgba(255, 255, 255, 0.97);
   text-align: left;
-  width: min(44vw, 760px);
+  width: min(43vw, 760px);
   opacity: 0;
 }
 
@@ -14276,7 +14276,7 @@ body.app-page {
 @media (max-width: 900px) {
   .page-home .hero-cinematic {
     --hero-scroll-length: 340vh;
-    --hero-lead-size: clamp(0.75rem, 2.8vw, 0.95rem);
+    --hero-lead-size: clamp(0.8rem, 3vw, 1rem);
     --hero-role-size: clamp(1.8rem, 9vw, 3.6rem);
     --hero-role-balanced-size: clamp(1.7rem, 7.2vw, 2.7rem);
     --hero-role-isolated-size: clamp(1.35rem, 6vw, 2rem);
@@ -14284,12 +14284,12 @@ body.app-page {
     --hero-coaching-size: clamp(0.76rem, 3.1vw, 1rem);
     --hero-final-size: clamp(0.96rem, 4.1vw, 1.25rem);
     --hero-pt-target-x: 7vw;
-    --hero-pt-target-y: 36vh;
+    --hero-pt-target-y: 42vh;
     --hero-pt-mid-x: 6vw;
     --hero-pt-reduced-x: 6vw;
     --hero-pt-reduced-y: 43vh;
-    --hero-nut-target-x: 51vw;
-    --hero-nut-target-y: 55vh;
+    --hero-nut-target-x: 52vw;
+    --hero-nut-target-y: 60vh;
     --hero-ls-y: 47vh;
     --hero-type-y: 53vh;
   }

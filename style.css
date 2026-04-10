@@ -14028,9 +14028,9 @@ body.app-page {
   --hero-stage-height: 100svh;
   --hero-curtain-angle: -24deg;
   --hero-sentence-size: clamp(2.2rem, 5.8vw, 6.2rem);
-  --hero-lead-size: clamp(1.2rem, 2.35vw, 2.1rem);
+  --hero-lead-size: clamp(1.42rem, 2.9vw, 2.55rem);
   --hero-lead-mid-size: clamp(1.4rem, 2.9vw, 2.55rem);
-  --hero-role-size: clamp(3.2rem, 8.2vw, 9.4rem);
+  --hero-role-size: clamp(3.6rem, 9.6vw, 10.8rem);
   --hero-role-balanced-size: clamp(3.1rem, 6.9vw, 7.8rem);
   --hero-role-center-size: clamp(4.2rem, 8.6vw, 10rem);
   --hero-role-center-right-size: clamp(3.5rem, 7.7vw, 8.6rem);
@@ -14184,8 +14184,11 @@ body.app-page {
 
 .page-home .hero-cinematic .hero-copy-role {
   font-size: var(--hero-role-size);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.065em;
   font-weight: 830;
+  line-height: 0.94;
+  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .page-home .hero-cinematic .hero-copy-role .hero-role-char {
@@ -14201,18 +14204,20 @@ body.app-page {
 }
 
 .page-home .hero-cinematic .hero-copy-pt {
-  top: 44%;
+  top: 43%;
   left: 7vw;
   transform: translate(0, -50%);
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
-  width: min(46vw, 840px);
-  max-width: min(46vw, 840px);
-  clip-path: polygon(0 0, 87% 0, 77% 100%, 0 100%);
+  width: min(88vw, 1420px);
+  max-width: min(88vw, 1420px);
+  clip-path: none;
 }
 
 .page-home .hero-cinematic .hero-copy-pt h1 {
+  width: 100%;
+  align-items: flex-start;
   text-shadow: 0 18px 42px rgba(3, 52, 58, 0.24);
 }
 
@@ -14308,6 +14313,12 @@ body.app-page {
     --hero-nut-mid-y: 66vh;
     --hero-ls-y: 47vh;
     --hero-type-y: 53vh;
+  }
+
+  .page-home .hero-cinematic .hero-copy-role {
+    text-wrap: balance;
+    white-space: normal;
+    line-height: 1.02;
   }
 }
 

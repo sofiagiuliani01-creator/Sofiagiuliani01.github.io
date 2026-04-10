@@ -14204,7 +14204,7 @@ body.app-page {
 }
 
 .page-home .hero-cinematic .hero-copy-pt {
-  top: 43%;
+  top: var(--hero-pt-target-y);
   left: 7vw;
   transform: translate(0, 0);
   color: rgba(5, 40, 44, 0.95);
@@ -14298,6 +14298,13 @@ body.app-page {
   letter-spacing: 0.04em;
   line-height: 1.25;
   text-wrap: balance;
+}
+
+@media (max-width: 1200px) {
+  .page-home .hero-cinematic .hero-copy-role {
+    text-wrap: balance;
+    white-space: normal;
+  }
 }
 
 @media (max-width: 900px) {

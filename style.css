@@ -14032,22 +14032,22 @@ body.app-page {
   --hero-lead-mid-size: clamp(1.4rem, 2.9vw, 2.55rem);
   --hero-role-size: clamp(3.6rem, 9.6vw, 10.8rem);
   --hero-role-balanced-size: clamp(3.1rem, 6.9vw, 7.8rem);
-  --hero-role-center-size: clamp(4.2rem, 8.6vw, 10rem);
-  --hero-role-center-right-size: clamp(3.5rem, 7.7vw, 8.6rem);
+  --hero-role-center-size: clamp(4.9rem, 10.1vw, 11.8rem);
+  --hero-role-center-right-size: clamp(4.4rem, 9.1vw, 10.6rem);
   --hero-role-isolated-size: clamp(2rem, 4.2vw, 4.4rem);
   --hero-ls-size: clamp(2.1rem, 5.3vw, 4.5rem);
   --hero-coaching-size: clamp(0.9rem, 1.6vw, 1.25rem);
   --hero-final-size: clamp(1.02rem, 2.4vw, 2rem);
-  --hero-pt-target-x: 6vw;
-  --hero-pt-target-y: 40vh;
-  --hero-pt-mid-x: 7vw;
-  --hero-pt-mid-y: 30vh;
+  --hero-pt-target-x: 4.5vw;
+  --hero-pt-target-y: 17vh;
+  --hero-pt-mid-x: 5.4vw;
+  --hero-pt-mid-y: 16vh;
   --hero-pt-reduced-x: 7vw;
   --hero-pt-reduced-y: 44vh;
-  --hero-nut-target-x: 54vw;
-  --hero-nut-target-y: 66vh;
-  --hero-nut-mid-x: 53vw;
-  --hero-nut-mid-y: 73vh;
+  --hero-nut-target-x: 52.2vw;
+  --hero-nut-target-y: 21vh;
+  --hero-nut-mid-x: 52vw;
+  --hero-nut-mid-y: 24vh;
   --hero-ls-x: 50vw;
   --hero-ls-y: 49vh;
   --hero-type-y: 58vh;
@@ -14206,7 +14206,7 @@ body.app-page {
 .page-home .hero-cinematic .hero-copy-pt {
   top: 43%;
   left: 7vw;
-  transform: translate(0, -50%);
+  transform: translate(0, 0);
   color: rgba(5, 40, 44, 0.95);
   text-align: left;
   transform-origin: left top;
@@ -14238,6 +14238,17 @@ body.app-page {
 .page-home .hero-cinematic .hero-copy-nutrition h2 {
   text-shadow: 0 20px 48px rgba(0, 0, 0, 0.72);
   align-items: flex-start;
+}
+
+.page-home .hero-cinematic .hero-copy-pt .hero-copy-role,
+.page-home .hero-cinematic .hero-copy-nutrition .hero-copy-role {
+  display: block;
+  max-inline-size: 100%;
+  line-height: 0.92;
+}
+
+.page-home .hero-cinematic .hero-copy-nutrition .hero-copy-role {
+  margin-top: 0.14em;
 }
 
 .page-home .hero-cinematic .hero-ls-stage {

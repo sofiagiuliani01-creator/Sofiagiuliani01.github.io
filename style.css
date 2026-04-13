@@ -14021,11 +14021,11 @@ body.app-page {
   transform: translate3d(0, calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15));
 }
 
-.page-home .role-focus .keep-l {
+.page-home .role-focus .char.keep.keep-l {
   transform: translate3d(var(--l-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
 }
 
-.page-home .role-focus .keep-s {
+.page-home .role-focus .char.keep.keep-s {
   transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
 }
 

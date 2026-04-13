@@ -1642,23 +1642,28 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = remap(progress, 0.14, 0.52);
-      const secondOpacity = remap(progress, 0.16, 0.34);
+      const split = remap(progress, 0.12, 0.54);
+      const secondOpacity = remap(progress, 0.31, 0.42);
       const supportFade = remap(progress, 0.64, 0.78);
       const lettersFocus = remap(progress, 0.86, 0.93);
       const merge = remap(progress, 0.92, 0.97);
       const coaching = remap(progress, 0.965, 1);
       const converge = remap(progress, 0.78, 0.89);
+      const splitPresence = remap(progress, 0.24, 0.44);
 
-      const axSplit = gsap.utils.interpolate(0, -24, split);
-      const aySplit = gsap.utils.interpolate(0, -23, split);
-      const bxSplit = gsap.utils.interpolate(0, 24, split);
-      const bySplit = gsap.utils.interpolate(0, 23, split);
+      const axSplit = gsap.utils.interpolate(0, -21.5, split);
+      const aySplit = gsap.utils.interpolate(0, -19, split);
+      const bxSplit = gsap.utils.interpolate(0, -3.5, split);
+      const bySplit = gsap.utils.interpolate(0, 18, split);
 
-      const aX = axSplit + gsap.utils.interpolate(0, 10.5, converge);
-      const aY = aySplit + gsap.utils.interpolate(0, 7, converge);
-      const bX = bxSplit + gsap.utils.interpolate(0, -10.5, converge);
-      const bY = bySplit + gsap.utils.interpolate(0, -7, converge);
+      const aX = axSplit + gsap.utils.interpolate(0, 8.5, converge);
+      const aY = aySplit + gsap.utils.interpolate(0, 6.4, converge);
+      const bX = bxSplit + gsap.utils.interpolate(0, -8.5, converge);
+      const bY = bySplit + gsap.utils.interpolate(0, -6.4, converge);
+
+      const aScale = gsap.utils.interpolate(1.12, 1.0, remap(progress, 0, 0.3));
+      const bScale = gsap.utils.interpolate(1.16, 1.01, splitPresence);
+      const bCarry = gsap.utils.interpolate(24, 0, splitPresence);
 
       stage.style.setProperty('--split', `${split * 112}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
@@ -1666,6 +1671,9 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
       stage.style.setProperty('--merge', merge.toFixed(4));
       stage.style.setProperty('--coaching', coaching.toFixed(4));
+      stage.style.setProperty('--a-scale', aScale.toFixed(4));
+      stage.style.setProperty('--b-scale', bScale.toFixed(4));
+      stage.style.setProperty('--b-carry', bCarry.toFixed(4));
 
       stage.style.setProperty('--a-x', aX.toFixed(3));
       stage.style.setProperty('--a-y', aY.toFixed(3));

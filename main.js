@@ -1623,7 +1623,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', onScroll, { passive: true });
 })();
 
-// HOME HERO — cinematic storyboard sequence
+// HOME HERO — cinematic storyboard sequence (persistent text nodes)
 window.addEventListener('DOMContentLoaded', () => {
   const hero = document.querySelector('.hero-cinematic');
   if (!hero || !window.gsap || !window.ScrollTrigger) return;
@@ -1631,12 +1631,7 @@ window.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const stage = hero.querySelector('.hero-cinematic-stage');
-  const leftBlock = hero.querySelector('[data-hero-left]');
-  const rightBlock = hero.querySelector('[data-hero-right]');
-  const roles = hero.querySelector('[data-hero-roles]');
-  const lockup = hero.querySelector('[data-hero-lockup]');
-  const letterL = hero.querySelector('[data-letter-l]');
-  const letterS = hero.querySelector('[data-letter-s]');
+  if (!stage) return;
 
   const clamp = gsap.utils.clamp(0, 1);
   const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
@@ -1647,28 +1642,27 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const splitProgress = remap(progress, 0.12, 0.48);
-      const blackout = remap(progress, 0.54, 0.72);
-      const letters = remap(progress, 0.72, 0.84);
-      const lockupProgress = remap(progress, 0.84, 1);
+      const split = remap(progress, 0.12, 0.48);
+      const secondOpacity = remap(progress, 0.24, 0.48);
+      const supportFade = remap(progress, 0.56, 0.72);
+      const lettersFocus = remap(progress, 0.70, 0.84);
+      const merge = remap(progress, 0.84, 0.94);
+      const coaching = remap(progress, 0.94, 1);
 
-      stage.style.setProperty('--split', `${splitProgress * 110}%`);
-      stage.style.setProperty('--hero-shift', splitProgress.toFixed(4));
-      stage.style.setProperty('--blackout', blackout.toFixed(4));
-      stage.style.setProperty('--letters', letters.toFixed(4));
-      stage.style.setProperty('--lockup', lockupProgress.toFixed(4));
+      stage.style.setProperty('--split', `${split * 110}%`);
+      stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
+      stage.style.setProperty('--support-fade', supportFade.toFixed(4));
+      stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
+      stage.style.setProperty('--merge', merge.toFixed(4));
+      stage.style.setProperty('--coaching', coaching.toFixed(4));
 
-      leftBlock.style.opacity = String(1 - blackout);
-      rightBlock.style.opacity = String(1 - blackout);
-      roles.style.opacity = String(blackout * (1 - letters));
+      stage.style.setProperty('--a-x', gsap.utils.interpolate(0, -25, split).toFixed(3));
+      stage.style.setProperty('--a-y', gsap.utils.interpolate(0, -26, split).toFixed(3));
+      stage.style.setProperty('--b-x', gsap.utils.interpolate(0, 21, split).toFixed(3));
+      stage.style.setProperty('--b-y', gsap.utils.interpolate(0, 24, split).toFixed(3));
 
-      const lX = gsap.utils.interpolate(0, 22, lockupProgress);
-      const sX = gsap.utils.interpolate(0, -22, lockupProgress);
-      const letterY = gsap.utils.interpolate(0, -8, lockupProgress);
-
-      letterL.style.transform = `translate(${lX}vw, ${letterY}vh)`;
-      letterS.style.transform = `translate(${sX}vw, ${letterY}vh)`;
-      lockup.style.transform = `translateY(${gsap.utils.interpolate(8, 0, lockupProgress)}vh)`;
+      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 12, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -12, merge).toFixed(3)}vw`);
     }
   });
 });

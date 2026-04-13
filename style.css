@@ -13929,7 +13929,10 @@ body.app-page {
   --support-fade: 0;
   --letters-focus: 0;
   --merge: 0;
+  --lockup-ls: 0;
   --second-opacity: 0;
+  --second-reveal: 0;
+  --sentence-exit: 0;
   --a-scale: 1;
   --b-scale: 1;
   --b-carry: 20;
@@ -14000,6 +14003,7 @@ body.app-page {
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.14),
     0 18px 42px rgba(4, 34, 36, 0.2);
+  opacity: calc(1 - var(--sentence-exit));
 }
 
 .page-home .sentence-a {
@@ -14014,9 +14018,10 @@ body.app-page {
   top: 44.5%;
   justify-content: flex-end;
   text-align: right;
-  opacity: var(--second-opacity);
+  opacity: calc(var(--second-opacity) * (1 - var(--sentence-exit)));
   transform: translate(calc(var(--b-carry) * 1vw + var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh)) scale(var(--b-scale));
   transform-origin: right center;
+  clip-path: inset(0 calc((1 - var(--second-reveal)) * 100%) 0 0);
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.1),
     0 20px 54px rgba(0, 0, 0, 0.58);
@@ -14024,7 +14029,8 @@ body.app-page {
 
 .page-home .word.support {
   opacity: calc(1 - var(--support-fade));
-  transition: opacity 120ms linear;
+  filter: blur(calc(var(--support-fade) * 2.2px));
+  transition: opacity 120ms linear, filter 120ms linear;
 }
 
 .page-home .role-word { white-space: nowrap; }
@@ -14032,18 +14038,18 @@ body.app-page {
 .page-home .role-nutri { color: #8b5cf6; }
 
 .page-home .role-secondary {
-  opacity: calc(1 - var(--letters-focus));
+  opacity: calc(1 - (var(--letters-focus) * 0.82));
   transition: opacity 120ms linear;
 }
 
 .page-home .role-focus .char {
   display: inline-block;
-  opacity: calc(1 - var(--letters-focus));
+  opacity: calc(1 - (var(--letters-focus) * 0.95));
   transition: opacity 120ms linear;
 }
 
 .page-home .role-focus .char.keep {
-  opacity: 1;
+  opacity: calc(1 - var(--sentence-exit));
   color: #f8fafc;
   transform: translate3d(0, calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15));
 }
@@ -14059,14 +14065,31 @@ body.app-page {
 .page-home .hero-coaching {
   position: absolute;
   left: 50%;
-  top: 56vh;
+  top: 50%;
   color: #f4f7f8;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: clamp(1.55rem, 3.3vw, 3.4rem);
+  font-size: clamp(1.1rem, 2.2vw, 2.35rem);
   opacity: var(--coaching);
-  transform: translate(-50%, 0) translateY(calc((1 - var(--coaching)) * 2.5vh));
+  transform: translate(calc(-50% + 5.6vw), calc(-50% + (1 - var(--coaching)) * 1.3vh));
+  transform-origin: left center;
+}
+
+.page-home .hero-lockup-ls {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: #f4f7f8;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: clamp(2.45rem, 6.1vw, 7.25rem);
+  line-height: 0.88;
+  opacity: var(--lockup-ls);
+  transform: translate(-50%, calc(-50% - 3.2vh)) scale(calc(1 + (1 - var(--lockup-ls)) * 0.04));
+  pointer-events: none;
+  z-index: 3;
 }
 
 @media (max-width: 900px) {

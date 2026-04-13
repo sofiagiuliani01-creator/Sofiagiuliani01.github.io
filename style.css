@@ -13970,14 +13970,13 @@ body.app-page {
 .page-home .hero-sentence {
   position: absolute;
   margin: 0;
-  font-size: clamp(1.8rem, 4.7vw, 5.1rem);
+  font-size: clamp(2rem, 5.35vw, 6.2rem);
   line-height: 0.92;
   display: flex;
   flex-wrap: wrap;
   gap: 0.2em;
-  max-width: min(92vw, 1600px);
+  max-width: min(94vw, 1780px);
   transform-origin: center;
-  opacity: calc(1 - var(--coaching));
 }
 
 .page-home .sentence-a {
@@ -13991,7 +13990,7 @@ body.app-page {
   top: 50%;
   justify-content: flex-end;
   text-align: right;
-  opacity: calc(var(--second-opacity) * (1 - var(--coaching)));
+  opacity: var(--second-opacity);
   transform: translate(calc(-50% + var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh));
 }
 
@@ -14033,13 +14032,13 @@ body.app-page {
   position: absolute;
   left: 50%;
   top: 56vh;
-  transform: translate(-50%, 0);
   color: #f4f7f8;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: clamp(1.4rem, 2.8vw, 3rem);
   opacity: var(--coaching);
+  transform: translate(-50%, 0) translateY(calc((1 - var(--coaching)) * 2.5vh));
 }
 
 @media (max-width: 900px) {
@@ -14048,7 +14047,7 @@ body.app-page {
     clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
   }
   .page-home .hero-sentence {
-    font-size: clamp(1.45rem, 6.6vw, 3.1rem);
-    max-width: 94vw;
+    font-size: clamp(1.45rem, 7.2vw, 3.45rem);
+    max-width: 96vw;
   }
 }

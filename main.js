@@ -1622,3 +1622,53 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 })();
+
+// HOME HERO — cinematic storyboard sequence
+window.addEventListener('DOMContentLoaded', () => {
+  const hero = document.querySelector('.hero-cinematic');
+  if (!hero || !window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const stage = hero.querySelector('.hero-cinematic-stage');
+  const leftBlock = hero.querySelector('[data-hero-left]');
+  const rightBlock = hero.querySelector('[data-hero-right]');
+  const roles = hero.querySelector('[data-hero-roles]');
+  const lockup = hero.querySelector('[data-hero-lockup]');
+  const letterL = hero.querySelector('[data-letter-l]');
+  const letterS = hero.querySelector('[data-letter-s]');
+
+  const clamp = gsap.utils.clamp(0, 1);
+  const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
+
+  ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    onUpdate: ({ progress }) => {
+      const splitProgress = remap(progress, 0.12, 0.48);
+      const blackout = remap(progress, 0.54, 0.72);
+      const letters = remap(progress, 0.72, 0.84);
+      const lockupProgress = remap(progress, 0.84, 1);
+
+      stage.style.setProperty('--split', `${splitProgress * 110}%`);
+      stage.style.setProperty('--hero-shift', splitProgress.toFixed(4));
+      stage.style.setProperty('--blackout', blackout.toFixed(4));
+      stage.style.setProperty('--letters', letters.toFixed(4));
+      stage.style.setProperty('--lockup', lockupProgress.toFixed(4));
+
+      leftBlock.style.opacity = String(1 - blackout);
+      rightBlock.style.opacity = String(1 - blackout);
+      roles.style.opacity = String(blackout * (1 - letters));
+
+      const lX = gsap.utils.interpolate(0, 22, lockupProgress);
+      const sX = gsap.utils.interpolate(0, -22, lockupProgress);
+      const letterY = gsap.utils.interpolate(0, -8, lockupProgress);
+
+      letterL.style.transform = `translate(${lX}vw, ${letterY}vh)`;
+      letterS.style.transform = `translate(${sX}vw, ${letterY}vh)`;
+      lockup.style.transform = `translateY(${gsap.utils.interpolate(8, 0, lockupProgress)}vh)`;
+    }
+  });
+});

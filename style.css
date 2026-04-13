@@ -13909,3 +13909,195 @@ body.app-page {
   filter: blur(16px);
   pointer-events: none;
 }
+
+/* === Cinematic storyboard hero rebuild === */
+.page-home .hero-cinematic {
+  position: relative;
+  height: 520vh;
+  background: #19dad5;
+}
+
+.page-home .hero-cinematic-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-home .hero-cinematic-stage {
+  --split: 0%;
+  --hero-shift: 0;
+  --blackout: 0;
+  --letters: 0;
+  --lockup: 0;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+}
+
+.page-home .hero-cinematic-base,
+.page-home .hero-cinematic-curtain {
+  position: absolute;
+  inset: 0;
+}
+
+.page-home .hero-cinematic-base { background: #19dad5; }
+
+.page-home .hero-cinematic-curtain {
+  background: #020202;
+  clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(72% - var(--split)) 100%);
+}
+
+.page-home .hero-opening,
+.page-home .hero-mid,
+.page-home .hero-roles,
+.page-home .hero-letters,
+.page-home .hero-lockup {
+  position: absolute;
+  inset: 0;
+  color: #f4f7f8;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.page-home .hero-opening {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  opacity: calc(1 - var(--hero-shift));
+}
+
+.page-home .hero-opening p {
+  margin: 0;
+  font-size: clamp(2.1rem, 5.7vw, 6.2rem);
+  line-height: 0.95;
+  max-width: min(95vw, 1600px);
+}
+
+.page-home .hero-opening .role-personal { color: #1d4ed8; }
+
+.page-home .hero-mid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.55rem, 1.8vh, 1.1rem);
+  font-size: clamp(2rem, 5.2vw, 5.2rem);
+  line-height: 0.9;
+  opacity: var(--hero-shift);
+}
+
+.page-home .hero-mid p { margin: 0; white-space: nowrap; }
+
+.page-home .hero-mid-left {
+  width: min(58vw, 980px);
+  left: clamp(1.2rem, 4.5vw, 6rem);
+  top: 4vh;
+  bottom: 4vh;
+  align-items: flex-start;
+}
+
+.page-home .hero-mid-right {
+  width: min(42vw, 760px);
+  left: auto;
+  right: clamp(1rem, 2.6vw, 3rem);
+  top: 5vh;
+  bottom: 5vh;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.page-home .hero-mid-left .role-personal,
+.page-home .hero-role.personal { color: #1d4ed8; }
+
+.page-home .hero-mid-right .role-nutri,
+.page-home .hero-role.nutri { color: #8b5cf6; }
+
+.page-home .hero-roles {
+  pointer-events: none;
+  opacity: var(--blackout);
+}
+
+.page-home .hero-role {
+  position: absolute;
+  margin: 0;
+  font-size: clamp(2.1rem, 5.1vw, 5.3rem);
+  line-height: 0.9;
+  white-space: nowrap;
+}
+
+.page-home .hero-role.personal {
+  left: clamp(1.2rem, 4.5vw, 6rem);
+  top: 58vh;
+}
+
+.page-home .hero-role.nutri {
+  right: clamp(1rem, 2.6vw, 3rem);
+  top: 60vh;
+}
+
+.page-home .hero-letters {
+  opacity: var(--letters);
+}
+
+.page-home .hero-letter {
+  position: absolute;
+  font-size: clamp(3.8rem, 9vw, 9.8rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #f8fafc;
+}
+
+.page-home .hero-letter.letter-l {
+  left: clamp(18vw, 24vw, 28vw);
+  top: 52vh;
+}
+
+.page-home .hero-letter.letter-s {
+  right: clamp(20vw, 24vw, 29vw);
+  top: 52vh;
+}
+
+.page-home .hero-lockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  opacity: var(--lockup);
+}
+
+.page-home .hero-lockup-mark {
+  font-size: clamp(4rem, 9vw, 10rem);
+  line-height: 1;
+}
+
+.page-home .hero-lockup-word {
+  font-size: clamp(1.4rem, 2.8vw, 3rem);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 900px) {
+  .page-home .hero-cinematic { height: 460vh; }
+  .page-home .hero-cinematic-curtain {
+    clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
+  }
+  .page-home .hero-opening p { line-height: 1; }
+  .page-home .hero-mid {
+    font-size: clamp(1.55rem, 8vw, 3.4rem);
+    line-height: 0.96;
+  }
+  .page-home .hero-mid-left {
+    width: 60vw;
+    top: 10vh;
+    bottom: 10vh;
+  }
+  .page-home .hero-mid-right {
+    width: 42vw;
+    top: 12vh;
+    bottom: 12vh;
+  }
+  .page-home .hero-role.personal { top: 56vh; }
+  .page-home .hero-role.nutri { top: 62vh; }
+}

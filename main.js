@@ -1642,35 +1642,41 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = remap(progress, 0.12, 0.54);
-      const secondOpacity = remap(progress, 0.31, 0.42);
-      const supportFade = remap(progress, 0.64, 0.78);
-      const lettersFocus = remap(progress, 0.86, 0.93);
-      const merge = remap(progress, 0.92, 0.97);
+      const split = remap(progress, 0.1, 0.51);
+      const splitPresence = remap(progress, 0.22, 0.44);
+      const secondOpacity = remap(progress, 0.25, 0.41);
+      const secondReveal = remap(progress, 0.22, 0.45);
+      const supportFade = remap(progress, 0.57, 0.75);
+      const lettersFocus = remap(progress, 0.74, 0.88);
+      const merge = remap(progress, 0.86, 0.95);
+      const lockupLs = remap(progress, 0.9, 0.97);
       const coaching = remap(progress, 0.965, 1);
-      const converge = remap(progress, 0.78, 0.89);
-      const splitPresence = remap(progress, 0.24, 0.44);
+      const converge = remap(progress, 0.73, 0.86);
+      const sentenceExit = remap(progress, 0.9, 0.98);
 
-      const axSplit = gsap.utils.interpolate(0, -21.5, split);
-      const aySplit = gsap.utils.interpolate(0, -19, split);
-      const bxSplit = gsap.utils.interpolate(0, -3.5, split);
-      const bySplit = gsap.utils.interpolate(0, 18, split);
+      const axSplit = gsap.utils.interpolate(0, -19.5, split);
+      const aySplit = gsap.utils.interpolate(0, -15.5, split);
+      const bxSplit = gsap.utils.interpolate(0, 10.5, split);
+      const bySplit = gsap.utils.interpolate(0, 14.5, split);
 
-      const aX = axSplit + gsap.utils.interpolate(0, 8.5, converge);
-      const aY = aySplit + gsap.utils.interpolate(0, 6.4, converge);
-      const bX = bxSplit + gsap.utils.interpolate(0, -8.5, converge);
-      const bY = bySplit + gsap.utils.interpolate(0, -6.4, converge);
+      const aX = axSplit + gsap.utils.interpolate(0, 7.2, converge);
+      const aY = aySplit + gsap.utils.interpolate(0, 5.2, converge);
+      const bX = bxSplit + gsap.utils.interpolate(0, -7.2, converge);
+      const bY = bySplit + gsap.utils.interpolate(0, -5.2, converge);
 
-      const aScale = gsap.utils.interpolate(1.12, 1.0, remap(progress, 0, 0.3));
-      const bScale = gsap.utils.interpolate(1.16, 1.01, splitPresence);
-      const bCarry = gsap.utils.interpolate(24, 0, splitPresence);
+      const aScale = gsap.utils.interpolate(1.08, 1.0, remap(progress, 0, 0.28));
+      const bScale = gsap.utils.interpolate(1.04, 1.0, splitPresence);
+      const bCarry = gsap.utils.interpolate(18, 0, splitPresence);
 
       stage.style.setProperty('--split', `${split * 112}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
+      stage.style.setProperty('--second-reveal', secondReveal.toFixed(4));
       stage.style.setProperty('--support-fade', supportFade.toFixed(4));
       stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
       stage.style.setProperty('--merge', merge.toFixed(4));
+      stage.style.setProperty('--lockup-ls', lockupLs.toFixed(4));
       stage.style.setProperty('--coaching', coaching.toFixed(4));
+      stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
       stage.style.setProperty('--a-scale', aScale.toFixed(4));
       stage.style.setProperty('--b-scale', bScale.toFixed(4));
       stage.style.setProperty('--b-carry', bCarry.toFixed(4));
@@ -1680,8 +1686,8 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--b-x', bX.toFixed(3));
       stage.style.setProperty('--b-y', bY.toFixed(3));
 
-      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 9.5, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -9.5, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 8.4, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -8.4, merge).toFixed(3)}vw`);
     }
   });
 });

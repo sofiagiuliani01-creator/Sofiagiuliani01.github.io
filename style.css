@@ -13926,10 +13926,17 @@ body.app-page {
 
 .page-home .hero-cinematic-stage {
   --split: 0%;
-  --hero-shift: 0;
-  --blackout: 0;
-  --letters: 0;
-  --lockup: 0;
+  --support-fade: 0;
+  --letters-focus: 0;
+  --merge: 0;
+  --second-opacity: 0;
+  --coaching: 0;
+  --a-x: 0;
+  --a-y: 0;
+  --b-x: 0;
+  --b-y: 0;
+  --l-merge-x: 0vw;
+  --s-merge-x: 0vw;
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -13950,132 +13957,89 @@ body.app-page {
   clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(72% - var(--split)) 100%);
 }
 
-.page-home .hero-opening,
-.page-home .hero-mid,
-.page-home .hero-roles,
-.page-home .hero-letters,
-.page-home .hero-lockup {
+.page-home .hero-lines {
   position: absolute;
   inset: 0;
   color: #f4f7f8;
   font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-}
-
-.page-home .hero-opening {
-  display: grid;
-  place-items: center;
-  text-align: center;
-  opacity: calc(1 - var(--hero-shift));
-}
-
-.page-home .hero-opening p {
-  margin: 0;
-  font-size: clamp(2.1rem, 5.7vw, 6.2rem);
-  line-height: 0.95;
-  max-width: min(95vw, 1600px);
-}
-
-.page-home .hero-opening .role-personal { color: #1d4ed8; }
-
-.page-home .hero-mid {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(0.55rem, 1.8vh, 1.1rem);
-  font-size: clamp(2rem, 5.2vw, 5.2rem);
-  line-height: 0.9;
-  opacity: var(--hero-shift);
-}
-
-.page-home .hero-mid p { margin: 0; white-space: nowrap; }
-
-.page-home .hero-mid-left {
-  width: min(58vw, 980px);
-  left: clamp(1.2rem, 4.5vw, 6rem);
-  top: 4vh;
-  bottom: 4vh;
-  align-items: flex-start;
-}
-
-.page-home .hero-mid-right {
-  width: min(42vw, 760px);
-  left: auto;
-  right: clamp(1rem, 2.6vw, 3rem);
-  top: 5vh;
-  bottom: 5vh;
-  align-items: flex-end;
-  text-align: right;
-}
-
-.page-home .hero-mid-left .role-personal,
-.page-home .hero-role.personal { color: #1d4ed8; }
-
-.page-home .hero-mid-right .role-nutri,
-.page-home .hero-role.nutri { color: #8b5cf6; }
-
-.page-home .hero-roles {
   pointer-events: none;
-  opacity: var(--blackout);
 }
 
-.page-home .hero-role {
+.page-home .hero-sentence {
   position: absolute;
   margin: 0;
-  font-size: clamp(2.1rem, 5.1vw, 5.3rem);
-  line-height: 0.9;
-  white-space: nowrap;
-}
-
-.page-home .hero-role.personal {
-  left: clamp(1.2rem, 4.5vw, 6rem);
-  top: 58vh;
-}
-
-.page-home .hero-role.nutri {
-  right: clamp(1rem, 2.6vw, 3rem);
-  top: 60vh;
-}
-
-.page-home .hero-letters {
-  opacity: var(--letters);
-}
-
-.page-home .hero-letter {
-  position: absolute;
-  font-size: clamp(3.8rem, 9vw, 9.8rem);
-  font-weight: 800;
-  line-height: 1;
-  color: #f8fafc;
-}
-
-.page-home .hero-letter.letter-l {
-  left: clamp(18vw, 24vw, 28vw);
-  top: 52vh;
-}
-
-.page-home .hero-letter.letter-s {
-  right: clamp(20vw, 24vw, 29vw);
-  top: 52vh;
-}
-
-.page-home .hero-lockup {
+  font-size: clamp(1.8rem, 4.7vw, 5.1rem);
+  line-height: 0.92;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45em;
-  opacity: var(--lockup);
+  flex-wrap: wrap;
+  gap: 0.2em;
+  max-width: min(92vw, 1600px);
+  transform-origin: center;
+  opacity: calc(1 - var(--coaching));
 }
 
-.page-home .hero-lockup-mark {
-  font-size: clamp(4rem, 9vw, 10rem);
-  line-height: 1;
+.page-home .sentence-a {
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--a-x) * 1vw), calc(-50% + var(--a-y) * 1vh));
 }
 
-.page-home .hero-lockup-word {
-  font-size: clamp(1.4rem, 2.8vw, 3rem);
+.page-home .sentence-b {
+  left: 50%;
+  top: 50%;
+  justify-content: flex-end;
+  text-align: right;
+  opacity: calc(var(--second-opacity) * (1 - var(--coaching)));
+  transform: translate(calc(-50% + var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh));
+}
+
+.page-home .word.support {
+  opacity: calc(1 - var(--support-fade));
+  transition: opacity 120ms linear;
+}
+
+.page-home .role-word { white-space: nowrap; }
+.page-home .role-personal { color: #1d4ed8; }
+.page-home .role-nutri { color: #8b5cf6; }
+
+.page-home .role-secondary {
+  opacity: calc(1 - var(--letters-focus));
+  transition: opacity 120ms linear;
+}
+
+.page-home .role-focus .char {
+  display: inline-block;
+  opacity: calc(1 - var(--letters-focus));
+  transition: opacity 120ms linear;
+}
+
+.page-home .role-focus .char.keep {
+  opacity: 1;
+  color: #f8fafc;
+  transform: translate3d(0, calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15));
+}
+
+.page-home .role-focus .keep-l {
+  transform: translate3d(var(--l-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
+}
+
+.page-home .role-focus .keep-s {
+  transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
+}
+
+.page-home .hero-coaching {
+  position: absolute;
+  left: 50%;
+  top: 56vh;
+  transform: translate(-50%, 0);
+  color: #f4f7f8;
+  font-weight: 800;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(1.4rem, 2.8vw, 3rem);
+  opacity: var(--coaching);
 }
 
 @media (max-width: 900px) {
@@ -14083,21 +14047,8 @@ body.app-page {
   .page-home .hero-cinematic-curtain {
     clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
   }
-  .page-home .hero-opening p { line-height: 1; }
-  .page-home .hero-mid {
-    font-size: clamp(1.55rem, 8vw, 3.4rem);
-    line-height: 0.96;
+  .page-home .hero-sentence {
+    font-size: clamp(1.45rem, 6.6vw, 3.1rem);
+    max-width: 94vw;
   }
-  .page-home .hero-mid-left {
-    width: 60vw;
-    top: 10vh;
-    bottom: 10vh;
-  }
-  .page-home .hero-mid-right {
-    width: 42vw;
-    top: 12vh;
-    bottom: 12vh;
-  }
-  .page-home .hero-role.personal { top: 56vh; }
-  .page-home .hero-role.nutri { top: 62vh; }
 }

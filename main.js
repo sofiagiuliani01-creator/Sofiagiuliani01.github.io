@@ -1642,33 +1642,25 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = remap(progress, 0.1, 0.51);
-      const splitPresence = remap(progress, 0.22, 0.44);
-      const secondOpacity = remap(progress, 0.25, 0.41);
-      const secondReveal = remap(progress, 0.22, 0.45);
-      const supportFade = remap(progress, 0.57, 0.75);
-      const lettersFocus = remap(progress, 0.74, 0.88);
-      const merge = remap(progress, 0.86, 0.95);
+      const split = remap(progress, 0.08, 0.46);
+      const secondOpacity = remap(progress, 0.2, 0.36);
+      const secondReveal = remap(progress, 0.24, 0.43);
+      const supportFade = remap(progress, 0.55, 0.73);
+      const lettersFocus = remap(progress, 0.7, 0.86);
+      const merge = remap(progress, 0.84, 0.94);
       const lockupLs = remap(progress, 0.9, 0.97);
-      const coaching = remap(progress, 0.965, 1);
-      const converge = remap(progress, 0.73, 0.86);
+      const coaching = remap(progress, 0.95, 1);
       const sentenceExit = remap(progress, 0.9, 0.98);
 
-      const axSplit = gsap.utils.interpolate(0, -19.5, split);
-      const aySplit = gsap.utils.interpolate(0, -15.5, split);
-      const bxSplit = gsap.utils.interpolate(0, 10.5, split);
-      const bySplit = gsap.utils.interpolate(0, 14.5, split);
+      const aX = gsap.utils.interpolate(0, -7.5, split) + gsap.utils.interpolate(0, 5.1, remap(progress, 0.64, 0.84));
+      const aY = gsap.utils.interpolate(0, -8.2, split) + gsap.utils.interpolate(0, 5.8, remap(progress, 0.64, 0.84));
+      const bX = gsap.utils.interpolate(22, 0, secondReveal) + gsap.utils.interpolate(0, -5.1, remap(progress, 0.64, 0.84));
+      const bY = gsap.utils.interpolate(6, 10.5, split) + gsap.utils.interpolate(0, -5.8, remap(progress, 0.64, 0.84));
 
-      const aX = axSplit + gsap.utils.interpolate(0, 7.2, converge);
-      const aY = aySplit + gsap.utils.interpolate(0, 5.2, converge);
-      const bX = bxSplit + gsap.utils.interpolate(0, -7.2, converge);
-      const bY = bySplit + gsap.utils.interpolate(0, -5.2, converge);
+      const aScale = gsap.utils.interpolate(1.05, 1, remap(progress, 0, 0.22));
+      const bScale = gsap.utils.interpolate(1.03, 1, remap(progress, 0.2, 0.45));
 
-      const aScale = gsap.utils.interpolate(1.08, 1.0, remap(progress, 0, 0.28));
-      const bScale = gsap.utils.interpolate(1.04, 1.0, splitPresence);
-      const bCarry = gsap.utils.interpolate(18, 0, splitPresence);
-
-      stage.style.setProperty('--split', `${split * 112}%`);
+      stage.style.setProperty('--split', `${split * 106}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
       stage.style.setProperty('--second-reveal', secondReveal.toFixed(4));
       stage.style.setProperty('--support-fade', supportFade.toFixed(4));
@@ -1679,15 +1671,14 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
       stage.style.setProperty('--a-scale', aScale.toFixed(4));
       stage.style.setProperty('--b-scale', bScale.toFixed(4));
-      stage.style.setProperty('--b-carry', bCarry.toFixed(4));
 
       stage.style.setProperty('--a-x', aX.toFixed(3));
       stage.style.setProperty('--a-y', aY.toFixed(3));
       stage.style.setProperty('--b-x', bX.toFixed(3));
       stage.style.setProperty('--b-y', bY.toFixed(3));
 
-      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 8.4, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -8.4, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.45, merge).toFixed(3)}vw`);
     }
   });
 });

@@ -1642,27 +1642,38 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = remap(progress, 0.12, 0.48);
-      const secondOpacity = remap(progress, 0.24, 0.48);
-      const supportFade = remap(progress, 0.56, 0.72);
-      const lettersFocus = remap(progress, 0.70, 0.84);
-      const merge = remap(progress, 0.84, 0.94);
-      const coaching = remap(progress, 0.94, 1);
+      const split = remap(progress, 0.14, 0.52);
+      const secondOpacity = remap(progress, 0.16, 0.34);
+      const supportFade = remap(progress, 0.64, 0.78);
+      const lettersFocus = remap(progress, 0.86, 0.93);
+      const merge = remap(progress, 0.92, 0.97);
+      const coaching = remap(progress, 0.965, 1);
+      const converge = remap(progress, 0.78, 0.89);
 
-      stage.style.setProperty('--split', `${split * 110}%`);
+      const axSplit = gsap.utils.interpolate(0, -24, split);
+      const aySplit = gsap.utils.interpolate(0, -23, split);
+      const bxSplit = gsap.utils.interpolate(0, 24, split);
+      const bySplit = gsap.utils.interpolate(0, 23, split);
+
+      const aX = axSplit + gsap.utils.interpolate(0, 10.5, converge);
+      const aY = aySplit + gsap.utils.interpolate(0, 7, converge);
+      const bX = bxSplit + gsap.utils.interpolate(0, -10.5, converge);
+      const bY = bySplit + gsap.utils.interpolate(0, -7, converge);
+
+      stage.style.setProperty('--split', `${split * 112}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
       stage.style.setProperty('--support-fade', supportFade.toFixed(4));
       stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
       stage.style.setProperty('--merge', merge.toFixed(4));
       stage.style.setProperty('--coaching', coaching.toFixed(4));
 
-      stage.style.setProperty('--a-x', gsap.utils.interpolate(0, -25, split).toFixed(3));
-      stage.style.setProperty('--a-y', gsap.utils.interpolate(0, -26, split).toFixed(3));
-      stage.style.setProperty('--b-x', gsap.utils.interpolate(0, 21, split).toFixed(3));
-      stage.style.setProperty('--b-y', gsap.utils.interpolate(0, 24, split).toFixed(3));
+      stage.style.setProperty('--a-x', aX.toFixed(3));
+      stage.style.setProperty('--a-y', aY.toFixed(3));
+      stage.style.setProperty('--b-x', bX.toFixed(3));
+      stage.style.setProperty('--b-y', bY.toFixed(3));
 
-      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 12, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -12, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 9.5, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -9.5, merge).toFixed(3)}vw`);
     }
   });
 });

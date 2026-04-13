@@ -13935,7 +13935,6 @@ body.app-page {
   --sentence-exit: 0;
   --a-scale: 1;
   --b-scale: 1;
-  --b-carry: 20;
   --coaching: 0;
   --a-x: 0;
   --a-y: 0;
@@ -13971,12 +13970,22 @@ body.app-page {
 }
 
 .page-home .hero-cinematic-curtain {
-  background: #020202;
-  clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(72% - var(--split)) 100%);
+  background:
+    radial-gradient(120% 120% at 84% 56%, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 48%),
+    #020202;
+  clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(73% - var(--split)) 100%);
   box-shadow:
-    -42px 0 96px rgba(0, 0, 0, 0.44),
-    inset 72px 0 110px rgba(255, 255, 255, 0.06),
-    inset 0 0 220px rgba(255, 255, 255, 0.04);
+    -42px 0 96px rgba(0, 0, 0, 0.5),
+    inset 72px 0 112px rgba(255, 255, 255, 0.06),
+    inset 0 0 220px rgba(255, 255, 255, 0.03);
+  z-index: 1;
+}
+
+.page-home .hero-curtain-content {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 calc((1 - var(--second-reveal)) * 100%) 0 0);
 }
 
 .page-home .hero-lines {
@@ -13984,7 +13993,7 @@ body.app-page {
   inset: 0;
   color: #f4f7f8;
   font-weight: 900;
-  letter-spacing: 0.018em;
+  letter-spacing: 0.016em;
   text-transform: uppercase;
   pointer-events: none;
   z-index: 2;
@@ -13993,44 +14002,38 @@ body.app-page {
 .page-home .hero-sentence {
   position: absolute;
   margin: 0;
-  font-size: clamp(2.45rem, 6.65vw, 8.25rem);
-  line-height: 0.88;
+  font-size: clamp(2.55rem, 6.5vw, 8.05rem);
+  line-height: 0.9;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.15em 0.22em;
-  max-width: min(97vw, 1960px);
+  gap: 0.14em 0.2em;
   transform-origin: center;
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.14),
-    0 18px 42px rgba(4, 34, 36, 0.2);
+  text-shadow: 0 16px 38px rgba(4, 34, 36, 0.22);
   opacity: calc(1 - var(--sentence-exit));
 }
 
 .page-home .sentence-a {
-  left: 50%;
-  top: 50%;
-  transform: translate(calc(-50% + var(--a-x) * 1vw), calc(-50% + var(--a-y) * 1vh)) scale(var(--a-scale));
+  left: 5vw;
+  width: min(60vw, 1220px);
+  top: 49%;
+  transform: translate(calc(var(--a-x) * 1vw), calc(-50% + var(--a-y) * 1vh)) scale(var(--a-scale));
 }
 
 .page-home .sentence-b {
-  right: 4.4vw;
-  left: auto;
-  top: 44.5%;
+  right: 5vw;
+  width: min(48vw, 980px);
+  top: 49%;
   justify-content: flex-end;
   text-align: right;
   opacity: calc(var(--second-opacity) * (1 - var(--sentence-exit)));
-  transform: translate(calc(var(--b-carry) * 1vw + var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh)) scale(var(--b-scale));
+  transform: translate(calc(var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh)) scale(var(--b-scale));
   transform-origin: right center;
-  clip-path: inset(0 calc((1 - var(--second-reveal)) * 100%) 0 0);
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.1),
-    0 20px 54px rgba(0, 0, 0, 0.58);
+  text-shadow: 0 20px 50px rgba(0, 0, 0, 0.58);
 }
 
 .page-home .word.support {
   opacity: calc(1 - var(--support-fade));
-  filter: blur(calc(var(--support-fade) * 2.2px));
-  transition: opacity 120ms linear, filter 120ms linear;
+  filter: blur(calc(var(--support-fade) * 1.8px));
 }
 
 .page-home .role-word { white-space: nowrap; }
@@ -14038,28 +14041,26 @@ body.app-page {
 .page-home .role-nutri { color: #8b5cf6; }
 
 .page-home .role-secondary {
-  opacity: calc(1 - (var(--letters-focus) * 0.82));
-  transition: opacity 120ms linear;
+  opacity: calc(1 - (var(--letters-focus) * 0.9));
 }
 
 .page-home .role-focus .char {
   display: inline-block;
-  opacity: calc(1 - (var(--letters-focus) * 0.95));
-  transition: opacity 120ms linear;
+  opacity: calc(1 - (var(--letters-focus) * 0.96));
 }
 
 .page-home .role-focus .char.keep {
   opacity: calc(1 - var(--sentence-exit));
   color: #f8fafc;
-  transform: translate3d(0, calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15));
+  transform: translate3d(0, calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08));
 }
 
 .page-home .role-focus .char.keep.keep-l {
-  transform: translate3d(var(--l-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
+  transform: translate3d(var(--l-merge-x), calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.62));
 }
 
 .page-home .role-focus .char.keep.keep-s {
-  transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -4vh), 0) scale(calc(1 + var(--letters-focus) * 1.15 + var(--merge) * 0.5));
+  transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.62));
 }
 
 .page-home .hero-coaching {
@@ -14067,13 +14068,14 @@ body.app-page {
   left: 50%;
   top: 50%;
   color: #f4f7f8;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  font-size: clamp(1.1rem, 2.2vw, 2.35rem);
+  font-size: clamp(1.12rem, 2.05vw, 2.15rem);
   opacity: var(--coaching);
-  transform: translate(calc(-50% + 5.6vw), calc(-50% + (1 - var(--coaching)) * 1.3vh));
+  transform: translate(calc(-50% + 9.2vw), calc(-50% + 3.8vh));
   transform-origin: left center;
+  z-index: 4;
 }
 
 .page-home .hero-lockup-ls {
@@ -14082,14 +14084,14 @@ body.app-page {
   top: 50%;
   color: #f4f7f8;
   font-weight: 900;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.012em;
   text-transform: uppercase;
-  font-size: clamp(2.45rem, 6.1vw, 7.25rem);
-  line-height: 0.88;
+  font-size: clamp(3.5rem, 9vw, 11.4rem);
+  line-height: 0.82;
   opacity: var(--lockup-ls);
-  transform: translate(-50%, calc(-50% - 3.2vh)) scale(calc(1 + (1 - var(--lockup-ls)) * 0.04));
+  transform: translate(-50%, calc(-50% - 1.8vh)) scale(calc(1 + (1 - var(--lockup-ls)) * 0.03));
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
 @media (max-width: 900px) {
@@ -14098,11 +14100,26 @@ body.app-page {
     clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
   }
   .page-home .hero-sentence {
-    font-size: clamp(1.7rem, 8.2vw, 4.2rem);
-    max-width: 96vw;
+    font-size: clamp(1.72rem, 7.8vw, 4.2rem);
+    line-height: 0.92;
   }
-  .page-home .sentence-b {
-    right: 3vw;
+  .page-home .sentence-a {
+    left: 4vw;
+    width: 62vw;
     top: 46%;
   }
+  .page-home .sentence-b {
+    right: 4vw;
+    width: 52vw;
+    top: 53%;
+  }
+  .page-home .hero-lockup-ls {
+    font-size: clamp(3.1rem, 16vw, 6rem);
+  }
+  .page-home .hero-coaching {
+    letter-spacing: 0.16em;
+    font-size: clamp(0.95rem, 4.2vw, 1.45rem);
+    transform: translate(calc(-50% + 7.8vw), calc(-50% + 4.6vh));
+  }
 }
+

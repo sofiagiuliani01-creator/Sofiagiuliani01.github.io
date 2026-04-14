@@ -1637,7 +1637,7 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = easeInOut(remap(progress, 0.08, 0.46));
+      const split = easeInOut(remap(progress, 0.08, 0.58));
       const secondOpacity = easeOut(remap(progress, 0.2, 0.35));
       const secondReveal = easeInOut(remap(progress, 0.22, 0.42));
       const supportFade = easeInOut(remap(progress, 0.54, 0.75));
@@ -1659,7 +1659,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
       const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
 
-      stage.style.setProperty('--split', `${split * 106}%`);
+      stage.style.setProperty('--split', `${split * 100}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
       stage.style.setProperty('--second-reveal', secondReveal.toFixed(4));
       stage.style.setProperty('--support-fade', supportFade.toFixed(4));

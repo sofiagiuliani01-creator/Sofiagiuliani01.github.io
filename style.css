@@ -13914,7 +13914,7 @@ body.app-page {
 .page-home .hero-cinematic {
   position: relative;
   height: 520vh;
-  background: #19dad5;
+  background: var(--accent-aqua);
 }
 
 .page-home .hero-cinematic-pin {
@@ -13955,7 +13955,7 @@ body.app-page {
   inset: 0;
 }
 
-.page-home .hero-cinematic-base { background: #19dad5; }
+.page-home .hero-cinematic-base { background: var(--accent-aqua); }
 
 .page-home .hero-cinematic-stage::before {
   content: "";
@@ -14016,15 +14016,15 @@ body.app-page {
 }
 
 .page-home .sentence-a {
-  left: 5vw;
-  width: min(60vw, 1220px);
+  left: clamp(18px, 6vw, 120px);
+  width: min(54vw, 1120px);
   top: 49%;
   transform: translate(calc(var(--a-x) * 1vw), calc(-50% + var(--a-y) * 1vh)) scale(var(--a-scale));
 }
 
 .page-home .sentence-b {
-  right: 5vw;
-  width: min(49vw, 1020px);
+  right: clamp(18px, 6vw, 120px);
+  width: min(44vw, 900px);
   top: 49%;
   display: block;
   text-align: right;
@@ -14116,13 +14116,13 @@ body.app-page {
     line-height: 0.92;
   }
   .page-home .sentence-a {
-    left: 4vw;
-    width: 62vw;
+    left: clamp(12px, 4.5vw, 26px);
+    width: 60vw;
     top: 46%;
   }
   .page-home .sentence-b {
-    right: 4vw;
-    width: 58vw;
+    right: clamp(12px, 4.5vw, 26px);
+    width: 56vw;
     top: 53%;
   }
   .page-home .hero-lockup-ls {
@@ -14134,4 +14134,3 @@ body.app-page {
     transform: translate(-50%, calc(-50% + 8.8vh));
   }
 }
-

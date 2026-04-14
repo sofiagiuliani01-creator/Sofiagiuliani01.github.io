@@ -13945,6 +13945,11 @@ body.app-page {
   --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
+  --puller-opacity: 0;
+  --puller-x: 14;
+  --puller-y: 0;
+  --puller-lean: 0deg;
+  --puller-tension: 1;
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -13988,6 +13993,27 @@ body.app-page {
   position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+.page-home .hero-curtain-puller {
+  position: absolute;
+  right: clamp(-6px, 1.2vw, 24px);
+  top: clamp(38%, 41vh, 47%);
+  width: clamp(190px, 27vw, 540px);
+  opacity: var(--puller-opacity);
+  transform: translate3d(calc(var(--puller-x) * 1vw), calc(var(--puller-y) * 1vh), 0) rotate(var(--puller-lean));
+  transform-origin: 92% 58%;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(-10px 12px 26px rgba(0, 0, 0, 0.3));
+}
+
+.page-home .hero-curtain-puller-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scaleX(var(--puller-tension));
+  transform-origin: 96% 56%;
 }
 
 .page-home .hero-lines {
@@ -14144,6 +14170,10 @@ body.app-page {
   .page-home .hero-cinematic { height: 460vh; }
   .page-home .hero-cinematic-curtain {
     clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
+  }
+  .page-home .hero-curtain-puller {
+    top: 56%;
+    width: clamp(160px, 40vw, 260px);
   }
   .page-home .hero-sentence {
     font-size: clamp(1.72rem, 7.8vw, 4.2rem);

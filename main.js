@@ -1649,12 +1649,20 @@ window.addEventListener('DOMContentLoaded', () => {
       const logoScale = easeInOut(remap(progress, 0.84, 0.995));
       const outroOpacity = easeOut(remap(progress, 0.975, 1));
       const outroLift = easeInOut(remap(progress, 0.975, 1));
+      const pullerEnter = easeOut(remap(progress, 0.12, 0.34));
+      const pullerSettle = easeInOut(remap(progress, 0.34, 0.58));
+      const pullerFade = easeInOut(remap(progress, 0.72, 0.87));
 
       const settle = easeInOut(remap(progress, 0.64, 0.84));
       const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
       const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
       const bX = gsap.utils.interpolate(11.5, 0, secondReveal) + gsap.utils.interpolate(0, -2.8, settle);
       const bY = gsap.utils.interpolate(5.2, 10.2, split) + gsap.utils.interpolate(0, -5, settle);
+      const pullerOpacity = Math.max(0, gsap.utils.interpolate(0, 0.72, pullerEnter) - pullerFade * 0.72);
+      const pullerX = gsap.utils.interpolate(14, -7.2, pullerEnter) + gsap.utils.interpolate(0, 1.6, pullerSettle);
+      const pullerY = gsap.utils.interpolate(0.8, -2.8, pullerEnter) + gsap.utils.interpolate(0, 1.9, pullerSettle);
+      const pullerLean = gsap.utils.interpolate(-10, -4, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
+      const pullerTension = gsap.utils.interpolate(1.05, 1, pullerSettle);
 
       const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
       const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
@@ -1678,6 +1686,11 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--a-y', aY.toFixed(3));
       stage.style.setProperty('--b-x', bX.toFixed(3));
       stage.style.setProperty('--b-y', bY.toFixed(3));
+      stage.style.setProperty('--puller-opacity', pullerOpacity.toFixed(4));
+      stage.style.setProperty('--puller-x', pullerX.toFixed(3));
+      stage.style.setProperty('--puller-y', pullerY.toFixed(3));
+      stage.style.setProperty('--puller-lean', `${pullerLean.toFixed(3)}deg`);
+      stage.style.setProperty('--puller-tension', pullerTension.toFixed(4));
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
       stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.45, merge).toFixed(3)}vw`);

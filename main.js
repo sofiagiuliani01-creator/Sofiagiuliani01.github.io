@@ -1520,9 +1520,12 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
       }
 
-      if (triggerY >= (steps.at(-1).getBoundingClientRect().top + steps.at(-1).getBoundingClientRect().height / 2)) {
+      const lastStep = steps[steps.length - 1];
+      const firstStep = steps[0];
+
+      if (triggerY >= (lastStep.getBoundingClientRect().top + lastStep.getBoundingClientRect().height / 2)) {
         progressed = 1;
-      } else if (triggerY <= (steps[0].getBoundingClientRect().top + steps[0].getBoundingClientRect().height / 2)) {
+      } else if (triggerY <= (firstStep.getBoundingClientRect().top + firstStep.getBoundingClientRect().height / 2)) {
         progressed = 0;
       } else if (!progressed) {
         progressed = segment / (steps.length - 1);

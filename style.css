@@ -14059,7 +14059,7 @@ body.app-page {
 }
 
 .page-home .role-focus .char.keep {
-  opacity: calc(1 - var(--sentence-exit));
+  opacity: calc((1 - var(--sentence-exit)) * (1 - var(--merge)));
   color: #f8fafc;
   filter: none;
   transform: translate3d(0, calc(var(--letters-focus) * -3.8vh), 0) scale(calc(1 + var(--letters-focus) * 1.12));
@@ -14091,7 +14091,7 @@ body.app-page {
 
 .page-home .hero-coaching-logo {
   display: block;
-  width: clamp(190px, 22vw, 460px);
+  width: clamp(160px, 18vw, 320px);
   height: auto;
 }
 

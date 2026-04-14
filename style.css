@@ -14030,6 +14030,35 @@ body.app-page {
   transform-origin: 96% 24%;
 }
 
+.page-home .hero-curtain-puller-svg .puller-body,
+.page-home .hero-curtain-puller-svg .puller-leg-back,
+.page-home .hero-curtain-puller-svg .puller-arm-back,
+.page-home .hero-curtain-puller-svg .puller-arm-front {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.page-home .hero-curtain-puller-svg .puller-body {
+  transform: translateX(var(--walk-hip-shift)) rotate(var(--walk-torso-lean));
+  transform-origin: 65% 46%;
+}
+
+.page-home .hero-curtain-puller-svg .puller-leg-back {
+  transform: rotate(var(--walk-leg-back));
+  transform-origin: 56% 30%;
+}
+
+.page-home .hero-curtain-puller-svg .puller-arm-back {
+  transform: rotate(var(--walk-arm-back));
+  transform-origin: 62% 12%;
+}
+
+.page-home .hero-curtain-puller-svg .puller-arm-front {
+  transform: rotate(var(--walk-arm-front));
+  transform-origin: 72% 56%;
+}
+
 .page-home .hero-lines {
   position: absolute;
   inset: 0;

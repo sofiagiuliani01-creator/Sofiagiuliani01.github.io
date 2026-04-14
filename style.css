@@ -13945,10 +13945,10 @@ body.app-page {
   --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
-  --puller-opacity: 0.42;
-  --puller-x: 9;
-  --puller-y: -0.4;
-  --puller-lean: -6deg;
+  --puller-opacity: 0.2;
+  --puller-x: 5.8;
+  --puller-y: 0.9;
+  --puller-lean: -3deg;
   --puller-tension: 1;
   position: relative;
   isolation: isolate;
@@ -13997,32 +13997,35 @@ body.app-page {
 
 .page-home .hero-curtain-puller {
   position: absolute;
-  right: clamp(-6px, 1.2vw, 24px);
-  top: clamp(38%, 41vh, 47%);
-  width: clamp(190px, 27vw, 540px);
+  right: clamp(-18px, 0.6vw, 12px);
+  top: clamp(50%, 55vh, 61%);
+  width: clamp(150px, 19vw, 330px);
   opacity: var(--puller-opacity);
   transform: translate3d(calc(var(--puller-x) * 1vw), calc(var(--puller-y) * 1vh), 0) rotate(var(--puller-lean));
-  transform-origin: 92% 58%;
+  transform-origin: 94% 62%;
   z-index: 1;
   pointer-events: none;
-  filter: drop-shadow(-10px 12px 26px rgba(0, 0, 0, 0.3));
+  mix-blend-mode: soft-light;
+  filter: drop-shadow(-6px 10px 16px rgba(0, 0, 0, 0.2));
 }
 
 .page-home .hero-curtain-puller-svg {
   display: block;
   width: 100%;
   height: auto;
+  opacity: 0.76;
   transform: translateY(0) rotate(0deg) scaleX(var(--puller-tension));
-  transform-origin: 96% 56%;
-  animation: heroPullerIdle 1.2s ease-in-out infinite alternate;
+  transform-origin: 94% 62%;
+  animation: heroPullerIdle 2.3s ease-in-out infinite alternate;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.95) 42%, rgba(0, 0, 0, 0.75) 58%, rgba(0, 0, 0, 0.3) 74%, transparent 100%);
 }
 
 @keyframes heroPullerIdle {
   0% {
-    transform: translateY(0) rotate(0.8deg) scaleX(var(--puller-tension));
+    transform: translateY(0) rotate(0.25deg) scaleX(var(--puller-tension));
   }
   100% {
-    transform: translateY(-6px) rotate(-0.8deg) scaleX(calc(var(--puller-tension) + 0.012));
+    transform: translateY(-2px) rotate(-0.35deg) scaleX(calc(var(--puller-tension) + 0.006));
   }
 }
 

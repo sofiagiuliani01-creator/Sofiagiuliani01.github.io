@@ -1635,6 +1635,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const clamp = gsap.utils.clamp(0, 1);
   const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
+  const easeOut = gsap.parseEase('power2.out');
+  const easeInOut = gsap.parseEase('power2.inOut');
 
   ScrollTrigger.create({
     trigger: hero,
@@ -1642,23 +1644,24 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = remap(progress, 0.08, 0.46);
-      const secondOpacity = remap(progress, 0.2, 0.36);
-      const secondReveal = remap(progress, 0.24, 0.43);
-      const supportFade = remap(progress, 0.55, 0.73);
-      const lettersFocus = remap(progress, 0.7, 0.86);
-      const merge = remap(progress, 0.84, 0.94);
-      const lockupLs = remap(progress, 0.9, 0.97);
-      const coaching = remap(progress, 0.95, 1);
-      const sentenceExit = remap(progress, 0.9, 0.98);
+      const split = easeInOut(remap(progress, 0.08, 0.46));
+      const secondOpacity = easeOut(remap(progress, 0.2, 0.35));
+      const secondReveal = easeInOut(remap(progress, 0.22, 0.42));
+      const supportFade = easeInOut(remap(progress, 0.54, 0.75));
+      const lettersFocus = easeInOut(remap(progress, 0.69, 0.87));
+      const merge = easeInOut(remap(progress, 0.83, 0.95));
+      const lockupLs = easeOut(remap(progress, 0.89, 0.97));
+      const coaching = easeOut(remap(progress, 0.94, 1));
+      const sentenceExit = easeInOut(remap(progress, 0.89, 0.98));
 
-      const aX = gsap.utils.interpolate(0, -7.5, split) + gsap.utils.interpolate(0, 5.1, remap(progress, 0.64, 0.84));
-      const aY = gsap.utils.interpolate(0, -8.2, split) + gsap.utils.interpolate(0, 5.8, remap(progress, 0.64, 0.84));
-      const bX = gsap.utils.interpolate(22, 0, secondReveal) + gsap.utils.interpolate(0, -5.1, remap(progress, 0.64, 0.84));
-      const bY = gsap.utils.interpolate(6, 10.5, split) + gsap.utils.interpolate(0, -5.8, remap(progress, 0.64, 0.84));
+      const settle = easeInOut(remap(progress, 0.64, 0.84));
+      const aX = gsap.utils.interpolate(0, -7.2, split) + gsap.utils.interpolate(0, 4.6, settle);
+      const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
+      const bX = gsap.utils.interpolate(14, 0, secondReveal) + gsap.utils.interpolate(0, -4.2, settle);
+      const bY = gsap.utils.interpolate(5.2, 10.2, split) + gsap.utils.interpolate(0, -5, settle);
 
-      const aScale = gsap.utils.interpolate(1.05, 1, remap(progress, 0, 0.22));
-      const bScale = gsap.utils.interpolate(1.03, 1, remap(progress, 0.2, 0.45));
+      const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
+      const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
 
       stage.style.setProperty('--split', `${split * 106}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));

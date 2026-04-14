@@ -13985,7 +13985,6 @@ body.app-page {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  clip-path: inset(0 calc((1 - var(--second-reveal)) * 100%) 0 0);
 }
 
 .page-home .hero-lines {
@@ -14012,6 +14011,10 @@ body.app-page {
   opacity: calc(1 - var(--sentence-exit));
 }
 
+.page-home .hero-sentence .word {
+  display: inline-block;
+}
+
 .page-home .sentence-a {
   left: 5vw;
   width: min(60vw, 1220px);
@@ -14021,10 +14024,11 @@ body.app-page {
 
 .page-home .sentence-b {
   right: 5vw;
-  width: min(48vw, 980px);
+  width: min(49vw, 1020px);
   top: 49%;
-  justify-content: flex-end;
+  display: block;
   text-align: right;
+  text-wrap: balance;
   opacity: calc(var(--second-opacity) * (1 - var(--sentence-exit)));
   transform: translate(calc(var(--b-x) * 1vw), calc(-50% + var(--b-y) * 1vh)) scale(var(--b-scale));
   transform-origin: right center;
@@ -14033,7 +14037,9 @@ body.app-page {
 
 .page-home .word.support {
   opacity: calc(1 - var(--support-fade));
-  filter: blur(calc(var(--support-fade) * 1.8px));
+  filter: blur(calc(var(--support-fade) * 1.35px));
+  transform: translate3d(0, calc(var(--support-fade) * -1.2vh), 0);
+  transition: opacity 0.28s ease, filter 0.28s ease, transform 0.34s ease;
 }
 
 .page-home .role-word { white-space: nowrap; }
@@ -14041,18 +14047,22 @@ body.app-page {
 .page-home .role-nutri { color: #8b5cf6; }
 
 .page-home .role-secondary {
-  opacity: calc(1 - (var(--letters-focus) * 0.9));
+  opacity: calc(1 - (var(--letters-focus) * 0.94));
+  filter: blur(calc(var(--letters-focus) * 1px));
+  transform: translate3d(calc(var(--letters-focus) * 0.7vw), calc(var(--letters-focus) * -0.7vh), 0);
 }
 
 .page-home .role-focus .char {
   display: inline-block;
-  opacity: calc(1 - (var(--letters-focus) * 0.96));
+  opacity: calc(1 - (var(--letters-focus) * 0.97));
+  filter: blur(calc(var(--letters-focus) * 0.8px));
 }
 
 .page-home .role-focus .char.keep {
   opacity: calc(1 - var(--sentence-exit));
   color: #f8fafc;
-  transform: translate3d(0, calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08));
+  filter: none;
+  transform: translate3d(0, calc(var(--letters-focus) * -3.8vh), 0) scale(calc(1 + var(--letters-focus) * 1.12));
 }
 
 .page-home .role-focus .char.keep.keep-l {
@@ -14068,13 +14078,14 @@ body.app-page {
   left: 50%;
   top: 50%;
   color: #f4f7f8;
-  font-weight: 700;
-  letter-spacing: 0.24em;
+  font-weight: 760;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  font-size: clamp(1.12rem, 2.05vw, 2.15rem);
+  font-size: clamp(1.35rem, 2.4vw, 2.65rem);
   opacity: var(--coaching);
-  transform: translate(calc(-50% + 9.2vw), calc(-50% + 3.8vh));
-  transform-origin: left center;
+  transform: translate(-50%, calc(-50% + 8.2vh));
+  transform-origin: center;
+  text-align: center;
   z-index: 4;
 }
 
@@ -14084,12 +14095,13 @@ body.app-page {
   top: 50%;
   color: #f4f7f8;
   font-weight: 900;
-  letter-spacing: 0.012em;
+  letter-spacing: 0.016em;
   text-transform: uppercase;
-  font-size: clamp(3.5rem, 9vw, 11.4rem);
-  line-height: 0.82;
+  font-size: clamp(4.6rem, 12vw, 14.2rem);
+  line-height: 0.8;
   opacity: var(--lockup-ls);
-  transform: translate(-50%, calc(-50% - 1.8vh)) scale(calc(1 + (1 - var(--lockup-ls)) * 0.03));
+  transform: translate(-50%, calc(-50% - 2.2vh)) scale(calc(1 + (1 - var(--lockup-ls)) * 0.025));
+  text-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
   pointer-events: none;
   z-index: 4;
 }
@@ -14110,16 +14122,16 @@ body.app-page {
   }
   .page-home .sentence-b {
     right: 4vw;
-    width: 52vw;
+    width: 58vw;
     top: 53%;
   }
   .page-home .hero-lockup-ls {
-    font-size: clamp(3.1rem, 16vw, 6rem);
+    font-size: clamp(4rem, 18vw, 7.2rem);
   }
   .page-home .hero-coaching {
-    letter-spacing: 0.16em;
-    font-size: clamp(0.95rem, 4.2vw, 1.45rem);
-    transform: translate(calc(-50% + 7.8vw), calc(-50% + 4.6vh));
+    letter-spacing: 0.2em;
+    font-size: clamp(1.05rem, 4.8vw, 1.7rem);
+    transform: translate(-50%, calc(-50% + 8.8vh));
   }
 }
 

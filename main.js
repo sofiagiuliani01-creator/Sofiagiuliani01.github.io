@@ -1663,6 +1663,21 @@ window.addEventListener('DOMContentLoaded', () => {
       const pullerY = gsap.utils.interpolate(0.8, -2.8, pullerEnter) + gsap.utils.interpolate(0, 1.9, pullerSettle);
       const pullerLean = gsap.utils.interpolate(-10, -4, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
       const pullerTension = gsap.utils.interpolate(1.05, 1, pullerSettle);
+      const walkDrive = easeInOut(remap(progress, 0.12, 0.72));
+      const walkEaseOut = easeInOut(remap(progress, 0.68, 0.84));
+      const walkPhase = walkDrive * Math.PI * 8.4;
+      const stride = Math.sin(walkPhase);
+      const counterStride = Math.sin(walkPhase + Math.PI);
+      const bodyRhythm = Math.sin(walkPhase * 2);
+      const strideMix = gsap.utils.interpolate(1, 0.32, walkEaseOut);
+      const walkLegFront = 13.5 * stride * strideMix;
+      const walkLegBack = 13.5 * counterStride * strideMix;
+      const walkArmFront = -11 * stride * strideMix;
+      const walkArmBack = -11 * counterStride * strideMix;
+      const walkBob = -3.6 * Math.abs(bodyRhythm) * strideMix;
+      const walkHipShift = 4.5 * stride * strideMix;
+      const walkTorsoLean = gsap.utils.interpolate(-6.4, -2.8, walkEaseOut) + (0.9 * stride * strideMix);
+      const ropeSag = gsap.utils.interpolate(0.45, 2.4, pullerSettle) + (1.1 - pullerTension) * 18;
 
       const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
       const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
@@ -1691,6 +1706,14 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--puller-y', pullerY.toFixed(3));
       stage.style.setProperty('--puller-lean', `${pullerLean.toFixed(3)}deg`);
       stage.style.setProperty('--puller-tension', pullerTension.toFixed(4));
+      stage.style.setProperty('--walk-leg-front', `${walkLegFront.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-leg-back', `${walkLegBack.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-arm-front', `${walkArmFront.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-arm-back', `${walkArmBack.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-bob', `${walkBob.toFixed(3)}px`);
+      stage.style.setProperty('--walk-hip-shift', `${walkHipShift.toFixed(3)}px`);
+      stage.style.setProperty('--walk-torso-lean', `${walkTorsoLean.toFixed(3)}deg`);
+      stage.style.setProperty('--rope-sag', `${ropeSag.toFixed(3)}px`);
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
       stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.45, merge).toFixed(3)}vw`);

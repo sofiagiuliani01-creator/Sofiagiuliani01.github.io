@@ -13946,7 +13946,7 @@ body.app-page {
   --outro-opacity: 0;
   --outro-y: 0vh;
   --puller-opacity: 1;
-  --puller-x: 2.2;
+  --puller-x: 5.8;
   --puller-y: -0.4;
   --puller-lean: -6deg;
   --puller-tension: 1;
@@ -14005,7 +14005,7 @@ body.app-page {
 
 .page-home .hero-curtain-puller {
   position: absolute;
-  left: calc((100% - var(--split)) - clamp(304px, 32vw, 472px));
+  left: calc((100% - var(--split)) - clamp(266px, 30vw, 432px));
   bottom: clamp(-10px, 1.5vh, 12px);
   width: clamp(192px, 20vw, 328px);
   opacity: var(--puller-opacity);
@@ -14041,7 +14041,7 @@ body.app-page {
 
 .page-home .hero-curtain-puller-svg .puller-body {
   transform: translateX(var(--walk-hip-shift)) rotate(var(--walk-torso-lean));
-  transform-origin: 65% 46%;
+  transform-origin: 58% 58%;
 }
 
 .page-home .hero-curtain-puller-svg .puller-leg-back {

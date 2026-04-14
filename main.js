@@ -1638,8 +1638,8 @@ window.addEventListener('DOMContentLoaded', () => {
     scrub: true,
     onUpdate: ({ progress }) => {
       const split = easeInOut(remap(progress, 0.08, 0.58));
-      const secondOpacity = easeOut(remap(progress, 0.2, 0.35));
-      const secondReveal = easeInOut(remap(progress, 0.22, 0.42));
+      const secondOpacity = easeOut(remap(progress, 0.18, 0.29));
+      const secondReveal = easeInOut(remap(progress, 0.19, 0.33));
       const supportFade = easeInOut(remap(progress, 0.54, 0.75));
       const lettersFocus = easeInOut(remap(progress, 0.69, 0.87));
       const merge = easeInOut(remap(progress, 0.82, 0.94));

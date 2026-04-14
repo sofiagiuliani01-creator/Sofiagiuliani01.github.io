@@ -14031,6 +14031,7 @@ body.app-page {
 }
 
 .page-home .hero-curtain-puller-svg .puller-body,
+.page-home .hero-curtain-puller-svg .puller-leg-front,
 .page-home .hero-curtain-puller-svg .puller-leg-back,
 .page-home .hero-curtain-puller-svg .puller-arm-back,
 .page-home .hero-curtain-puller-svg .puller-arm-front {
@@ -14040,8 +14041,13 @@ body.app-page {
 }
 
 .page-home .hero-curtain-puller-svg .puller-body {
-  transform: translateX(var(--walk-hip-shift)) rotate(var(--walk-torso-lean));
+  transform: none;
   transform-origin: 58% 58%;
+}
+
+.page-home .hero-curtain-puller-svg .puller-leg-front {
+  transform: rotate(var(--walk-leg-front));
+  transform-origin: 30% 8%;
 }
 
 .page-home .hero-curtain-puller-svg .puller-leg-back {

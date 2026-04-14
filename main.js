@@ -1642,7 +1642,6 @@ window.addEventListener('DOMContentLoaded', () => {
       const merge = easeInOut(remap(progress, 0.82, 0.94));
       const lockupLs = easeOut(remap(progress, 0.865, 0.95));
       const coaching = easeOut(remap(progress, 0.94, 1));
-      const sentenceExit = easeInOut(remap(progress, 0.865, 0.96));
       const sentenceExit = easeInOut(remap(progress, 0.89, 0.98));
       const logoRise = easeInOut(remap(progress, 0.95, 1));
       const outroOpacity = easeOut(remap(progress, 0.955, 1));

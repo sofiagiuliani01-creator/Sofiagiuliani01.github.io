@@ -14104,16 +14104,16 @@ body.app-page {
   top: 50%;
   width: min(1120px, calc(100% - 36px));
   margin: 0;
-  color: #1d4ed8;
+  color: #ffffff;
   text-align: center;
-  font-size: clamp(2.8rem, 6.8vw, 6.6rem);
+  font-size: clamp(2.35rem, 6.1vw, 5.7rem);
   font-style: italic;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1.08;
   opacity: var(--outro-opacity);
-  transform: translate(-50%, calc(-50% + 29vh + var(--outro-y))) skewX(-7deg);
+  transform: translate(-50%, calc(-50% + 24vh + var(--outro-y))) skewX(-7deg);
   text-wrap: balance;
   text-shadow: 0 20px 42px rgba(0, 0, 0, 0.38);
   z-index: 4;
@@ -14124,8 +14124,8 @@ body.app-page {
   font-weight: 900;
 }
 
-.page-home .hero-outro-em-educa { color: #22d3ee; }
-.page-home .hero-outro-em-autonomo { color: #a78bfa; }
+.page-home .hero-outro-em-educa { color: #ffffff; }
+.page-home .hero-outro-em-autonomo { color: #ffffff; }
 
 @media (max-width: 900px) {
   .page-home .hero-cinematic { height: 460vh; }
@@ -14149,12 +14149,12 @@ body.app-page {
   .page-home .hero-coaching {
     letter-spacing: 0.2em;
     font-size: clamp(1.05rem, 4.8vw, 1.7rem);
-    transform: translate(-50%, calc(-50% + 8.8vh - var(--logo-rise)));
+    transform: translate(-50%, calc(-50% + 10.5vh - var(--logo-rise)));
   }
   .page-home .hero-outro-copy {
     width: min(700px, calc(100% - 24px));
-    font-size: clamp(2rem, 8.2vw, 3.8rem);
-    line-height: 1.12;
-    transform: translate(-50%, calc(-50% + 30vh + var(--outro-y))) skewX(-5deg);
+    font-size: clamp(1.7rem, 6.9vw, 3.15rem);
+    line-height: 1.08;
+    transform: translate(-50%, calc(-50% + 23vh + var(--outro-y))) skewX(-5deg);
   }
 }

@@ -3,21 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const homeHeader = document.querySelector('.site-header-home');
 
   if (homeHeader) {
-    let lastY = window.scrollY;
-
     const onScroll = () => {
       const y = window.scrollY;
-      const goingDown = y > lastY;
 
       homeHeader.classList.toggle('is-scrolled', y > 24);
-
-      if (y > 130 && goingDown) {
-        homeHeader.classList.add('is-hidden');
-      } else {
-        homeHeader.classList.remove('is-hidden');
-      }
-
-      lastY = y;
+      homeHeader.classList.remove('is-hidden');
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -1655,9 +1645,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const sentenceExit = easeInOut(remap(progress, 0.89, 0.98));
 
       const settle = easeInOut(remap(progress, 0.64, 0.84));
-      const aX = gsap.utils.interpolate(0, -7.2, split) + gsap.utils.interpolate(0, 4.6, settle);
+      const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
       const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
-      const bX = gsap.utils.interpolate(14, 0, secondReveal) + gsap.utils.interpolate(0, -4.2, settle);
+      const bX = gsap.utils.interpolate(11.5, 0, secondReveal) + gsap.utils.interpolate(0, -2.8, settle);
       const bY = gsap.utils.interpolate(5.2, 10.2, split) + gsap.utils.interpolate(0, -5, settle);
 
       const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));

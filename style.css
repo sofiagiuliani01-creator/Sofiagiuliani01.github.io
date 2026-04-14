@@ -14041,7 +14041,7 @@ body.app-page {
 
 .page-home .hero-curtain-puller-svg .puller-body {
   transform: translateX(var(--walk-hip-shift)) rotate(var(--walk-torso-lean));
-  transform-origin: 65% 46%;
+  transform-origin: 58% 58%;
 }
 
 .page-home .hero-curtain-puller-svg .puller-leg-back {

@@ -1668,7 +1668,7 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--coaching', coaching.toFixed(4));
       stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
       stage.style.setProperty('--logo-rise', `${gsap.utils.interpolate(0, 47, logoRise).toFixed(3)}vh`);
-      stage.style.setProperty('--logo-scale', gsap.utils.interpolate(1, 0.88, logoScale).toFixed(4));
+      stage.style.setProperty('--logo-scale', gsap.utils.interpolate(1, 0.97, logoScale).toFixed(4));
       stage.style.setProperty('--outro-opacity', outroOpacity.toFixed(4));
       stage.style.setProperty('--outro-y', `${gsap.utils.interpolate(8.5, 0, outroLift).toFixed(3)}vh`);
       stage.style.setProperty('--a-scale', aScale.toFixed(4));

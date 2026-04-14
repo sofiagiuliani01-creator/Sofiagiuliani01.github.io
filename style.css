@@ -13929,7 +13929,6 @@ body.app-page {
   --support-fade: 0;
   --letters-focus: 0;
   --merge: 0;
-  --lockup-ls: 0;
   --second-opacity: 0;
   --second-reveal: 0;
   --sentence-exit: 0;
@@ -13943,6 +13942,7 @@ body.app-page {
   --l-merge-x: 0vw;
   --s-merge-x: 0vw;
   --logo-rise: 0vh;
+  --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
   position: relative;
@@ -14062,7 +14062,7 @@ body.app-page {
 }
 
 .page-home .role-focus .char.keep {
-  opacity: calc((1 - var(--sentence-exit)) * (1 - var(--merge)) * (1 - (var(--lockup-ls) * 1.6)));
+  opacity: calc((1 - var(--sentence-exit)) * (1 - (var(--merge) * 1.85)));
   color: #f8fafc;
   filter: none;
   transform: translate3d(0, calc(var(--letters-focus) * -3.8vh), 0) scale(calc(1 + var(--letters-focus) * 1.12));
@@ -14086,7 +14086,7 @@ body.app-page {
   text-transform: uppercase;
   font-size: clamp(1.35rem, 2.4vw, 2.65rem);
   opacity: var(--coaching);
-  transform: translate(-50%, calc(-50% + 8.2vh - var(--logo-rise)));
+  transform: translate(-50%, calc(-50% + 8.2vh - var(--logo-rise))) scale(var(--logo-scale));
   transform-origin: center;
   text-align: center;
   z-index: 4;
@@ -14098,39 +14098,23 @@ body.app-page {
   height: auto;
 }
 
-.page-home .hero-lockup-ls {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  color: #f4f7f8;
-  font-weight: 900;
-  letter-spacing: 0.016em;
-  text-transform: uppercase;
-  font-size: clamp(4.6rem, 12vw, 14.2rem);
-  line-height: 0.8;
-  opacity: var(--lockup-ls);
-  transform: translate(-50%, calc(-50% - 2.2vh - var(--logo-rise))) scale(calc(1 + (1 - var(--lockup-ls)) * 0.025));
-  text-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
-  pointer-events: none;
-  z-index: 4;
-}
-
 .page-home .hero-outro-copy {
   position: absolute;
   left: 50%;
   top: 50%;
   width: min(860px, calc(100% - 36px));
   margin: 0;
-  color: #f8fafc;
+  color: #1d4ed8;
   text-align: center;
-  font-size: clamp(1.02rem, 2.1vw, 1.7rem);
-  font-weight: 600;
+  font-size: clamp(1.7rem, 3.9vw, 3.4rem);
+  font-style: italic;
+  font-weight: 800;
   letter-spacing: 0.012em;
   line-height: 1.5;
   opacity: var(--outro-opacity);
   transform: translate(-50%, calc(-50% + 17.8vh + var(--outro-y)));
   text-wrap: balance;
-  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
   z-index: 4;
   pointer-events: none;
 }
@@ -14161,9 +14145,6 @@ body.app-page {
     width: 56vw;
     top: 53%;
   }
-  .page-home .hero-lockup-ls {
-    font-size: clamp(4rem, 18vw, 7.2rem);
-  }
   .page-home .hero-coaching {
     letter-spacing: 0.2em;
     font-size: clamp(1.05rem, 4.8vw, 1.7rem);
@@ -14171,7 +14152,7 @@ body.app-page {
   }
   .page-home .hero-outro-copy {
     width: min(540px, calc(100% - 24px));
-    font-size: clamp(0.94rem, 3.9vw, 1.2rem);
+    font-size: clamp(1.3rem, 5.6vw, 2.1rem);
     line-height: 1.42;
     transform: translate(-50%, calc(-50% + 16.8vh + var(--outro-y)));
   }

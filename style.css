@@ -14059,7 +14059,7 @@ body.app-page {
 }
 
 .page-home .role-focus .char.keep {
-  opacity: calc((1 - var(--sentence-exit)) * (1 - var(--merge)));
+  opacity: calc((1 - var(--sentence-exit)) * (1 - var(--merge)) * (1 - (var(--lockup-ls) * 1.6)));
   color: #f8fafc;
   filter: none;
   transform: translate3d(0, calc(var(--letters-focus) * -3.8vh), 0) scale(calc(1 + var(--letters-focus) * 1.12));

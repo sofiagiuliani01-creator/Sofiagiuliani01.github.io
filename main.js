@@ -1639,10 +1639,10 @@ window.addEventListener('DOMContentLoaded', () => {
       const secondReveal = easeInOut(remap(progress, 0.22, 0.42));
       const supportFade = easeInOut(remap(progress, 0.54, 0.75));
       const lettersFocus = easeInOut(remap(progress, 0.69, 0.87));
-      const merge = easeInOut(remap(progress, 0.83, 0.95));
-      const lockupLs = easeOut(remap(progress, 0.89, 0.97));
+      const merge = easeInOut(remap(progress, 0.82, 0.94));
+      const lockupLs = easeOut(remap(progress, 0.865, 0.95));
       const coaching = easeOut(remap(progress, 0.94, 1));
-      const sentenceExit = easeInOut(remap(progress, 0.89, 0.98));
+      const sentenceExit = easeInOut(remap(progress, 0.865, 0.96));
 
       const settle = easeInOut(remap(progress, 0.64, 0.84));
       const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);

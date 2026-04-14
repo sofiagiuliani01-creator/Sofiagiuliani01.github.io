@@ -14063,9 +14063,6 @@ body.app-page {
   color: #f8fafc;
   filter: none;
   transform: translate3d(0, calc(var(--letters-focus) * -3.8vh), 0) scale(calc(1 + var(--letters-focus) * 1.12));
-  width: 0.67em;
-  height: 0.9em;
-  vertical-align: baseline;
 }
 
 .page-home .role-focus .char.keep.keep-l {
@@ -14074,34 +14071,6 @@ body.app-page {
 
 .page-home .role-focus .char.keep.keep-s {
   transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.62));
-}
-
-.page-home .logo-letter-window {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.page-home .logo-letter-source {
-  position: absolute;
-  inset: 0;
-  width: 430%;
-  height: 430%;
-  max-width: none;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  transform-origin: top left;
-}
-
-/* Crop delle iniziali direttamente dalla SVG ufficiale coaching.svg */
-.page-home .logo-letter-window--l .logo-letter-source {
-  transform: translate(-115%, -77%);
-}
-
-.page-home .logo-letter-window--s .logo-letter-source {
-  transform: translate(-72%, -77%);
 }
 
 .page-home .hero-coaching {

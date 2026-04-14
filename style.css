@@ -13945,8 +13945,8 @@ body.app-page {
   --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
-  --puller-opacity: 0.42;
-  --puller-x: 9;
+  --puller-opacity: 1;
+  --puller-x: 5.8;
   --puller-y: -0.4;
   --puller-lean: -6deg;
   --puller-tension: 1;
@@ -14005,9 +14005,9 @@ body.app-page {
 
 .page-home .hero-curtain-puller {
   position: absolute;
-  left: calc((100% - var(--split)) - clamp(236px, 26vw, 440px));
+  left: calc((100% - var(--split)) - clamp(302px, 34vw, 520px));
   top: clamp(51%, 57vh, 66%);
-  width: clamp(220px, 26vw, 440px);
+  width: clamp(250px, 31vw, 500px);
   opacity: var(--puller-opacity);
   transform: translate3d(calc(var(--puller-x) * 1vw), calc(var(--puller-y) * 1vh), 0) rotate(var(--puller-lean));
   transform-origin: 82% 56%;
@@ -14035,14 +14035,27 @@ body.app-page {
 }
 
 .page-home .puller-head,
+.page-home .puller-neck,
 .page-home .puller-torso,
 .page-home .puller-hip,
 .page-home .puller-arm-front,
 .page-home .puller-arm-back,
 .page-home .puller-hand,
 .page-home .puller-leg-front,
-.page-home .puller-leg-back {
+.page-home .puller-leg-back,
+.page-home .puller-foot-front,
+.page-home .puller-foot-back {
+  fill: none;
+  stroke: #040404;
+  stroke-width: 11;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.page-home .puller-head,
+.page-home .puller-hand {
   fill: #040404;
+  stroke: none;
 }
 
 .page-home .puller-rope-main {
@@ -14249,9 +14262,9 @@ body.app-page {
     clip-path: polygon(calc(100% - var(--split)) 0, 100% 0, 100% 100%, calc(64% - var(--split)) 100%);
   }
   .page-home .hero-curtain-puller {
-    left: calc((100% - var(--split)) - clamp(220px, 54vw, 360px));
+    left: calc((100% - var(--split)) - clamp(250px, 62vw, 420px));
     top: clamp(56%, 61vh, 72%);
-    width: clamp(200px, 50vw, 360px);
+    width: clamp(220px, 56vw, 410px);
   }
   .page-home .hero-sentence {
     font-size: clamp(1.72rem, 7.8vw, 4.2rem);

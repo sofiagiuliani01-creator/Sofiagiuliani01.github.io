@@ -1623,64 +1623,35 @@ window.addEventListener('DOMContentLoaded', () => {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const stage = hero.querySelector('.hero-cinematic-stage');
-  if (!stage) return;
+  const scenes = Array.from(hero.querySelectorAll('[data-hero-scene]'));
+  if (!scenes.length) return;
 
-  const clamp = gsap.utils.clamp(0, 1);
-  const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
-  const easeOut = gsap.parseEase('power2.out');
-  const easeInOut = gsap.parseEase('power2.inOut');
+  const setActiveScene = (index) => {
+    scenes.forEach((scene, i) => {
+      scene.classList.toggle('is-active', i === index);
+    });
+  };
+
+  setActiveScene(0);
 
   ScrollTrigger.create({
     trigger: hero,
     start: 'top top',
     end: 'bottom bottom',
     scrub: true,
+    snap: {
+      snapTo: (value) => {
+        const maxIndex = scenes.length - 1;
+        const snappedIndex = Math.round(value * maxIndex);
+        return snappedIndex / maxIndex;
+      },
+      duration: { min: 0.12, max: 0.32 },
+      ease: 'power1.out'
+    },
     onUpdate: ({ progress }) => {
-      const split = easeInOut(remap(progress, 0.08, 0.58));
-      const secondOpacity = easeOut(remap(progress, 0.18, 0.29));
-      const secondReveal = easeInOut(remap(progress, 0.19, 0.33));
-      const supportFade = easeInOut(remap(progress, 0.54, 0.75));
-      const lettersFocus = easeInOut(remap(progress, 0.69, 0.87));
-      const merge = easeInOut(remap(progress, 0.82, 0.94));
-      const coaching = easeOut(remap(progress, 0.88, 0.97));
-      const sentenceExit = easeInOut(remap(progress, 0.86, 0.95));
-      const logoRise = easeInOut(remap(progress, 0.84, 0.995));
-      const logoScale = easeInOut(remap(progress, 0.84, 0.995));
-      const outroOpacity = easeOut(remap(progress, 0.975, 1));
-      const outroLift = easeInOut(remap(progress, 0.975, 1));
-
-      const settle = easeInOut(remap(progress, 0.64, 0.84));
-      const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
-      const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
-      const bX = gsap.utils.interpolate(11.5, 0, secondReveal) + gsap.utils.interpolate(0, -2.8, settle);
-      const bY = gsap.utils.interpolate(5.2, 10.2, split) + gsap.utils.interpolate(0, -5, settle);
-
-      const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
-      const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
-
-      stage.style.setProperty('--split', `${split * 100}%`);
-      stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
-      stage.style.setProperty('--second-reveal', secondReveal.toFixed(4));
-      stage.style.setProperty('--support-fade', supportFade.toFixed(4));
-      stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
-      stage.style.setProperty('--merge', merge.toFixed(4));
-      stage.style.setProperty('--coaching', coaching.toFixed(4));
-      stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
-      stage.style.setProperty('--logo-rise', `${gsap.utils.interpolate(0, 38, logoRise).toFixed(3)}vh`);
-      stage.style.setProperty('--logo-scale', gsap.utils.interpolate(1, 0.97, logoScale).toFixed(4));
-      stage.style.setProperty('--outro-opacity', outroOpacity.toFixed(4));
-      stage.style.setProperty('--outro-y', `${gsap.utils.interpolate(8.5, 0, outroLift).toFixed(3)}vh`);
-      stage.style.setProperty('--a-scale', aScale.toFixed(4));
-      stage.style.setProperty('--b-scale', bScale.toFixed(4));
-
-      stage.style.setProperty('--a-x', aX.toFixed(3));
-      stage.style.setProperty('--a-y', aY.toFixed(3));
-      stage.style.setProperty('--b-x', bX.toFixed(3));
-      stage.style.setProperty('--b-y', bY.toFixed(3));
-
-      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.45, merge).toFixed(3)}vw`);
+      const maxIndex = scenes.length - 1;
+      const nextIndex = Math.round(progress * maxIndex);
+      setActiveScene(nextIndex);
     }
   });
 });

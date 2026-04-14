@@ -1643,6 +1643,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const lockupLs = easeOut(remap(progress, 0.89, 0.97));
       const coaching = easeOut(remap(progress, 0.94, 1));
       const sentenceExit = easeInOut(remap(progress, 0.89, 0.98));
+      const logoRise = easeInOut(remap(progress, 0.95, 1));
+      const outroOpacity = easeOut(remap(progress, 0.955, 1));
+      const outroLift = easeInOut(remap(progress, 0.955, 1));
 
       const settle = easeInOut(remap(progress, 0.64, 0.84));
       const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
@@ -1662,6 +1665,9 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--lockup-ls', lockupLs.toFixed(4));
       stage.style.setProperty('--coaching', coaching.toFixed(4));
       stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
+      stage.style.setProperty('--logo-rise', `${gsap.utils.interpolate(0, 11.5, logoRise).toFixed(3)}vh`);
+      stage.style.setProperty('--outro-opacity', outroOpacity.toFixed(4));
+      stage.style.setProperty('--outro-y', `${gsap.utils.interpolate(2.4, 0, outroLift).toFixed(3)}vh`);
       stage.style.setProperty('--a-scale', aScale.toFixed(4));
       stage.style.setProperty('--b-scale', bScale.toFixed(4));
 

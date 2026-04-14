@@ -13945,10 +13945,10 @@ body.app-page {
   --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
-  --puller-opacity: 0;
-  --puller-x: 14;
-  --puller-y: 0;
-  --puller-lean: 0deg;
+  --puller-opacity: 0.42;
+  --puller-x: 9;
+  --puller-y: -0.4;
+  --puller-lean: -6deg;
   --puller-tension: 1;
   position: relative;
   isolation: isolate;
@@ -14012,8 +14012,18 @@ body.app-page {
   display: block;
   width: 100%;
   height: auto;
-  transform: scaleX(var(--puller-tension));
+  transform: translateY(0) rotate(0deg) scaleX(var(--puller-tension));
   transform-origin: 96% 56%;
+  animation: heroPullerIdle 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes heroPullerIdle {
+  0% {
+    transform: translateY(0) rotate(0.8deg) scaleX(var(--puller-tension));
+  }
+  100% {
+    transform: translateY(-6px) rotate(-0.8deg) scaleX(calc(var(--puller-tension) + 0.012));
+  }
 }
 
 .page-home .hero-lines {

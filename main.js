@@ -1616,96 +1616,170 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', onScroll, { passive: true });
 })();
 
-/* === 2026-04 hotfix: home cinematic hero scroll animation restore === */
-document.addEventListener('DOMContentLoaded', () => {
-  const hero = document.getElementById('hero-cinematic');
-  const stage = hero && hero.querySelector('.hero-cinematic-stage');
-  if (!hero || !stage) return;
+// HOME HERO — cinematic storyboard sequence (persistent text nodes)
+window.addEventListener('DOMContentLoaded', () => {
+  const hero = document.querySelector('.hero-cinematic');
+  if (!hero || !window.gsap || !window.ScrollTrigger) return;
 
-  const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
-  const mapRange = (value, inMin, inMax, outMin, outMax) => {
-    if (inMax === inMin) return outMin;
-    const t = clamp((value - inMin) / (inMax - inMin));
-    return outMin + (outMax - outMin) * t;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const stage = hero.querySelector('.hero-cinematic-stage');
+  if (!stage) return;
+
+  const clamp = gsap.utils.clamp(0, 1);
+  const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
+  const easeOut = gsap.parseEase('power2.out');
+  const easeInOut = gsap.parseEase('power2.inOut');
+  const narrativeMap = [
+    { raw: 0, story: 0 },
+    // ingresso prima frase
+    { raw: 0.16, story: 0.2 },
+    // pausa 1: "NON SONO SOLO UN PERSONAL TRAINER"
+    { raw: 0.24, story: 0.2 },
+    // transizione verso seconda frase
+    { raw: 0.44, story: 0.52 },
+    // pausa 2: "NON HAI BISOGNO SOLO DI UN NUTRIZIONISTA"
+    { raw: 0.52, story: 0.52 },
+    // merge + reveal logo
+    { raw: 0.68, story: 0.76 },
+    // pausa 3: reveal LS coaching
+    { raw: 0.75, story: 0.76 },
+    // chiusura e frase finale
+    { raw: 0.92, story: 0.95 },
+    { raw: 1, story: 1 }
+  ];
+
+  const mapNarrativeProgress = (rawProgress) => {
+    const p = clamp(rawProgress);
+
+    for (let i = 0; i < narrativeMap.length - 1; i += 1) {
+      const current = narrativeMap[i];
+      const next = narrativeMap[i + 1];
+
+      if (p >= current.raw && p <= next.raw) {
+        if (next.raw === current.raw) return next.story;
+        const local = (p - current.raw) / (next.raw - current.raw);
+        return gsap.utils.interpolate(current.story, next.story, local);
+      }
+    }
+
+    return p <= 0 ? 0 : 1;
   };
 
-  const setVar = (name, value) => stage.style.setProperty(name, String(value));
+  let cinematicProgressLocked = false;
+  let autoAdvanceTween = null;
+  let autoProgress = 0;
+  const mergeAutoStart = 0.82;
 
-  const paint = () => {
-    const rect = hero.getBoundingClientRect();
-    const total = Math.max(1, rect.height - window.innerHeight);
-    const progress = clamp((-rect.top) / total);
+  const renderCinematic = (cinematicProgress) => {
+      autoProgress = cinematicProgress;
 
-    const split = mapRange(progress, 0.02, 0.32, 0, 58);
-    const supportFade = mapRange(progress, 0.08, 0.28, 0, 1);
-    const lettersFocus = mapRange(progress, 0.16, 0.38, 0, 1);
-    const merge = mapRange(progress, 0.26, 0.46, 0, 1);
-    const secondOpacity = mapRange(progress, 0.18, 0.36, 0, 1);
-    const sentenceExit = mapRange(progress, 0.5, 0.66, 0, 1);
+      const split = easeInOut(remap(cinematicProgress, 0.08, 0.58));
+      const secondOpacity = easeOut(remap(cinematicProgress, 0.18, 0.29));
+      const secondReveal = easeInOut(remap(cinematicProgress, 0.19, 0.33));
+      const supportFade = easeInOut(remap(cinematicProgress, 0.54, 0.75));
+      const lettersFocus = easeInOut(remap(cinematicProgress, 0.69, 0.87));
+      const merge = easeInOut(remap(cinematicProgress, 0.82, 0.94));
+      const sLetterMerge = easeOut(remap(cinematicProgress, 0.72, 0.88));
+      const coaching = easeOut(remap(cinematicProgress, 0.88, 0.97));
+      const sentenceExit = easeInOut(remap(cinematicProgress, 0.86, 0.95));
+      const logoRise = easeInOut(remap(cinematicProgress, 0.84, 0.995));
+      const logoScale = easeInOut(remap(cinematicProgress, 0.84, 0.995));
+      const outroOpacity = easeOut(remap(cinematicProgress, 0.975, 1));
+      const outroLift = easeInOut(remap(cinematicProgress, 0.975, 1));
+      const pullerEnter = easeOut(remap(cinematicProgress, 0.12, 0.34));
+      const pullerSettle = easeInOut(remap(cinematicProgress, 0.34, 0.58));
 
-    const coachingIn = mapRange(progress, 0.58, 0.78, 0, 1);
-    const coachingOut = mapRange(progress, 0.84, 0.94, 0, 1);
-    const coaching = clamp(coachingIn * (1 - coachingOut));
+      const settle = easeInOut(remap(cinematicProgress, 0.64, 0.84));
+      const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
+      const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
+      const bX = gsap.utils.interpolate(11.5, 0, secondReveal) + gsap.utils.interpolate(0, -2.8, settle);
+      const bY = gsap.utils.interpolate(5.2, 10.2, split) + gsap.utils.interpolate(0, -5, settle);
+      const pullerOpacity = 1;
+      const pullerX = gsap.utils.interpolate(11.5, -10.5, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
+      const pullerY = gsap.utils.interpolate(1.4, -3.6, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
+      const pullerLean = gsap.utils.interpolate(-10, -4, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
+      const pullerTension = gsap.utils.interpolate(1.05, 1, pullerSettle);
+      const walkDrive = easeInOut(remap(cinematicProgress, 0.12, 0.72));
+      const walkEaseOut = easeInOut(remap(cinematicProgress, 0.68, 0.84));
+      const walkPhase = walkDrive * Math.PI * 14.4;
+      const stride = Math.sin(walkPhase);
+      const counterStride = Math.sin(walkPhase + Math.PI);
+      const bodyRhythm = Math.sin(walkPhase * 2);
+      const strideMix = gsap.utils.interpolate(1.28, 0.52, walkEaseOut);
+      const walkLegFront = 22.5 * stride * strideMix;
+      const walkLegBack = 22.5 * counterStride * strideMix;
+      const walkArmFront = -17 * stride * strideMix;
+      const walkArmBack = -17 * counterStride * strideMix;
+      const walkBob = -6.9 * Math.abs(bodyRhythm) * strideMix;
+      const walkHipShift = 2.6 * stride * strideMix;
+      const walkTorsoLean = gsap.utils.interpolate(-6.8, -2.6, walkEaseOut) + (0.8 * stride * strideMix);
+      const ropeSag = gsap.utils.interpolate(0.45, 2.4, pullerSettle) + (1.1 - pullerTension) * 18;
 
-    const outroOpacity = mapRange(progress, 0.78, 0.96, 0, 1);
-    const outroY = mapRange(progress, 0.78, 0.96, 5, 0);
+      const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(cinematicProgress, 0, 0.22)));
+      const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(cinematicProgress, 0.2, 0.45)));
 
-    const pullerFade = mapRange(progress, 0.46, 0.7, 1, 0);
-    const pullerTension = mapRange(progress, 0.08, 0.34, 1, 0.93);
+      stage.style.setProperty('--split', `${split * 100}%`);
+      stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));
+      stage.style.setProperty('--second-reveal', secondReveal.toFixed(4));
+      stage.style.setProperty('--support-fade', supportFade.toFixed(4));
+      stage.style.setProperty('--letters-focus', lettersFocus.toFixed(4));
+      stage.style.setProperty('--merge', merge.toFixed(4));
+      stage.style.setProperty('--coaching', coaching.toFixed(4));
+      stage.style.setProperty('--sentence-exit', sentenceExit.toFixed(4));
+      stage.style.setProperty('--logo-rise', `${gsap.utils.interpolate(0, 38, logoRise).toFixed(3)}vh`);
+      stage.style.setProperty('--logo-scale', gsap.utils.interpolate(1, 0.97, logoScale).toFixed(4));
+      stage.style.setProperty('--outro-opacity', outroOpacity.toFixed(4));
+      stage.style.setProperty('--outro-y', `${gsap.utils.interpolate(8.5, 0, outroLift).toFixed(3)}vh`);
+      stage.style.setProperty('--a-scale', aScale.toFixed(4));
+      stage.style.setProperty('--b-scale', bScale.toFixed(4));
 
-    const walkPhase = progress * 40;
-    const gait = Math.sin(walkPhase) * 16;
-    const arms = Math.sin(walkPhase + Math.PI) * 14;
-    const bob = Math.sin(walkPhase * 0.5) * 3.5;
-    const hip = Math.sin(walkPhase + 0.3) * 2.5;
-    const ropeSag = mapRange(progress, 0.08, 0.32, 0, 7);
+      stage.style.setProperty('--a-x', aX.toFixed(3));
+      stage.style.setProperty('--a-y', aY.toFixed(3));
+      stage.style.setProperty('--b-x', bX.toFixed(3));
+      stage.style.setProperty('--b-y', bY.toFixed(3));
+      stage.style.setProperty('--puller-opacity', pullerOpacity.toFixed(4));
+      stage.style.setProperty('--puller-x', pullerX.toFixed(3));
+      stage.style.setProperty('--puller-y', pullerY.toFixed(3));
+      stage.style.setProperty('--puller-lean', `${pullerLean.toFixed(3)}deg`);
+      stage.style.setProperty('--puller-tension', pullerTension.toFixed(4));
+      stage.style.setProperty('--walk-leg-front', `${walkLegFront.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-leg-back', `${walkLegBack.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-arm-front', `${walkArmFront.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-arm-back', `${walkArmBack.toFixed(3)}deg`);
+      stage.style.setProperty('--walk-bob', `${walkBob.toFixed(3)}px`);
+      stage.style.setProperty('--walk-hip-shift', `${walkHipShift.toFixed(3)}px`);
+      stage.style.setProperty('--walk-torso-lean', `${walkTorsoLean.toFixed(3)}deg`);
+      stage.style.setProperty('--rope-sag', `${ropeSag.toFixed(3)}px`);
 
-    const aX = mapRange(progress, 0.24, 0.44, 0, 12);
-    const bX = mapRange(progress, 0.24, 0.44, 0, -12);
-    const aScale = mapRange(progress, 0.24, 0.44, 1, 1.16);
-    const bScale = mapRange(progress, 0.24, 0.44, 1, 1.16);
-
-    setVar('--split', `${split.toFixed(2)}%`);
-    setVar('--support-fade', supportFade.toFixed(4));
-    setVar('--letters-focus', lettersFocus.toFixed(4));
-    setVar('--merge', merge.toFixed(4));
-    setVar('--second-opacity', secondOpacity.toFixed(4));
-    setVar('--sentence-exit', sentenceExit.toFixed(4));
-    setVar('--a-scale', aScale.toFixed(4));
-    setVar('--b-scale', bScale.toFixed(4));
-    setVar('--a-x', aX.toFixed(3));
-    setVar('--b-x', bX.toFixed(3));
-    setVar('--l-merge-x', `${mapRange(progress, 0.26, 0.46, 0, 5.4).toFixed(3)}vw`);
-    setVar('--s-merge-x', `${mapRange(progress, 0.26, 0.46, 0, -5.4).toFixed(3)}vw`);
-    setVar('--coaching', coaching.toFixed(4));
-    setVar('--logo-rise', `${mapRange(progress, 0.58, 0.78, 0, 11).toFixed(3)}vh`);
-    setVar('--logo-scale', mapRange(progress, 0.58, 0.78, 0.86, 1.06).toFixed(4));
-    setVar('--outro-opacity', outroOpacity.toFixed(4));
-    setVar('--outro-y', `${outroY.toFixed(3)}vh`);
-    setVar('--puller-opacity', pullerFade.toFixed(4));
-    setVar('--puller-tension', pullerTension.toFixed(4));
-    setVar('--puller-x', mapRange(progress, 0.02, 0.32, 5.8, -1.1).toFixed(3));
-    setVar('--puller-y', mapRange(progress, 0.02, 0.32, -0.4, 0.9).toFixed(3));
-    setVar('--puller-lean', `${mapRange(progress, 0.02, 0.32, -8, 4).toFixed(3)}deg`);
-    setVar('--walk-leg-front', `${gait.toFixed(3)}deg`);
-    setVar('--walk-leg-back', `${(-gait).toFixed(3)}deg`);
-    setVar('--walk-arm-front', `${arms.toFixed(3)}deg`);
-    setVar('--walk-arm-back', `${(-arms).toFixed(3)}deg`);
-    setVar('--walk-bob', `${bob.toFixed(3)}px`);
-    setVar('--walk-hip-shift', `${hip.toFixed(3)}px`);
-    setVar('--rope-sag', `${ropeSag.toFixed(3)}px`);
+      stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
   };
 
-  let raf = 0;
-  const requestPaint = () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      paint();
-    });
-  };
+  ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    onUpdate: ({ progress }) => {
+      const cinematicProgress = mapNarrativeProgress(progress);
+      if (!cinematicProgressLocked && cinematicProgress >= mergeAutoStart) {
+        cinematicProgressLocked = true;
+        if (autoAdvanceTween) autoAdvanceTween.kill();
+        autoAdvanceTween = gsap.to({ value: cinematicProgress }, {
+          value: 1,
+          duration: 1.65,
+          ease: 'power2.out',
+          onUpdate() {
+            renderCinematic(this.targets()[0].value);
+          }
+        });
+        return;
+      }
 
-  requestPaint();
-  window.addEventListener('scroll', requestPaint, { passive: true });
-  window.addEventListener('resize', requestPaint, { passive: true });
+      if (cinematicProgressLocked) return;
+
+      renderCinematic(cinematicProgress);
+    }
+  });
 });

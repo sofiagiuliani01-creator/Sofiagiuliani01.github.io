@@ -12500,9 +12500,9 @@ body.app-page {
   min-height: 100%;
   padding: 1.35rem;
   border-radius: 28px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  background: #ffffff;
-  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.24);
+  background: var(--accent-aqua);
+  box-shadow: 0 20px 45px rgba(10, 15, 26, 0.2);
 }
 
 .trustpilot-card-head {
@@ -12518,8 +12518,8 @@ body.app-page {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: var(--review-accent, #dbe4ec);
-  color: #1f2937;
+  background: rgba(15, 23, 42, 0.12);
+  color: #0b1220;
   font-size: 1.45rem;
   font-weight: 700;
 }
@@ -12527,12 +12527,12 @@ body.app-page {
 .trustpilot-card-head h3,
 .trustpilot-card-write h3 {
   margin: 0;
-  color: #111827;
+  color: #0b1220;
 }
 
 .trustpilot-card-head p {
   margin: 0.18rem 0 0;
-  color: #6b7280;
+  color: #0f172a;
 }
 
 .trustpilot-stars {
@@ -12554,7 +12554,7 @@ body.app-page {
 
 .trustpilot-card-title {
   margin: 0 0 0.75rem;
-  color: #111827;
+  color: #0b1220;
   font-size: 1.45rem;
   font-weight: 700;
   line-height: 1.15;
@@ -12562,7 +12562,7 @@ body.app-page {
 
 .trustpilot-card-body {
   margin: 0;
-  color: #374151;
+  color: #0f172a;
   line-height: 1.65;
 }
 
@@ -12576,8 +12576,9 @@ body.app-page {
 .trustpilot-card-meta span {
   padding: 0.38rem 0.7rem;
   border-radius: 999px;
-  background: #f3f4f6;
-  color: #4b5563;
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  background: rgba(255, 255, 255, 0.42);
+  color: #0f172a;
   font-size: 0.82rem;
   font-weight: 600;
 }

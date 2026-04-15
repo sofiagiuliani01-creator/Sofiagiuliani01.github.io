@@ -1753,33 +1753,7 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--rope-sag', `${ropeSag.toFixed(3)}px`);
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
-  };
-
-  ScrollTrigger.create({
-    trigger: hero,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    onUpdate: ({ progress }) => {
-      const cinematicProgress = mapNarrativeProgress(progress);
-      if (!cinematicProgressLocked && cinematicProgress >= mergeAutoStart) {
-        cinematicProgressLocked = true;
-        if (autoAdvanceTween) autoAdvanceTween.kill();
-        autoAdvanceTween = gsap.to({ value: cinematicProgress }, {
-          value: 1,
-          duration: 1.65,
-          ease: 'power2.out',
-          onUpdate() {
-            renderCinematic(this.targets()[0].value);
-          }
-        });
-        return;
-      }
-
-      if (cinematicProgressLocked) return;
-
-      renderCinematic(cinematicProgress);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, merge).toFixed(3)}vw`);
     }
   });
 });

@@ -1753,7 +1753,7 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--rope-sag', `${ropeSag.toFixed(3)}px`);
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, merge).toFixed(3)}vw`);
     }
   });
 });

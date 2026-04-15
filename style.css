@@ -14230,11 +14230,11 @@ body.app-page {
   position: absolute;
   left: clamp(12px, 6vw, 118px);
   top: 0;
-  width: clamp(86px, 8vw, 136px);
+  width: clamp(72px, 7.4vw, 116px);
   opacity: 0;
   pointer-events: none;
   z-index: 4;
-  transform: translate3d(0, -27%, 0);
+  transform: translate3d(0, -8%, 0);
   will-change: transform, opacity;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
 }
@@ -14245,6 +14245,15 @@ body.app-page {
   height: auto;
   overflow: visible;
   transform-origin: 50% 10%;
+  will-change: transform;
+}
+
+.page-home .hero-timeline-hands {
+  transform-origin: 50% 14px;
+}
+
+.page-home .hero-timeline-body {
+  transform-origin: 50% 14px;
   will-change: transform;
 }
 
@@ -14285,7 +14294,7 @@ body.app-page {
   }
   .page-home .hero-timeline-hanger {
     left: clamp(8px, 5vw, 34px);
-    width: clamp(72px, 24vw, 112px);
-    transform: translate3d(0, -24%, 0);
+    width: clamp(68px, 22vw, 102px);
+    transform: translate3d(0, -6%, 0);
   }
 }

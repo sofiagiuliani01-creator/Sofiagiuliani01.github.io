@@ -13941,6 +13941,8 @@ body.app-page {
   --b-y: 0;
   --l-merge-x: 0vw;
   --s-merge-x: 0vw;
+  --a-merge-x: 0vw;
+  --a-merge-y: 0vh;
   --logo-rise: 0vh;
   --logo-scale: 1;
   --outro-opacity: 0;
@@ -14149,6 +14151,10 @@ body.app-page {
 
 .page-home .role-focus .char.keep.keep-s {
   transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.62));
+}
+
+.page-home .role-focus .char.keep.keep-a {
+  transform: translate3d(var(--a-merge-x), calc(var(--letters-focus) * -3.6vh + var(--a-merge-y)), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.48));
 }
 
 .page-home .hero-coaching {

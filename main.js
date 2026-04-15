@@ -1687,6 +1687,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const logoScale = easeInOut(remap(cinematicProgress, 0.84, 0.995));
       const outroOpacity = easeOut(remap(cinematicProgress, 0.975, 1));
       const outroLift = easeInOut(remap(cinematicProgress, 0.975, 1));
+      const pullFigureReveal = easeOut(remap(cinematicProgress, 0.89, 0.965));
+      const pullFigureFade = 1 - easeInOut(remap(cinematicProgress, 0.995, 1));
+      const pullFigureDrive = easeInOut(remap(cinematicProgress, 0.89, 1));
       const pullerEnter = easeOut(remap(cinematicProgress, 0.12, 0.34));
       const pullerSettle = easeInOut(remap(cinematicProgress, 0.34, 0.58));
 
@@ -1715,6 +1718,14 @@ window.addEventListener('DOMContentLoaded', () => {
       const walkHipShift = 2.6 * stride * strideMix;
       const walkTorsoLean = gsap.utils.interpolate(-6.8, -2.6, walkEaseOut) + (0.8 * stride * strideMix);
       const ropeSag = gsap.utils.interpolate(0.45, 2.4, pullerSettle) + (1.1 - pullerTension) * 18;
+      const pullFigurePhase = pullFigureDrive * Math.PI * 7.2;
+      const pullFigureStroke = Math.max(0, Math.sin(pullFigurePhase));
+      const pullFigureRecover = Math.max(0, Math.sin(pullFigurePhase + Math.PI));
+      const pullFigureOpacity = pullFigureReveal * pullFigureFade;
+      const pullFigureShiftX = gsap.utils.interpolate(0, -8.6, pullFigureStroke) + gsap.utils.interpolate(0, 1.8, pullFigureRecover);
+      const pullFigureShiftY = gsap.utils.interpolate(0, 3.8, pullFigureStroke) + gsap.utils.interpolate(0, -1.1, pullFigureRecover);
+      const pullFigureLean = gsap.utils.interpolate(0, -3.1, pullFigureStroke) + gsap.utils.interpolate(0, 1.4, pullFigureRecover);
+      const pullFigureCompress = gsap.utils.interpolate(1, 0.984, pullFigureStroke);
 
       const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(cinematicProgress, 0, 0.22)));
       const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(cinematicProgress, 0.2, 0.45)));
@@ -1731,6 +1742,11 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--logo-scale', gsap.utils.interpolate(1, 0.97, logoScale).toFixed(4));
       stage.style.setProperty('--outro-opacity', outroOpacity.toFixed(4));
       stage.style.setProperty('--outro-y', `${gsap.utils.interpolate(8.5, 0, outroLift).toFixed(3)}vh`);
+      stage.style.setProperty('--pull-figure-opacity', pullFigureOpacity.toFixed(4));
+      stage.style.setProperty('--pull-figure-shift-x', `${pullFigureShiftX.toFixed(3)}px`);
+      stage.style.setProperty('--pull-figure-shift-y', `${pullFigureShiftY.toFixed(3)}px`);
+      stage.style.setProperty('--pull-figure-lean', `${pullFigureLean.toFixed(3)}deg`);
+      stage.style.setProperty('--pull-figure-compress', pullFigureCompress.toFixed(4));
       stage.style.setProperty('--a-scale', aScale.toFixed(4));
       stage.style.setProperty('--b-scale', bScale.toFixed(4));
 

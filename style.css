@@ -13945,6 +13945,11 @@ body.app-page {
   --logo-scale: 1;
   --outro-opacity: 0;
   --outro-y: 0vh;
+  --pull-figure-opacity: 0;
+  --pull-figure-shift-x: 0px;
+  --pull-figure-shift-y: 0px;
+  --pull-figure-lean: 0deg;
+  --pull-figure-compress: 1;
   --puller-opacity: 1;
   --puller-x: 5.8;
   --puller-y: -0.4;
@@ -14216,6 +14221,29 @@ body.app-page {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
 }
 
+.page-home .hero-bottom-pull-figure {
+  position: absolute;
+  right: clamp(24px, 3.8vw, 60px);
+  bottom: clamp(-4px, 0.5vh, 8px);
+  width: clamp(112px, 11.5vw, 188px);
+  opacity: var(--pull-figure-opacity);
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+}
+
+.page-home .hero-bottom-pull-figure-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform-origin: 89% 28%;
+  transform:
+    translate3d(var(--pull-figure-shift-x), var(--pull-figure-shift-y), 0)
+    rotate(var(--pull-figure-lean))
+    scaleY(var(--pull-figure-compress));
+}
+
 @media (max-width: 900px) {
   .page-home .hero-cinematic { height: 460vh; }
   .page-home .hero-cinematic-curtain {
@@ -14250,5 +14278,9 @@ body.app-page {
     font-size: clamp(1.7rem, 6.9vw, 3.15rem);
     line-height: 1.08;
     transform: translate(-50%, calc(-50% + 18vh + var(--outro-y))) skewX(-5deg);
+  }
+  .page-home .hero-bottom-pull-figure {
+    right: clamp(18px, 4.5vw, 34px);
+    width: clamp(92px, 24vw, 152px);
   }
 }

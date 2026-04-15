@@ -121,8 +121,12 @@
   padding: 2rem 2.2rem 1.7rem;
   border-radius: 44px;
   border: 0;
-  background: linear-gradient(180deg, rgba(25, 218, 213, 0.18) 0%, rgba(212, 217, 231, 0.65) 100%);
-  box-shadow: 0 24px 54px rgba(15, 23, 42, 0.08);
+  background:
+    radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(165deg, rgba(9, 28, 69, 0.98) 0%, rgba(16, 47, 108, 0.98) 45%, rgba(12, 91, 123, 0.96) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 54px rgba(2, 6, 23, 0.35);
   text-align: center;
 }
 
@@ -173,21 +177,16 @@
   height: 62px;
   border-radius: 50%;
   background: var(--review-accent, #dbe4ec);
-  color: #1f2937;
+  color: #0f172a;
   font-size: 1.45rem;
   font-weight: 700;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.25);
 }
 
 .trustpilot-card-head h3,
 .trustpilot-card-write h3 {
   margin: 0;
-  color: #111827;
-  text-align: left;
-}
-
-.trustpilot-card-head p {
-  margin: 0.18rem 0 0;
-  color: #6b7280;
+  color: #f8fbff;
   text-align: left;
 }
 
@@ -213,11 +212,11 @@
 .trustpilot-card-title {
   order: 3;
   margin: 0 0 0.75rem;
-  color: #111827;
+  color: #ffffff;
   font-size: 1.75rem;
   order: 2;
   margin: 0 0 0.75rem;
-  color: #111827;
+  color: #ffffff;
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.15;
@@ -226,7 +225,7 @@
 .trustpilot-card-body {
   order: 4;
   margin: 0;
-  color: #374151;
+  color: #e6edf7;
   max-width: none;
   flex: 1 1 auto;
   width: 100%;
@@ -236,29 +235,10 @@
   line-height: 1.55;
   order: 3;
   margin: 0;
-  color: #374151;
+  color: #e6edf7;
   max-width: 32ch;
   font-size: 1.02rem;
   line-height: 1.6;
-}
-
-.trustpilot-card-meta {
-  order: 5;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  justify-content: center;
-  gap: 0.55rem;
-  margin-top: 1rem;
-}
-
-.trustpilot-card-meta span {
-  padding: 0.38rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #4b5563;
-  font-size: 0.82rem;
-  font-weight: 600;
 }
 
 .trustpilot-card-write {

@@ -1630,6 +1630,41 @@ window.addEventListener('DOMContentLoaded', () => {
   const remap = (value, inMin, inMax) => clamp((value - inMin) / (inMax - inMin));
   const easeOut = gsap.parseEase('power2.out');
   const easeInOut = gsap.parseEase('power2.inOut');
+  const narrativeMap = [
+    { raw: 0, story: 0 },
+    // ingresso prima frase
+    { raw: 0.16, story: 0.2 },
+    // pausa 1: "NON SONO SOLO UN PERSONAL TRAINER"
+    { raw: 0.24, story: 0.2 },
+    // transizione verso seconda frase
+    { raw: 0.44, story: 0.52 },
+    // pausa 2: "NON HAI BISOGNO SOLO DI UN NUTRIZIONISTA"
+    { raw: 0.52, story: 0.52 },
+    // merge + reveal logo
+    { raw: 0.68, story: 0.76 },
+    // pausa 3: reveal LS coaching
+    { raw: 0.75, story: 0.76 },
+    // chiusura e frase finale
+    { raw: 0.92, story: 0.95 },
+    { raw: 1, story: 1 }
+  ];
+
+  const mapNarrativeProgress = (rawProgress) => {
+    const p = clamp(rawProgress);
+
+    for (let i = 0; i < narrativeMap.length - 1; i += 1) {
+      const current = narrativeMap[i];
+      const next = narrativeMap[i + 1];
+
+      if (p >= current.raw && p <= next.raw) {
+        if (next.raw === current.raw) return next.story;
+        const local = (p - current.raw) / (next.raw - current.raw);
+        return gsap.utils.interpolate(current.story, next.story, local);
+      }
+    }
+
+    return p <= 0 ? 0 : 1;
+  };
 
   ScrollTrigger.create({
     trigger: hero,
@@ -1637,22 +1672,24 @@ window.addEventListener('DOMContentLoaded', () => {
     end: 'bottom bottom',
     scrub: true,
     onUpdate: ({ progress }) => {
-      const split = easeInOut(remap(progress, 0.08, 0.58));
-      const secondOpacity = easeOut(remap(progress, 0.18, 0.29));
-      const secondReveal = easeInOut(remap(progress, 0.19, 0.33));
-      const supportFade = easeInOut(remap(progress, 0.54, 0.75));
-      const lettersFocus = easeInOut(remap(progress, 0.69, 0.87));
-      const merge = easeInOut(remap(progress, 0.82, 0.94));
-      const coaching = easeOut(remap(progress, 0.88, 0.97));
-      const sentenceExit = easeInOut(remap(progress, 0.86, 0.95));
-      const logoRise = easeInOut(remap(progress, 0.84, 0.995));
-      const logoScale = easeInOut(remap(progress, 0.84, 0.995));
-      const outroOpacity = easeOut(remap(progress, 0.975, 1));
-      const outroLift = easeInOut(remap(progress, 0.975, 1));
-      const pullerEnter = easeOut(remap(progress, 0.12, 0.34));
-      const pullerSettle = easeInOut(remap(progress, 0.34, 0.58));
+      const cinematicProgress = mapNarrativeProgress(progress);
 
-      const settle = easeInOut(remap(progress, 0.64, 0.84));
+      const split = easeInOut(remap(cinematicProgress, 0.08, 0.58));
+      const secondOpacity = easeOut(remap(cinematicProgress, 0.18, 0.29));
+      const secondReveal = easeInOut(remap(cinematicProgress, 0.19, 0.33));
+      const supportFade = easeInOut(remap(cinematicProgress, 0.54, 0.75));
+      const lettersFocus = easeInOut(remap(cinematicProgress, 0.69, 0.87));
+      const merge = easeInOut(remap(cinematicProgress, 0.82, 0.94));
+      const coaching = easeOut(remap(cinematicProgress, 0.88, 0.97));
+      const sentenceExit = easeInOut(remap(cinematicProgress, 0.86, 0.95));
+      const logoRise = easeInOut(remap(cinematicProgress, 0.84, 0.995));
+      const logoScale = easeInOut(remap(cinematicProgress, 0.84, 0.995));
+      const outroOpacity = easeOut(remap(cinematicProgress, 0.975, 1));
+      const outroLift = easeInOut(remap(cinematicProgress, 0.975, 1));
+      const pullerEnter = easeOut(remap(cinematicProgress, 0.12, 0.34));
+      const pullerSettle = easeInOut(remap(cinematicProgress, 0.34, 0.58));
+
+      const settle = easeInOut(remap(cinematicProgress, 0.64, 0.84));
       const aX = gsap.utils.interpolate(0, -3.2, split) + gsap.utils.interpolate(0, 2.1, settle);
       const aY = gsap.utils.interpolate(0, -8.1, split) + gsap.utils.interpolate(0, 5.2, settle);
       const bX = gsap.utils.interpolate(11.5, 0, secondReveal) + gsap.utils.interpolate(0, -2.8, settle);
@@ -1662,8 +1699,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const pullerY = gsap.utils.interpolate(1.4, -3.6, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
       const pullerLean = gsap.utils.interpolate(-10, -4, pullerEnter) + gsap.utils.interpolate(0, 2.2, pullerSettle);
       const pullerTension = gsap.utils.interpolate(1.05, 1, pullerSettle);
-      const walkDrive = easeInOut(remap(progress, 0.12, 0.72));
-      const walkEaseOut = easeInOut(remap(progress, 0.68, 0.84));
+      const walkDrive = easeInOut(remap(cinematicProgress, 0.12, 0.72));
+      const walkEaseOut = easeInOut(remap(cinematicProgress, 0.68, 0.84));
       const walkPhase = walkDrive * Math.PI * 14.4;
       const stride = Math.sin(walkPhase);
       const counterStride = Math.sin(walkPhase + Math.PI);
@@ -1678,8 +1715,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const walkTorsoLean = gsap.utils.interpolate(-6.8, -2.6, walkEaseOut) + (0.8 * stride * strideMix);
       const ropeSag = gsap.utils.interpolate(0.45, 2.4, pullerSettle) + (1.1 - pullerTension) * 18;
 
-      const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(progress, 0, 0.22)));
-      const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(progress, 0.2, 0.45)));
+      const aScale = gsap.utils.interpolate(1.045, 1, easeOut(remap(cinematicProgress, 0, 0.22)));
+      const bScale = gsap.utils.interpolate(1.02, 1, easeOut(remap(cinematicProgress, 0.2, 0.45)));
 
       stage.style.setProperty('--split', `${split * 100}%`);
       stage.style.setProperty('--second-opacity', secondOpacity.toFixed(4));

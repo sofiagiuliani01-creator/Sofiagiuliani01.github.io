@@ -14221,27 +14221,31 @@ body.app-page {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
 }
 
-.page-home .hero-bottom-pull-figure {
-  position: absolute;
-  right: clamp(24px, 3.8vw, 60px);
-  bottom: clamp(-4px, 0.5vh, 8px);
-  width: clamp(112px, 11.5vw, 188px);
-  opacity: var(--pull-figure-opacity);
-  pointer-events: none;
-  z-index: 3;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+.page-home #come-funziona {
+  position: relative;
+  overflow: visible;
 }
 
-.page-home .hero-bottom-pull-figure-svg {
+.page-home .hero-timeline-hanger {
+  position: absolute;
+  left: clamp(12px, 6vw, 118px);
+  top: 0;
+  width: clamp(86px, 8vw, 136px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  transform: translate3d(0, -27%, 0);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.35));
+}
+
+.page-home .hero-timeline-hanger-svg {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
-  transform-origin: 89% 28%;
-  transform:
-    translate3d(var(--pull-figure-shift-x), var(--pull-figure-shift-y), 0)
-    rotate(var(--pull-figure-lean))
-    scaleY(var(--pull-figure-compress));
+  transform-origin: 50% 10%;
+  will-change: transform;
 }
 
 @media (max-width: 900px) {
@@ -14279,8 +14283,9 @@ body.app-page {
     line-height: 1.08;
     transform: translate(-50%, calc(-50% + 18vh + var(--outro-y))) skewX(-5deg);
   }
-  .page-home .hero-bottom-pull-figure {
-    right: clamp(18px, 4.5vw, 34px);
-    width: clamp(92px, 24vw, 152px);
+  .page-home .hero-timeline-hanger {
+    left: clamp(8px, 5vw, 34px);
+    width: clamp(72px, 24vw, 112px);
+    transform: translate3d(0, -24%, 0);
   }
 }

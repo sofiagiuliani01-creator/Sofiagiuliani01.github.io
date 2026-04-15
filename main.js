@@ -1799,3 +1799,42 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// HOME HERO/TIMELINE boundary hanger (activate only near timeline entry)
+window.addEventListener('DOMContentLoaded', () => {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const hanger = document.querySelector('.hero-timeline-hanger');
+  const hangerSvg = hanger && hanger.querySelector('.hero-timeline-hanger-svg');
+  const timelineSection = document.querySelector('#come-funziona');
+  if (!hanger || !hangerSvg || !timelineSection) return;
+
+  gsap.set(hanger, { autoAlpha: 0 });
+  gsap.set(hangerSvg, { yPercent: 0, rotate: 0, scaleY: 1, transformOrigin: '50% 10%' });
+
+  const pullLoop = gsap.timeline({ paused: true, repeat: -1, defaults: { ease: 'sine.inOut' } });
+  pullLoop
+    .to(hangerSvg, { yPercent: -6.5, rotate: -1.2, scaleY: 0.984, duration: 1.05 })
+    .to(hangerSvg, { yPercent: -1.2, rotate: 0.4, scaleY: 1, duration: 0.95 });
+
+  const startMotion = () => {
+    gsap.to(hanger, { autoAlpha: 1, duration: 0.25, overwrite: true });
+    if (!pullLoop.isActive()) pullLoop.play();
+  };
+
+  const stopMotion = () => {
+    pullLoop.pause(0);
+    gsap.to(hanger, { autoAlpha: 0, duration: 0.2, overwrite: true });
+  };
+
+  ScrollTrigger.create({
+    trigger: timelineSection,
+    start: 'top 88%',
+    end: 'top 22%',
+    onEnter: startMotion,
+    onEnterBack: startMotion,
+    onLeaveBack: stopMotion
+  });
+});

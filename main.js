@@ -116,7 +116,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       });
     }
   });
-});
 // FAQ INTERATTIVE (ACCORDION)
 document.addEventListener('DOMContentLoaded', () => {
   const faqItems = document.querySelectorAll('[data-faq-item]');

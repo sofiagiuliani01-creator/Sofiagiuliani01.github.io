@@ -1666,13 +1666,13 @@ window.addEventListener('DOMContentLoaded', () => {
     return p <= 0 ? 0 : 1;
   };
 
-  ScrollTrigger.create({
-    trigger: hero,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    onUpdate: ({ progress }) => {
-      const cinematicProgress = mapNarrativeProgress(progress);
+  let cinematicProgressLocked = false;
+  let autoAdvanceTween = null;
+  let autoProgress = 0;
+  const mergeAutoStart = 0.82;
+
+  const renderCinematic = (cinematicProgress) => {
+      autoProgress = cinematicProgress;
 
       const split = easeInOut(remap(cinematicProgress, 0.08, 0.58));
       const secondOpacity = easeOut(remap(cinematicProgress, 0.18, 0.29));
@@ -1754,6 +1754,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
       stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
+  };
+
+  ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    onUpdate: ({ progress }) => {
+      const cinematicProgress = mapNarrativeProgress(progress);
+      if (!cinematicProgressLocked && cinematicProgress >= mergeAutoStart) {
+        cinematicProgressLocked = true;
+        if (autoAdvanceTween) autoAdvanceTween.kill();
+        autoAdvanceTween = gsap.to({ value: cinematicProgress }, {
+          value: 1,
+          duration: 1.65,
+          ease: 'power2.out',
+          onUpdate() {
+            renderCinematic(this.targets()[0].value);
+          }
+        });
+        return;
+      }
+
+      if (cinematicProgressLocked) return;
+
+      renderCinematic(cinematicProgress);
     }
   });
 });

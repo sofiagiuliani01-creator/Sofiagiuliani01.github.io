@@ -1615,3 +1615,97 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
 })();
+
+/* === 2026-04 hotfix: home cinematic hero scroll animation restore === */
+document.addEventListener('DOMContentLoaded', () => {
+  const hero = document.getElementById('hero-cinematic');
+  const stage = hero && hero.querySelector('.hero-cinematic-stage');
+  if (!hero || !stage) return;
+
+  const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
+  const mapRange = (value, inMin, inMax, outMin, outMax) => {
+    if (inMax === inMin) return outMin;
+    const t = clamp((value - inMin) / (inMax - inMin));
+    return outMin + (outMax - outMin) * t;
+  };
+
+  const setVar = (name, value) => stage.style.setProperty(name, String(value));
+
+  const paint = () => {
+    const rect = hero.getBoundingClientRect();
+    const total = Math.max(1, rect.height - window.innerHeight);
+    const progress = clamp((-rect.top) / total);
+
+    const split = mapRange(progress, 0.02, 0.32, 0, 58);
+    const supportFade = mapRange(progress, 0.08, 0.28, 0, 1);
+    const lettersFocus = mapRange(progress, 0.16, 0.38, 0, 1);
+    const merge = mapRange(progress, 0.26, 0.46, 0, 1);
+    const secondOpacity = mapRange(progress, 0.18, 0.36, 0, 1);
+    const sentenceExit = mapRange(progress, 0.5, 0.66, 0, 1);
+
+    const coachingIn = mapRange(progress, 0.58, 0.78, 0, 1);
+    const coachingOut = mapRange(progress, 0.84, 0.94, 0, 1);
+    const coaching = clamp(coachingIn * (1 - coachingOut));
+
+    const outroOpacity = mapRange(progress, 0.78, 0.96, 0, 1);
+    const outroY = mapRange(progress, 0.78, 0.96, 5, 0);
+
+    const pullerFade = mapRange(progress, 0.46, 0.7, 1, 0);
+    const pullerTension = mapRange(progress, 0.08, 0.34, 1, 0.93);
+
+    const walkPhase = progress * 40;
+    const gait = Math.sin(walkPhase) * 16;
+    const arms = Math.sin(walkPhase + Math.PI) * 14;
+    const bob = Math.sin(walkPhase * 0.5) * 3.5;
+    const hip = Math.sin(walkPhase + 0.3) * 2.5;
+    const ropeSag = mapRange(progress, 0.08, 0.32, 0, 7);
+
+    const aX = mapRange(progress, 0.24, 0.44, 0, 12);
+    const bX = mapRange(progress, 0.24, 0.44, 0, -12);
+    const aScale = mapRange(progress, 0.24, 0.44, 1, 1.16);
+    const bScale = mapRange(progress, 0.24, 0.44, 1, 1.16);
+
+    setVar('--split', `${split.toFixed(2)}%`);
+    setVar('--support-fade', supportFade.toFixed(4));
+    setVar('--letters-focus', lettersFocus.toFixed(4));
+    setVar('--merge', merge.toFixed(4));
+    setVar('--second-opacity', secondOpacity.toFixed(4));
+    setVar('--sentence-exit', sentenceExit.toFixed(4));
+    setVar('--a-scale', aScale.toFixed(4));
+    setVar('--b-scale', bScale.toFixed(4));
+    setVar('--a-x', aX.toFixed(3));
+    setVar('--b-x', bX.toFixed(3));
+    setVar('--l-merge-x', `${mapRange(progress, 0.26, 0.46, 0, 5.4).toFixed(3)}vw`);
+    setVar('--s-merge-x', `${mapRange(progress, 0.26, 0.46, 0, -5.4).toFixed(3)}vw`);
+    setVar('--coaching', coaching.toFixed(4));
+    setVar('--logo-rise', `${mapRange(progress, 0.58, 0.78, 0, 11).toFixed(3)}vh`);
+    setVar('--logo-scale', mapRange(progress, 0.58, 0.78, 0.86, 1.06).toFixed(4));
+    setVar('--outro-opacity', outroOpacity.toFixed(4));
+    setVar('--outro-y', `${outroY.toFixed(3)}vh`);
+    setVar('--puller-opacity', pullerFade.toFixed(4));
+    setVar('--puller-tension', pullerTension.toFixed(4));
+    setVar('--puller-x', mapRange(progress, 0.02, 0.32, 5.8, -1.1).toFixed(3));
+    setVar('--puller-y', mapRange(progress, 0.02, 0.32, -0.4, 0.9).toFixed(3));
+    setVar('--puller-lean', `${mapRange(progress, 0.02, 0.32, -8, 4).toFixed(3)}deg`);
+    setVar('--walk-leg-front', `${gait.toFixed(3)}deg`);
+    setVar('--walk-leg-back', `${(-gait).toFixed(3)}deg`);
+    setVar('--walk-arm-front', `${arms.toFixed(3)}deg`);
+    setVar('--walk-arm-back', `${(-arms).toFixed(3)}deg`);
+    setVar('--walk-bob', `${bob.toFixed(3)}px`);
+    setVar('--walk-hip-shift', `${hip.toFixed(3)}px`);
+    setVar('--rope-sag', `${ropeSag.toFixed(3)}px`);
+  };
+
+  let raf = 0;
+  const requestPaint = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      paint();
+    });
+  };
+
+  requestPaint();
+  window.addEventListener('scroll', requestPaint, { passive: true });
+  window.addEventListener('resize', requestPaint, { passive: true });
+});

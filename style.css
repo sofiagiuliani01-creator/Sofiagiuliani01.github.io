@@ -14151,6 +14151,7 @@ body.app-page {
   transform: translate3d(var(--s-merge-x), calc(var(--letters-focus) * -3.6vh), 0) scale(calc(1 + var(--letters-focus) * 1.08 + var(--merge) * 0.62));
 }
 
+
 .page-home .hero-coaching {
   position: absolute;
   left: 50%;

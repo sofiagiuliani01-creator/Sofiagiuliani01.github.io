@@ -1680,6 +1680,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const supportFade = easeInOut(remap(cinematicProgress, 0.54, 0.75));
       const lettersFocus = easeInOut(remap(cinematicProgress, 0.69, 0.87));
       const merge = easeInOut(remap(cinematicProgress, 0.82, 0.94));
+      const sLetterMerge = easeOut(remap(cinematicProgress, 0.72, 0.88));
       const coaching = easeOut(remap(cinematicProgress, 0.88, 0.97));
       const sentenceExit = easeInOut(remap(cinematicProgress, 0.86, 0.95));
       const logoRise = easeInOut(remap(cinematicProgress, 0.84, 0.995));
@@ -1752,7 +1753,7 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--rope-sag', `${ropeSag.toFixed(3)}px`);
 
       stage.style.setProperty('--l-merge-x', `${gsap.utils.interpolate(0, 2.45, merge).toFixed(3)}vw`);
-      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.45, merge).toFixed(3)}vw`);
+      stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
     }
   });
 });

@@ -1783,3 +1783,145 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// HOME HERO/TIMELINE EDGE — hanging figure mini pull-up
+window.addEventListener('DOMContentLoaded', () => {
+  const hero = document.querySelector('.hero-cinematic');
+  const timelineSection = document.querySelector('#come-funziona');
+  const hanger = document.querySelector('[data-hero-hanger]');
+  const sentinel = document.querySelector('[data-hero-hanger-sentinel]');
+
+  if (!hero || !timelineSection || !hanger || !sentinel || !window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const part = (id) => hanger.querySelector(`#${id}`);
+  const fullFigure = part('full-figure');
+  const upperBody = part('upper-body');
+  const lowerBody = part('lower-body');
+  const torso = part('torso');
+  const head = part('head');
+  const pelvis = part('pelvis');
+  const leftUpperArm = part('left-upper-arm');
+  const rightUpperArm = part('right-upper-arm');
+  const leftForearm = part('left-forearm');
+  const rightForearm = part('right-forearm');
+  const leftThigh = part('left-thigh');
+  const rightThigh = part('right-thigh');
+  const leftShin = part('left-shin');
+  const rightShin = part('right-shin');
+
+  const resetHangPose = () => {
+    gsap.set(fullFigure, { x: 0, y: 0, rotation: 0, transformOrigin: '414px 760px' });
+    gsap.set(upperBody, { y: 0, rotation: 0, transformOrigin: '414px 700px' });
+    gsap.set(lowerBody, { y: 0, rotation: 0, transformOrigin: '414px 950px' });
+    gsap.set(torso, { y: 0, rotation: 1.6 });
+    gsap.set(head, { y: 0, rotation: -1.2 });
+    gsap.set(pelvis, { y: 1.5, rotation: 1.2 });
+
+    gsap.set(leftUpperArm, { rotation: -112 });
+    gsap.set(rightUpperArm, { rotation: 112 });
+    gsap.set(leftForearm, { rotation: -20 });
+    gsap.set(rightForearm, { rotation: 20 });
+
+    gsap.set(leftThigh, { rotation: 9, y: 4 });
+    gsap.set(rightThigh, { rotation: -8, y: 3.5 });
+    gsap.set(leftShin, { rotation: 7, y: 7 });
+    gsap.set(rightShin, { rotation: -6, y: 6.5 });
+  };
+
+  resetHangPose();
+
+  const miniPullTl = gsap.timeline({ paused: true });
+  miniPullTl
+    .to([fullFigure, torso, pelvis], {
+      y: '-=26',
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to(upperBody, {
+      y: -10,
+      rotation: -1.2,
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to(lowerBody, {
+      y: -4,
+      rotation: 1.1,
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftUpperArm, rightUpperArm], {
+      rotation: (i) => (i === 0 ? -96 : 96),
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftForearm, rightForearm], {
+      rotation: (i) => (i === 0 ? -6 : 6),
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftThigh, rightThigh], {
+      rotation: (i) => (i === 0 ? 11 : -10),
+      y: 2,
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftShin, rightShin], {
+      rotation: (i) => (i === 0 ? 10 : -9),
+      y: 4,
+      duration: 0.62,
+      ease: 'power2.inOut'
+    }, 0)
+    .to({}, { duration: 0.2 })
+    .to([fullFigure, upperBody, lowerBody, torso, pelvis], {
+      y: 0,
+      rotation: 0,
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent')
+    .to([leftUpperArm, rightUpperArm], {
+      rotation: (i) => (i === 0 ? -112 : 112),
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent')
+    .to([leftForearm, rightForearm], {
+      rotation: (i) => (i === 0 ? -20 : 20),
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent')
+    .to([leftThigh, rightThigh], {
+      rotation: (i) => (i === 0 ? 9 : -8),
+      y: (i) => (i === 0 ? 4 : 3.5),
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent')
+    .to([leftShin, rightShin], {
+      rotation: (i) => (i === 0 ? 7 : -6),
+      y: (i) => (i === 0 ? 7 : 6.5),
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent')
+    .to(head, {
+      y: 0.6,
+      rotation: -0.6,
+      duration: 0.84,
+      ease: 'power3.out'
+    }, 'descent');
+
+  ScrollTrigger.create({
+    trigger: sentinel,
+    start: 'top 82%',
+    end: 'bottom 60%',
+    onEnter: () => {
+      miniPullTl.restart(true);
+    },
+    onEnterBack: () => {
+      miniPullTl.restart(true);
+    },
+    onLeaveBack: () => {
+      miniPullTl.pause(0);
+      resetHangPose();
+    }
+  });
+});

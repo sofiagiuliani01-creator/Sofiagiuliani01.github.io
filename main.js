@@ -1827,19 +1827,19 @@ window.addEventListener('DOMContentLoaded', () => {
     gsap.set(upperBody, { y: 0, rotation: 0.9, transformOrigin: '414px 706px' });
     gsap.set(lowerBody, { y: 6, rotation: 1.6, transformOrigin: '414px 920px' });
     gsap.set(torso, { y: 2, rotation: 0.6, x: 0 });
-    gsap.set(headWrap, { y: 0, rotation: -1.6, transformOrigin: '414px 516px' });
+    gsap.set(headWrap, { y: 0, rotation: -1.6, transformOrigin: '414px 536px' });
     gsap.set(head, { y: 0, x: 0, rotation: 0 });
     gsap.set(pelvis, { y: 6, rotation: 0.8 });
 
-    gsap.set(leftUpperArmWrap, { x: 64, y: -116, rotation: -51, transformOrigin: '287px 627px' });
-    gsap.set(rightUpperArmWrap, { x: -64, y: -116, rotation: 51, transformOrigin: '541px 627px' });
-    gsap.set(leftForearmWrap, { x: 84, y: -246, rotation: -21, transformOrigin: '251px 798px' });
-    gsap.set(rightForearmWrap, { x: -84, y: -246, rotation: 21, transformOrigin: '599px 798px' });
+    gsap.set(leftUpperArmWrap, { x: 64, y: -116, rotation: -51, transformOrigin: '267px 632px' });
+    gsap.set(rightUpperArmWrap, { x: -64, y: -116, rotation: 51, transformOrigin: '561px 632px' });
+    gsap.set(leftForearmWrap, { x: 84, y: -246, rotation: -21, transformOrigin: '237px 798px' });
+    gsap.set(rightForearmWrap, { x: -84, y: -246, rotation: 21, transformOrigin: '591px 798px' });
 
-    gsap.set(leftThighWrap, { rotation: 7, y: 10, x: -4, transformOrigin: '332px 953px' });
-    gsap.set(rightThighWrap, { rotation: -7, y: 10, x: 4, transformOrigin: '495px 953px' });
-    gsap.set(leftShinWrap, { rotation: 8, y: 18, x: -2, transformOrigin: '305px 1178px' });
-    gsap.set(rightShinWrap, { rotation: -8, y: 18, x: 2, transformOrigin: '527px 1178px' });
+    gsap.set(leftThighWrap, { rotation: 7, y: 10, x: -4, transformOrigin: '360px 990px' });
+    gsap.set(rightThighWrap, { rotation: -7, y: 10, x: 4, transformOrigin: '468px 990px' });
+    gsap.set(leftShinWrap, { rotation: 8, y: 18, x: -2, transformOrigin: '331px 1184px' });
+    gsap.set(rightShinWrap, { rotation: -8, y: 18, x: 2, transformOrigin: '497px 1184px' });
   };
 
   resetHangPose();

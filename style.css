@@ -9405,7 +9405,7 @@ body.app-page {
     overflow: visible;
   }
   #leonardo-diverso .different-icon svg path,
-  #leonardo-diverso .different-icon svg circle{
+  #leonardo-diverso .different-icon svg circle:not(.mblob){
     fill: none;
     stroke: #0f1115;
     stroke-linecap: round;

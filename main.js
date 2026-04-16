@@ -1783,3 +1783,80 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// HOME HERO EDGE HANGER — attiva solo nella transizione hero -> timeline
+window.addEventListener('DOMContentLoaded', () => {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const timelineSection = document.querySelector('#come-funziona');
+  const hanger = document.querySelector('#hanger-figure');
+  if (!timelineSection || !hanger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const setPose = () => {
+    gsap.set('#hanger-figure', { y: 0, rotation: 0, transformOrigin: '414px 740px' });
+    gsap.set('#hanger-upper-body', { y: 0, rotation: 0.2 });
+    gsap.set('#hanger-lower-body', { y: 0, rotation: 0.9 });
+    gsap.set('#hanger-head', { y: 0, rotation: 0.4 });
+    gsap.set('#hanger-left-upper-arm', { rotation: -119 });
+    gsap.set('#hanger-right-upper-arm', { rotation: 119 });
+    gsap.set('#hanger-left-forearm', { rotation: -19 });
+    gsap.set('#hanger-right-forearm', { rotation: 19 });
+    gsap.set('#hanger-pelvis', { y: 1.2, rotation: 0.7 });
+    gsap.set('#hanger-left-thigh', { rotation: 6 });
+    gsap.set('#hanger-right-thigh', { rotation: -6 });
+    gsap.set('#hanger-left-shin', { rotation: 8 });
+    gsap.set('#hanger-right-shin', { rotation: -8 });
+  };
+
+  setPose();
+
+  const pullLoop = gsap.timeline({
+    paused: true,
+    repeat: -1,
+    repeatDelay: 0.26,
+    defaults: { ease: 'sine.inOut' }
+  });
+
+  pullLoop
+    .to('#hanger-figure', { y: -6, duration: 0.52, ease: 'power2.out' }, 0)
+    .to('#hanger-upper-body', { y: -12, rotation: -1.1, duration: 0.52, ease: 'power2.out' }, 0)
+    .to('#hanger-lower-body', { y: -7, rotation: -0.5, duration: 0.52, ease: 'power2.out' }, 0)
+    .to('#hanger-head', { y: -2.5, rotation: 0.1, duration: 0.52, ease: 'power2.out' }, 0)
+    .to('#hanger-left-upper-arm', { rotation: -111.5, duration: 0.52 }, 0)
+    .to('#hanger-right-upper-arm', { rotation: 111.5, duration: 0.52 }, 0)
+    .to('#hanger-left-forearm', { rotation: -13.5, duration: 0.52 }, 0)
+    .to('#hanger-right-forearm', { rotation: 13.5, duration: 0.52 }, 0)
+    .to('#hanger-pelvis', { y: -1.4, rotation: 0.2, duration: 0.52 }, 0)
+    .to('#hanger-left-thigh', { rotation: 7.5, duration: 0.52 }, 0)
+    .to('#hanger-right-thigh', { rotation: -7.5, duration: 0.52 }, 0)
+    .to('#hanger-left-shin', { rotation: 10, duration: 0.52 }, 0)
+    .to('#hanger-right-shin', { rotation: -10, duration: 0.52 }, 0)
+    .to('#hanger-figure', { y: -5.8, duration: 0.2 }, 0.52)
+    .to('#hanger-figure', { y: 0, duration: 0.66, ease: 'power2.inOut' }, 0.74)
+    .to('#hanger-upper-body', { y: 0, rotation: 0.2, duration: 0.66, ease: 'power2.inOut' }, 0.74)
+    .to('#hanger-lower-body', { y: 0, rotation: 0.9, duration: 0.66, ease: 'power2.inOut' }, 0.74)
+    .to('#hanger-head', { y: 0, rotation: 0.4, duration: 0.66, ease: 'power2.inOut' }, 0.74)
+    .to('#hanger-left-upper-arm', { rotation: -119, duration: 0.66 }, 0.74)
+    .to('#hanger-right-upper-arm', { rotation: 119, duration: 0.66 }, 0.74)
+    .to('#hanger-left-forearm', { rotation: -19, duration: 0.66 }, 0.74)
+    .to('#hanger-right-forearm', { rotation: 19, duration: 0.66 }, 0.74)
+    .to('#hanger-pelvis', { y: 1.2, rotation: 0.7, duration: 0.66 }, 0.74)
+    .to('#hanger-left-thigh', { rotation: 6, duration: 0.66 }, 0.74)
+    .to('#hanger-right-thigh', { rotation: -6, duration: 0.66 }, 0.74)
+    .to('#hanger-left-shin', { rotation: 8, duration: 0.66 }, 0.74)
+    .to('#hanger-right-shin', { rotation: -8, duration: 0.66 }, 0.74);
+
+  ScrollTrigger.create({
+    trigger: timelineSection,
+    start: 'top 88%',
+    end: 'top 18%',
+    onEnter: () => pullLoop.play(),
+    onEnterBack: () => pullLoop.play(),
+    onLeaveBack: () => {
+      pullLoop.pause(0);
+      setPose();
+    }
+  });
+});

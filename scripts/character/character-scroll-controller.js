@@ -31,6 +31,7 @@
 
     const characterState = { x: -9999, y: -9999, rotation: 0, scale: 1 };
     let jumpTween = null;
+    let timelineDriftActive = false;
 
     const setCharacterSize = () => {
       const width = window.innerWidth <= config.responsive.mobileBreakpoint
@@ -73,6 +74,7 @@
 
     const runJump = () => {
       if (jumpTween) jumpTween.kill();
+      timelineDriftActive = true;
 
       const start = pointFromElement(jumpStartMarker, renderer.logicalWidth, renderer.logicalHeight);
       const end = getTimelineLandingPoint();
@@ -128,15 +130,18 @@
       start: 'top top',
       end: 'bottom 32%',
       onEnter: () => {
+        timelineDriftActive = false;
         placeInHero();
         animationManager.play('pullup', { reset: false });
       },
       onEnterBack: () => {
+        timelineDriftActive = false;
         placeInHero();
         animationManager.play('pullup', { reset: false });
       },
       onLeave: runJump,
       onLeaveBack: () => {
+        timelineDriftActive = false;
         if (jumpTween) jumpTween.kill();
         placeInHero();
         animationManager.play('pullup', { reset: true });
@@ -158,6 +163,7 @@
       start: 'top 92%',
       end: 'bottom 10%',
       onUpdate: (self) => {
+        if (!timelineDriftActive) return;
         const p = self.progress;
         const target = getTimelineLandingPoint();
         if (p > 0.02) {

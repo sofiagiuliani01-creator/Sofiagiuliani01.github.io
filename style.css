@@ -14270,17 +14270,17 @@ body.app-page {
 .page-home .hero-hanger-figure #full-figure { transform-origin: 414px 640px; }
 .page-home .hero-hanger-figure #upper-body { transform-origin: 414px 706px; }
 .page-home .hero-hanger-figure #lower-body { transform-origin: 414px 920px; }
-.page-home .hero-hanger-figure #head { transform-origin: 414px 484px; }
-.page-home .hero-hanger-figure #torso { transform-origin: 414px 716px; }
-.page-home .hero-hanger-figure #left-upper-arm { transform-origin: 287px 627px; }
-.page-home .hero-hanger-figure #right-upper-arm { transform-origin: 541px 627px; }
-.page-home .hero-hanger-figure #left-forearm { transform-origin: 251px 798px; }
-.page-home .hero-hanger-figure #right-forearm { transform-origin: 599px 798px; }
-.page-home .hero-hanger-figure #pelvis { transform-origin: 414px 901px; }
-.page-home .hero-hanger-figure #left-thigh { transform-origin: 332px 953px; }
-.page-home .hero-hanger-figure #right-thigh { transform-origin: 495px 953px; }
-.page-home .hero-hanger-figure #left-shin { transform-origin: 305px 1178px; }
-.page-home .hero-hanger-figure #right-shin { transform-origin: 527px 1178px; }
+.page-home .hero-hanger-figure #head { transform-origin: 414px 488px; }
+.page-home .hero-hanger-figure #torso { transform-origin: 414px 724px; }
+.page-home .hero-hanger-figure #left-upper-arm { transform-origin: 267px 632px; }
+.page-home .hero-hanger-figure #right-upper-arm { transform-origin: 561px 632px; }
+.page-home .hero-hanger-figure #left-forearm { transform-origin: 237px 798px; }
+.page-home .hero-hanger-figure #right-forearm { transform-origin: 591px 798px; }
+.page-home .hero-hanger-figure #pelvis { transform-origin: 414px 925px; }
+.page-home .hero-hanger-figure #left-thigh { transform-origin: 360px 990px; }
+.page-home .hero-hanger-figure #right-thigh { transform-origin: 468px 990px; }
+.page-home .hero-hanger-figure #left-shin { transform-origin: 331px 1184px; }
+.page-home .hero-hanger-figure #right-shin { transform-origin: 497px 1184px; }
 
 @media (max-width: 900px) {
   .page-home .hero-cinematic { height: 460vh; }

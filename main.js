@@ -1796,123 +1796,162 @@ window.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const part = (id) => hanger.querySelector(`#${id}`);
+  const hangerAnchor = part('hanger-anchor');
   const fullFigure = part('full-figure');
   const upperBody = part('upper-body');
   const lowerBody = part('lower-body');
+  const headWrap = part('head-wrap');
+  const leftUpperArmWrap = part('left-upper-arm-wrap');
+  const rightUpperArmWrap = part('right-upper-arm-wrap');
+  const leftForearmWrap = part('left-forearm-wrap');
+  const rightForearmWrap = part('right-forearm-wrap');
+  const leftThighWrap = part('left-thigh-wrap');
+  const rightThighWrap = part('right-thigh-wrap');
+  const leftShinWrap = part('left-shin-wrap');
+  const rightShinWrap = part('right-shin-wrap');
   const torso = part('torso');
   const head = part('head');
   const pelvis = part('pelvis');
-  const leftUpperArm = part('left-upper-arm');
-  const rightUpperArm = part('right-upper-arm');
-  const leftForearm = part('left-forearm');
-  const rightForearm = part('right-forearm');
-  const leftThigh = part('left-thigh');
-  const rightThigh = part('right-thigh');
-  const leftShin = part('left-shin');
-  const rightShin = part('right-shin');
+  const leftUpperArm = part('left-upper-arm-wrap');
+  const rightUpperArm = part('right-upper-arm-wrap');
+  const leftForearm = part('left-forearm-wrap');
+  const rightForearm = part('right-forearm-wrap');
+  const leftThigh = part('left-thigh-wrap');
+  const rightThigh = part('right-thigh-wrap');
+  const leftShin = part('left-shin-wrap');
+  const rightShin = part('right-shin-wrap');
 
   const resetHangPose = () => {
-    gsap.set(fullFigure, { x: 0, y: 0, rotation: 0, transformOrigin: '414px 760px' });
-    gsap.set(upperBody, { y: 0, rotation: 0, transformOrigin: '414px 700px' });
-    gsap.set(lowerBody, { y: 0, rotation: 0, transformOrigin: '414px 950px' });
-    gsap.set(torso, { y: 0, rotation: 1.6 });
-    gsap.set(head, { y: 0, rotation: -1.2 });
-    gsap.set(pelvis, { y: 1.5, rotation: 1.2 });
+    gsap.set(hangerAnchor, { x: 0, y: 0, rotation: 0, transformOrigin: '414px 552px' });
+    gsap.set(fullFigure, { x: 0, y: 78, rotation: 0.8, transformOrigin: '414px 642px' });
+    gsap.set(upperBody, { y: 0, rotation: 0.9, transformOrigin: '414px 706px' });
+    gsap.set(lowerBody, { y: 6, rotation: 1.6, transformOrigin: '414px 920px' });
+    gsap.set(torso, { y: 2, rotation: 0.6, x: 0 });
+    gsap.set(headWrap, { y: 0, rotation: -1.6, transformOrigin: '414px 516px' });
+    gsap.set(head, { y: 0, x: 0, rotation: 0 });
+    gsap.set(pelvis, { y: 6, rotation: 0.8 });
 
-    gsap.set(leftUpperArm, { rotation: -112 });
-    gsap.set(rightUpperArm, { rotation: 112 });
-    gsap.set(leftForearm, { rotation: -20 });
-    gsap.set(rightForearm, { rotation: 20 });
+    gsap.set(leftUpperArmWrap, { x: 64, y: -116, rotation: -51, transformOrigin: '287px 627px' });
+    gsap.set(rightUpperArmWrap, { x: -64, y: -116, rotation: 51, transformOrigin: '541px 627px' });
+    gsap.set(leftForearmWrap, { x: 84, y: -246, rotation: -21, transformOrigin: '251px 798px' });
+    gsap.set(rightForearmWrap, { x: -84, y: -246, rotation: 21, transformOrigin: '599px 798px' });
 
-    gsap.set(leftThigh, { rotation: 9, y: 4 });
-    gsap.set(rightThigh, { rotation: -8, y: 3.5 });
-    gsap.set(leftShin, { rotation: 7, y: 7 });
-    gsap.set(rightShin, { rotation: -6, y: 6.5 });
+    gsap.set(leftThighWrap, { rotation: 7, y: 10, x: -4, transformOrigin: '332px 953px' });
+    gsap.set(rightThighWrap, { rotation: -7, y: 10, x: 4, transformOrigin: '495px 953px' });
+    gsap.set(leftShinWrap, { rotation: 8, y: 18, x: -2, transformOrigin: '305px 1178px' });
+    gsap.set(rightShinWrap, { rotation: -8, y: 18, x: 2, transformOrigin: '527px 1178px' });
   };
 
   resetHangPose();
 
   const miniPullTl = gsap.timeline({ paused: true });
   miniPullTl
-    .to([fullFigure, torso, pelvis], {
-      y: '-=26',
-      duration: 0.62,
+    .to([fullFigure, upperBody], {
+      y: '-=20',
+      duration: 0.46,
       ease: 'power2.inOut'
     }, 0)
+    .to([torso, pelvis, lowerBody], {
+      y: '-=13',
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to(headWrap, {
+      y: -5,
+      rotation: -0.5,
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftUpperArm, rightUpperArm], {
+      rotation: (i) => (i === 0 ? -46 : 46),
+      y: '-=6',
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftForearm, rightForearm], {
+      rotation: (i) => (i === 0 ? -15 : 15),
+      y: '-=8',
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftThigh, rightThigh], {
+      rotation: (i) => (i === 0 ? 8 : -8),
+      y: (i) => (i === 0 ? 8 : 8),
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to([leftShin, rightShin], {
+      rotation: (i) => (i === 0 ? 9 : -9),
+      y: (i) => (i === 0 ? 13 : 13),
+      duration: 0.46,
+      ease: 'power2.inOut'
+    }, 0)
+    .to({}, { duration: 0.14 })
+    .to(fullFigure, {
+      y: 78,
+      rotation: 0.8,
+      duration: 0.62,
+      ease: 'power3.out'
+    }, 'descent+=0')
     .to(upperBody, {
-      y: -10,
-      rotation: -1.2,
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to(lowerBody, {
-      y: -4,
-      rotation: 1.1,
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to([leftUpperArm, rightUpperArm], {
-      rotation: (i) => (i === 0 ? -96 : 96),
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to([leftForearm, rightForearm], {
-      rotation: (i) => (i === 0 ? -6 : 6),
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to([leftThigh, rightThigh], {
-      rotation: (i) => (i === 0 ? 11 : -10),
-      y: 2,
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to([leftShin, rightShin], {
-      rotation: (i) => (i === 0 ? 10 : -9),
-      y: 4,
-      duration: 0.62,
-      ease: 'power2.inOut'
-    }, 0)
-    .to({}, { duration: 0.2 })
-    .to([fullFigure, upperBody, lowerBody, torso, pelvis], {
       y: 0,
-      rotation: 0,
-      duration: 0.84,
+      rotation: 0.9,
+      duration: 0.62,
+      ease: 'power3.out'
+    }, 'descent')
+    .to(lowerBody, {
+      y: 6,
+      rotation: 1.6,
+      duration: 0.62,
+      ease: 'power3.out'
+    }, 'descent')
+    .to([torso, pelvis], {
+      y: (i) => (i === 0 ? 2 : 6),
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent')
     .to([leftUpperArm, rightUpperArm], {
-      rotation: (i) => (i === 0 ? -112 : 112),
-      duration: 0.84,
+      rotation: (i) => (i === 0 ? -51 : 51),
+      y: (i) => (i === 0 ? -116 : -116),
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent')
     .to([leftForearm, rightForearm], {
-      rotation: (i) => (i === 0 ? -20 : 20),
-      duration: 0.84,
+      rotation: (i) => (i === 0 ? -21 : 21),
+      y: (i) => (i === 0 ? -246 : -246),
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent')
     .to([leftThigh, rightThigh], {
-      rotation: (i) => (i === 0 ? 9 : -8),
-      y: (i) => (i === 0 ? 4 : 3.5),
-      duration: 0.84,
+      rotation: (i) => (i === 0 ? 7 : -7),
+      y: 10,
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent')
     .to([leftShin, rightShin], {
-      rotation: (i) => (i === 0 ? 7 : -6),
-      y: (i) => (i === 0 ? 7 : 6.5),
-      duration: 0.84,
+      rotation: (i) => (i === 0 ? 8 : -8),
+      y: 18,
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent')
-    .to(head, {
-      y: 0.6,
-      rotation: -0.6,
-      duration: 0.84,
+    .to(fullFigure, {
+      rotation: 1.4,
+      duration: 0.3,
+      yoyo: true,
+      repeat: 1,
+      ease: 'sine.inOut'
+    }, 'descent+=0.08')
+    .to(headWrap, {
+      rotation: -1.6,
+      y: 0,
+      duration: 0.62,
       ease: 'power3.out'
     }, 'descent');
 
   ScrollTrigger.create({
-    trigger: sentinel,
-    start: 'top 82%',
-    end: 'bottom 60%',
+    trigger: timelineSection,
+    start: 'top 92%',
+    end: 'top 58%',
     onEnter: () => {
       miniPullTl.restart(true);
     },

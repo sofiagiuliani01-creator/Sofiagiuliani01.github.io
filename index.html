@@ -104,28 +104,48 @@
     <div class="hero-hanger-sentinel" data-hero-hanger-sentinel></div>
     <div class="hero-hanger-figure-wrap" data-hero-hanger>
       <svg class="hero-hanger-figure" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 1792" role="img" aria-hidden="true">
-        <g id="full-figure">
-          <g id="upper-body">
-            <circle id="head" class="part" cx="414" cy="484" r="92"></circle>
-            <path id="torso" class="part" d="M322 604 L317 612 L317 620 L342 838 L349 843 L478 843 L482 841 L486 836 L507 662 L511 626 L506 603 L500 595 L486 590 L368 590 L345 596 Z"></path>
-            <g id="left-arm">
-              <path id="left-upper-arm" class="part" d="M288 618 L282 618 L274 624 L230 765 L231 773 L240 777 L262 782 L266 781 L270 777 L304 668 L305 661 L305 657 L298 620 Z"></path>
-              <path id="left-forearm" class="part" d="M235 791 L228 791 L223 795 L201 941 L202 947 L207 952 L223 955 L233 955 L239 949 L264 805 L264 798 L262 794 L255 791 Z"></path>
+        <g id="hanger-anchor">
+          <g id="full-figure">
+            <g id="upper-body">
+              <g id="head-wrap">
+                <circle id="head" class="part" cx="414" cy="484" r="92"></circle>
+              </g>
+              <path id="torso" class="part" d="M322 604 L317 612 L317 620 L342 838 L349 843 L478 843 L482 841 L486 836 L507 662 L511 626 L506 603 L500 595 L486 590 L368 590 L345 596 Z"></path>
+              <g id="left-arm">
+                <g id="left-upper-arm-wrap">
+                  <path id="left-upper-arm" class="part" d="M288 618 L282 618 L274 624 L230 765 L231 773 L240 777 L262 782 L266 781 L270 777 L304 668 L305 661 L305 657 L298 620 Z"></path>
+                </g>
+                <g id="left-forearm-wrap">
+                  <path id="left-forearm" class="part" d="M235 791 L228 791 L223 795 L201 941 L202 947 L207 952 L223 955 L233 955 L239 949 L264 805 L264 798 L262 794 L255 791 Z"></path>
+                </g>
+              </g>
+              <g id="right-arm">
+                <g id="right-upper-arm-wrap">
+                  <path id="right-upper-arm" class="part" d="M541 618 L532 620 L527 624 L522 660 L557 776 L561 781 L566 782 L591 776 L597 772 L598 766 L564 653 L553 620 Z"></path>
+                </g>
+                <g id="right-forearm-wrap">
+                  <path id="right-forearm" class="part" d="M593 791 L569 795 L564 799 L563 804 L588 947 L594 955 L604 955 L622 951 L626 942 L605 798 L602 793 Z"></path>
+                </g>
+              </g>
             </g>
-            <g id="right-arm">
-              <path id="right-upper-arm" class="part" d="M541 618 L532 620 L527 624 L522 660 L557 776 L561 781 L566 782 L591 776 L597 772 L598 766 L564 653 L553 620 Z"></path>
-              <path id="right-forearm" class="part" d="M593 791 L569 795 L564 799 L563 804 L588 947 L594 955 L604 955 L622 951 L626 942 L605 798 L602 793 Z"></path>
-            </g>
-          </g>
-          <g id="lower-body">
-            <path id="pelvis" class="part" d="M327 911 L327 918 L332 924 L392 948 L436 948 L491 926 L498 922 L501 916 L489 863 L482 859 L346 859 L338 864 Z"></path>
-            <g id="left-leg">
-              <path id="left-thigh" class="part" d="M329 941 L325 942 L321 946 L319 953 L289 1143 L296 1151 L340 1157 L348 1151 L385 969 L381 962 L335 941 Z"></path>
-              <path id="left-shin" class="part" d="M292 1168 L287 1170 L283 1177 L281 1212 L263 1393 L265 1397 L271 1401 L301 1405 L309 1400 L312 1391 L344 1180 L343 1173 L336 1169 Z"></path>
-            </g>
-            <g id="right-leg">
-              <path id="right-thigh" class="part" d="M498 941 L446 962 L443 966 L443 975 L463 1067 L478 1148 L483 1155 L488 1157 L532 1151 L538 1144 L507 951 Z"></path>
-              <path id="right-shin" class="part" d="M535 1168 L492 1173 L487 1176 L484 1182 L515 1390 L519 1401 L526 1405 L557 1401 L564 1393 L544 1176 L541 1171 Z"></path>
+            <g id="lower-body">
+              <path id="pelvis" class="part" d="M327 911 L327 918 L332 924 L392 948 L436 948 L491 926 L498 922 L501 916 L489 863 L482 859 L346 859 L338 864 Z"></path>
+              <g id="left-leg">
+                <g id="left-thigh-wrap">
+                  <path id="left-thigh" class="part" d="M329 941 L325 942 L321 946 L319 953 L289 1143 L296 1151 L340 1157 L348 1151 L385 969 L381 962 L335 941 Z"></path>
+                </g>
+                <g id="left-shin-wrap">
+                  <path id="left-shin" class="part" d="M292 1168 L287 1170 L283 1177 L281 1212 L263 1393 L265 1397 L271 1401 L301 1405 L309 1400 L312 1391 L344 1180 L343 1173 L336 1169 Z"></path>
+                </g>
+              </g>
+              <g id="right-leg">
+                <g id="right-thigh-wrap">
+                  <path id="right-thigh" class="part" d="M498 941 L446 962 L443 966 L443 975 L463 1067 L478 1148 L483 1155 L488 1157 L532 1151 L538 1144 L507 951 Z"></path>
+                </g>
+                <g id="right-shin-wrap">
+                  <path id="right-shin" class="part" d="M535 1168 L492 1173 L487 1176 L484 1182 L515 1390 L519 1401 L526 1405 L557 1401 L564 1393 L544 1176 L541 1171 Z"></path>
+                </g>
+              </g>
             </g>
           </g>
         </g>

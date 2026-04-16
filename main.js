@@ -1821,6 +1821,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const leftShin = part('left-shin-wrap');
   const rightShin = part('right-shin-wrap');
 
+  if (!hangerAnchor || !fullFigure || !upperBody || !lowerBody || !headWrap || !leftUpperArmWrap || !rightUpperArmWrap || !leftForearmWrap || !rightForearmWrap || !leftThighWrap || !rightThighWrap || !leftShinWrap || !rightShinWrap || !torso || !head || !pelvis || !leftUpperArm || !rightUpperArm || !leftForearm || !rightForearm || !leftThigh || !rightThigh || !leftShin || !rightShin) return;
+
   const resetHangPose = () => {
     gsap.set(hangerAnchor, { x: 0, y: 0, rotation: 0, transformOrigin: '414px 552px' });
     gsap.set(fullFigure, { x: 0, y: 78, rotation: 0.8, transformOrigin: '414px 642px' });

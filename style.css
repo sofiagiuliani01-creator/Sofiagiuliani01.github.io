@@ -14310,11 +14310,41 @@ body.app-page {
     left: clamp(28px, 6vw, 70px);
   }
 
-  .page-home .hero-character-point-jump {
+.page-home .hero-character-point-jump {
     left: clamp(38px, 9vw, 108px);
   }
 
   .character-canvas-wrap {
     width: var(--character-width-mobile, 120px);
   }
+}
+
+/* === Rive character integration for home timeline cards === */
+.rive-character-mobile-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 35;
+}
+
+.rive-character-mobile {
+  position: absolute;
+  width: clamp(108px, 11.8vw, 170px);
+  aspect-ratio: 1 / 1.68;
+  transform: translate3d(-9999px, -9999px, 0);
+  will-change: transform;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.2));
+}
+
+.rive-character-card-slot {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 1 / 1.68;
+}
+
+.rive-character-mobile canvas,
+.rive-character-card-slot canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }

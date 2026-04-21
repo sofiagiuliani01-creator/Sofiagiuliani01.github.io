@@ -1783,3 +1783,214 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+/* === Home timeline Rive integration: traction > jump_1_card > enter_to_1_card > card_1_action + working_at_desk === */
+document.addEventListener('DOMContentLoaded', () => {
+  const riveRuntime = window.rive;
+  if (!riveRuntime || !window.gsap || !window.ScrollTrigger) return;
+
+  const hero = document.querySelector('.hero-cinematic');
+  const timelineSection = document.querySelector('#come-funziona');
+  const timeline = timelineSection && timelineSection.querySelector('[data-timeline]');
+  const steps = timeline ? Array.from(timeline.querySelectorAll('.timeline-step')) : [];
+  const firstCard = steps[0];
+  const secondCard = steps[1];
+  const bar = hero && hero.querySelector('.hero-cinematic-base');
+
+  if (!hero || !timeline || !firstCard || !secondCard || !bar) return;
+
+  const TIMELINES = {
+    traction: 'traction',
+    jump: 'jump_1_card',
+    enter: 'enter_to_1_card',
+    firstCardLoop: 'card_1_action',
+    secondCardLoop: 'working_at_desk'
+  };
+
+  const state = {
+    layout: null,
+    jumpPlayed: false,
+    firstCardReady: false
+  };
+
+  const createRiveInstance = ({ canvas, autoplay = false, timelineName }) => {
+    let instance = null;
+    instance = new riveRuntime.Rive({
+      src: 'omino.riv',
+      canvas,
+      autoplay,
+      animations: timelineName ? [timelineName] : [],
+      onLoad: () => {
+        if (instance && typeof instance.resizeDrawingSurfaceToCanvas === 'function') {
+          instance.resizeDrawingSurfaceToCanvas();
+        }
+      }
+    });
+    return instance;
+  };
+
+  const resolveAnchorPoint = (element) => {
+    const rect = element.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width * 0.5,
+      y: rect.top + rect.height * 0.64
+    };
+  };
+
+  const resolveSlotCenter = (slot) => {
+    const rect = slot.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width * 0.5,
+      y: rect.top + rect.height * 0.5
+    };
+  };
+
+  const replaceStepSvgWithRiveSlot = (stepEl, slotClassName) => {
+    const visual = stepEl.querySelector('.step-visual');
+    const picture = visual && visual.querySelector('picture');
+    const svg = visual && visual.querySelector('.step-illu');
+    if (!visual || !picture || !svg) return null;
+
+    picture.remove();
+
+    const slot = document.createElement('div');
+    slot.className = slotClassName;
+    slot.setAttribute('aria-hidden', 'true');
+    const canvas = document.createElement('canvas');
+    slot.appendChild(canvas);
+    visual.appendChild(slot);
+
+    return { slot, canvas };
+  };
+
+  const firstSlotNodes = replaceStepSvgWithRiveSlot(firstCard, 'rive-character-card-slot rive-character-card-slot-1');
+  const secondSlotNodes = replaceStepSvgWithRiveSlot(secondCard, 'rive-character-card-slot rive-character-card-slot-2');
+  if (!firstSlotNodes || !secondSlotNodes) return;
+
+  const mobileLayer = document.createElement('div');
+  mobileLayer.className = 'rive-character-mobile-layer';
+  const mobileWrap = document.createElement('div');
+  mobileWrap.className = 'rive-character-mobile';
+  const mobileCanvas = document.createElement('canvas');
+  mobileWrap.appendChild(mobileCanvas);
+  mobileLayer.appendChild(mobileWrap);
+  document.body.appendChild(mobileLayer);
+
+  const firstCardRive = createRiveInstance({ canvas: firstSlotNodes.canvas });
+  const secondCardRive = createRiveInstance({ canvas: secondSlotNodes.canvas });
+  const mobileRive = createRiveInstance({ canvas: mobileCanvas });
+
+  const playTimeline = (instance, timelineName, reset = true) => {
+    if (!instance || !timelineName) return;
+    if (typeof instance.stop === 'function' && reset) instance.stop();
+    instance.play(timelineName);
+  };
+
+  const setMobilePosition = ({ x, y }) => {
+    const width = mobileWrap.offsetWidth || 140;
+    const height = mobileWrap.offsetHeight || 210;
+    mobileWrap.style.transform = `translate3d(${x - width * 0.5}px, ${y - height * 0.65}px, 0)`;
+  };
+
+  const readLayoutCoordinates = () => {
+    const start = resolveAnchorPoint(bar);
+    const jumpStart = {
+      x: start.x + Math.min(110, window.innerWidth * 0.08),
+      y: start.y - Math.min(20, window.innerHeight * 0.03)
+    };
+    const firstCardCenter = resolveSlotCenter(firstSlotNodes.slot);
+    return { start, jumpStart, firstCardCenter };
+  };
+
+  const renderInitialState = () => {
+    state.layout = readLayoutCoordinates();
+    setMobilePosition(state.layout.start);
+    playTimeline(mobileRive, TIMELINES.traction);
+    playTimeline(firstCardRive, TIMELINES.firstCardLoop);
+    playTimeline(secondCardRive, TIMELINES.secondCardLoop);
+    firstSlotNodes.slot.style.visibility = 'hidden';
+  };
+
+  const runJumpSequence = () => {
+    if (state.jumpPlayed) return;
+    state.jumpPlayed = true;
+    state.layout = readLayoutCoordinates();
+
+    const jumpState = { ...state.layout.jumpStart };
+    setMobilePosition(jumpState);
+    playTimeline(mobileRive, TIMELINES.jump);
+
+    gsap.to(jumpState, {
+      x: state.layout.firstCardCenter.x,
+      y: state.layout.firstCardCenter.y,
+      duration: 0.9,
+      ease: 'power2.inOut',
+      onUpdate: () => setMobilePosition(jumpState),
+      onComplete: () => {
+        playTimeline(mobileRive, TIMELINES.enter);
+        gsap.delayedCall(0.45, () => {
+          firstSlotNodes.slot.style.visibility = 'visible';
+          playTimeline(firstCardRive, TIMELINES.firstCardLoop);
+          mobileWrap.style.opacity = '0';
+          state.firstCardReady = true;
+        });
+      }
+    });
+  };
+
+  renderInitialState();
+
+  ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: 'bottom 30%',
+    onEnter: () => {
+      mobileWrap.style.opacity = '1';
+      firstSlotNodes.slot.style.visibility = 'hidden';
+      state.jumpPlayed = false;
+      state.firstCardReady = false;
+      renderInitialState();
+    },
+    onEnterBack: () => {
+      mobileWrap.style.opacity = '1';
+      firstSlotNodes.slot.style.visibility = 'hidden';
+      state.jumpPlayed = false;
+      state.firstCardReady = false;
+      renderInitialState();
+    },
+    onLeave: runJumpSequence,
+    onLeaveBack: () => {
+      mobileWrap.style.opacity = '1';
+      firstSlotNodes.slot.style.visibility = 'hidden';
+      state.jumpPlayed = false;
+      state.firstCardReady = false;
+      renderInitialState();
+    }
+  });
+
+  ScrollTrigger.create({
+    trigger: firstCard,
+    start: 'top 64%',
+    end: 'bottom 38%',
+    onEnter: () => {
+      if (state.firstCardReady) playTimeline(firstCardRive, TIMELINES.firstCardLoop, false);
+    },
+    onEnterBack: () => {
+      if (state.firstCardReady) playTimeline(firstCardRive, TIMELINES.firstCardLoop, false);
+    }
+  });
+
+  ScrollTrigger.create({
+    trigger: secondCard,
+    start: 'top 70%',
+    end: 'bottom 34%',
+    onEnter: () => playTimeline(secondCardRive, TIMELINES.secondCardLoop, false),
+    onEnterBack: () => playTimeline(secondCardRive, TIMELINES.secondCardLoop, false)
+  });
+
+  window.addEventListener('resize', () => {
+    state.layout = readLayoutCoordinates();
+    if (!state.jumpPlayed) setMobilePosition(state.layout.start);
+    ScrollTrigger.refresh();
+  }, { passive: true });
+});

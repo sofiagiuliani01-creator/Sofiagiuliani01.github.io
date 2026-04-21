@@ -1812,6 +1812,8 @@ document.addEventListener('DOMContentLoaded', () => {
     jumpPlayed: false,
     firstCardReady: false
   };
+  let jumpTween = null;
+  let jumpRevealDelayedCall = null;
 
   const createRiveInstance = ({ canvas, autoplay = false, timelineName }) => {
     let instance = null;
@@ -1911,6 +1913,26 @@ document.addEventListener('DOMContentLoaded', () => {
     firstSlotNodes.slot.style.visibility = 'hidden';
   };
 
+  const cancelPendingJumpCallbacks = () => {
+    if (jumpTween) {
+      jumpTween.kill();
+      jumpTween = null;
+    }
+    if (jumpRevealDelayedCall) {
+      jumpRevealDelayedCall.kill();
+      jumpRevealDelayedCall = null;
+    }
+  };
+
+  const resetHeroJumpState = () => {
+    cancelPendingJumpCallbacks();
+    mobileWrap.style.opacity = '1';
+    firstSlotNodes.slot.style.visibility = 'hidden';
+    state.jumpPlayed = false;
+    state.firstCardReady = false;
+    renderInitialState();
+  };
+
   const runJumpSequence = () => {
     if (state.jumpPlayed) return;
     state.jumpPlayed = true;
@@ -1920,15 +1942,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setMobilePosition(jumpState);
     playTimeline(mobileRive, TIMELINES.jump);
 
-    gsap.to(jumpState, {
+    jumpTween = gsap.to(jumpState, {
       x: state.layout.firstCardCenter.x,
       y: state.layout.firstCardCenter.y,
       duration: 0.9,
       ease: 'power2.inOut',
       onUpdate: () => setMobilePosition(jumpState),
       onComplete: () => {
+        jumpTween = null;
         playTimeline(mobileRive, TIMELINES.enter);
-        gsap.delayedCall(0.45, () => {
+        jumpRevealDelayedCall = gsap.delayedCall(0.45, () => {
+          jumpRevealDelayedCall = null;
           firstSlotNodes.slot.style.visibility = 'visible';
           playTimeline(firstCardRive, TIMELINES.firstCardLoop);
           mobileWrap.style.opacity = '0';
@@ -1944,28 +1968,10 @@ document.addEventListener('DOMContentLoaded', () => {
     trigger: hero,
     start: 'top top',
     end: 'bottom 30%',
-    onEnter: () => {
-      mobileWrap.style.opacity = '1';
-      firstSlotNodes.slot.style.visibility = 'hidden';
-      state.jumpPlayed = false;
-      state.firstCardReady = false;
-      renderInitialState();
-    },
-    onEnterBack: () => {
-      mobileWrap.style.opacity = '1';
-      firstSlotNodes.slot.style.visibility = 'hidden';
-      state.jumpPlayed = false;
-      state.firstCardReady = false;
-      renderInitialState();
-    },
+    onEnter: resetHeroJumpState,
+    onEnterBack: resetHeroJumpState,
     onLeave: runJumpSequence,
-    onLeaveBack: () => {
-      mobileWrap.style.opacity = '1';
-      firstSlotNodes.slot.style.visibility = 'hidden';
-      state.jumpPlayed = false;
-      state.firstCardReady = false;
-      renderInitialState();
-    }
+    onLeaveBack: resetHeroJumpState
   });
 
   ScrollTrigger.create({
@@ -1991,6 +1997,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => {
     state.layout = readLayoutCoordinates();
     if (!state.jumpPlayed) setMobilePosition(state.layout.start);
+    [mobileRive, firstCardRive, secondCardRive].forEach((instance) => {
+      if (instance && typeof instance.resizeDrawingSurfaceToCanvas === 'function') {
+        instance.resizeDrawingSurfaceToCanvas();
+      }
+    });
     ScrollTrigger.refresh();
   }, { passive: true });
 });

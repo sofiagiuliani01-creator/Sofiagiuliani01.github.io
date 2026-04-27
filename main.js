@@ -1796,6 +1796,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const firstCard = steps[0];
   const secondCard = steps[1];
   const bar = hero && hero.querySelector('.hero-cinematic-base');
+  const startPointMarker = hero && hero.querySelector('.hero-character-point-start');
+  const jumpPointMarker = hero && hero.querySelector('.hero-character-point-jump');
 
   if (!hero || !timeline || !firstCard || !secondCard || !bar) return;
 
@@ -1854,6 +1856,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   };
 
+  const resolveMarkerPoint = (marker, fallback) => {
+    if (!marker) return fallback;
+    const rect = marker.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width * 0.5,
+      y: rect.top + rect.height * 0.5
+    };
+  };
+
   const replaceStepSvgWithRiveSlot = (stepEl, slotClassName) => {
     const visual = stepEl.querySelector('.step-visual');
     const picture = visual && visual.querySelector('picture');
@@ -1902,11 +1913,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const readLayoutCoordinates = () => {
-    const start = resolveAnchorPoint(bar);
-    const jumpStart = {
+    const startFallback = resolveAnchorPoint(bar);
+    const start = resolveMarkerPoint(startPointMarker, startFallback);
+    const jumpStartFallback = {
       x: start.x + Math.min(110, window.innerWidth * 0.08),
       y: start.y - Math.min(20, window.innerHeight * 0.03)
     };
+    const jumpStart = resolveMarkerPoint(jumpPointMarker, jumpStartFallback);
     const firstCardCenter = resolveSlotCenter(firstSlotNodes.slot);
     return { start, jumpStart, firstCardCenter };
   };

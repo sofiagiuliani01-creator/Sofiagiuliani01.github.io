@@ -14329,7 +14329,7 @@ body.app-page {
 
 .rive-character-mobile {
   position: absolute;
-  width: clamp(108px, 11.8vw, 170px);
+  width: clamp(192px, 20vw, 328px);
   aspect-ratio: 1 / 1.68;
   transform: translate3d(-9999px, -9999px, 0);
   will-change: transform;
@@ -14337,8 +14337,8 @@ body.app-page {
 }
 
 .rive-character-card-slot {
-  width: 100%;
-  max-width: 180px;
+  width: min(100%, clamp(192px, 20vw, 328px));
+  max-width: 328px;
   aspect-ratio: 1 / 1.68;
 }
 
@@ -14347,4 +14347,8 @@ body.app-page {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+#come-funziona .timeline-steps {
+  padding-top: clamp(80px, 10vh, 160px);
 }

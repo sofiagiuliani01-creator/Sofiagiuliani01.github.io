@@ -14307,11 +14307,13 @@ body.app-page {
     transform: translate(-50%, calc(-50% + 18vh + var(--outro-y))) skewX(-5deg);
   }
   .page-home .hero-character-point-start {
-    left: clamp(28px, 6vw, 70px);
+    left: clamp(24px, 6vw, 72px);
+    bottom: clamp(24px, 8.5vh, 64px);
   }
 
-.page-home .hero-character-point-jump {
-    left: clamp(38px, 9vw, 108px);
+  .page-home .hero-character-point-jump {
+    left: clamp(44px, 11vw, 132px);
+    bottom: clamp(48px, 12vh, 112px);
   }
 
   .character-canvas-wrap {

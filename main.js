@@ -1810,6 +1810,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const state = {
     layout: null,
+    dividerVisible: false,
     jumpPlayed: false,
     firstCardReady: false,
     waitingFirstCardEnter: false,
@@ -1913,11 +1914,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderInitialState = () => {
     state.layout = readLayoutCoordinates();
     setMobilePosition(state.layout.start);
-    playTimeline(mobileRive, TIMELINES.traction);
+    mobileWrap.style.opacity = '0';
     playTimeline(firstCardRive, TIMELINES.firstCardLoop);
     playTimeline(secondCardRive, TIMELINES.secondCardLoop);
     firstSlotNodes.slot.style.visibility = 'hidden';
     secondSlotNodes.slot.style.visibility = 'hidden';
+  };
+
+  const showDividerTraction = () => {
+    state.layout = readLayoutCoordinates();
+    setMobilePosition(state.layout.start);
+    mobileWrap.style.opacity = '1';
+    playTimeline(mobileRive, TIMELINES.traction);
+    state.dividerVisible = true;
   };
 
   const cancelPendingJumpCallbacks = () => {
@@ -1937,8 +1946,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const resetHeroJumpState = () => {
     cancelPendingJumpCallbacks();
-    mobileWrap.style.opacity = '1';
+    mobileWrap.style.opacity = '0';
     firstSlotNodes.slot.style.visibility = 'hidden';
+    secondSlotNodes.slot.style.visibility = 'hidden';
+    state.dividerVisible = false;
     state.jumpPlayed = false;
     state.firstCardReady = false;
     state.waitingFirstCardEnter = false;
@@ -1966,6 +1977,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.jumpPlayed) return;
     state.jumpPlayed = true;
     state.layout = readLayoutCoordinates();
+    if (!state.dividerVisible) showDividerTraction();
 
     const jumpState = { ...state.layout.jumpStart };
     setMobilePosition(jumpState);
@@ -2047,10 +2059,21 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollTrigger.create({
     trigger: hero,
     start: 'top top',
-    end: 'bottom top+=2%',
+    end: 'bottom top+=12%',
     onEnter: resetHeroJumpState,
     onEnterBack: resetHeroJumpState,
-    onLeave: runJumpSequence,
+    onUpdate: ({ progress }) => {
+      if (progress >= 0.86) {
+        if (!state.dividerVisible && !state.jumpPlayed) showDividerTraction();
+      } else if (state.dividerVisible && !state.jumpPlayed) {
+        mobileWrap.style.opacity = '0';
+        state.dividerVisible = false;
+      }
+    },
+    onLeave: () => {
+      if (!state.dividerVisible) showDividerTraction();
+      runJumpSequence();
+    },
     onLeaveBack: resetHeroJumpState
   });
 

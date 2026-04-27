@@ -1821,22 +1821,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let jumpRevealDelayedCall = null;
   let firstToSecondTween = null;
 
-  const createRiveInstance = ({ canvas, autoplay = false, timelineName }) => {
-    let instance = null;
-    instance = new riveRuntime.Rive({
-      src: 'omino 2.riv',
-      canvas,
-      autoplay,
-      animations: timelineName ? [timelineName] : [],
-      onLoad: () => {
-        if (instance && typeof instance.resizeDrawingSurfaceToCanvas === 'function') {
-          instance.resizeDrawingSurfaceToCanvas();
-        }
-      }
-    });
-    return instance;
-  };
-
+  const riveAsset = 'omino 2.riv';
   const resolveAnchorPoint = (element) => {
     const rect = element.getBoundingClientRect();
     return {

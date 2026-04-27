@@ -1804,21 +1804,27 @@ document.addEventListener('DOMContentLoaded', () => {
     jump: 'jump_1_card',
     enter: 'enter_to_1_card',
     firstCardLoop: 'card_1_action',
+    firstToSecond: '1_to_2',
     secondCardLoop: 'working_at_desk'
   };
 
   const state = {
     layout: null,
     jumpPlayed: false,
-    firstCardReady: false
+    firstCardReady: false,
+    waitingFirstCardEnter: false,
+    firstEnterPlayed: false,
+    movingToSecond: false,
+    secondCardReady: false
   };
   let jumpTween = null;
   let jumpRevealDelayedCall = null;
+  let firstToSecondTween = null;
 
   const createRiveInstance = ({ canvas, autoplay = false, timelineName }) => {
     let instance = null;
     instance = new riveRuntime.Rive({
-      src: 'omino.riv',
+      src: 'omino 2.riv',
       canvas,
       autoplay,
       animations: timelineName ? [timelineName] : [],
@@ -1834,8 +1840,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const resolveAnchorPoint = (element) => {
     const rect = element.getBoundingClientRect();
     return {
-      x: rect.left + rect.width * 0.5,
-      y: rect.top + rect.height * 0.64
+      x: rect.left + Math.max(18, rect.width * 0.36),
+      y: rect.bottom - Math.max(6, rect.height * 0.12)
     };
   };
 
@@ -1911,6 +1917,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playTimeline(firstCardRive, TIMELINES.firstCardLoop);
     playTimeline(secondCardRive, TIMELINES.secondCardLoop);
     firstSlotNodes.slot.style.visibility = 'hidden';
+    secondSlotNodes.slot.style.visibility = 'hidden';
   };
 
   const cancelPendingJumpCallbacks = () => {
@@ -1922,6 +1929,10 @@ document.addEventListener('DOMContentLoaded', () => {
       jumpRevealDelayedCall.kill();
       jumpRevealDelayedCall = null;
     }
+    if (firstToSecondTween) {
+      firstToSecondTween.kill();
+      firstToSecondTween = null;
+    }
   };
 
   const resetHeroJumpState = () => {
@@ -1930,7 +1941,25 @@ document.addEventListener('DOMContentLoaded', () => {
     firstSlotNodes.slot.style.visibility = 'hidden';
     state.jumpPlayed = false;
     state.firstCardReady = false;
+    state.waitingFirstCardEnter = false;
+    state.firstEnterPlayed = false;
+    state.movingToSecond = false;
+    state.secondCardReady = false;
     renderInitialState();
+  };
+
+  const completeFirstCardEnter = () => {
+    if (state.firstEnterPlayed || !state.waitingFirstCardEnter) return;
+    state.waitingFirstCardEnter = false;
+    state.firstEnterPlayed = true;
+    playTimeline(mobileRive, TIMELINES.enter);
+    jumpRevealDelayedCall = gsap.delayedCall(0.5, () => {
+      jumpRevealDelayedCall = null;
+      firstSlotNodes.slot.style.visibility = 'visible';
+      playTimeline(firstCardRive, TIMELINES.firstCardLoop);
+      mobileWrap.style.opacity = '0';
+      state.firstCardReady = true;
+    });
   };
 
   const runJumpSequence = () => {
@@ -1945,20 +1974,71 @@ document.addEventListener('DOMContentLoaded', () => {
     jumpTween = gsap.to(jumpState, {
       x: state.layout.firstCardCenter.x,
       y: state.layout.firstCardCenter.y,
-      duration: 0.9,
+      duration: 1.15,
       ease: 'power2.inOut',
       onUpdate: () => setMobilePosition(jumpState),
       onComplete: () => {
         jumpTween = null;
-        playTimeline(mobileRive, TIMELINES.enter);
-        jumpRevealDelayedCall = gsap.delayedCall(0.45, () => {
-          jumpRevealDelayedCall = null;
-          firstSlotNodes.slot.style.visibility = 'visible';
-          playTimeline(firstCardRive, TIMELINES.firstCardLoop);
-          mobileWrap.style.opacity = '0';
-          state.firstCardReady = true;
-        });
+        state.waitingFirstCardEnter = true;
       }
+    });
+  };
+
+  const isFullyVisible = (element) => {
+    const rect = element.getBoundingClientRect();
+    return rect.top >= 0 && rect.bottom <= window.innerHeight;
+  };
+
+  const runFirstToSecondTransition = () => {
+    if (!state.firstCardReady || state.movingToSecond || state.secondCardReady) return;
+    state.movingToSecond = true;
+    state.layout = readLayoutCoordinates();
+    const firstCardCenter = resolveSlotCenter(firstSlotNodes.slot);
+    const secondCardCenter = resolveSlotCenter(secondSlotNodes.slot);
+    const hangPoint = {
+      x: firstCardCenter.x + Math.min(36, window.innerWidth * 0.032),
+      y: firstCardCenter.y + Math.min(66, window.innerHeight * 0.08)
+    };
+    const travelState = { ...firstCardCenter };
+
+    firstSlotNodes.slot.style.visibility = 'hidden';
+    mobileWrap.style.opacity = '1';
+    setMobilePosition(travelState);
+    playTimeline(mobileRive, TIMELINES.firstToSecond);
+
+    firstToSecondTween = gsap.timeline({
+      defaults: { ease: 'power1.inOut' },
+      onComplete: () => {
+        firstToSecondTween = null;
+        secondSlotNodes.slot.style.visibility = 'visible';
+        mobileWrap.style.opacity = '0';
+        playTimeline(secondCardRive, TIMELINES.secondCardLoop);
+        state.secondCardReady = true;
+      }
+    });
+
+    firstToSecondTween.to(travelState, {
+      x: hangPoint.x,
+      y: hangPoint.y,
+      duration: 0.46,
+      onUpdate: () => setMobilePosition(travelState),
+      onComplete: () => {
+        if (typeof mobileRive.pause === 'function') mobileRive.pause();
+      }
+    });
+
+    firstToSecondTween.to({}, {
+      duration: 0.2,
+      onStart: () => {
+        if (typeof mobileRive.play === 'function') mobileRive.play(TIMELINES.firstToSecond);
+      }
+    });
+
+    firstToSecondTween.to(travelState, {
+      x: secondCardCenter.x,
+      y: secondCardCenter.y,
+      duration: 0.72,
+      onUpdate: () => setMobilePosition(travelState)
     });
   };
 
@@ -1967,7 +2047,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollTrigger.create({
     trigger: hero,
     start: 'top top',
-    end: 'bottom 30%',
+    end: 'bottom top+=2%',
     onEnter: resetHeroJumpState,
     onEnterBack: resetHeroJumpState,
     onLeave: runJumpSequence,
@@ -1976,22 +2056,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ScrollTrigger.create({
     trigger: firstCard,
-    start: 'top 64%',
+    start: 'top 78%',
     end: 'bottom 38%',
     onEnter: () => {
+      if (state.waitingFirstCardEnter && isFullyVisible(firstCard)) completeFirstCardEnter();
       if (state.firstCardReady) playTimeline(firstCardRive, TIMELINES.firstCardLoop, false);
     },
     onEnterBack: () => {
+      if (state.waitingFirstCardEnter && isFullyVisible(firstCard)) completeFirstCardEnter();
       if (state.firstCardReady) playTimeline(firstCardRive, TIMELINES.firstCardLoop, false);
+    },
+    onUpdate: () => {
+      if (state.waitingFirstCardEnter && isFullyVisible(firstCard)) completeFirstCardEnter();
     }
   });
 
   ScrollTrigger.create({
     trigger: secondCard,
-    start: 'top 70%',
+    start: 'top 88%',
     end: 'bottom 34%',
-    onEnter: () => playTimeline(secondCardRive, TIMELINES.secondCardLoop, false),
-    onEnterBack: () => playTimeline(secondCardRive, TIMELINES.secondCardLoop, false)
+    onEnter: () => {
+      runFirstToSecondTransition();
+      if (state.secondCardReady) playTimeline(secondCardRive, TIMELINES.secondCardLoop, false);
+    },
+    onEnterBack: () => {
+      if (state.secondCardReady) playTimeline(secondCardRive, TIMELINES.secondCardLoop, false);
+    }
   });
 
   window.addEventListener('resize', () => {

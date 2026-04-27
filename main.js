@@ -1824,7 +1824,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const createRiveInstance = ({ canvas, autoplay = false, timelineName }) => {
     let instance = null;
     instance = new riveRuntime.Rive({
-      src: 'omino 2.riv',
+      src: 'omino.riv',
       canvas,
       autoplay,
       animations: timelineName ? [timelineName] : [],

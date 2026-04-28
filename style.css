@@ -14321,36 +14321,6 @@ body.app-page {
   }
 }
 
-/* === Rive character integration for home timeline cards === */
-.rive-character-mobile-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 35;
-}
-
-.rive-character-mobile {
-  position: absolute;
-  width: clamp(192px, 20vw, 328px);
-  aspect-ratio: 1 / 1.68;
-  transform: translate3d(-9999px, -9999px, 0);
-  will-change: transform;
-  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.2));
-}
-
-.rive-character-card-slot {
-  width: min(100%, clamp(192px, 20vw, 328px));
-  max-width: 328px;
-  aspect-ratio: 1 / 1.68;
-}
-
-.rive-character-mobile canvas,
-.rive-character-card-slot canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 #come-funziona .timeline-steps {
   padding-top: clamp(80px, 10vh, 160px);
 }

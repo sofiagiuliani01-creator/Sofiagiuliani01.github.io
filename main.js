@@ -1904,7 +1904,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       riveInstance = new rive.Rive({
-        src: "animations/omino_def.riv",
+        src: "omino_def.riv",
         canvas: canvas,
         autoplay: false,
         animations: "traction",

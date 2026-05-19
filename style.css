@@ -14415,8 +14415,16 @@ body.app-page {
   }
 }
 
+.timeline-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  overflow: visible;
+}
+
 .rive-character-layer {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 220px;
@@ -14424,7 +14432,14 @@ body.app-page {
   z-index: 12;
   pointer-events: none;
   transform-origin: center center;
-  will-change: transform, width, height;
+  will-change: transform, width, height, opacity;
+  opacity: 1;
+  visibility: visible;
+}
+
+.rive-character-layer.is-hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .rive-character-canvas {
@@ -14434,22 +14449,9 @@ body.app-page {
   background: transparent;
 }
 
-#come-funziona {
-  position: relative;
-  overflow: visible;
-}
-
-#come-funziona .timeline-step[data-step="1"] {
-  position: relative;
-}
-
-#come-funziona .timeline-step[data-step="1"] .step-badge {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#come-funziona.rive-card-mode .timeline-step[data-step="1"] .step-badge {
+#come-funziona .timeline-step[data-step="1"].rive-slot-active [data-rive-slot-target] {
   opacity: 0;
-  transform: scale(0.8);
+  visibility: hidden;
 }
 
 @media (max-width: 900px) {

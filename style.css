@@ -14324,3 +14324,34 @@ body.app-page {
 #come-funziona .timeline-steps {
   padding-top: clamp(80px, 10vh, 160px);
 }
+
+/* Traction bridge between hero and timeline */
+.page-home .traction-rive-bridge {
+  position: relative;
+  height: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.page-home .traction-rive-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: rgba(17, 24, 39, 0.24);
+}
+.page-home .traction-rive-canvas {
+  position: absolute;
+  top: -12px;
+  left: clamp(18px, 5vw, 92px);
+  width: clamp(138px, 10.2vw, 186px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  opacity: 0;
+  transform: translateY(-24px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.page-home .traction-rive-canvas.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

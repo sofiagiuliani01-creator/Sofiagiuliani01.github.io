@@ -14368,8 +14368,8 @@ body.app-page {
   position: absolute;
   left: clamp(4rem, 12vw, 13rem);
   top: 0;
-  width: 220px;
-  height: 260px;
+  width: 320px;
+  height: 380px;
   transform: translateY(-18px);
   z-index: 8;
   pointer-events: none;
@@ -14431,8 +14431,8 @@ body.app-page {
   position: absolute;
   left: 0;
   top: 0;
-  width: 220px;
-  height: 260px;
+  width: 320px;
+  height: 380px;
   z-index: 12;
   pointer-events: none;
   transform-origin: center center;
@@ -14465,15 +14465,15 @@ body.app-page {
 
 @media (max-width: 900px) {
   .rive-character-layer {
-    width: 150px;
-    height: 180px;
+    width: 220px;
+    height: 264px;
   }
 }
 
 @media (max-width: 520px) {
   .rive-character-layer {
-    width: 120px;
-    height: 150px;
+    width: 180px;
+    height: 225px;
   }
 }
 

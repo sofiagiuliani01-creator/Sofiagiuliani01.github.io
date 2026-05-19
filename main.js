@@ -1931,6 +1931,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ScrollTrigger.create({ trigger: steps[3], start: "top 62%", onEnter: () => setPhase("card_4"), onEnterBack: () => setPhase("card_4") });
     ScrollTrigger.create({ trigger: steps[4], start: "top 82%", onEnter: () => setPhase("to_card_5"), onEnterBack: () => setPhase("to_card_5") });
     ScrollTrigger.create({ trigger: steps[4], start: "top 62%", onEnter: () => setPhase("card_5"), onEnterBack: () => setPhase("card_5") });
+    ScrollTrigger.create({ trigger: steps[4], start: "bottom 70%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("card_5") });
     if (cta) ScrollTrigger.create({ trigger: cta, start: "top 88%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("last") });
     ScrollTrigger.create({ trigger: section, start: "bottom 20%", onLeave: () => {} });
 

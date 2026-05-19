@@ -1795,12 +1795,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const riveInstance = new rive.Rive({
     src: 'omino_def.riv',
     canvas,
-    autoplay: true,
-    animations: ['traction'],
+    autoplay: false,
     onLoad: () => {
       riveInstance.resizeDrawingSurfaceToCanvas();
+
+      const animationNames = (riveInstance.animationNames || []).map((name) => String(name));
+      const preferredAnimation = animationNames.find((name) => /traction/i.test(name)) || animationNames[0] || null;
+
+      if (preferredAnimation) {
+        riveInstance.stop();
+        riveInstance.play(preferredAnimation);
+      }
+
       canvas.classList.add('is-visible');
-      riveInstance.play('traction');
     },
   });
 

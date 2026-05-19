@@ -14453,7 +14453,12 @@ body.app-page {
   background: transparent;
 }
 
-#come-funziona .timeline-step[data-step="1"].rive-slot-active [data-rive-slot-target] {
+
+.timeline-step.rive-slot-active .step-badge,
+.timeline-step.rive-slot-active .step-icon,
+.timeline-step.rive-slot-active .step-visual,
+.timeline-step.rive-slot-active .timeline-icon,
+.timeline-step.rive-slot-active .timeline-step-visual {
   opacity: 0;
   visibility: hidden;
 }

@@ -1784,7 +1784,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-(function initRiveCharacterFirstTimelineSequence() {
+(function initRiveCharacterFullTimelineSequence() {
   document.addEventListener("DOMContentLoaded", () => {
     const section = document.getElementById("come-funziona");
     const layer = document.getElementById("riveCharacterLayer");
@@ -1793,146 +1793,149 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!window.rive || !window.rive.Rive || !window.gsap || !window.ScrollTrigger) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const firstCard = section.querySelector('.timeline-step[data-step="1"]');
-    if (!firstCard) return;
-
-    const firstCardSlot =
-      section.querySelector('.timeline-step[data-step="1"] .step-visual') ||
-      section.querySelector('.timeline-step[data-step="1"] .step-icon') ||
-      section.querySelector('.timeline-step[data-step="1"] .step-badge') ||
-      section.querySelector('.timeline-step[data-step="1"] .step-illu');
-
-    if (!firstCardSlot) {
-      console.warn("Slot prima card non trovato: impossibile posizionare correttamente l’omino.");
-      layer.classList.add("is-hidden");
-      return;
-    }
-
-    firstCardSlot.setAttribute("data-rive-slot-target", "true");
+    const steps = Array.from(section.querySelectorAll(".timeline-step"));
+    const cta = section.querySelector(".timeline-cta .btn, .timeline-cta a");
+    if (steps.length < 5) return;
 
     let riveInstance = null;
     let currentAnimation = null;
     let currentPhase = null;
 
-    const getLocalRect = (el, container) => {
+    function getLocalRect(el, container) {
       if (!el || !container) return null;
       const elRect = el.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-      return {
-        left: elRect.left - containerRect.left,
-        top: elRect.top - containerRect.top,
-        width: elRect.width,
-        height: elRect.height,
-        right: elRect.right - containerRect.left,
-        bottom: elRect.bottom - containerRect.top
-      };
-    };
+      return { left: elRect.left - containerRect.left, top: elRect.top - containerRect.top, width: elRect.width, height: elRect.height, right: elRect.right - containerRect.left, bottom: elRect.bottom - containerRect.top };
+    }
 
-    const getBarAnchor = () => ({ x: Math.max(40, section.clientWidth * 0.16), y: -30 });
-    const getFirstCardTopAnchor = () => {
-      const cardRect = getLocalRect(firstCard, section);
-      return cardRect ? { x: cardRect.left + cardRect.width * 0.18, y: cardRect.top - 135 } : null;
-    };
-    const getFirstCardSlotAnchor = () => {
-      const slotRect = getLocalRect(firstCardSlot, section);
-      return slotRect ? { x: slotRect.left, y: slotRect.top } : null;
-    };
+    function getSlotForCard(card) {
+      if (!card) return null;
+      return card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge");
+    }
 
-    const showCharacter = () => layer.classList.remove("is-hidden");
-    const hideCharacter = () => layer.classList.add("is-hidden");
+    function setActiveSlotCard(index) { steps.forEach((step, i) => step.classList.toggle("rive-slot-active", i === index)); }
+    function clearActiveSlotCards() { steps.forEach((step) => step.classList.remove("rive-slot-active")); }
 
-    const playRiveTimeline = (name) => {
-      if (!riveInstance || !name || currentAnimation === name) return;
-      console.log("[RIVE] animation:", name);
-      const prev = currentAnimation;
+    function getBarAnchor() { return { x: Math.max(40, section.clientWidth * 0.16), y: -30 }; }
+    function getCardSlotAnchor(index) {
+      const card = steps[index];
+      const slot = getSlotForCard(card);
+      if (!card || !slot) { console.warn("[RIVE] Slot card non trovato:", index + 1); return null; }
+      const slotRect = getLocalRect(slot, section);
+      const point = { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 };
+      console.log("[RIVE] card slot anchor", index + 1, point);
+      return point;
+    }
+    function getAboveCardAnchor(index) {
+      const card = steps[index]; if (!card) return null;
+      const cardRect = getLocalRect(card, section);
+      return { x: cardRect.left + cardRect.width * 0.18, y: cardRect.top - layer.offsetHeight * 0.7 };
+    }
+    function getCtaAnchor() {
+      const node = section.querySelector(".timeline-cta .btn, .timeline-cta a");
+      if (!node) { console.warn("[RIVE] CTA timeline non trovata."); return null; }
+      const ctaRect = getLocalRect(node, section);
+      const point = { x: ctaRect.left + ctaRect.width * 0.5 - layer.offsetWidth * 0.5, y: ctaRect.top - layer.offsetHeight * 0.9 };
+      console.log("[RIVE] CTA anchor:", point);
+      return point;
+    }
+
+    function playRiveTimeline(name) {
+      if (!riveInstance || !name) return;
+      if (currentAnimation === name) return;
+      const previous = currentAnimation;
       currentAnimation = name;
-      try {
-        if (prev && typeof riveInstance.stop === "function") riveInstance.stop(prev);
-        riveInstance.play(name);
-      } catch (error) {
-        console.warn("Timeline Rive non riproducibile:", name, error);
-      }
-    };
+      console.log("[RIVE] animation:", name);
+      try { if (previous && typeof riveInstance.stop === "function") riveInstance.stop(previous); riveInstance.play(name); }
+      catch (error) { console.warn("[RIVE] Timeline non riproducibile:", name, error); }
+    }
 
-    const setLayerAt = (point) => { if (point) gsap.set(layer, { x: point.x, y: point.y }); };
-    const moveLayerTo = (point, vars = {}) => {
+    function showCharacter() { layer.classList.remove("is-hidden"); }
+    function hideCharacter() { layer.classList.add("is-hidden"); }
+    function setLayerAt(point) { if (!point) return; gsap.set(layer, { x: point.x, y: point.y }); try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
+    function moveLayerTo(point, vars = {}) {
       if (!point) return;
-      gsap.to(layer, {
-        x: point.x, y: point.y, duration: vars.duration ?? 0.55, ease: vars.ease ?? "power2.out", overwrite: "auto",
-        onUpdate: () => { try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
-      });
-    };
+      gsap.to(layer, { x: point.x, y: point.y, duration: vars.duration ?? 0.6, ease: vars.ease ?? "power2.inOut", overwrite: "auto", onUpdate: () => { try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} } });
+    }
 
-    const setPhase = (phase) => {
-      if (!phase) return hideCharacter();
+    const cardActions = ["card_1_action", "working_at_desk", "progress_monitor_card", "optimize_results_card", "healthy_lifestyle_card"];
+    const transitions = [null, "1_to_2", "2_to_3", "3_to_4", "4_to_5"];
+
+    function enterCard(index) {
+      const point = getCardSlotAnchor(index);
+      if (!point) { hideCharacter(); return; }
+      showCharacter(); setActiveSlotCard(index);
+      moveLayerTo(point, { duration: 0.45, ease: "power2.out" });
+      playRiveTimeline(cardActions[index]);
+    }
+
+    function transitionToCard(index) {
+      const point = getCardSlotAnchor(index);
+      const transitionTimeline = transitions[index];
+      if (!point || !transitionTimeline) { hideCharacter(); return; }
+      showCharacter(); clearActiveSlotCards(); playRiveTimeline(transitionTimeline);
+      moveLayerTo(point, { duration: 0.75, ease: "power3.inOut" });
+      window.setTimeout(() => {
+        if (currentPhase === "card_" + (index + 1)) { setActiveSlotCard(index); playRiveTimeline(cardActions[index]); }
+      }, 760);
+    }
+
+    function setPhase(phase) {
       if (currentPhase === phase) return;
       currentPhase = phase;
       console.log("[RIVE] phase:", phase);
-      console.log("[RIVE] bar anchor:", getBarAnchor());
-      console.log("[RIVE] first card top anchor:", getFirstCardTopAnchor());
-      console.log("[RIVE] first card slot anchor:", getFirstCardSlotAnchor());
 
-      if (phase === "traction") {
-        showCharacter();
-        firstCard.classList.remove("rive-slot-active");
-        setLayerAt(getBarAnchor());
-        playRiveTimeline("traction");
-      } else if (phase === "jump_1_card") {
-        showCharacter();
-        firstCard.classList.remove("rive-slot-active");
-        setLayerAt(getBarAnchor());
-        moveLayerTo(getFirstCardTopAnchor(), { duration: 0.75, ease: "power3.inOut" });
-        playRiveTimeline("jump_1_card");
-      } else if (phase === "enter_to_1_card") {
-        showCharacter();
-        moveLayerTo(getFirstCardSlotAnchor(), { duration: 0.55, ease: "power2.out" });
-        playRiveTimeline("enter_to_1_card");
-        firstCard.classList.add("rive-slot-active");
-      } else if (phase === "card_1_action") {
-        showCharacter();
-        setLayerAt(getFirstCardSlotAnchor());
-        playRiveTimeline("card_1_action");
-        firstCard.classList.add("rive-slot-active");
+      if (phase === "traction") { clearActiveSlotCards(); showCharacter(); setLayerAt(getBarAnchor()); playRiveTimeline("traction"); return; }
+      if (phase === "jump_1_card") { clearActiveSlotCards(); showCharacter(); playRiveTimeline("jump_1_card"); const target = getAboveCardAnchor(0); if (!target) return hideCharacter(); moveLayerTo(target, { duration: 0.75, ease: "power3.inOut" }); return; }
+      if (phase === "enter_to_1_card") {
+        showCharacter(); playRiveTimeline("enter_to_1_card");
+        const target = getCardSlotAnchor(0); if (!target) return hideCharacter();
+        moveLayerTo(target, { duration: 0.5, ease: "power2.out" });
+        window.setTimeout(() => { if (currentPhase === "enter_to_1_card") { setActiveSlotCard(0); playRiveTimeline("card_1_action"); currentPhase = "card_1"; } }, 520);
+        return;
       }
-    };
+      if (phase === "card_1") return enterCard(0);
+      if (phase === "to_card_2") { currentPhase = "card_2"; return transitionToCard(1); }
+      if (phase === "card_2") return enterCard(1);
+      if (phase === "to_card_3") { currentPhase = "card_3"; return transitionToCard(2); }
+      if (phase === "card_3") return enterCard(2);
+      if (phase === "to_card_4") { currentPhase = "card_4"; return transitionToCard(3); }
+      if (phase === "card_4") return enterCard(3);
+      if (phase === "to_card_5") { currentPhase = "card_5"; return transitionToCard(4); }
+      if (phase === "card_5") return enterCard(4);
+      if (phase === "last") { const target = getCtaAnchor(); if (!target) return hideCharacter(); clearActiveSlotCards(); showCharacter(); playRiveTimeline("last"); moveLayerTo(target, { duration: 0.85, ease: "power3.inOut" }); return; }
+      if (phase === "hidden") { clearActiveSlotCards(); hideCharacter(); return; }
+      clearActiveSlotCards(); hideCharacter();
+    }
+
+    function realignCurrentPhase() {
+      if (currentPhase === "traction") setLayerAt(getBarAnchor());
+      if (currentPhase === "card_1") setLayerAt(getCardSlotAnchor(0));
+      if (currentPhase === "card_2") setLayerAt(getCardSlotAnchor(1));
+      if (currentPhase === "card_3") setLayerAt(getCardSlotAnchor(2));
+      if (currentPhase === "card_4") setLayerAt(getCardSlotAnchor(3));
+      if (currentPhase === "card_5") setLayerAt(getCardSlotAnchor(4));
+      if (currentPhase === "last") setLayerAt(getCtaAnchor());
+      try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {}
+    }
 
     gsap.registerPlugin(ScrollTrigger);
-    const clearPhase = () => { currentPhase = null; hideCharacter(); firstCard.classList.remove("rive-slot-active"); };
+    ScrollTrigger.create({ trigger: section, start: "top 82%", end: "top 45%", onEnter: () => setPhase("traction"), onEnterBack: () => setPhase("traction"), onLeaveBack: () => setPhase("hidden") });
+    ScrollTrigger.create({ trigger: steps[0], start: "top 88%", onEnter: () => setPhase("jump_1_card"), onEnterBack: () => setPhase("jump_1_card") });
+    ScrollTrigger.create({ trigger: steps[0], start: "top 68%", onEnter: () => setPhase("enter_to_1_card"), onEnterBack: () => setPhase("card_1") });
+    ScrollTrigger.create({ trigger: steps[1], start: "top 82%", onEnter: () => setPhase("to_card_2"), onEnterBack: () => setPhase("to_card_2") });
+    ScrollTrigger.create({ trigger: steps[1], start: "top 62%", onEnter: () => setPhase("card_2"), onEnterBack: () => setPhase("card_2") });
+    ScrollTrigger.create({ trigger: steps[2], start: "top 82%", onEnter: () => setPhase("to_card_3"), onEnterBack: () => setPhase("to_card_3") });
+    ScrollTrigger.create({ trigger: steps[2], start: "top 62%", onEnter: () => setPhase("card_3"), onEnterBack: () => setPhase("card_3") });
+    ScrollTrigger.create({ trigger: steps[3], start: "top 82%", onEnter: () => setPhase("to_card_4"), onEnterBack: () => setPhase("to_card_4") });
+    ScrollTrigger.create({ trigger: steps[3], start: "top 62%", onEnter: () => setPhase("card_4"), onEnterBack: () => setPhase("card_4") });
+    ScrollTrigger.create({ trigger: steps[4], start: "top 82%", onEnter: () => setPhase("to_card_5"), onEnterBack: () => setPhase("to_card_5") });
+    ScrollTrigger.create({ trigger: steps[4], start: "top 62%", onEnter: () => setPhase("card_5"), onEnterBack: () => setPhase("card_5") });
+    if (cta) ScrollTrigger.create({ trigger: cta, start: "top 88%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("last") });
+    ScrollTrigger.create({ trigger: section, start: "bottom 20%", onLeave: () => {} });
 
-    ScrollTrigger.create({
-      trigger: section, start: "top 85%", end: "top 25%",
-      onEnter: () => setPhase("traction"), onEnterBack: () => setPhase("traction"), onLeaveBack: clearPhase
-    });
-    ScrollTrigger.create({
-      trigger: firstCard, start: "top 88%", end: "top 62%",
-      onEnter: () => setPhase("jump_1_card"), onEnterBack: () => setPhase("jump_1_card")
-    });
-    ScrollTrigger.create({
-      trigger: firstCard, start: "top 62%", end: "top 45%",
-      onEnter: () => setPhase("enter_to_1_card"), onEnterBack: () => setPhase("enter_to_1_card")
-    });
-    ScrollTrigger.create({
-      trigger: firstCard, start: "top 45%", end: "bottom 35%",
-      onEnter: () => setPhase("card_1_action"), onEnterBack: () => setPhase("card_1_action"), onLeave: () => setPhase("card_1_action")
-    });
+    window.addEventListener("resize", () => { ScrollTrigger.refresh(); realignCurrentPhase(); }, { passive: true });
 
-    ScrollTrigger.create({ trigger: firstCard, start: "bottom 20%", onEnter: () => hideCharacter() });
-
-    riveInstance = new rive.Rive({
-      src: "omino_def.riv", canvas, autoplay: false, animations: "traction",
-      onLoad: () => {
-        hideCharacter();
-        setLayerAt(getBarAnchor());
-        try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (e) {}
-        ScrollTrigger.refresh();
-
-        const sectionRect = section.getBoundingClientRect();
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const isSectionInTractionWindow = sectionRect.top <= viewportHeight * 0.85 && sectionRect.top >= viewportHeight * 0.25;
-        if (isSectionInTractionWindow) {
-          setPhase("traction");
-        }
-      }
-    });
+    riveInstance = new rive.Rive({ src: "omino_def.riv", canvas, autoplay: false, animations: "traction", onLoad: () => { hideCharacter(); setLayerAt(getBarAnchor()); try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (e) {} ScrollTrigger.refresh(); } });
   });
 })();

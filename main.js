@@ -1784,159 +1784,180 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-// HERO → TIMELINE: omino Rive (timeline traction)
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.querySelector('[data-traction-rive]');
-  const timelineSection = document.getElementById('come-funziona');
-
-  if (!canvas || !timelineSection || !window.rive) return;
-
-  const riveInstance = new rive.Rive({
-    src: 'omino_def.riv',
-    canvas,
-    autoplay: false,
-    onLoad: () => {
-      riveInstance.resizeDrawingSurfaceToCanvas();
-
-      const animationNames = (riveInstance.animationNames || []).map((name) => String(name));
-      const preferredAnimation = animationNames.find((name) => /traction/i.test(name)) || animationNames[0] || null;
-
-      if (preferredAnimation) {
-        riveInstance.stop();
-        riveInstance.play(preferredAnimation);
-      }
-
-      canvas.classList.add('is-visible');
-    },
-  });
-
-  if (window.gsap && window.ScrollTrigger) {
-    ScrollTrigger.create({
-      trigger: timelineSection,
-      start: 'top bottom',
-      end: 'bottom top',
-      onEnter: () => canvas.classList.add('is-visible'),
-      onEnterBack: () => canvas.classList.add('is-visible'),
-      onLeave: () => canvas.classList.remove('is-visible'),
-      onLeaveBack: () => canvas.classList.remove('is-visible'),
-    });
-  }
-
-  window.addEventListener('resize', () => {
-    riveInstance.resizeDrawingSurfaceToCanvas();
-  });
-});
-
-(function initPullupRiveTractionOnly() {
+(function initRiveCharacterFirstTimelineSequence() {
   document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("pullupRiveCanvas");
+    const layer = document.getElementById("riveCharacterLayer");
+    const canvas = document.getElementById("riveCharacterCanvas");
     const section = document.getElementById("come-funziona");
 
-    if (!canvas || !section) return;
-
+    if (!layer || !canvas || !section) return;
     if (!window.rive || !window.rive.Rive) {
-      console.warn("Rive runtime non trovato. Controlla che @rive-app/webgl2 sia caricato prima di main.js.");
+      console.warn("Rive runtime non trovato. Carica @rive-app/webgl2 prima di main.js.");
       return;
     }
+    if (!window.gsap || !window.ScrollTrigger) {
+      console.warn("GSAP/ScrollTrigger non trovati. Questa sequenza richiede ScrollTrigger.");
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const firstCard = section.querySelector('.timeline-step[data-step="1"]');
+    if (!firstCard) {
+      console.warn("Prima card timeline non trovata.");
       return;
     }
 
     let riveInstance = null;
-    let hasStarted = false;
+    let currentAnimation = null;
+    let currentPhase = null;
 
-    function playTraction() {
-      if (!riveInstance || hasStarted) return;
-      hasStarted = true;
-
+    function playRiveTimeline(name) {
+      if (!riveInstance || !name || currentAnimation === name) return;
+      console.log("[RIVE ANIMATION]", name);
+      const previous = currentAnimation;
+      currentAnimation = name;
       try {
-        riveInstance.play("traction");
+        if (previous && typeof riveInstance.stop === "function") riveInstance.stop(previous);
+        riveInstance.play(name);
       } catch (error) {
-        console.warn("Impossibile riprodurre la timeline traction:", error);
+        console.warn("Timeline Rive non riproducibile:", name, error);
       }
     }
 
-    function stopTraction() {
-      if (!riveInstance || !hasStarted) return;
-      hasStarted = false;
+    function getViewportPointForPullupBar() {
+      const sectionRect = section.getBoundingClientRect();
+      return { x: Math.max(70, window.innerWidth * 0.16), y: sectionRect.top - 18 };
+    }
 
-      try {
-        riveInstance.stop("traction");
-      } catch (error) {
-        console.warn("Impossibile fermare la timeline traction:", error);
+    function getViewportPointAboveFirstCard() {
+      const rect = firstCard.getBoundingClientRect();
+      return { x: rect.left + rect.width * 0.18, y: rect.top - 150 };
+    }
+
+    function getViewportPointInsideFirstCard() {
+      const rect = firstCard.getBoundingClientRect();
+      return { x: rect.left + 24, y: rect.top + 18 };
+    }
+
+    function refreshRiveSurface() {
+      if (!riveInstance) return;
+      try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (error) {}
+    }
+
+    function setLayerPosition(point, size = null) {
+      if (!point) return;
+      gsap.set(layer, {
+        x: point.x,
+        y: point.y,
+        width: size?.width || layer.offsetWidth,
+        height: size?.height || layer.offsetHeight
+      });
+      refreshRiveSurface();
+    }
+
+    function animateLayerTo(point, vars = {}) {
+      if (!point) return;
+      gsap.to(layer, {
+        x: point.x,
+        y: point.y,
+        duration: vars.duration ?? 0.55,
+        ease: vars.ease ?? "power2.out",
+        overwrite: "auto",
+        onUpdate: refreshRiveSurface
+      });
+    }
+
+    function setPhase(phase) {
+      if (currentPhase === phase) return;
+      currentPhase = phase;
+      console.log("[RIVE PHASE]", phase);
+
+      section.classList.remove("rive-phase-traction", "rive-phase-jump", "rive-phase-enter-card", "rive-card-mode");
+
+      if (phase === "traction") {
+        section.classList.add("rive-phase-traction");
+        setLayerPosition(getViewportPointForPullupBar());
+        playRiveTimeline("traction");
+      } else if (phase === "jump_1_card") {
+        section.classList.add("rive-phase-jump");
+        playRiveTimeline("jump_1_card");
+        animateLayerTo(getViewportPointAboveFirstCard(), { duration: 0.75, ease: "power3.inOut" });
+      } else if (phase === "enter_to_1_card") {
+        section.classList.add("rive-phase-enter-card");
+        playRiveTimeline("enter_to_1_card");
+        animateLayerTo(getViewportPointInsideFirstCard(), { duration: 0.5, ease: "power2.out" });
+        window.setTimeout(() => {
+          if (currentPhase === "enter_to_1_card") section.classList.add("rive-card-mode");
+        }, 250);
+      } else if (phase === "card_1_action") {
+        section.classList.add("rive-card-mode");
+        animateLayerTo(getViewportPointInsideFirstCard(), { duration: 0.25, ease: "power1.out" });
+        playRiveTimeline("card_1_action");
       }
     }
 
-    function setupScrollTrigger() {
-      if (window.gsap && window.ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-
-        ScrollTrigger.create({
+    function setupScrollSequence() {
+      gsap.timeline({
+        scrollTrigger: {
           trigger: section,
-          start: "top 78%",
-          end: "top 10%",
-          onEnter: playTraction,
-          onEnterBack: playTraction,
-          onLeaveBack: stopTraction
-        });
+          start: "top 82%",
+          end: () => {
+            const rect = firstCard.getBoundingClientRect();
+            const absoluteTop = rect.top + window.scrollY;
+            return "+=" + Math.max(900, absoluteTop - section.offsetTop + 600);
+          },
+          scrub: false,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            if (p < 0.25) setPhase("traction");
+            else if (p < 0.48) setPhase("jump_1_card");
+            else if (p < 0.68) setPhase("enter_to_1_card");
+            else setPhase("card_1_action");
+          },
+          onEnter: () => setPhase("traction"),
+          onEnterBack: () => setPhase("traction"),
+          onLeaveBack: () => {
+            currentPhase = null;
+            currentAnimation = null;
+            section.classList.remove("rive-phase-traction", "rive-phase-jump", "rive-phase-enter-card", "rive-card-mode");
+          }
+        }
+      });
 
-        return;
-      }
+      ScrollTrigger.addEventListener("refreshInit", () => {
+        if (currentPhase === "traction") setLayerPosition(getViewportPointForPullupBar());
+        else if (currentPhase === "jump_1_card") setLayerPosition(getViewportPointAboveFirstCard());
+        else if (currentPhase === "enter_to_1_card" || currentPhase === "card_1_action") setLayerPosition(getViewportPointInsideFirstCard());
+      });
 
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              playTraction();
-            } else {
-              stopTraction();
-            }
-          });
-        }, {
-          threshold: 0.15
-        });
-
-        observer.observe(section);
-      }
+      window.addEventListener("resize", () => {
+        ScrollTrigger.refresh();
+        refreshRiveSurface();
+      }, { passive: true });
     }
 
     try {
       riveInstance = new rive.Rive({
         src: "omino_def.riv",
-        canvas: canvas,
+        canvas,
         autoplay: false,
         animations: "traction",
         onLoad: () => {
-          try {
-            riveInstance.resizeDrawingSurfaceToCanvas();
-          } catch (error) {
-            console.warn("resizeDrawingSurfaceToCanvas fallito:", error);
-          }
-
-          setupScrollTrigger();
+          refreshRiveSurface();
+          setLayerPosition(getViewportPointForPullupBar());
+          setupScrollSequence();
         },
-        onLoadError: (error) => {
-          console.warn("Errore caricamento file Rive:", error);
-        }
+        onLoadError: (error) => console.warn("Errore caricamento file Rive:", error)
       });
     } catch (error) {
-      console.warn("Errore inizializzazione Rive traction:", error);
+      console.warn("Errore inizializzazione Rive:", error);
     }
 
-    window.addEventListener("resize", () => {
-      if (!riveInstance) return;
-
-      try {
-        riveInstance.resizeDrawingSurfaceToCanvas();
-      } catch (error) {}
-    }, { passive: true });
-
     window.addEventListener("beforeunload", () => {
-      if (riveInstance && typeof riveInstance.cleanup === "function") {
-        riveInstance.cleanup();
-      }
+      if (riveInstance && typeof riveInstance.cleanup === "function") riveInstance.cleanup();
     });
   });
 })();

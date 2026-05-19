@@ -1813,8 +1813,14 @@ window.addEventListener('DOMContentLoaded', () => {
       return card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge");
     }
 
-    function setActiveSlotCard(index) { steps.forEach((step, i) => step.classList.toggle("rive-slot-active", i === index)); }
-    function clearActiveSlotCards() { steps.forEach((step) => step.classList.remove("rive-slot-active")); }
+    function setActiveSlotCard(index) {
+      steps.forEach((step, i) => step.classList.toggle("rive-slot-active", i === index));
+      layer.classList.toggle("is-step-5", index === 4);
+    }
+    function clearActiveSlotCards() {
+      steps.forEach((step) => step.classList.remove("rive-slot-active"));
+      layer.classList.remove("is-step-5");
+    }
 
     function getBarAnchor() { return { x: Math.max(40, section.clientWidth * 0.16), y: -30 }; }
     function getCardSlotAnchor(index) {
@@ -1822,7 +1828,11 @@ window.addEventListener('DOMContentLoaded', () => {
       const slot = getSlotForCard(card);
       if (!card || !slot) { console.warn("[RIVE] Slot card non trovato:", index + 1); return null; }
       const slotRect = getLocalRect(slot, section);
-      const point = { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 };
+      const isLastCard = index === 4;
+      const point = {
+        x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isLastCard ? layer.offsetWidth * 0.06 : 0),
+        y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + (isLastCard ? -layer.offsetHeight * 0.08 : 0)
+      };
       console.log("[RIVE] card slot anchor", index + 1, point);
       return point;
     }

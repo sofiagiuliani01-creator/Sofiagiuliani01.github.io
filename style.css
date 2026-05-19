@@ -14477,6 +14477,26 @@ body.app-page {
   }
 }
 
+
+.rive-character-layer.is-step-5 {
+  width: 360px;
+  height: 420px;
+}
+
+@media (max-width: 900px) {
+  .rive-character-layer.is-step-5 {
+    width: 250px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 520px) {
+  .rive-character-layer.is-step-5 {
+    width: 210px;
+    height: 262px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rive-character-layer {
     display: none;

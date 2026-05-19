@@ -1787,41 +1787,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // HERO → TIMELINE: omino Rive (timeline traction)
 document.addEventListener('DOMContentLoaded', () => {
-  const bridge = document.querySelector('[data-traction-bridge]');
   const canvas = document.querySelector('[data-traction-rive]');
-  const hero = document.getElementById('hero-cinematic');
   const timelineSection = document.getElementById('come-funziona');
 
-  if (!bridge || !canvas || !hero || !timelineSection || !window.rive) return;
+  if (!canvas || !timelineSection || !window.rive) return;
 
   const riveInstance = new rive.Rive({
     src: 'omino_def.riv',
     canvas,
-    autoplay: false,
+    autoplay: true,
     animations: ['traction'],
     onLoad: () => {
       riveInstance.resizeDrawingSurfaceToCanvas();
+      canvas.classList.add('is-visible');
+      riveInstance.play('traction');
     },
   });
-
-  const setVisible = (visible) => {
-    canvas.classList.toggle('is-visible', visible);
-    if (visible) {
-      riveInstance.play('traction');
-    } else {
-      riveInstance.pause('traction');
-    }
-  };
 
   if (window.gsap && window.ScrollTrigger) {
     ScrollTrigger.create({
       trigger: timelineSection,
-      start: 'top bottom-=100',
-      end: 'top top+=140',
-      onEnter: () => setVisible(true),
-      onEnterBack: () => setVisible(true),
-      onLeave: () => setVisible(false),
-      onLeaveBack: () => setVisible(false),
+      start: 'top bottom',
+      end: 'bottom top',
+      onEnter: () => canvas.classList.add('is-visible'),
+      onEnterBack: () => canvas.classList.add('is-visible'),
+      onLeave: () => canvas.classList.remove('is-visible'),
+      onLeaveBack: () => canvas.classList.remove('is-visible'),
     });
   }
 

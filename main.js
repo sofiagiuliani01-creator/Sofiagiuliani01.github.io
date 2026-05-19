@@ -1925,6 +1925,13 @@ window.addEventListener('DOMContentLoaded', () => {
         setLayerAt(getBarAnchor());
         try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (e) {}
         ScrollTrigger.refresh();
+
+        const sectionRect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const isSectionInTractionWindow = sectionRect.top <= viewportHeight * 0.85 && sectionRect.top >= viewportHeight * 0.25;
+        if (isSectionInTractionWindow) {
+          setPhase("traction");
+        }
       }
     });
   });

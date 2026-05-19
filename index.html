@@ -105,6 +105,15 @@
 </section>
 <!-- STORYLINE: COME FUNZIONA -->
 <section class="section section-light" data-mobile-theme="flow" id="come-funziona">
+<div class="pullup-rive-anchor" aria-hidden="true">
+<canvas
+  id="pullupRiveCanvas"
+  class="pullup-rive-canvas"
+  width="360"
+  height="360">
+</canvas>
+</div>
+
 <div class="container-wide">
 <div class="section-header center">
 <h2>Un percorso lineare, spiegato in 5 step.</h2>
@@ -113,7 +122,6 @@
 <div class="timeline-line">
 <div class="timeline-line-base"></div>
 <div class="timeline-line-active"></div>
-<canvas class="traction-rive-canvas" data-traction-rive aria-hidden="true"></canvas>
 </div>
 <div class="timeline-steps">
 <!-- STEP 1 -->
@@ -779,6 +787,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
 <script src="https://unpkg.com/@rive-app/canvas@2.31.4"></script>
 <script src="trustpilot.js"></script>
+<script src="https://unpkg.com/@rive-app/webgl2"></script>
 <script src="main.js"></script>
 </body>
 </html>

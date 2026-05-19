@@ -14353,3 +14353,64 @@ body.app-page {
     top: -60px;
   }
 }
+
+#come-funziona {
+  position: relative;
+  overflow: visible;
+  border-top: 1px solid rgba(25, 218, 213, 0.65);
+}
+
+.pullup-rive-anchor {
+  position: absolute;
+  left: clamp(4rem, 12vw, 13rem);
+  top: 0;
+  width: 220px;
+  height: 260px;
+  transform: translateY(-18px);
+  z-index: 8;
+  pointer-events: none;
+}
+
+.pullup-rive-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+}
+
+/* Desktop grande */
+@media (min-width: 1200px) {
+  .pullup-rive-anchor {
+    left: clamp(5rem, 10vw, 12rem);
+    width: 240px;
+    height: 280px;
+    transform: translateY(-22px);
+  }
+}
+
+/* Tablet / mobile */
+@media (max-width: 900px) {
+  .pullup-rive-anchor {
+    left: 1.2rem;
+    top: 0;
+    width: 150px;
+    height: 190px;
+    transform: translateY(-12px);
+  }
+}
+
+/* Mobile piccolo */
+@media (max-width: 520px) {
+  .pullup-rive-anchor {
+    left: 0.7rem;
+    width: 120px;
+    height: 155px;
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pullup-rive-anchor {
+    display: none;
+  }
+}

@@ -1827,3 +1827,116 @@ document.addEventListener('DOMContentLoaded', () => {
     riveInstance.resizeDrawingSurfaceToCanvas();
   });
 });
+
+(function initPullupRiveTractionOnly() {
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("pullupRiveCanvas");
+    const section = document.getElementById("come-funziona");
+
+    if (!canvas || !section) return;
+
+    if (!window.rive || !window.rive.Rive) {
+      console.warn("Rive runtime non trovato. Controlla che @rive-app/webgl2 sia caricato prima di main.js.");
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let riveInstance = null;
+    let hasStarted = false;
+
+    function playTraction() {
+      if (!riveInstance || hasStarted) return;
+      hasStarted = true;
+
+      try {
+        riveInstance.play("traction");
+      } catch (error) {
+        console.warn("Impossibile riprodurre la timeline traction:", error);
+      }
+    }
+
+    function stopTraction() {
+      if (!riveInstance || !hasStarted) return;
+      hasStarted = false;
+
+      try {
+        riveInstance.stop("traction");
+      } catch (error) {
+        console.warn("Impossibile fermare la timeline traction:", error);
+      }
+    }
+
+    function setupScrollTrigger() {
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 78%",
+          end: "top 10%",
+          onEnter: playTraction,
+          onEnterBack: playTraction,
+          onLeaveBack: stopTraction
+        });
+
+        return;
+      }
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              playTraction();
+            } else {
+              stopTraction();
+            }
+          });
+        }, {
+          threshold: 0.15
+        });
+
+        observer.observe(section);
+      }
+    }
+
+    try {
+      riveInstance = new rive.Rive({
+        src: "animations/omino_def.riv",
+        canvas: canvas,
+        autoplay: false,
+        animations: "traction",
+        onLoad: () => {
+          try {
+            riveInstance.resizeDrawingSurfaceToCanvas();
+          } catch (error) {
+            console.warn("resizeDrawingSurfaceToCanvas fallito:", error);
+          }
+
+          setupScrollTrigger();
+        },
+        onLoadError: (error) => {
+          console.warn("Errore caricamento file Rive:", error);
+        }
+      });
+    } catch (error) {
+      console.warn("Errore inizializzazione Rive traction:", error);
+    }
+
+    window.addEventListener("resize", () => {
+      if (!riveInstance) return;
+
+      try {
+        riveInstance.resizeDrawingSurfaceToCanvas();
+      } catch (error) {}
+    }, { passive: true });
+
+    window.addEventListener("beforeunload", () => {
+      if (riveInstance && typeof riveInstance.cleanup === "function") {
+        riveInstance.cleanup();
+      }
+    });
+  });
+})();

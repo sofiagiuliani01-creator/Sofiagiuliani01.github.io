@@ -1920,9 +1920,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.create({ trigger: section, start: "top 82%", end: "top 45%", onEnter: () => setPhase("traction"), onEnterBack: () => setPhase("traction"), onLeaveBack: () => setPhase("hidden") });
-    ScrollTrigger.create({ trigger: steps[0], start: "top 88%", onEnter: () => setPhase("jump_1_card"), onEnterBack: () => setPhase("jump_1_card") });
-    ScrollTrigger.create({ trigger: steps[0], start: "top 68%", onEnter: () => setPhase("enter_to_1_card"), onEnterBack: () => setPhase("card_1") });
+    ScrollTrigger.create({ trigger: section, start: "top 88%", end: "top 52%", onEnter: () => setPhase("traction"), onEnterBack: () => setPhase("traction"), onLeaveBack: () => setPhase("hidden") });
+    ScrollTrigger.create({ trigger: steps[0], start: "top 72%", onEnter: () => setPhase("jump_1_card"), onEnterBack: () => setPhase("jump_1_card") });
+    ScrollTrigger.create({ trigger: steps[0], start: "top 58%", onEnter: () => setPhase("enter_to_1_card"), onEnterBack: () => setPhase("card_1") });
     ScrollTrigger.create({ trigger: steps[1], start: "top 82%", onEnter: () => setPhase("to_card_2"), onEnterBack: () => setPhase("to_card_2") });
     ScrollTrigger.create({ trigger: steps[1], start: "top 62%", onEnter: () => setPhase("card_2"), onEnterBack: () => setPhase("card_2") });
     ScrollTrigger.create({ trigger: steps[2], start: "top 82%", onEnter: () => setPhase("to_card_3"), onEnterBack: () => setPhase("to_card_3") });
@@ -1931,8 +1931,8 @@ window.addEventListener('DOMContentLoaded', () => {
     ScrollTrigger.create({ trigger: steps[3], start: "top 62%", onEnter: () => setPhase("card_4"), onEnterBack: () => setPhase("card_4") });
     ScrollTrigger.create({ trigger: steps[4], start: "top 82%", onEnter: () => setPhase("to_card_5"), onEnterBack: () => setPhase("to_card_5") });
     ScrollTrigger.create({ trigger: steps[4], start: "top 62%", onEnter: () => setPhase("card_5"), onEnterBack: () => setPhase("card_5") });
-    ScrollTrigger.create({ trigger: steps[4], start: "bottom 70%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("card_5") });
-    if (cta) ScrollTrigger.create({ trigger: cta, start: "top 88%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("last") });
+    ScrollTrigger.create({ trigger: steps[4], start: "top 48%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("card_5") });
+    if (cta) ScrollTrigger.create({ trigger: cta, start: "top 92%", onEnter: () => setPhase("last"), onEnterBack: () => setPhase("last") });
     ScrollTrigger.create({ trigger: section, start: "bottom 20%", onLeave: () => {} });
 
     window.addEventListener("resize", () => { ScrollTrigger.refresh(); realignCurrentPhase(); }, { passive: true });

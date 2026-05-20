@@ -1850,14 +1850,31 @@ window.addEventListener('DOMContentLoaded', () => {
       return point;
     }
 
+    const animationAliases = {
+      healthy_lifestyle_card: ["healthy_lifestyle_card", "healthy_lifestyle_card_dumbell", "healthy_lifestyle_card_dumbbell"],
+      traction: ["traction", "start", "intro"],
+      last: ["last", "outro", "cta"]
+    };
+
     function playRiveTimeline(name) {
       if (!riveInstance || !name) return;
       if (currentAnimation === name) return;
       const previous = currentAnimation;
+      const candidates = animationAliases[name] || [name];
+      let playedName = null;
+      for (const candidate of candidates) {
+        try {
+          if (previous && typeof riveInstance.stop === "function") riveInstance.stop(previous);
+          riveInstance.play(candidate);
+          playedName = candidate;
+          break;
+        } catch (error) {
+          console.warn("[RIVE] Timeline non riproducibile:", candidate, error);
+        }
+      }
+      if (!playedName) return;
       currentAnimation = name;
-      console.log("[RIVE] animation:", name);
-      try { if (previous && typeof riveInstance.stop === "function") riveInstance.stop(previous); riveInstance.play(name); }
-      catch (error) { console.warn("[RIVE] Timeline non riproducibile:", name, error); }
+      console.log("[RIVE] animation:", name, "→", playedName);
     }
 
     function showCharacter() { layer.classList.remove("is-hidden"); }
@@ -1947,6 +1964,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener("resize", () => { ScrollTrigger.refresh(); realignCurrentPhase(); }, { passive: true });
 
-    riveInstance = new rive.Rive({ src: "omino_def.riv", canvas, autoplay: false, animations: "traction", onLoad: () => { hideCharacter(); setLayerAt(getBarAnchor()); try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (e) {} ScrollTrigger.refresh(); } });
+    riveInstance = new rive.Rive({ src: "omino_def.riv", canvas, autoplay: false, animations: "traction", onLoad: () => { setLayerAt(getBarAnchor()); try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (e) {} ScrollTrigger.refresh(); setPhase("traction"); } });
   });
 })();

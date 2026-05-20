@@ -14329,182 +14329,47 @@ body.app-page {
   padding-top: clamp(80px, 10vh, 160px);
 }
 
-/* Traction on timeline divider */
-.page-home #come-funziona .timeline-line {
-  position: relative;
-  overflow: visible;
-}
-.page-home #come-funziona .traction-rive-canvas {
-  position: absolute;
-  left: 50%;
-  top: -74px;
-  width: clamp(132px, 9.4vw, 176px);
-  height: auto;
-  aspect-ratio: 1 / 1;
-  transform: translateX(-50%) translateY(-16px);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 4;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.page-home #come-funziona .traction-rive-canvas.is-visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-@media (max-width: 980px) {
-  .page-home #come-funziona .traction-rive-canvas {
-    width: clamp(110px, 28vw, 144px);
-    top: -60px;
-  }
-}
-
 #come-funziona {
   position: relative;
-  overflow: visible;
-  border-top: 1px solid rgba(25, 218, 213, 0.65);
+  overflow: visible !important;
 }
 
-.pullup-rive-anchor {
-  position: absolute;
-  left: clamp(4rem, 12vw, 13rem);
-  top: 0;
-  width: 320px;
-  height: 380px;
-  transform: translateY(-18px);
-  z-index: 8;
-  pointer-events: none;
-}
-
-.pullup-rive-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: transparent;
-}
-
-/* Desktop grande */
-@media (min-width: 1200px) {
-  .pullup-rive-anchor {
-    left: clamp(5rem, 10vw, 12rem);
-    width: 240px;
-    height: 280px;
-    transform: translateY(-22px);
-  }
-}
-
-/* Tablet / mobile */
-@media (max-width: 900px) {
-  .pullup-rive-anchor {
-    left: 1.2rem;
-    top: 0;
-    width: 150px;
-    height: 190px;
-    transform: translateY(-12px);
-  }
-}
-
-/* Mobile piccolo */
-@media (max-width: 520px) {
-  .pullup-rive-anchor {
-    left: 0.7rem;
-    width: 120px;
-    height: 155px;
-    transform: translateY(-8px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pullup-rive-anchor {
-    display: none;
-  }
-}
-
-.timeline-scene {
+#come-funziona .timeline-scene {
   position: absolute;
   inset: 0;
-  z-index: 12;
+  z-index: 80;
   pointer-events: none;
-  overflow: visible;
+  overflow: visible !important;
 }
 
-.rive-character-layer {
+#come-funziona .rive-character-layer {
   position: absolute;
   left: 0;
   top: 0;
-  width: 320px;
-  height: 380px;
-  z-index: 12;
+  width: 240px;
+  height: 300px;
+  z-index: 90;
   pointer-events: none;
-  transform-origin: center center;
-  will-change: transform, width, height, opacity;
   opacity: 1;
   visibility: visible;
+  transform-origin: center center;
+  will-change: transform, width, height, opacity;
+  overflow: visible !important;
 }
 
-.rive-character-layer.is-hidden {
+#come-funziona .rive-character-layer.is-hidden {
   opacity: 0;
   visibility: hidden;
 }
 
-.rive-character-canvas {
+#come-funziona .rive-character-canvas {
   width: 100%;
   height: 100%;
   display: block;
   background: transparent;
+  overflow: visible !important;
 }
 
-
-.timeline-step.rive-slot-active .step-badge,
-.timeline-step.rive-slot-active .step-icon,
-.timeline-step.rive-slot-active .step-visual,
-.timeline-step.rive-slot-active .timeline-icon,
-.timeline-step.rive-slot-active .timeline-step-visual {
-  opacity: 0;
-  visibility: hidden;
-}
-
-@media (max-width: 900px) {
-  .rive-character-layer {
-    width: 220px;
-    height: 264px;
-  }
-}
-
-@media (max-width: 520px) {
-  .rive-character-layer {
-    width: 180px;
-    height: 225px;
-  }
-}
-
-
-.rive-character-layer.is-step-5 {
-  width: 340px;
-  height: 380px;
-  outline: 2px solid red;
-  background: rgba(255, 0, 0, 0.08);
-}
-
-@media (max-width: 900px) {
-  .rive-character-layer.is-step-5 {
-    width: 250px;
-    height: 290px;
-  }
-}
-
-@media (max-width: 520px) {
-  .rive-character-layer.is-step-5 {
-    width: 220px;
-    height: 260px;
-  }
-}
-
-
-
-#come-funziona,
-#come-funziona .timeline-scene,
-#come-funziona .rive-character-layer,
-#come-funziona .rive-character-canvas,
 #come-funziona .timeline-step,
 #come-funziona .step-content,
 #come-funziona .step-row,
@@ -14512,8 +14377,42 @@ body.app-page {
   overflow: visible !important;
 }
 
+#come-funziona .timeline-step.rive-slot-active .step-visual {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#come-funziona .rive-character-layer.is-step-5 {
+  width: 340px;
+  height: 380px;
+}
+
+@media (max-width: 900px) {
+  #come-funziona .rive-character-layer {
+    width: 170px;
+    height: 215px;
+  }
+
+  #come-funziona .rive-character-layer.is-step-5 {
+    width: 250px;
+    height: 290px;
+  }
+}
+
+@media (max-width: 520px) {
+  #come-funziona .rive-character-layer {
+    width: 140px;
+    height: 180px;
+  }
+
+  #come-funziona .rive-character-layer.is-step-5 {
+    width: 220px;
+    height: 260px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .rive-character-layer {
+  #come-funziona .timeline-scene {
     display: none;
   }
 }

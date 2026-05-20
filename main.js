@@ -1884,7 +1884,7 @@ window.addEventListener('DOMContentLoaded', () => {
       gsap.to(layer, { x: point.x, y: point.y, duration: vars.duration ?? 0.6, ease: vars.ease ?? "power2.inOut", overwrite: "auto", onUpdate: () => { try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} } });
     }
 
-    const cardActions = ["card_1_action", "working_at_desk", "progress_monitor_card", "optimize_results_card", "healthy_lifestyle_card"];
+    const cardActions = ["card_1_action", "working_at_desk", "progress_monitor_card", "optimize_results_card", "last"];
     const transitions = [null, "1_to_2", "2_to_3", "3_to_4", "4_to_5"];
 
     function enterCard(index) {

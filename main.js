@@ -1838,7 +1838,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const slotRect = getLocalRect(slot, section);
       const isLastCard = index === 4;
       const point = {
-        x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isLastCard ? layer.offsetWidth * 0.06 : 0),
+        x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isLastCard ? -layer.offsetWidth * 0.10 : 0),
         y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + (isLastCard ? -layer.offsetHeight * 0.08 : 0)
       };
       console.log("[RIVE] card slot anchor", index + 1, point);
@@ -1917,7 +1917,7 @@ window.addEventListener('DOMContentLoaded', () => {
       return activeMoveTween;
     }
 
-    const cardActions = ["card_1_action", "working_at_desk", "progress_monitor_card", "optimize_results_card", "last"];
+    const cardActions = ["card_1_action", "working_at_desk", "progress_monitor_card", "optimize_results_card", "healthy_lifestyle_card"];
     const transitions = [null, "1_to_2", "2_to_3", "3_to_4", "4_to_5"];
 
     function enterCardSafe(index, token) {
@@ -1926,7 +1926,9 @@ window.addEventListener('DOMContentLoaded', () => {
       showCharacter();
       setActiveSlotCard(index);
       setLayerAt(point);
-      forceRiveTimeline(cardActions[index]);
+      const animation = cardActions[index];
+      console.log("[RIVE] enter card:", index + 1, animation);
+      forceRiveTimeline(animation);
     }
 
     function transitionToCardSafe(index, token) {

@@ -1831,6 +1831,55 @@ window.addEventListener('DOMContentLoaded', () => {
     function hideCharacter() { layer.classList.add("is-hidden"); }
     function setActiveSlotCard(index) { steps.forEach((step, i) => { step.classList.toggle("rive-slot-active", i === index); }); layer.classList.toggle("is-step-5", index === 4); try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
     function clearActiveSlotCards() { steps.forEach((step) => step.classList.remove("rive-slot-active")); layer.classList.remove("is-step-5"); }
+    function debugPlaceCharacter() {
+      showCharacter();
+      clearActiveSlotCards();
+
+      layer.classList.add("debug-visible");
+
+      gsap.set(layer, {
+        x: section.clientWidth * 0.12,
+        y: 40
+      });
+
+      try {
+        riveInstance.resizeDrawingSurfaceToCanvas();
+      } catch (e) {}
+    }
+
+    function debugPlay(name) {
+      if (!riveInstance) {
+        console.warn("[RIVE DEBUG] riveInstance non pronta");
+        return;
+      }
+
+      console.log("[RIVE DEBUG] manual play:", name);
+
+      debugPlaceCharacter();
+
+      try {
+        if (typeof riveInstance.stop === "function") {
+          riveInstance.stop();
+        }
+
+        currentAnimation = null;
+
+        // Prova 1: play normale
+        riveInstance.play(name);
+        currentAnimation = name;
+
+        console.log("[RIVE DEBUG] played:", name);
+      } catch (error) {
+        console.warn("[RIVE DEBUG] errore play:", name, error);
+      }
+    }
+
+    document.querySelectorAll("[data-rive-test]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const name = btn.getAttribute("data-rive-test");
+        debugPlay(name);
+      });
+    });
     function getBarAnchor() { return { x: Math.max(40, section.clientWidth * 0.15), y: -layer.offsetHeight * 0.78 }; }
     function getAboveCardAnchor(index) { const card = steps[index]; const rect = getLocalRect(card, section); if (!rect) return null; return { x: rect.left + rect.width * 0.16, y: rect.top - layer.offsetHeight * 0.72 }; }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; const isStep5 = index === 4; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isStep5 ? -layer.offsetWidth * 0.10 : 0), y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + (isStep5 ? -layer.offsetHeight * 0.08 : 0) }; }
@@ -1844,6 +1893,14 @@ window.addEventListener('DOMContentLoaded', () => {
     function transitionToCard(index, token) { const from = getCardSlotAnchor(index - 1); const to = getCardSlotAnchor(index); const transition = transitions[index]; if (!from || !to || !transition) { hideCharacter(); return; } showCharacter(); clearActiveSlotCards(); setLayerAt(from); console.log("[RIVE] transition to card:", index + 1, transition); forceRiveTimeline(transition); moveLayerTo(to, { duration: 0.8, ease: "power3.inOut", onComplete: () => { if (token !== phaseToken) return; setActiveSlotCard(index); forceRiveTimeline(cardActions[index]); currentPhase = "card_" + (index + 1); } }); }
 
     function setPhase(phase) {
+      console.log("[RIVE PHASE CHECK]", {
+        phase,
+        currentAnimation,
+        sectionTop: section.getBoundingClientRect().top,
+        ctaTop: cta.getBoundingClientRect().top,
+        step1Top: steps[0].getBoundingClientRect().top,
+        step5Top: steps[4].getBoundingClientRect().top
+      });
       if (currentPhase === phase) return;
       const token = beginPhase(phase);
       if (phase === "hidden") { clearActiveSlotCards(); hideCharacter(); return; }
@@ -1891,7 +1948,22 @@ window.addEventListener('DOMContentLoaded', () => {
     try {
       riveInstance = new rive.Rive({
         src: "omino_def.riv", canvas, autoplay: false, animations: ["traction"],
-        onLoad: () => { console.log("[RIVE] loaded"); try { riveInstance.resizeDrawingSurfaceToCanvas(); } catch (error) { console.warn("[RIVE] resize failed", error); } startDirector(); },
+        onLoad: () => {
+          console.log("[RIVE] loaded");
+
+          try {
+            riveInstance.resizeDrawingSurfaceToCanvas();
+          } catch (error) {
+            console.warn("[RIVE] resize failed", error);
+          }
+
+          debugPlaceCharacter();
+
+          // Test temporaneo: deve vedersi traction senza scroll.
+          debugPlay("traction");
+
+          startDirector();
+        },
         onLoadError: (error) => { console.warn("[RIVE] errore caricamento omino_def.riv", error); }
       });
     } catch (error) { console.warn("[RIVE] errore inizializzazione", error); }

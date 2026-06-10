@@ -15438,17 +15438,17 @@ body.app-page {
    PAGINA CHI SONO — scroll experience colorata
    ========================================================== */
 .page-chi-sono {
-  --about-pink: #ff4fd8;
-  --about-orange: #ff9f43;
-  --about-violet: #7c5cff;
-  --about-lime: #b8ff5c;
+  --about-pink: #19dad5;
+  --about-orange: #d4d9e7;
+  --about-violet: #0d4c4a;
+  --about-lime: #7f8597;
   --about-cyan: #19dad5;
   --about-ink: #05060a;
   --about-glass: rgba(255, 255, 255, 0.075);
   background:
-    radial-gradient(circle at 12% 8%, rgba(255, 79, 216, 0.26), transparent 26rem),
-    radial-gradient(circle at 86% 18%, rgba(25, 218, 213, 0.22), transparent 28rem),
-    linear-gradient(180deg, #070816 0%, #05060a 48%, #08051a 100%);
+    radial-gradient(circle at 12% 8%, rgba(25, 218, 213, 0.16), transparent 26rem),
+    radial-gradient(circle at 86% 18%, rgba(13, 76, 74, 0.34), transparent 30rem),
+    linear-gradient(180deg, #07111f 0%, #05060a 48%, #020309 100%);
   overflow-x: hidden;
 }
 
@@ -15480,8 +15480,8 @@ body.app-page {
   width: calc(var(--about-scroll, 0) * 100%);
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--about-cyan), var(--about-pink), var(--about-orange), var(--about-lime));
-  box-shadow: 0 0 24px rgba(255, 79, 216, 0.6);
+  background: linear-gradient(90deg, var(--accent-petrol), var(--accent-aqua), var(--accent-silver));
+  box-shadow: 0 0 22px rgba(25, 218, 213, 0.42);
 }
 
 .about-scroll-experience {
@@ -15829,17 +15829,17 @@ body.app-page {
    PAGINA CHI SONO — storytelling narrativo scroll-driven
    ========================================================== */
 .page-chi-sono {
-  --story-rose: #ff4fd8;
-  --story-amber: #ffb84d;
-  --story-cyan: #19dad5;
-  --story-violet: #7c5cff;
-  --story-lime: #b8ff5c;
+  --story-rose: #7f8597;
+  --story-amber: #d4d9e7;
+  --story-cyan: var(--accent-aqua);
+  --story-violet: var(--accent-petrol);
+  --story-lime: var(--accent-silver);
   --story-night: #04050b;
   --story-panel: rgba(255, 255, 255, 0.075);
   background:
-    radial-gradient(circle at 8% 8%, rgba(255, 79, 216, 0.24), transparent 30rem),
-    radial-gradient(circle at 92% 12%, rgba(25, 218, 213, 0.2), transparent 31rem),
-    linear-gradient(180deg, #070817 0%, #04050b 42%, #090519 100%);
+    radial-gradient(circle at 8% 8%, rgba(25, 218, 213, 0.14), transparent 30rem),
+    radial-gradient(circle at 92% 12%, rgba(13, 76, 74, 0.32), transparent 31rem),
+    linear-gradient(180deg, #07111f 0%, #04050b 42%, #020309 100%);
 }
 
 .about-story {
@@ -15864,7 +15864,7 @@ body.app-page {
   aspect-ratio: 1;
   top: 15%;
   left: -8rem;
-  background: radial-gradient(circle, rgba(255, 79, 216, 0.78), transparent 68%);
+  background: radial-gradient(circle, rgba(25, 218, 213, 0.42), transparent 68%);
 }
 
 .story-ambient-two {
@@ -15881,7 +15881,7 @@ body.app-page {
   aspect-ratio: 1;
   left: 42%;
   bottom: 10%;
-  background: radial-gradient(circle, rgba(184, 255, 92, 0.42), transparent 70%);
+  background: radial-gradient(circle, rgba(212, 217, 231, 0.24), transparent 70%);
 }
 
 .story-hero {
@@ -15930,11 +15930,11 @@ body.app-page {
   font-size: clamp(3.1rem, 8.8vw, 7.8rem);
   line-height: 0.86;
   letter-spacing: -0.075em;
-  background: linear-gradient(120deg, #ffffff 8%, #a9fffb 34%, #ffb6ef 63%, #ffe19c 92%);
+  background: linear-gradient(120deg, #ffffff 8%, #d4d9e7 38%, #19dad5 68%, #7f8597 96%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 28px 70px rgba(255, 79, 216, 0.16));
+  filter: drop-shadow(0 28px 70px rgba(25, 218, 213, 0.15));
 }
 
 .story-lead {
@@ -15973,7 +15973,7 @@ body.app-page {
   position: absolute;
   inset: -2px;
   z-index: -1;
-  background: conic-gradient(from 120deg, var(--story-cyan), var(--story-rose), var(--story-amber), var(--story-cyan));
+  background: conic-gradient(from 120deg, var(--story-cyan), var(--story-violet), var(--story-amber), var(--story-cyan));
   filter: blur(18px);
   opacity: 0.55;
 }
@@ -16060,11 +16060,10 @@ body.app-page {
 }
 
 .story-sticky {
-  position: sticky;
-  top: 0;
+  position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 7.2rem 0 4rem;
 }
 
@@ -16072,15 +16071,33 @@ body.app-page {
   display: grid;
   grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1fr);
   gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+  align-items: flex-start;
 }
 
 .story-visual {
-  position: relative;
-  min-height: min(64vh, 42rem);
+  position: sticky;
+  top: 7.2rem;
+  min-height: calc(100vh - 11.2rem);
   display: grid;
   place-items: center;
   perspective: 1000px;
+}
+
+.story-visual::before {
+  content: "";
+  position: absolute;
+  width: min(42vw, 31rem);
+  min-width: 20rem;
+  aspect-ratio: 1;
+  border-radius: 42px;
+  background:
+    linear-gradient(135deg, rgba(25, 218, 213, 0.16), rgba(13, 76, 74, 0.2)),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.018));
+  border: 1px solid rgba(25, 218, 213, 0.18);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: rotate(45deg) scale(calc(0.92 + var(--story-local-progress, 0) * 0.06));
+  opacity: 0.7;
+  transition: transform 0.45s ease, opacity 0.45s ease;
 }
 
 .story-orbit {
@@ -16091,9 +16108,9 @@ body.app-page {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.09), transparent 58%),
-    conic-gradient(from calc(var(--about-scroll, 0) * 360deg), rgba(25, 218, 213, 0.4), rgba(255, 79, 216, 0.32), rgba(255, 184, 77, 0.28), rgba(25, 218, 213, 0.4));
-  box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.06), 0 0 80px rgba(124, 92, 255, 0.18);
+    radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 58%),
+    conic-gradient(from calc(var(--about-scroll, 0) * 360deg), rgba(25, 218, 213, 0.32), rgba(13, 76, 74, 0.38), rgba(212, 217, 231, 0.18), rgba(25, 218, 213, 0.32));
+  box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.055), 0 0 80px rgba(25, 218, 213, 0.16);
   transform: rotate(calc(var(--story-active, 0) * 16deg)) scale(calc(1 + var(--story-local-progress, 0) * 0.05));
   transition: transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -16115,21 +16132,33 @@ body.app-page {
 }
 
 .story-dot-one { top: 8%; left: 50%; color: var(--story-cyan); background: currentColor; }
-.story-dot-two { right: 10%; bottom: 25%; color: var(--story-rose); background: currentColor; }
-.story-dot-three { left: 16%; bottom: 18%; color: var(--story-lime); background: currentColor; }
+.story-dot-two { right: 10%; bottom: 25%; color: var(--story-amber); background: currentColor; }
+.story-dot-three { left: 16%; bottom: 18%; color: var(--story-violet); background: currentColor; }
 
 .story-core-card {
   position: relative;
   z-index: 2;
   width: min(100%, 25rem);
   padding: clamp(1.4rem, 3.2vw, 2.2rem);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(25, 218, 213, 0.18);
   border-radius: 32px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.045));
+  background:
+    linear-gradient(145deg, rgba(7, 17, 31, 0.9), rgba(4, 5, 11, 0.74)),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035));
   backdrop-filter: blur(20px);
-  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38), 0 0 56px rgba(25, 218, 213, 0.13);
   transform: rotateY(calc((var(--story-local-progress, 0) - 0.5) * -10deg)) translateY(calc((0.5 - var(--story-local-progress, 0)) * 20px));
-  transition: transform 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.story-core-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  z-index: -1;
+  border-radius: 24px;
+  border: 1px solid rgba(212, 217, 231, 0.08);
+  background: radial-gradient(circle at 20% 0%, rgba(25, 218, 213, 0.13), transparent 58%);
 }
 
 .story-core-card h2 {
@@ -16214,9 +16243,9 @@ body.app-page {
   width: 3.15rem;
   height: 3.15rem;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(184, 255, 92, 0.42);
+  border: 1px solid rgba(25, 218, 213, 0.38);
   border-radius: 999px;
-  background: rgba(184, 255, 92, 0.075);
+  background: rgba(25, 218, 213, 0.075);
 }
 
 .story-chapter h2 {
@@ -16273,7 +16302,7 @@ body.app-page {
   inset: 0;
   pointer-events: none;
   background: radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.22), transparent 30%),
-              linear-gradient(135deg, rgba(25, 218, 213, 0.14), transparent 43%, rgba(255, 79, 216, 0.14));
+              linear-gradient(135deg, rgba(25, 218, 213, 0.14), transparent 43%, rgba(212, 217, 231, 0.1));
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -16344,9 +16373,9 @@ body.app-page {
   border-radius: 36px;
   text-align: center;
   background:
-    radial-gradient(circle at 18% 18%, rgba(184, 255, 92, 0.18), transparent 28rem),
-    radial-gradient(circle at 82% 18%, rgba(255, 79, 216, 0.22), transparent 30rem),
-    linear-gradient(135deg, rgba(25, 218, 213, 0.16), rgba(124, 92, 255, 0.14));
+    radial-gradient(circle at 18% 18%, rgba(25, 218, 213, 0.13), transparent 28rem),
+    radial-gradient(circle at 82% 18%, rgba(13, 76, 74, 0.28), transparent 30rem),
+    linear-gradient(135deg, rgba(25, 218, 213, 0.15), rgba(127, 133, 151, 0.12));
 }
 
 .story-final-card p {
@@ -16393,13 +16422,11 @@ body.app-page {
   }
 
   .story-sticky {
-    position: relative;
     padding-top: 3rem;
   }
 
   .story-visual {
     min-height: 28rem;
-    position: sticky;
     top: 92px;
     z-index: 1;
   }

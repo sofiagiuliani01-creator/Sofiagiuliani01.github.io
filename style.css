@@ -14440,3 +14440,372 @@ body.app-page {
   outline: 2px solid red;
   background: rgba(255, 0, 0, 0.08);
 }
+
+/* ==========================================================
+   PAGINA CHI SONO — layout minimal e strategia chiara
+   ========================================================== */
+
+.page-chi-sono {
+  background: #05060a;
+}
+
+.page-chi-sono .section {
+  padding: clamp(4.2rem, 8vw, 7rem) 0;
+}
+
+.about-hero {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(25, 218, 213, 0.14), transparent 30%),
+    linear-gradient(180deg, #080b14 0%, #05060a 100%);
+}
+
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.about-hero-copy h1,
+.about-split h2,
+.about-method h2,
+.about-sales h2,
+.about-fit h2,
+.about-final h2 {
+  margin: 0;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.about-hero-copy h1 {
+  max-width: 760px;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+}
+
+.about-lead {
+  max-width: 650px;
+  margin: 1.45rem 0 0;
+  color: rgba(247, 248, 252, 0.72);
+  font-size: clamp(1.02rem, 1.5vw, 1.22rem);
+  line-height: 1.75;
+}
+
+.about-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.about-proof-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  max-width: 720px;
+  margin: 3rem 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.22);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.about-proof-strip div {
+  padding: 1rem 1.2rem 1rem 0;
+}
+
+.about-proof-strip div + div {
+  padding-left: 1.2rem;
+  border-left: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.about-proof-strip dt {
+  margin-bottom: 0.35rem;
+  color: var(--accent-aqua);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.about-proof-strip dd {
+  margin: 0;
+  color: rgba(247, 248, 252, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.about-portrait-card {
+  position: relative;
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+}
+
+.about-portrait-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 24px;
+  filter: saturate(0.92) contrast(1.04);
+}
+
+.about-portrait-note {
+  position: absolute;
+  right: 1.45rem;
+  bottom: 1.45rem;
+  left: 1.45rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(5, 6, 10, 0.78);
+  backdrop-filter: blur(16px);
+}
+
+.about-portrait-note span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-aqua);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.about-portrait-note strong {
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.about-position {
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.about-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.about-split h2,
+.about-method h2,
+.about-sales h2,
+.about-fit h2,
+.about-final h2 {
+  font-size: clamp(2rem, 4.2vw, 4rem);
+}
+
+.about-text-stack {
+  display: grid;
+  gap: 1rem;
+  color: rgba(247, 248, 252, 0.72);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.about-text-stack p {
+  margin: 0;
+}
+
+.about-text-stack strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.about-method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-step-card,
+.about-sales-cards article,
+.about-fit-card {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: none;
+}
+
+.about-step-card {
+  padding: 1.45rem;
+  min-height: 230px;
+}
+
+.about-step-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(25, 218, 213, 0.38);
+  border-radius: 999px;
+  color: var(--accent-aqua);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.about-step-card h3,
+.about-sales-cards h3,
+.about-fit-card h3 {
+  margin: 0 0 0.65rem;
+  color: #ffffff;
+  font-size: 1.08rem;
+}
+
+.about-step-card p,
+.about-sales-intro p,
+.about-sales-cards p,
+.about-fit-card li,
+.about-final p {
+  color: rgba(247, 248, 252, 0.68);
+  line-height: 1.65;
+}
+
+.about-step-card p,
+.about-sales-cards p,
+.about-final p {
+  margin: 0;
+}
+
+.about-sales-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.about-sales-intro p {
+  margin: 1rem 0 1.8rem;
+  font-size: 1.02rem;
+}
+
+.about-sales-cards {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.about-sales-cards article {
+  padding: 1.35rem 1.45rem;
+  background: rgba(5, 6, 10, 0.36);
+}
+
+.about-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-fit-card {
+  padding: clamp(1.45rem, 3vw, 2rem);
+}
+
+.about-fit-card ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-fit-card li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.about-fit-card li::before {
+  position: absolute;
+  left: 0;
+  color: var(--accent-aqua);
+  font-weight: 900;
+}
+
+.about-fit-positive li::before {
+  content: "✓";
+}
+
+.about-fit-negative li::before {
+  content: "—";
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.about-final {
+  padding-top: 2rem !important;
+}
+
+.about-final-card {
+  max-width: 920px;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid rgba(25, 218, 213, 0.26);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(25, 218, 213, 0.13), rgba(255, 255, 255, 0.035) 48%),
+    rgba(255, 255, 255, 0.04);
+  text-align: center;
+}
+
+.about-final p {
+  max-width: 620px;
+  margin: 1rem auto 1.8rem;
+  font-size: 1.04rem;
+}
+
+@media (max-width: 900px) {
+  .about-hero-grid,
+  .about-split,
+  .about-sales-grid,
+  .about-fit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero-copy h1,
+  .about-split h2,
+  .about-method h2,
+  .about-sales h2,
+  .about-fit h2,
+  .about-final h2 {
+    line-height: 1.04;
+  }
+
+  .about-proof-strip,
+  .about-method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-proof-strip div,
+  .about-proof-strip div + div {
+    padding: 0.95rem 0;
+    border-left: 0;
+  }
+
+  .about-proof-strip div + div {
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .about-portrait-card {
+    max-width: 460px;
+  }
+
+  .about-step-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-hero-actions .btn,
+  .about-sales-intro .btn,
+  .about-final-card .btn {
+    width: 100%;
+  }
+
+  .about-portrait-note {
+    position: static;
+    margin-top: 0.8rem;
+  }
+}

@@ -26,12 +26,12 @@
         <ul>
 
 			<li><a href="index.html">Home</a></li>
-          <li><a href="chi-sono.html"class="active active">Chi sono</a></li>
+          <li><a href="chi-sono.html" class="active">Chi sono</a></li>
           <li><a href="index.html#come-funziona">Come funziona</a></li>
           <li><a href="index.html#programmi">Programmi</a></li>
           <li><a href="contenuti-gratuiti.html">Contenuti gratuiti</a></li>
           <li><a href="app.html">App</a></li>
-          <li><a href="consulenza.html"class="btn-nav active">Consulenza gratuita</a></li>
+          <li><a href="consulenza.html" class="btn-nav">Consulenza gratuita</a></li>
         </ul>
       </nav>
 
@@ -43,108 +43,158 @@
 
   <main>
     <!-- HERO CHI SONO -->
-    <section class="section">
-      <div class="container hero-inner" style="grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);">
-        <div class="hero-text">
+    <section class="about-hero section">
+      <div class="container about-hero-grid">
+        <div class="about-hero-copy">
           <p class="eyebrow">Chi sono</p>
-          <h1>Non ti do solo una scheda. Ti aiuto a costruire un metodo.</h1>
-          <p class="hero-subtitle">
-            Sono Leonardo, coach online specializzato nel mettere ordine in allenamento,
-            nutrizione e stile di vita di chi ha poco tempo, ma non vuole più accontentarsi.
+          <h1>Fitness coaching chiaro, sostenibile, costruito sulla tua vita.</h1>
+          <p class="about-lead">
+            Sono Leonardo Santini. Aiuto persone con giornate piene a smettere di improvvisare
+            e a seguire un piano semplice: allenamento, nutrizione e abitudini che puoi davvero mantenere.
           </p>
-          <p class="hero-subtitle">
-            Unisco approccio scientifico e pragmatismo: niente promesse impossibili,
-            ma un percorso su misura, basato sui tuoi orari, sul tuo livello e sulle
-            tue reali possibilità.
-          </p>
-          <div class="hero-actions">
-            <a href="index.html#consulenza" class="btn btn-primary">
-              Prenota una consulenza gratuita
-            </a>
-            <a href="index.html#come-funziona" class="btn btn-outline">
-              Guarda come lavoriamo
-            </a>
+
+          <div class="about-hero-actions">
+            <a href="consulenza.html" class="btn btn-primary">Prenota la consulenza gratuita</a>
+            <a href="#metodo" class="btn btn-outline">Scopri il metodo</a>
           </div>
+
+          <dl class="about-proof-strip" aria-label="Punti chiave del coaching">
+            <div>
+              <dt>01</dt>
+              <dd>Analisi prima del piano</dd>
+            </div>
+            <div>
+              <dt>02</dt>
+              <dd>Obiettivi misurabili</dd>
+            </div>
+            <div>
+              <dt>03</dt>
+              <dd>Adattamenti settimanali</dd>
+            </div>
+          </dl>
         </div>
 
-        <!-- SLOT FOTO LEONARDO -->
-        <div class="hero-media">
-          <div class="hero-photo">
-					 <img src="tua-foto-chi-sono.png" alt="Leonardo Santini">
-            <!-- <img src="tua-foto-chi-sono.jpg" alt="Leonardo Santini"> -->
+        <aside class="about-portrait-card" aria-label="Leonardo Santini">
+          <img src="tua-foto-chi-sono.png" alt="Leonardo Santini, online fitness coach">
+          <div class="about-portrait-note">
+            <span>Il mio ruolo</span>
+            <strong>Rendere il percorso più semplice da seguire, non più complicato.</strong>
           </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- POSIZIONAMENTO -->
+    <section class="about-position section-soft" aria-labelledby="posizionamento-title">
+      <div class="container about-split">
+        <div>
+          <p class="eyebrow">Perché diverso</p>
+          <h2 id="posizionamento-title">Non vendo motivazione. Costruisco un sistema.</h2>
+        </div>
+        <div class="about-text-stack">
+          <p>
+            La maggior parte delle persone non fallisce perché “non ha forza di volontà”. Fallisce perché
+            segue programmi troppo rigidi, confusi o scollegati dalla propria routine.
+          </p>
+          <p>
+            Il mio coaching parte da una domanda concreta: <strong>qual è il minimo sistema efficace
+            che ti permette di progredire senza stravolgere la tua vita?</strong>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- CARD METAL / APPROCCIO -->
-    <section class="section section-soft">
+    <!-- METODO -->
+    <section class="about-method section" id="metodo" aria-labelledby="metodo-title">
       <div class="container">
         <div class="section-header center">
-          <p class="eyebrow">Approccio</p>
-          <h2>Allenamento, nutrizione, mindset: niente è scollegato.</h2>
+          <p class="eyebrow">Metodo</p>
+          <h2 id="metodo-title">Una strategia semplice in 4 passaggi.</h2>
           <p class="section-subtitle">
-            Ti accompagno passo passo per darti struttura, chiarezza e autonomia.
+            Ogni fase ha un obiettivo preciso: togliere dubbi, creare continuità e rendere i progressi leggibili.
           </p>
         </div>
 
-        <div class="plans">
-          <article class="plan-card">
-            <h3>Metodo scientifico, linguaggio semplice</h3>
-            <p class="plan-tag">
-              Ogni scelta è basata su principi di fisiologia e allenamento della forza,
-              ma tradotta in indicazioni chiare e pratiche.
-            </p>
-            <p class="plan-note">
-              Non ti serve essere “nerd del fitness”: ti serve qualcuno che filtri
-              le informazioni per te e ti dica cosa fare, come e perché.
-            </p>
+        <div class="about-method-grid">
+          <article class="about-step-card">
+            <span>01</span>
+            <h3>Diagnosi</h3>
+            <p>Analizziamo orari, livello, storico, alimentazione, ostacoli e obiettivo reale.</p>
           </article>
-
-          <article class="plan-card">
-            <h3>Risultati misurabili, non solo sensazioni</h3>
-            <p class="plan-tag">
-              Monitoriamo carichi, progressi, feedback, foto (se vuoi) e come ti senti
-              in allenamento e nella vita di tutti i giorni.
-            </p>
-            <p class="plan-note">
-              Questo ci permette di capire se stai andando nella direzione giusta
-              e quando è il momento di alzare l’asticella o prenderti respiro.
-            </p>
+          <article class="about-step-card">
+            <span>02</span>
+            <h3>Piano essenziale</h3>
+            <p>Creiamo poche azioni chiare: cosa fare, quando farlo e come misurarlo.</p>
+          </article>
+          <article class="about-step-card">
+            <span>03</span>
+            <h3>Monitoraggio</h3>
+            <p>Controlliamo feedback, carichi, energia, aderenza e andamento nel tempo.</p>
+          </article>
+          <article class="about-step-card">
+            <span>04</span>
+            <h3>Ottimizzazione</h3>
+            <p>Aggiustiamo il piano prima che diventi troppo facile, troppo pesante o poco sostenibile.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- PER CHI È / PER CHI NON È -->
-    <section class="section section-light">
-      <div class="container">
-        <div class="section-header center">
-          <p class="eyebrow">Con chi lavoro meglio</p>
-          <h2>Il coaching funziona se facciamo squadra.</h2>
-          <p class="section-subtitle">
-            Non alleno tutti. Alleno chi è disposto a mettersi in gioco in modo onesto.
+    <!-- STRATEGIE DI VENDITA / CHIAREZZA OFFERTA -->
+    <section class="about-sales section section-soft" aria-labelledby="strategia-title">
+      <div class="container about-sales-grid">
+        <div class="about-sales-intro">
+          <p class="eyebrow">Strategia</p>
+          <h2 id="strategia-title">Prima capiamo se ha senso lavorare insieme.</h2>
+          <p>
+            La consulenza gratuita non è una chiamata motivazionale: è un filtro. Ti aiuta a capire
+            dove sei bloccato, cosa ti serve davvero e quale percorso ha più senso per te.
           </p>
+          <a href="consulenza.html" class="btn btn-primary">Voglio fare chiarezza</a>
         </div>
 
-        <div class="plans">
-          <article class="plan-card">
-            <h3>Per chi è</h3>
-            <ul class="plan-list">
-              <li>Per chi ha poco tempo ma vuole organizzarsi meglio.</li>
-              <li>Per chi è stufo di fare le cose “a caso” in palestra.</li>
-              <li>Per chi vuole capire il perché delle cose.</li>
-              <li>Per chi accetta che servano mesi, non giorni.</li>
+        <div class="about-sales-cards">
+          <article>
+            <h3>Ti ascolto</h3>
+            <p>Partiamo dalla tua situazione, non da un pacchetto predefinito.</p>
+          </article>
+          <article>
+            <h3>Ti mostro il percorso</h3>
+            <p>Capisci cosa include il coaching, quali step seguiremo e cosa mi aspetto da te.</p>
+          </article>
+          <article>
+            <h3>Decidi senza pressione</h3>
+            <p>Se c’è fit, ti propongo la soluzione più adatta. Se non c’è, te lo dico chiaramente.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIT -->
+    <section class="about-fit section" aria-labelledby="fit-title">
+      <div class="container">
+        <div class="section-header center">
+          <p class="eyebrow">Fit</p>
+          <h2 id="fit-title">È il percorso giusto se vuoi struttura, non scorciatoie.</h2>
+        </div>
+
+        <div class="about-fit-grid">
+          <article class="about-fit-card about-fit-positive">
+            <h3>Fa per te se</h3>
+            <ul>
+              <li>Vuoi allenarti con un criterio preciso.</li>
+              <li>Hai bisogno di organizzazione e responsabilità.</li>
+              <li>Vuoi migliorare corpo, performance e abitudini.</li>
+              <li>Accetti un percorso progressivo, misurabile e sostenibile.</li>
             </ul>
           </article>
-
-          <article class="plan-card">
-            <h3>Per chi non è</h3>
-            <ul class="plan-list">
-              <li>Per chi cerca “-10 kg in 2 settimane”.</li>
-              <li>Per chi vuole solo una scheda copia-incolla.</li>
-              <li>Per chi non è disposto a dare feedback sinceri.</li>
-              <li>Per chi pensa che basti il coach a fare tutto.</li>
+          <article class="about-fit-card about-fit-negative">
+            <h3>Non fa per te se</h3>
+            <ul>
+              <li>Cerchi risultati estremi in pochi giorni.</li>
+              <li>Vuoi solo una scheda copia-incolla.</li>
+              <li>Non vuoi dare feedback o monitorare nulla.</li>
+              <li>Pensi che il coach possa fare il lavoro al posto tuo.</li>
             </ul>
           </article>
         </div>
@@ -152,21 +202,14 @@
     </section>
 
     <!-- CTA FINALE -->
-    <section class="section">
-      <div class="container">
-        <div class="section-header center">
-          <p class="eyebrow">Step successivo</p>
-          <h2>Vediamo se sono il coach giusto per te.</h2>
-          <p class="section-subtitle">
-            Partiamo da una consulenza gratuita: analizziamo la tua situazione,
-            capiamo cosa ti serve davvero e decidiamo insieme se iniziare.
-          </p>
-        </div>
-        <div style="text-align:center;">
-          <a href="index.html#consulenza" class="btn btn-primary">
-            Prenota la consulenza gratuita
-          </a>
-        </div>
+    <section class="about-final section" aria-labelledby="cta-title">
+      <div class="container about-final-card">
+        <p class="eyebrow">Prossimo step</p>
+        <h2 id="cta-title">Se vuoi un piano più chiaro, partiamo da una conversazione.</h2>
+        <p>
+          In consulenza analizziamo la tua situazione e ti dico con onestà quale direzione seguire.
+        </p>
+        <a href="consulenza.html" class="btn btn-primary">Prenota la consulenza gratuita</a>
       </div>
     </section>
   </main>

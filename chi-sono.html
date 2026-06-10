@@ -41,97 +41,141 @@
     </div>
   </header>
 
-  <main>
+  <div class="about-scroll-progress" aria-hidden="true"><span></span></div>
+
+  <main class="about-scroll-experience">
+    <div class="about-bg-orb about-bg-orb-one" aria-hidden="true"></div>
+    <div class="about-bg-orb about-bg-orb-two" aria-hidden="true"></div>
+
     <!-- HERO CHI SONO -->
-    <section class="about-hero section">
+    <section class="about-hero section about-panel" data-about-reveal>
       <div class="container about-hero-grid">
         <div class="about-hero-copy">
           <p class="eyebrow">Chi sono</p>
-          <h1>Fitness coaching chiaro, sostenibile, costruito sulla tua vita.</h1>
+          <h1>Trasformo confusione, energia e obiettivi in un percorso fitness che senti tuo.</h1>
           <p class="about-lead">
-            Sono Leonardo Santini. Aiuto persone con giornate piene a smettere di improvvisare
-            e a seguire un piano semplice: allenamento, nutrizione e abitudini che puoi davvero mantenere.
+            Sono Leonardo Santini: porto competenza tecnica, ascolto e strategia nel coaching online.
+            Creo piani di allenamento, nutrizione e abitudini che si incastrano nella tua vita reale,
+            senza estremismi e senza schede copia-incolla.
           </p>
+
+          <div class="about-skill-pills" aria-label="Competenze principali">
+            <span>Allenamento intelligente</span>
+            <span>Nutrizione sostenibile</span>
+            <span>Mindset pratico</span>
+          </div>
 
           <div class="about-hero-actions">
             <a href="consulenza.html" class="btn btn-primary">Prenota la consulenza gratuita</a>
-            <a href="#metodo" class="btn btn-outline">Scopri il metodo</a>
+            <a href="#metodo" class="btn btn-outline">Scorri l'esperienza</a>
           </div>
 
           <dl class="about-proof-strip" aria-label="Punti chiave del coaching">
             <div>
               <dt>01</dt>
-              <dd>Analisi prima del piano</dd>
+              <dd>Analisi completa prima del piano</dd>
             </div>
             <div>
               <dt>02</dt>
-              <dd>Obiettivi misurabili</dd>
+              <dd>Obiettivi misurabili e motivanti</dd>
             </div>
             <div>
               <dt>03</dt>
-              <dd>Adattamenti settimanali</dd>
+              <dd>Check e adattamenti continui</dd>
             </div>
           </dl>
         </div>
 
-        <aside class="about-portrait-card" aria-label="Leonardo Santini">
+        <aside class="about-portrait-card" aria-label="Leonardo Santini" data-about-float>
+          <span class="about-card-glow" aria-hidden="true"></span>
           <img src="tua-foto-chi-sono.png" alt="Leonardo Santini, online fitness coach">
           <div class="about-portrait-note">
-            <span>Il mio ruolo</span>
-            <strong>Rendere il percorso più semplice da seguire, non più complicato.</strong>
+            <span>La mia competenza</span>
+            <strong>Tradurre metodo, dati e feedback in azioni semplici da seguire ogni settimana.</strong>
           </div>
         </aside>
       </div>
     </section>
 
     <!-- POSIZIONAMENTO -->
-    <section class="about-position section-soft" aria-labelledby="posizionamento-title">
+    <section class="about-position section-soft about-panel" aria-labelledby="posizionamento-title" data-about-reveal>
       <div class="container about-split">
         <div>
-          <p class="eyebrow">Perché diverso</p>
-          <h2 id="posizionamento-title">Non vendo motivazione. Costruisco un sistema.</h2>
+          <p class="eyebrow">Energia giovane, metodo serio</p>
+          <h2 id="posizionamento-title">Non ti chiedo di diventare un'altra persona. Costruiamo il tuo ritmo.</h2>
         </div>
         <div class="about-text-stack">
           <p>
-            La maggior parte delle persone non fallisce perché “non ha forza di volontà”. Fallisce perché
-            segue programmi troppo rigidi, confusi o scollegati dalla propria routine.
+            La maggior parte delle persone non fallisce perché manca di forza di volontà: fallisce perché
+            prova a copiare routine impossibili, troppo rigide o lontane dalla propria quotidianità.
           </p>
           <p>
-            Il mio coaching parte da una domanda concreta: <strong>qual è il minimo sistema efficace
-            che ti permette di progredire senza stravolgere la tua vita?</strong>
+            Il mio lavoro è unire <strong>competenza, semplicità e responsabilità</strong>: capiamo dove sei,
+            scegliamo le leve più importanti e trasformiamo il percorso in una sequenza di micro-vittorie.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- COMPETENZE -->
+    <section class="about-competence section about-panel" aria-labelledby="competence-title" data-about-reveal>
+      <div class="container">
+        <div class="section-header center">
+          <p class="eyebrow">Competenze</p>
+          <h2 id="competence-title">Coloro il percorso con tre pilastri concreti.</h2>
+          <p class="section-subtitle">
+            Niente formule magiche: uso strumenti chiari per farti capire cosa stai facendo, perché lo fai
+            e come migliorare senza bruciarti.
+          </p>
+        </div>
+        <div class="about-competence-grid">
+          <article class="about-neon-card">
+            <span>01</span>
+            <h3>Tecnica di allenamento</h3>
+            <p>Progressioni, carichi, recuperi e selezione esercizi pensati per il tuo livello e il tuo tempo.</p>
+          </article>
+          <article class="about-neon-card">
+            <span>02</span>
+            <h3>Educazione alimentare</h3>
+            <p>Linee guida pratiche, sostenibili e leggibili, così sai scegliere anche fuori dalla “giornata perfetta”.</p>
+          </article>
+          <article class="about-neon-card">
+            <span>03</span>
+            <h3>Coaching e aderenza</h3>
+            <p>Feedback, check e aggiustamenti per restare costante quando lavoro, studio o vita si fanno intensi.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- METODO -->
-    <section class="about-method section" id="metodo" aria-labelledby="metodo-title">
+    <section class="about-method section" id="metodo" aria-labelledby="metodo-title" data-about-reveal>
       <div class="container">
         <div class="section-header center">
           <p class="eyebrow">Metodo</p>
-          <h2 id="metodo-title">Una strategia semplice in 4 passaggi.</h2>
+          <h2 id="metodo-title">Una scroll experience in 4 step: parti, provi, misuri, evolvi.</h2>
           <p class="section-subtitle">
-            Ogni fase ha un obiettivo preciso: togliere dubbi, creare continuità e rendere i progressi leggibili.
+            Ogni fase è una tappa: togliamo dubbi, creiamo continuità e rendiamo i progressi visibili.
           </p>
         </div>
 
         <div class="about-method-grid">
-          <article class="about-step-card">
+          <article class="about-step-card" data-about-reveal>
             <span>01</span>
             <h3>Diagnosi</h3>
             <p>Analizziamo orari, livello, storico, alimentazione, ostacoli e obiettivo reale.</p>
           </article>
-          <article class="about-step-card">
+          <article class="about-step-card" data-about-reveal>
             <span>02</span>
             <h3>Piano essenziale</h3>
             <p>Creiamo poche azioni chiare: cosa fare, quando farlo e come misurarlo.</p>
           </article>
-          <article class="about-step-card">
+          <article class="about-step-card" data-about-reveal>
             <span>03</span>
             <h3>Monitoraggio</h3>
             <p>Controlliamo feedback, carichi, energia, aderenza e andamento nel tempo.</p>
           </article>
-          <article class="about-step-card">
+          <article class="about-step-card" data-about-reveal>
             <span>04</span>
             <h3>Ottimizzazione</h3>
             <p>Aggiustiamo il piano prima che diventi troppo facile, troppo pesante o poco sostenibile.</p>
@@ -141,45 +185,45 @@
     </section>
 
     <!-- STRATEGIE DI VENDITA / CHIAREZZA OFFERTA -->
-    <section class="about-sales section section-soft" aria-labelledby="strategia-title">
+    <section class="about-sales section section-soft about-panel" aria-labelledby="strategia-title" data-about-reveal>
       <div class="container about-sales-grid">
         <div class="about-sales-intro">
           <p class="eyebrow">Strategia</p>
-          <h2 id="strategia-title">Prima capiamo se ha senso lavorare insieme.</h2>
+          <h2 id="strategia-title">Prima accendiamo la chiarezza, poi decidiamo la strada.</h2>
           <p>
-            La consulenza gratuita non è una chiamata motivazionale: è un filtro. Ti aiuta a capire
+            La consulenza gratuita non è una chiamata motivazionale: è un filtro concreto. Ti aiuta a capire
             dove sei bloccato, cosa ti serve davvero e quale percorso ha più senso per te.
           </p>
           <a href="consulenza.html" class="btn btn-primary">Voglio fare chiarezza</a>
         </div>
 
         <div class="about-sales-cards">
-          <article>
+          <article data-about-reveal>
             <h3>Ti ascolto</h3>
             <p>Partiamo dalla tua situazione, non da un pacchetto predefinito.</p>
           </article>
-          <article>
+          <article data-about-reveal>
             <h3>Ti mostro il percorso</h3>
             <p>Capisci cosa include il coaching, quali step seguiremo e cosa mi aspetto da te.</p>
           </article>
-          <article>
+          <article data-about-reveal>
             <h3>Decidi senza pressione</h3>
-            <p>Se c’è fit, ti propongo la soluzione più adatta. Se non c’è, te lo dico chiaramente.</p>
+            <p>Se c'è fit, ti propongo la soluzione più adatta. Se non c'è, te lo dico chiaramente.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- FIT -->
-    <section class="about-fit section" aria-labelledby="fit-title">
+    <section class="about-fit section about-panel" aria-labelledby="fit-title" data-about-reveal>
       <div class="container">
         <div class="section-header center">
           <p class="eyebrow">Fit</p>
-          <h2 id="fit-title">È il percorso giusto se vuoi struttura, non scorciatoie.</h2>
+          <h2 id="fit-title">È il percorso giusto se vuoi sentirti guidato, non ingabbiato.</h2>
         </div>
 
         <div class="about-fit-grid">
-          <article class="about-fit-card about-fit-positive">
+          <article class="about-fit-card about-fit-positive" data-about-reveal>
             <h3>Fa per te se</h3>
             <ul>
               <li>Vuoi allenarti con un criterio preciso.</li>
@@ -188,7 +232,7 @@
               <li>Accetti un percorso progressivo, misurabile e sostenibile.</li>
             </ul>
           </article>
-          <article class="about-fit-card about-fit-negative">
+          <article class="about-fit-card about-fit-negative" data-about-reveal>
             <h3>Non fa per te se</h3>
             <ul>
               <li>Cerchi risultati estremi in pochi giorni.</li>
@@ -202,10 +246,10 @@
     </section>
 
     <!-- CTA FINALE -->
-    <section class="about-final section" aria-labelledby="cta-title">
+    <section class="about-final section" aria-labelledby="cta-title" data-about-reveal>
       <div class="container about-final-card">
         <p class="eyebrow">Prossimo step</p>
-        <h2 id="cta-title">Se vuoi un piano più chiaro, partiamo da una conversazione.</h2>
+        <h2 id="cta-title">Se vuoi un piano più colorato, chiaro e sostenibile, partiamo da una conversazione.</h2>
         <p>
           In consulenza analizziamo la tua situazione e ti dico con onestà quale direzione seguire.
         </p>

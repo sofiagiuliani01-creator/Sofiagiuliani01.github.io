@@ -1970,3 +1970,43 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 })();
 ;
+
+// CHI SONO: esperienza di scroll colorata + reveal animations
+(() => {
+  const page = document.querySelector('.page-chi-sono');
+  if (!page) return;
+
+  const updateAboutScroll = () => {
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    page.style.setProperty('--about-scroll', progress.toFixed(4));
+  };
+
+  updateAboutScroll();
+  window.addEventListener('scroll', updateAboutScroll, { passive: true });
+  window.addEventListener('resize', updateAboutScroll);
+
+  const revealItems = Array.from(document.querySelectorAll('[data-about-reveal]'));
+  if (!revealItems.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: '0px 0px -8% 0px',
+    }
+  );
+
+  revealItems.forEach((item) => observer.observe(item));
+})();

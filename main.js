@@ -1971,20 +1971,79 @@ window.addEventListener('DOMContentLoaded', () => {
 })();
 ;
 
-// CHI SONO: esperienza di scroll colorata + reveal animations
+// CHI SONO: storytelling narrativo guidato dallo scroll
 (() => {
   const page = document.querySelector('.page-chi-sono');
   if (!page) return;
 
+  const story = document.querySelector('[data-about-story]');
+  const chapters = Array.from(document.querySelectorAll('[data-story-chapter]'));
+  const storyTitle = document.querySelector('[data-story-title]');
+  const storyCaption = document.querySelector('[data-story-caption]');
+  const storyMetricMain = document.querySelector('[data-story-metric-main]');
+  const storyMetricFocus = document.querySelector('[data-story-metric-focus]');
+  let activeChapterIndex = -1;
+  let ticking = false;
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  const setActiveChapter = (index) => {
+    if (!chapters.length || index === activeChapterIndex) return;
+    activeChapterIndex = index;
+    const activeChapter = chapters[index];
+
+    page.style.setProperty('--story-active', String(index));
+    chapters.forEach((chapter, chapterIndex) => {
+      chapter.classList.toggle('is-active', chapterIndex === index);
+    });
+
+    if (storyTitle) storyTitle.textContent = activeChapter.dataset.title || activeChapter.querySelector('h2')?.textContent || '';
+    if (storyCaption) storyCaption.textContent = activeChapter.dataset.caption || '';
+    if (storyMetricMain) storyMetricMain.textContent = String(index + 1).padStart(2, '0');
+    if (storyMetricFocus) storyMetricFocus.textContent = activeChapter.dataset.focus || 'Focus';
+  };
+
   const updateAboutScroll = () => {
     const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
-    page.style.setProperty('--about-scroll', progress.toFixed(4));
+    const globalProgress = clamp(window.scrollY / maxScroll);
+    page.style.setProperty('--about-scroll', globalProgress.toFixed(4));
+
+    if (story && chapters.length) {
+      const viewportAnchor = window.innerHeight * 0.52;
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+      let activeLocalProgress = 0;
+
+      chapters.forEach((chapter, index) => {
+        const rect = chapter.getBoundingClientRect();
+        const chapterProgress = clamp((viewportAnchor - rect.top) / Math.max(1, rect.height));
+        chapter.style.setProperty('--chapter-progress', chapterProgress.toFixed(4));
+
+        const chapterCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(chapterCenter - viewportAnchor);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+          activeLocalProgress = chapterProgress;
+        }
+      });
+
+      page.style.setProperty('--story-local-progress', activeLocalProgress.toFixed(4));
+      setActiveChapter(nearestIndex);
+    }
+
+    ticking = false;
+  };
+
+  const requestScrollUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateAboutScroll);
   };
 
   updateAboutScroll();
-  window.addEventListener('scroll', updateAboutScroll, { passive: true });
-  window.addEventListener('resize', updateAboutScroll);
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+  window.addEventListener('resize', requestScrollUpdate);
 
   const revealItems = Array.from(document.querySelectorAll('[data-about-reveal]'));
   if (!revealItems.length) return;
@@ -2003,7 +2062,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     },
     {
-      threshold: 0.16,
+      threshold: 0.14,
       rootMargin: '0px 0px -8% 0px',
     }
   );

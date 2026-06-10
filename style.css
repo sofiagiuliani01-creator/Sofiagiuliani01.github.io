@@ -15212,3 +15212,213 @@ body.app-page {
     max-width: 86%;
   }
 }
+
+/* ================= Consulenza: funnel semplificato ================= */
+.page-consulenza .consulenza-hero-focused {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.78fr);
+  gap: 2.4rem;
+  align-items: center;
+}
+
+.page-consulenza .consulenza-hero-copy h1 {
+  max-width: 780px;
+}
+
+.page-consulenza .consulenza-hero-actions {
+  display: flex;
+}
+
+.page-consulenza .consulenza-proof-list {
+  list-style: none;
+  padding: 0;
+}
+
+.page-consulenza .consulenza-proof-list li {
+  border: 1px solid rgba(25, 218, 213, 0.35);
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 999px;
+  color: #e5f9f8;
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 0.48rem 0.8rem;
+}
+
+.page-consulenza .consult-quick-card,
+.page-consulenza .consult-booking-card {
+  background: linear-gradient(150deg, #ffffff 0%, #eef3f8 100%);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 28px;
+  box-shadow:
+    0 28px 76px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+}
+
+.page-consulenza .consult-quick-card {
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.page-consulenza .consult-quick-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: linear-gradient(90deg, #0d4c4a, #19dad5);
+}
+
+.page-consulenza .consult-quick-card h2,
+.page-consulenza .consult-booking-card h2 {
+  color: #07111f;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  margin: 0 0 1.2rem;
+}
+
+.page-consulenza .consult-quick-points {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.page-consulenza .consult-quick-points div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.9rem;
+  border-radius: 18px;
+  background: rgba(13, 76, 74, 0.07);
+  border: 1px solid rgba(13, 148, 136, 0.18);
+}
+
+.page-consulenza .consult-quick-points strong,
+.page-consulenza .consult-process-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0d4c4a, #19dad5);
+  color: #021013;
+  font-weight: 900;
+}
+
+.page-consulenza .consult-quick-points span {
+  color: #334155;
+  line-height: 1.45;
+}
+
+.page-consulenza .consulenza-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.page-consulenza .consulenza-fit-grid .consult-card-light {
+  padding: 1.45rem;
+}
+
+.page-consulenza .consulenza-process-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.page-consulenza .consult-process-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.page-consulenza .consult-process-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.24);
+}
+
+.page-consulenza .consult-process-item h3 {
+  margin: 0 0 0.35rem;
+  color: #f8fafc;
+}
+
+.page-consulenza .consult-process-item p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.55;
+}
+
+.page-consulenza .consult-booking-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.45fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2rem;
+}
+
+.page-consulenza .consult-booking-copy p,
+.page-consulenza .consult-booking-action p {
+  color: #475569;
+  line-height: 1.65;
+}
+
+.page-consulenza .consult-booking-copy > p {
+  margin: 0 0 1.1rem;
+}
+
+.page-consulenza .consult-booking-action {
+  padding: 1.2rem;
+  border-radius: 22px;
+  background: #07111f;
+  color: #f8fafc;
+  text-align: center;
+}
+
+.page-consulenza .consult-booking-action p {
+  margin: 0.85rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.92rem;
+}
+
+.page-consulenza .consult-time-badge {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(25, 218, 213, 0.13);
+  color: #67fff6;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .page-consulenza .consulenza-hero-focused,
+  .page-consulenza .consulenza-process-layout,
+  .page-consulenza .consult-booking-card {
+    grid-template-columns: 1fr;
+  }
+
+  .page-consulenza .consulenza-fit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-consulenza .consulenza-hero-actions,
+  .page-consulenza .consulenza-hero-actions .btn,
+  .page-consulenza .consult-booking-action .btn {
+    width: 100%;
+  }
+
+  .page-consulenza .consult-quick-card,
+  .page-consulenza .consult-booking-card {
+    padding: 1.35rem;
+  }
+}

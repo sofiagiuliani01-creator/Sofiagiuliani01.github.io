@@ -15422,3 +15422,14 @@ body.app-page {
     padding: 1.35rem;
   }
 }
+
+/* ================= Consulenza: CTA timeline dinamica ripristinata ================= */
+.page-consulenza .consulenza-stepper-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.page-consulenza .consulenza-stepper-cta .btn {
+  min-width: min(100%, 280px);
+}

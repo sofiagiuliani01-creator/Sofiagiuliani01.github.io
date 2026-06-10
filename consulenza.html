@@ -118,40 +118,86 @@
       </div>
     </section>
 
-    <!-- SEZIONE: COSA SUCCEDE -->
-    <section class="section consulenza-offer-section consulenza-simple-process">
-      <div class="container consulenza-process-layout">
-        <div class="section-header consulenza-left-header">
-          <p class="eyebrow">Come funziona</p>
-          <h2>Tre passaggi. Un’unica azione richiesta: lasciare la richiesta.</h2>
-          <p class="section-subtitle">
-            Ho tolto tutti i passaggi superflui: ti basta scrivermi le informazioni essenziali, poi ti ricontatto io.
-          </p>
-          <a href="#booking" class="btn btn-primary">Voglio essere ricontattato</a>
-        </div>
+    <!-- COME FUNZIONA LA CONSULENZA (TIMELINE DINAMICA) -->
+    <section id="consulenza-stepper-section" class="section section-light consulenza-stepper-section">
+      <div class="container">
+        <div class="consulenza-stepper-pin">
+          <div class="section-header center">
+            <p class="eyebrow">Come funziona</p>
+            <h2>La consulenza gratuita in 5 step chiari.</h2>
+            <p class="section-subtitle">
+              Manteniamo la pagina semplice, ma con una timeline dinamica: scorri e vedi accendersi
+              il percorso esatto dalla richiesta alla decisione finale.
+            </p>
+          </div>
 
-        <div class="consult-process-list">
-          <article class="consult-process-item">
-            <span>01</span>
-            <div>
-              <h3>Compili il form</h3>
-              <p>Nome, email, obiettivo e cosa ti sta bloccando ora.</p>
+          <div class="consulenza-stepper" data-consulenza-stepper>
+            <div class="consulenza-stepper-line" aria-hidden="true">
+              <div class="consulenza-stepper-line-base"></div>
+              <div class="consulenza-stepper-line-active"></div>
             </div>
-          </article>
-          <article class="consult-process-item">
-            <span>02</span>
-            <div>
-              <h3>Ti rispondo personalmente</h3>
-              <p>Se posso aiutarti, fissiamo giorno e orario della call online.</p>
+
+            <div class="consulenza-stepper-steps">
+              <article class="consulenza-stepper-step" data-step="1">
+                <div class="consulenza-step-image">
+                  <img src="anamnesi.png" alt="Mini anamnesi">
+                </div>
+                <div class="consulenza-step-bullet">01</div>
+                <div class="consulenza-step-info">
+                  <h3>Compili il form</h3>
+                  <p>Mi lasci nome, email, obiettivo e il blocco principale che vuoi risolvere.</p>
+                </div>
+              </article>
+
+              <article class="consulenza-stepper-step" data-step="2">
+                <div class="consulenza-step-image">
+                  <img src="analisi.png" alt="Analisi della situazione">
+                </div>
+                <div class="consulenza-step-bullet">02</div>
+                <div class="consulenza-step-info">
+                  <h3>Ti rispondo personalmente</h3>
+                  <p>Leggo la richiesta e capisco se posso aiutarti davvero prima di fissare la call.</p>
+                </div>
+              </article>
+
+              <article class="consulenza-stepper-step" data-step="3">
+                <div class="consulenza-step-image">
+                  <img src="progetto.png" alt="Progetto del percorso">
+                </div>
+                <div class="consulenza-step-bullet">03</div>
+                <div class="consulenza-step-info">
+                  <h3>Analizziamo il punto di partenza</h3>
+                  <p>Durante la call mettiamo ordine tra routine, allenamento, alimentazione e difficoltà.</p>
+                </div>
+              </article>
+
+              <article class="consulenza-stepper-step" data-step="4">
+                <div class="consulenza-step-image">
+                  <img src="lavoro.png" alt="Priorità di lavoro">
+                </div>
+                <div class="consulenza-step-bullet">04</div>
+                <div class="consulenza-step-info">
+                  <h3>Definiamo le priorità</h3>
+                  <p>Esci con le prime azioni sensate per i prossimi 14 giorni, senza teoria inutile.</p>
+                </div>
+              </article>
+
+              <article class="consulenza-stepper-step" data-step="5">
+                <div class="consulenza-step-image">
+                  <img src="partire.png" alt="Decisione finale">
+                </div>
+                <div class="consulenza-step-bullet">05</div>
+                <div class="consulenza-step-info">
+                  <h3>Decidiamo se partire</h3>
+                  <p>Se un coaching ha senso te lo spiego; se non è il momento giusto, te lo dico lo stesso.</p>
+                </div>
+              </article>
             </div>
-          </article>
-          <article class="consult-process-item">
-            <span>03</span>
-            <div>
-              <h3>Esci con una direzione</h3>
-              <p>Saprai quali priorità seguire e se un coaching su misura ha senso per te.</p>
-            </div>
-          </article>
+          </div>
+
+          <div class="consulenza-stepper-cta">
+            <a href="#booking" class="btn btn-primary">Voglio essere ricontattato</a>
+          </div>
         </div>
       </div>
     </section>

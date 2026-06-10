@@ -14809,3 +14809,406 @@ body.app-page {
     margin-top: 0.8rem;
   }
 }
+
+/* ==========================
+   CONSULENZA GRATUITA – SALES PAGE REFRESH
+   ========================== */
+.page-consulenza {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(25, 218, 213, 0.16), transparent 34rem),
+    radial-gradient(circle at 92% 18%, rgba(212, 217, 231, 0.10), transparent 30rem),
+    #020309;
+}
+
+.page-consulenza .consulenza-sales-hero {
+  padding: 5.5rem 0 4rem;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(25, 218, 213, 0.22), transparent 34rem),
+    linear-gradient(180deg, #070b14 0%, #020309 100%);
+}
+
+.page-consulenza .consulenza-hero-inner {
+  grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.8fr);
+  gap: 3rem;
+  align-items: center;
+  transform: none;
+}
+
+.page-consulenza .consulenza-hero-copy {
+  max-width: 680px;
+}
+
+.page-consulenza .consulenza-hero-copy h1 {
+  max-width: 760px;
+  font-size: clamp(2.45rem, 5vw, 4.8rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  margin-bottom: 1.2rem;
+}
+
+.page-consulenza .consulenza-hero-copy .hero-subtitle {
+  max-width: 650px;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+}
+
+.page-consulenza .consulenza-hero-actions {
+  flex-direction: row;
+  gap: 0.9rem;
+  margin-top: 1.7rem;
+}
+
+.page-consulenza .consulenza-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+}
+
+.page-consulenza .consulenza-proof-row span {
+  border: 1px solid rgba(25, 218, 213, 0.35);
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 999px;
+  color: #e5f9f8;
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 0.48rem 0.8rem;
+}
+
+.page-consulenza .consulenza-hero-panel {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+}
+
+.page-consulenza .consulenza-hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(25, 218, 213, 0.24), transparent 68%);
+  filter: blur(20px);
+}
+
+.page-consulenza .consult-card-light,
+.page-consulenza .consult-benefit-card,
+.page-consulenza .consult-compare-card,
+.page-consulenza .consult-final-card {
+  background: linear-gradient(150deg, #ffffff 0%, #eef3f8 100%);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 24px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+}
+
+.page-consulenza .consult-card-main {
+  padding: 2rem;
+}
+
+.page-consulenza .consult-card-kicker {
+  color: #0d9488;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  margin: 0 0 0.55rem;
+  text-transform: uppercase;
+}
+
+.page-consulenza .consult-card-main h2,
+.page-consulenza .consult-final-card h2 {
+  color: #07111f;
+  font-size: clamp(1.8rem, 3vw, 2.55rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  margin: 0 0 1rem;
+}
+
+.page-consulenza .consult-checklist,
+.page-consulenza .consult-compare-card ul {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-consulenza .consult-checklist li,
+.page-consulenza .consult-compare-card li {
+  position: relative;
+  color: #334155;
+  line-height: 1.55;
+  padding-left: 1.55rem;
+}
+
+.page-consulenza .consult-checklist li::before,
+.page-consulenza .consult-compare-card li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #0d9488;
+  font-weight: 900;
+}
+
+.page-consulenza .consult-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.page-consulenza .consult-mini-card {
+  min-height: 126px;
+  padding: 1.2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  color: #f8fafc;
+}
+
+.page-consulenza .consult-mini-card strong {
+  display: block;
+  color: #67fff6;
+  font-size: 1.05rem;
+  margin-bottom: 0.45rem;
+}
+
+.page-consulenza .consult-mini-card span {
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.page-consulenza .consulenza-dark-section,
+.page-consulenza .consulenza-comparison-section {
+  background:
+    linear-gradient(180deg, rgba(2, 3, 9, 0.96), rgba(7, 11, 20, 0.98)),
+    radial-gradient(circle at top right, rgba(25, 218, 213, 0.12), transparent 28rem);
+}
+
+.page-consulenza .consulenza-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+  gap: 2.1rem;
+  align-items: start;
+}
+
+.page-consulenza .consulenza-left-header {
+  position: sticky;
+  top: 118px;
+  margin-bottom: 0;
+}
+
+.page-consulenza .consulenza-left-header h2,
+.page-consulenza .section-header h2 {
+  letter-spacing: -0.045em;
+}
+
+.page-consulenza .consulenza-pain-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.page-consulenza .consulenza-pain-grid .consult-card-light {
+  padding: 1.45rem;
+}
+
+.page-consulenza .consult-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  margin-bottom: 0.85rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0d4c4a, #19dad5);
+  color: #021013;
+  font-weight: 900;
+  box-shadow: 0 12px 24px rgba(25, 218, 213, 0.32);
+}
+
+.page-consulenza .consult-card-light h3,
+.page-consulenza .consult-benefit-card h3,
+.page-consulenza .consult-compare-card h3 {
+  color: #0f172a;
+  font-size: 1.15rem;
+  margin: 0 0 0.55rem;
+}
+
+.page-consulenza .consult-card-light p,
+.page-consulenza .consult-benefit-card p,
+.page-consulenza .consult-final-card p {
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.page-consulenza .consulenza-offer-section,
+.page-consulenza .consulenza-final-cta {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(25, 218, 213, 0.12), transparent 30rem),
+    #05060a;
+}
+
+.page-consulenza .consult-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.page-consulenza .consult-benefit-card {
+  padding: 1.35rem;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.page-consulenza .consult-benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(25, 218, 213, 0.25);
+}
+
+.page-consulenza .consult-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 1rem;
+  border-radius: 16px;
+  background: #07111f;
+  color: #19dad5;
+}
+
+.page-consulenza .consult-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+}
+
+.page-consulenza .consulenza-booking-path .section-header {
+  margin-bottom: 1.6rem;
+}
+
+.page-consulenza .consulenza-booking-path .consulenza-flow {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-consulenza .consulenza-booking-path .cons-card {
+  background: linear-gradient(150deg, #ffffff, #eef3f8);
+  border-color: rgba(226, 232, 240, 0.95);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.34);
+  color: #0f172a;
+}
+
+.page-consulenza .consulenza-booking-path .cons-card-head h3,
+.page-consulenza .consulenza-booking-path .cons-card-list li {
+  color: #0f172a;
+}
+
+.page-consulenza .consulenza-booking-path .cons-card-text {
+  color: #475569;
+}
+
+.page-consulenza .consulenza-booking-path .cons-card-icon svg {
+  stroke: #0d9488;
+}
+
+.page-consulenza .consult-compare-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.2rem;
+  align-items: stretch;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-consulenza .consult-compare-card {
+  padding: 1.7rem;
+}
+
+.page-consulenza .consult-compare-card.featured {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(25, 218, 213, 0.45);
+  box-shadow:
+    0 28px 76px rgba(0, 0, 0, 0.45),
+    0 0 38px rgba(25, 218, 213, 0.22);
+}
+
+.page-consulenza .consult-compare-card.featured::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, #0d4c4a, #19dad5);
+}
+
+.page-consulenza .consult-compare-card .btn {
+  margin-top: 1.25rem;
+}
+
+.page-consulenza .consult-final-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2rem;
+}
+
+@media (max-width: 1000px) {
+  .page-consulenza .consult-benefit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-consulenza .consulenza-booking-path .consulenza-flow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .page-consulenza .consulenza-sales-hero {
+    padding: 3.7rem 0 3rem;
+  }
+
+  .page-consulenza .consulenza-hero-inner,
+  .page-consulenza .consulenza-split,
+  .page-consulenza .consult-compare-grid,
+  .page-consulenza .consult-final-card {
+    grid-template-columns: 1fr;
+  }
+
+  .page-consulenza .consulenza-left-header {
+    position: static;
+  }
+
+  .page-consulenza .consulenza-hero-copy h1 {
+    font-size: clamp(2.35rem, 13vw, 3.55rem);
+  }
+
+  .page-consulenza .consulenza-hero-actions,
+  .page-consulenza .consult-final-card .btn {
+    width: 100%;
+  }
+
+  .page-consulenza .consulenza-hero-actions .btn,
+  .page-consulenza .consult-final-card .btn {
+    width: 100%;
+  }
+
+  .page-consulenza .consult-mini-grid,
+  .page-consulenza .consult-benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-consulenza .consulenza-booking-path .consulenza-flow {
+    display: flex;
+    grid-template-columns: none;
+  }
+
+  .page-consulenza .consulenza-booking-path .cons-card {
+    flex: 0 0 86%;
+    max-width: 86%;
+  }
+}

@@ -15433,3 +15433,394 @@ body.app-page {
 .page-consulenza .consulenza-stepper-cta .btn {
   min-width: min(100%, 280px);
 }
+
+/* ==========================================================
+   PAGINA CHI SONO — scroll experience colorata
+   ========================================================== */
+.page-chi-sono {
+  --about-pink: #ff4fd8;
+  --about-orange: #ff9f43;
+  --about-violet: #7c5cff;
+  --about-lime: #b8ff5c;
+  --about-cyan: #19dad5;
+  --about-ink: #05060a;
+  --about-glass: rgba(255, 255, 255, 0.075);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 79, 216, 0.26), transparent 26rem),
+    radial-gradient(circle at 86% 18%, rgba(25, 218, 213, 0.22), transparent 28rem),
+    linear-gradient(180deg, #070816 0%, #05060a 48%, #08051a 100%);
+  overflow-x: hidden;
+}
+
+.page-chi-sono::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 88%);
+}
+
+.about-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.about-scroll-progress span {
+  display: block;
+  width: calc(var(--about-scroll, 0) * 100%);
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--about-cyan), var(--about-pink), var(--about-orange), var(--about-lime));
+  box-shadow: 0 0 24px rgba(255, 79, 216, 0.6);
+}
+
+.about-scroll-experience {
+  position: relative;
+  isolation: isolate;
+}
+
+.about-bg-orb {
+  position: fixed;
+  z-index: -1;
+  width: clamp(13rem, 24vw, 24rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  filter: blur(20px);
+  opacity: 0.42;
+  pointer-events: none;
+  animation: about-orb-drift 13s ease-in-out infinite alternate;
+}
+
+.about-bg-orb-one {
+  top: 18%;
+  left: -7rem;
+  background: radial-gradient(circle, rgba(255, 79, 216, 0.7), transparent 68%);
+}
+
+.about-bg-orb-two {
+  right: -8rem;
+  bottom: 8%;
+  background: radial-gradient(circle, rgba(25, 218, 213, 0.72), transparent 68%);
+  animation-delay: -5s;
+}
+
+.about-hero {
+  min-height: calc(100vh - 102px);
+  display: grid;
+  align-items: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 79, 216, 0.24), transparent 28rem),
+    radial-gradient(circle at 82% 24%, rgba(25, 218, 213, 0.26), transparent 30rem),
+    linear-gradient(135deg, rgba(124, 92, 255, 0.14), rgba(5, 6, 10, 0.2) 55%);
+}
+
+.about-hero-copy h1,
+.about-split h2,
+.about-method h2,
+.about-sales h2,
+.about-fit h2,
+.about-final h2,
+.about-competence h2 {
+  text-wrap: balance;
+}
+
+.about-hero-copy h1 {
+  background: linear-gradient(120deg, #ffffff 10%, #a6fffb 34%, #ffb2ee 62%, #ffe199 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 18px 42px rgba(255, 79, 216, 0.12));
+}
+
+.about-lead,
+.about-text-stack,
+.about-sales-intro p,
+.about-step-card p,
+.about-sales-cards p,
+.about-fit-card li,
+.about-final p,
+.about-neon-card p {
+  color: rgba(247, 248, 252, 0.78);
+}
+
+.about-skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.about-skill-pills span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035));
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 38px rgba(0, 0, 0, 0.22);
+}
+
+.about-proof-strip {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(16px);
+}
+
+.about-proof-strip div {
+  padding: 1.05rem 1.2rem;
+}
+
+.about-proof-strip dt,
+.about-portrait-note span,
+.about-step-card span,
+.about-neon-card span {
+  color: var(--about-lime);
+}
+
+.about-portrait-card {
+  transform: translateY(calc(var(--about-scroll, 0) * -28px));
+  border-color: rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(135deg, rgba(25, 218, 213, 0.2), rgba(255, 79, 216, 0.17)),
+    rgba(255, 255, 255, 0.055);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.52), 0 0 60px rgba(25, 218, 213, 0.14);
+  animation: about-card-float 5.5s ease-in-out infinite;
+}
+
+.about-card-glow {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--about-cyan), var(--about-pink), var(--about-orange));
+  opacity: 0.42;
+  filter: blur(18px);
+}
+
+.about-portrait-card img {
+  filter: saturate(1.12) contrast(1.06);
+}
+
+.about-portrait-note {
+  background: linear-gradient(135deg, rgba(5, 6, 10, 0.82), rgba(38, 16, 52, 0.78));
+}
+
+.about-panel,
+.about-method,
+.about-competence {
+  position: relative;
+}
+
+.about-position,
+.about-sales {
+  background:
+    linear-gradient(135deg, rgba(124, 92, 255, 0.15), rgba(25, 218, 213, 0.06)),
+    rgba(255, 255, 255, 0.02);
+}
+
+.about-competence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-neon-card,
+.about-step-card,
+.about-sales-cards article,
+.about-fit-card,
+.about-final-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.24);
+}
+
+.about-neon-card::before,
+.about-step-card::before,
+.about-sales-cards article::before,
+.about-fit-card::before,
+.about-final-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.22), transparent 28%),
+              linear-gradient(135deg, rgba(25, 218, 213, 0.16), transparent 40%, rgba(255, 79, 216, 0.13));
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.about-neon-card:hover::before,
+.about-step-card:hover::before,
+.about-sales-cards article:hover::before,
+.about-fit-card:hover::before,
+.about-final-card:hover::before {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.about-neon-card {
+  min-height: 260px;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 28px;
+}
+
+.about-neon-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 2.2rem;
+  border: 1px solid rgba(184, 255, 92, 0.38);
+  border-radius: 999px;
+  background: rgba(184, 255, 92, 0.08);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.about-neon-card h3 {
+  position: relative;
+  margin: 0 0 0.7rem;
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.about-neon-card p {
+  position: relative;
+  margin: 0;
+  line-height: 1.65;
+}
+
+.about-step-card:nth-child(1),
+.about-neon-card:nth-child(1) {
+  border-top-color: rgba(25, 218, 213, 0.55);
+}
+
+.about-step-card:nth-child(2),
+.about-neon-card:nth-child(2) {
+  border-top-color: rgba(255, 79, 216, 0.55);
+}
+
+.about-step-card:nth-child(3),
+.about-neon-card:nth-child(3) {
+  border-top-color: rgba(255, 159, 67, 0.58);
+}
+
+.about-step-card:nth-child(4) {
+  border-top-color: rgba(184, 255, 92, 0.58);
+}
+
+.about-fit-positive li::before {
+  color: var(--about-lime);
+}
+
+.about-fit-negative li::before {
+  color: var(--about-orange);
+}
+
+.about-final-card {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(184, 255, 92, 0.18), transparent 28rem),
+    radial-gradient(circle at 85% 20%, rgba(255, 79, 216, 0.22), transparent 30rem),
+    linear-gradient(135deg, rgba(25, 218, 213, 0.18), rgba(124, 92, 255, 0.14));
+}
+
+[data-about-reveal] {
+  opacity: 0;
+  transform: translateY(34px) scale(0.985);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: var(--about-delay, 0s);
+}
+
+[data-about-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.about-method-grid [data-about-reveal]:nth-child(2),
+.about-sales-cards [data-about-reveal]:nth-child(2),
+.about-fit-grid [data-about-reveal]:nth-child(2),
+.about-competence-grid [data-about-reveal]:nth-child(2) {
+  --about-delay: 0.08s;
+}
+
+.about-method-grid [data-about-reveal]:nth-child(3),
+.about-sales-cards [data-about-reveal]:nth-child(3),
+.about-competence-grid [data-about-reveal]:nth-child(3) {
+  --about-delay: 0.16s;
+}
+
+.about-method-grid [data-about-reveal]:nth-child(4) {
+  --about-delay: 0.24s;
+}
+
+@keyframes about-card-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+
+@keyframes about-orb-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(26px, -34px, 0) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-bg-orb,
+  .about-portrait-card {
+    animation: none;
+  }
+
+  [data-about-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-hero {
+    min-height: auto;
+  }
+
+  .about-competence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-neon-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-skill-pills span {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-scroll-progress {
+    height: 3px;
+  }
+}

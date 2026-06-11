@@ -1,0 +1,42 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Routine - Supporto e preferenze</title>
+<desc id="desc">Illustrazione generata per la sezione routine del questionario.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#07111F"/><stop offset="0.52" stop-color="#0F2230"/><stop offset="1" stop-color="#102A31"/>
+  </linearGradient>
+  <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(250 135) rotate(49) scale(520 350)">
+    <stop stop-color="#a78bfa" stop-opacity="0.55"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(960 600) rotate(49) scale(520 330)">
+    <stop stop-color="#19dad5" stop-opacity="0.42"/><stop offset="1" stop-color="#19dad5" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000" flood-opacity="0.35"/></filter>
+</defs>
+<rect width="1200" height="760" rx="64" fill="url(#bg)"/>
+<rect width="1200" height="760" rx="64" fill="url(#glow1)"/>
+<rect width="1200" height="760" rx="64" fill="url(#glow2)"/>
+<path d="M76 608C218 532 318 648 460 570C606 490 690 396 848 432C978 462 1052 380 1128 310" stroke="white" stroke-opacity="0.10" stroke-width="3" stroke-linecap="round"/>
+<circle cx="1010" cy="132" r="78" fill="#a78bfa" fill-opacity="0.13"/>
+<circle cx="1026" cy="132" r="42" fill="white" fill-opacity="0.10"/>
+<rect x="118" y="108" width="964" height="544" rx="44" fill="white" fill-opacity="0.10" stroke="white" stroke-opacity="0.20"/>
+<rect x="160" y="154" width="420" height="452" rx="34" fill="white" fill-opacity="0.94" filter="url(#shadow)"/>
+<rect x="198" y="202" width="246" height="22" rx="11" fill="#0F172A" fill-opacity="0.92"/>
+<rect x="198" y="246" width="322" height="16" rx="8" fill="#CBD5E1"/>
+<rect x="198" y="282" width="268" height="16" rx="8" fill="#E2E8F0"/>
+<rect x="198" y="340" width="318" height="72" rx="22" fill="#a78bfa" fill-opacity="0.16" stroke="#a78bfa" stroke-opacity="0.58"/>
+<circle cx="236" cy="376" r="15" fill="#a78bfa"/><circle cx="236" cy="376" r="6" fill="white"/>
+<rect x="270" y="360" width="188" height="14" rx="7" fill="#0F172A" fill-opacity="0.82"/>
+<rect x="270" y="384" width="136" height="12" rx="6" fill="#64748B" fill-opacity="0.62"/>
+<rect x="198" y="430" width="318" height="72" rx="22" fill="#F8FAFC" stroke="#E2E8F0"/>
+<circle cx="236" cy="466" r="15" fill="#E2E8F0"/>
+<rect x="270" y="450" width="202" height="14" rx="7" fill="#334155" fill-opacity="0.70"/>
+<rect x="270" y="474" width="118" height="12" rx="6" fill="#94A3B8" fill-opacity="0.75"/>
+<rect x="650" y="168" width="356" height="356" rx="54" fill="white" fill-opacity="0.13" stroke="white" stroke-opacity="0.22" filter="url(#shadow)"/>
+<rect x="720" y="238" width="216" height="232" rx="30" fill="white" fill-opacity="0.93"/>
+<rect x="720" y="238" width="216" height="64" rx="30" fill="#a78bfa"/><path d="M720 282H936" stroke="#a78bfa" stroke-width="40"/>
+<g fill="#CBD5E1"><rect x="752" y="332" width="34" height="34" rx="10"/><rect x="811" y="332" width="34" height="34" rx="10"/><rect x="870" y="332" width="34" height="34" rx="10"/><rect x="752" y="389" width="34" height="34" rx="10"/><rect x="811" y="389" width="34" height="34" rx="10"/><rect x="870" y="389" width="34" height="34" rx="10"/></g>
+<path d="M762 406L778 421L814 382" stroke="#19dad5" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="650" y="552" width="356" height="54" rx="27" fill="white" fill-opacity="0.14" stroke="white" stroke-opacity="0.16"/>
+<text x="828" y="587" fill="white" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" text-anchor="middle">Piano nella vita reale</text>
+</svg>

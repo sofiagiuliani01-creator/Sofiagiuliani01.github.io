@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="page-program page-program-premium">
+  <div class="program-scroll-progress" aria-hidden="true"><span></span></div>
 
   <!-- HEADER identico alle altre pagine (niente voci nuove) -->
    <header class="site-header">
@@ -67,10 +68,18 @@
               Pochi posti attivi alla volta: più contatto, più precisione, più responsabilità condivisa.
             </span>
           </div>
+          <div class="program-hero-proof" data-animate="fade-up" data-delay="0.2" aria-label="Punti forti Coaching Premium">
+            <span><i data-lucide="check-circle-2"></i> Metodo completo</span>
+            <span><i data-lucide="utensils"></i> Nutrizione pratica</span>
+            <span><i data-lucide="zap"></i> Supporto prioritario</span>
+          </div>
         </div>
 
-        <div class="hero-program-visual" data-animate="fade-up" data-delay="0.1">
-          <div class="program-floating-card program-floating-card-premium">
+        <div class="hero-program-visual" data-animate="fade-left" data-delay="0.1">
+          <div class="program-orbit program-orbit-premium" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="program-floating-card program-floating-card-premium program-dashboard-card" data-tilt-card>
             <div class="program-icon-badge premium">
               <i data-lucide="sparkles"></i>
             </div>
@@ -78,7 +87,57 @@
             <p class="program-floating-text">
               Allenamento, nutrizione, check e gestione degli imprevisti vengono letti insieme: così ogni modifica ha un senso preciso.
             </p>
+            <div class="program-mini-dashboard" aria-label="Anteprima del percorso Premium">
+              <div><strong>2 leve</strong><span>training + food</span></div>
+              <div><strong>LeoAI</strong><span>supporto rapido</span></div>
+              <div><strong>Check+</strong><span>dati e sensazioni</span></div>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SCELTA INTERATTIVA -->
+    <section class="section program-path-section">
+      <div class="container program-path-card program-path-card-premium" data-animate="scale-in">
+        <div class="program-path-copy">
+          <p class="eyebrow">Decidi in 20 secondi</p>
+          <h2>Dimmi dove perdi aderenza: ti mostro il vantaggio Premium.</h2>
+          <p class="section-subtitle">
+            Il percorso completo serve quando vuoi meno tentativi e più decisioni coordinate tra palestra, tavola e vita reale.
+          </p>
+        </div>
+        <div class="program-path-interactive" data-program-picker>
+          <div class="program-path-options" role="tablist" aria-label="Situazioni Coaching Premium">
+            <button type="button" class="program-path-option is-active" data-program-option="plateau">Sono in plateau</button>
+            <button type="button" class="program-path-option" data-program-option="food">La dieta salta</button>
+            <button type="button" class="program-path-option" data-program-option="support">Voglio più supporto</button>
+          </div>
+          <div class="program-path-result" data-program-result>
+            <span class="program-result-kicker">Scelta consigliata</span>
+            <h3>Premium legge allenamento, fame, energia e peso insieme.</h3>
+            <p>Quando un dato si blocca, non improvvisiamo: correggiamo la leva giusta senza smontare tutto il percorso.</p>
+            <a href="consulenza.html" class="btn btn-primary">Candidati al Premium</a>
+          </div>
+          <template data-program-template="plateau">
+            <span class="program-result-kicker">Scelta consigliata</span>
+            <h3>Premium legge allenamento, fame, energia e peso insieme.</h3>
+            <p>Quando un dato si blocca, non improvvisiamo: correggiamo la leva giusta senza smontare tutto il percorso.</p>
+            <a href="consulenza.html" class="btn btn-primary">Candidati al Premium</a>
+          </template>
+          <template data-program-template="food">
+            <span class="program-result-kicker">Aderenza prima di tutto</span>
+            <h3>Costruiamo una nutrizione che resta in piedi anche nei weekend.</h3>
+            <p>Calorie, macro e pasti diventano strumenti pratici, non una lista rigida impossibile da seguire.</p>
+            <a href="consulenza.html" class="btn btn-primary">Voglio una strategia completa</a>
+          </template>
+          <template data-program-template="support">
+            <span class="program-result-kicker">Più vicinanza</span>
+            <h3>Check più completi, chat prioritaria e LeoAI per i dubbi rapidi.</h3>
+            <p>Hai più contesto e più feedback proprio nelle settimane in cui di solito si perde continuità.</p>
+            <a href="consulenza.html" class="btn btn-primary">Prenota la consulenza</a>
+          </template>
         </div>
       </div>
     </section>

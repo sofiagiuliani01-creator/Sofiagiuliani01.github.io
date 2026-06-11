@@ -2069,3 +2069,73 @@ window.addEventListener('DOMContentLoaded', () => {
 
   revealItems.forEach((item) => observer.observe(item));
 })();
+
+// COACHING PAGES – progress, picker and subtle card tilt
+(() => {
+  const initProgramEnhancements = () => {
+    const progress = document.querySelector('.program-scroll-progress span');
+    const programPage = document.body.classList.contains('page-program');
+
+    if (progress && programPage) {
+      const updateProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+        progress.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+      };
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+    }
+
+    document.querySelectorAll('[data-program-picker]').forEach((picker) => {
+      const options = Array.from(picker.querySelectorAll('[data-program-option]'));
+      const result = picker.querySelector('[data-program-result]');
+      const templates = Array.from(picker.querySelectorAll('template[data-program-template]'));
+
+      if (!options.length || !result || !templates.length) return;
+
+      const renderOption = (key) => {
+        const template = templates.find((item) => item.dataset.programTemplate === key);
+        if (!template) return;
+
+        result.style.animation = 'none';
+        result.offsetHeight; // restart entrance animation for immediate visual feedback
+        result.innerHTML = template.innerHTML;
+        result.style.animation = '';
+
+        options.forEach((option) => {
+          const isActive = option.dataset.programOption === key;
+          option.classList.toggle('is-active', isActive);
+          option.setAttribute('aria-selected', String(isActive));
+        });
+      };
+
+      options.forEach((option) => {
+        option.setAttribute('role', 'tab');
+        option.setAttribute('aria-selected', String(option.classList.contains('is-active')));
+        option.addEventListener('click', () => renderOption(option.dataset.programOption));
+      });
+    });
+
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+      card.addEventListener('mousemove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `rotateX(${y * -7}deg) rotateY(${x * 8}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgramEnhancements);
+  } else {
+    initProgramEnhancements();
+  }
+})();

@@ -13320,7 +13320,6 @@ body.app-page {
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
 .page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
 
-}
 
 .page-home .pixel,
 .page-home .pixel-dot,
@@ -13353,7 +13352,6 @@ body.app-page {
   opacity: 0;
 }
 
-}
 
 .page-home .pixel-seed {
   width: 10px;
@@ -13486,7 +13484,6 @@ body.app-page {
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
 .page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
 
-}
 
 .page-home .pixel,
 .page-home .pixel-dot,
@@ -17052,5 +17049,240 @@ body.app-page {
   .program-path-result .btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* ================================
+   Coaching pages clean light palette
+   ================================ */
+.page-program {
+  --program-bg: #f5f7fb;
+  --program-bg-soft: #eef4f6;
+  --program-surface: #ffffff;
+  --program-surface-soft: #f8fafc;
+  --program-border: #dbe5ea;
+  --program-text: #0f172a;
+  --program-muted: #536173;
+  --program-accent: #0f766e;
+  --program-accent-strong: #0d5f59;
+  --program-accent-soft: #dff8f4;
+  background: var(--program-bg);
+  color: var(--program-text);
+}
+
+.page-program main {
+  padding-top: 0;
+  background: var(--program-bg);
+}
+
+body.page-program.page-transition-in main {
+  box-shadow: none;
+}
+
+.page-program .site-header .btn-nav {
+  box-shadow: none;
+}
+
+.page-program .section,
+.page-program .section-light,
+.page-program .section-soft {
+  background: var(--program-bg);
+}
+
+.page-program .hero-program {
+  padding: clamp(1.6rem, 4vw, 2.6rem) 0 clamp(2.6rem, 5vw, 3.6rem);
+  color: var(--program-text);
+  background: linear-gradient(180deg, #ffffff 0%, #eef6f7 100%);
+  border-bottom: 1px solid var(--program-border);
+}
+
+.page-program .hero-program::before,
+.page-program .hero-program::after,
+.page-program .program-orbit,
+.page-program .program-choice-card::before,
+.page-program .btn-primary::after {
+  display: none;
+}
+
+.page-program h1,
+.page-program h2,
+.page-program h3,
+.page-program .program-floating-title,
+.page-program .program-mini-dashboard strong,
+.page-program .upgrade-points span {
+  color: var(--program-text);
+}
+
+.page-program .hero-subtitle,
+.page-program .section-subtitle,
+.page-program .program-floating-text,
+.page-program .program-feature-card p,
+.page-program .program-choice-card p,
+.page-program .program-checklist,
+.page-program .program-path-result p,
+.page-program .program-mini-dashboard span,
+.page-program .hero-note,
+.page-program .welfare-card p,
+.page-program .welfare-card li {
+  color: var(--program-muted);
+}
+
+.page-program .eyebrow,
+.page-program .program-result-kicker {
+  color: var(--program-accent);
+}
+
+.page-program .program-floating-card,
+.page-program .program-choice-card,
+.page-program .program-feature-card,
+.page-program .program-include-col,
+.page-program .program-fit-card,
+.page-program .program-path-card,
+.page-program .program-upgrade-card,
+.page-program .program-cta,
+.page-program .welfare-card,
+.page-program .program-price-card {
+  background: var(--program-surface);
+  border: 1px solid var(--program-border);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  color: var(--program-text);
+  backdrop-filter: none;
+}
+
+.page-program .program-floating-card-premium,
+.page-program .program-choice-card-premium,
+.page-program .program-path-card-premium,
+.page-program .program-include-grid-premium .program-include-col,
+.page-program .program-cta-premium {
+  border-color: rgba(15, 118, 110, 0.28);
+  background: var(--program-surface);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+}
+
+.page-program .program-dashboard-card:hover,
+.page-program .program-choice-card:hover,
+.page-program .program-feature-card:hover,
+.page-program .program-include-col:hover,
+.page-program .program-upgrade-card:hover,
+.page-program .welfare-card:hover,
+.page-program .program-cta:hover {
+  border-color: rgba(15, 118, 110, 0.34);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10);
+}
+
+.page-program .program-icon-badge,
+.page-program .program-icon-badge.premium,
+.page-program .program-icon,
+.page-program .program-icon.premium {
+  background: var(--program-accent-soft);
+  color: var(--program-accent-strong);
+}
+
+.page-program .program-icon svg,
+.page-program .program-icon-badge svg,
+.page-program .program-icon-badge i svg {
+  stroke: var(--program-accent-strong);
+}
+
+.page-program .program-mini-dashboard div,
+.page-program .program-path-result,
+.page-program .upgrade-points,
+.page-program .upgrade-points span {
+  background: var(--program-surface-soft);
+  border: 1px solid var(--program-border);
+  box-shadow: none;
+}
+
+.page-program .program-hero-proof span,
+.page-program .choice-label,
+.page-program .leoai-badge-premium,
+.page-program .welfare-badge,
+.page-program .comparison-note {
+  color: var(--program-text);
+  background: var(--program-surface-soft);
+  border: 1px solid var(--program-border);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.page-program .program-hero-proof svg,
+.page-program .leoai-badge-premium svg,
+.page-program .upgrade-points svg {
+  color: var(--program-accent);
+  stroke: var(--program-accent);
+}
+
+.page-program .program-path-option {
+  color: var(--program-text);
+  background: var(--program-surface);
+  border-color: var(--program-border);
+}
+
+.page-program .program-path-option:hover,
+.page-program .program-path-option.is-active {
+  transform: none;
+  color: #ffffff;
+  background: var(--program-accent);
+  border-color: var(--program-accent);
+  box-shadow: none;
+}
+
+.page-program .btn-primary,
+.page-program .upgrade-points strong,
+.page-program .choice-label.premium,
+.page-program .program-price-toggle-btn.is-active {
+  color: #ffffff;
+  background: var(--program-accent);
+  border-color: var(--program-accent);
+  box-shadow: none;
+}
+
+.page-program .btn-primary::after {
+  display: none;
+}
+
+.page-program .btn-primary:hover {
+  background: var(--program-accent-strong);
+  box-shadow: none;
+}
+
+.page-program .btn-outline,
+.page-program .hero-program .btn-outline,
+.page-program .program-choice-card .btn-outline,
+.page-program .welfare-card .btn-outline {
+  color: var(--program-accent-strong);
+  background: #ffffff;
+  border-color: rgba(15, 118, 110, 0.34);
+}
+
+.page-program .btn-outline:hover,
+.page-program .hero-program .btn-outline:hover,
+.page-program .program-choice-card .btn-outline:hover,
+.page-program .welfare-card .btn-outline:hover {
+  color: #ffffff;
+  background: var(--program-accent);
+  border-color: var(--program-accent);
+}
+
+.page-program .program-scroll-progress {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.page-program .program-scroll-progress span {
+  background: var(--program-accent);
+  box-shadow: none;
+}
+
+.page-program .welfare-card::before {
+  display: none;
+}
+
+.page-program .program-checklist li::before {
+  background: var(--program-accent);
+}
+
+@media (max-width: 900px) {
+  .page-program .hero-program {
+    padding-top: 1.25rem;
   }
 }

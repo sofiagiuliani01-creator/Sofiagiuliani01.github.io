@@ -16487,3 +16487,165 @@ body.app-page {
     font-size: clamp(2.1rem, 13vw, 3.6rem);
   }
 }
+
+/* ================================
+   Coaching pages conversion refresh
+   ================================ */
+.program-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.6rem;
+  margin-top: 2rem;
+}
+
+.program-choice-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 24px;
+  padding: 1.8rem;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.18);
+  overflow: hidden;
+}
+
+.program-choice-card::before {
+  content: "";
+  position: absolute;
+  inset: -35% -20% auto auto;
+  width: 230px;
+  height: 230px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.24), transparent 68%);
+  pointer-events: none;
+}
+
+.program-choice-card h3,
+.program-choice-card p,
+.program-choice-card ul,
+.program-choice-card a,
+.program-choice-card span {
+  position: relative;
+  z-index: 1;
+}
+
+.program-choice-card h3 {
+  margin-bottom: -0.3rem;
+}
+
+.program-choice-card p {
+  color: var(--text-muted);
+}
+
+.program-choice-card .btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.program-choice-card-premium {
+  border-color: rgba(25, 218, 213, 0.88);
+  background:
+    radial-gradient(circle at top right, rgba(25, 218, 213, 0.18), transparent 38%),
+    rgba(15, 23, 42, 0.98);
+  box-shadow:
+    0 26px 68px rgba(15, 23, 42, 0.24),
+    0 0 44px rgba(25, 218, 213, 0.16);
+}
+
+.choice-label {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #e5e7eb;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.choice-label.premium {
+  background: linear-gradient(135deg, rgba(110, 231, 183, 0.95), rgba(34, 211, 238, 0.92));
+  border-color: rgba(25, 218, 213, 0.95);
+  color: #021316;
+}
+
+.program-upgrade-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.8fr);
+  gap: 1.6rem;
+  align-items: center;
+  border-radius: 26px;
+  padding: 2.1rem;
+  background:
+    radial-gradient(circle at top left, rgba(25, 218, 213, 0.18), transparent 34%),
+    rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(25, 218, 213, 0.55);
+  box-shadow: 0 26px 68px rgba(15, 23, 42, 0.24);
+}
+
+.program-upgrade-card .section-subtitle {
+  margin-left: 0;
+  max-width: 68ch;
+}
+
+.upgrade-points {
+  display: grid;
+  gap: 0.65rem;
+  justify-items: center;
+  padding: 1.2rem;
+  border-radius: 22px;
+  background: rgba(2, 6, 23, 0.34);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  text-align: center;
+}
+
+.upgrade-points span,
+.upgrade-points strong {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.upgrade-points strong {
+  background: linear-gradient(135deg, #6ee7b7, #22d3ee);
+  color: #021316;
+}
+
+.upgrade-points svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-aqua);
+}
+
+.hero-program .btn-outline,
+.program-choice-card .btn-outline {
+  border-color: rgba(229, 231, 235, 0.72);
+  color: #f8fafc;
+}
+
+.hero-program .btn-outline:hover,
+.program-choice-card .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 860px) {
+  .program-choice-grid,
+  .program-upgrade-card {
+    grid-template-columns: 1fr;
+  }
+
+  .program-choice-card,
+  .program-upgrade-card {
+    padding: 1.35rem;
+  }
+}

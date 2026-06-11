@@ -43,6 +43,37 @@ if (burger && mainNav) {
   });
 }
 
+// ANIMAZIONI GENERICHE ON SCROLL
+// Mostra tutti gli elementi marcati con data-animate (tra cui la CTA del questionario)
+// aggiungendo la classe usata dal CSS per renderli visibili.
+document.addEventListener('DOMContentLoaded', () => {
+  const animatedItems = Array.from(document.querySelectorAll('[data-animate]'));
+  if (!animatedItems.length) return;
+
+  const showItem = (item) => item.classList.add('in-view');
+
+  if (!('IntersectionObserver' in window)) {
+    animatedItems.forEach(showItem);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        showItem(entry.target);
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -8% 0px',
+    }
+  );
+
+  animatedItems.forEach((item) => observer.observe(item));
+});
+
 // STORYLINE / TIMELINE
 const timelineEl = document.querySelector('[data-timeline]');
 if (timelineEl) {

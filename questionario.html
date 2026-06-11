@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Questionario percorso ideale | Leonardo Santini</title>
+<meta name="description" content="Questionario guidato per capire se è più adatto il Coaching Base o il Coaching Premium con allenamento e nutrizione."/>
+<link href="style.css" rel="stylesheet"/>
+<link href="trustpilot.css" rel="stylesheet"/>
+</head>
+<body class="page-questionario">
+<header class="site-header">
+<div class="container header-inner">
+<a class="logo header-logo-real" href="index.html">
+<div class="logo-image-wrapper">
+<img alt="Leonardo Santini Logo" class="logo-image" src="logo-ls.png"/>
+</div>
+<div class="logo-text-group">
+<span class="logo-text">Leonardo Santini</span>
+<span class="logo-sub">Online Fitness Coaching</span>
+</div>
+</a>
+<nav class="main-nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="chi-sono.html">Chi sono</a></li>
+<li><a href="index.html#come-funziona">Come funziona</a></li>
+<li><a href="index.html#programmi">Programmi</a></li>
+<li><a href="contenuti-gratuiti.html">Contenuti gratuiti</a></li>
+<li><a href="app.html">App</a></li>
+<li><a class="btn-nav" href="consulenza.html">Consulenza gratuita</a></li>
+</ul>
+</nav>
+<button aria-label="Apri menù" class="burger"><span></span><span></span><span></span></button>
+</div>
+</header>
+<main class="page-content">
+<section class="questionnaire-hero">
+<div class="container questionnaire-hero__grid">
+<div class="questionnaire-hero__copy">
+<p class="eyebrow">Questionario guidato</p>
+<h1>Trova il percorso più adatto a te in pochi minuti.</h1>
+<p>Rispondi con sincerità: il risultato combina obiettivo, esperienza, disponibilità, alimentazione e ostacoli reali. Non è una diagnosi, ma una bussola pratica per capire se partire dal Coaching Base o se ha più senso un percorso Premium con nutrizione integrata.</p>
+<div class="questionnaire-hero__actions">
+<a class="btn btn-primary" href="#questionario-percorso">Inizia ora</a>
+<a class="btn btn-outline" href="index.html#programmi">Rivedi i programmi</a>
+</div>
+</div>
+<div class="questionnaire-hero__panel" aria-label="Anteprima del metodo">
+<img src="hero-nutrition.svg" alt="Percorso integrato allenamento e nutrizione"/>
+<div class="questionnaire-hero__stats">
+<span><strong>4</strong> sezioni</span>
+<span><strong>15</strong> domande</span>
+<span><strong>1</strong> risultato chiaro</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section questionnaire-section" id="questionario-percorso">
+<div class="container questionnaire-layout">
+<aside class="questionnaire-sidebar">
+<div class="questionnaire-progress-card">
+<p class="eyebrow">Avanzamento</p>
+<div class="questionnaire-progress" aria-hidden="true"><span data-progress-bar></span></div>
+<p data-progress-text>Sezione 1 di 4</p>
+<ol>
+<li data-step-label class="is-active">Obiettivo</li>
+<li data-step-label>Allenamento</li>
+<li data-step-label>Nutrizione</li>
+<li data-step-label>Routine</li>
+</ol>
+</div>
+<div class="questionnaire-tip-card">
+<img src="analisi.png" alt="Analisi del percorso" loading="lazy"/>
+<h3>Perché chiedo dati sulla nutrizione?</h3>
+<p>Perché spesso il blocco non è la scheda: sono gestione dei carboidrati, fame, pasti fuori, weekend, proteine, recupero e aderenza. Se questi aspetti pesano, il percorso nutrizionale diventa una leva decisiva.</p>
+</div>
+</aside>
+
+<form class="questionnaire-form" data-questionnaire-form>
+<section class="questionnaire-step is-active" data-questionnaire-step>
+<div class="questionnaire-step__head">
+<span>Sezione 01</span>
+<h2>Obiettivo e punto di partenza</h2>
+<p>Partiamo dal risultato che vuoi ottenere e da quanto è urgente strutturare il percorso.</p>
+</div>
+<div class="question-block">
+<h3>Qual è il tuo obiettivo principale?</h3>
+<label><input type="radio" name="goal" value="Dimagrimento/definizione" data-premium="4" required/> Dimagrimento o definizione</label>
+<label><input type="radio" name="goal" value="Ricomposizione corporea" data-premium="3" data-base="1"/> Ricomposizione: perdere grasso e aumentare tono/muscolo</label>
+<label><input type="radio" name="goal" value="Massa/forza" data-premium="2" data-base="2"/> Massa muscolare, forza o performance</label>
+<label><input type="radio" name="goal" value="Ripresa abitudini" data-premium="2" data-base="2"/> Riprendere costanza e sane abitudini</label>
+</div>
+<div class="question-block">
+<h3>Quanto ti senti bloccato adesso?</h3>
+<label><input type="radio" name="stuck" value="Molto: provo ma non cambia nulla" data-premium="4" required/> Molto: provo ma peso, misure o forma non cambiano</label>
+<label><input type="radio" name="stuck" value="A tratti: miglioro e poi torno indietro" data-premium="3"/> A tratti: parto bene e poi torno indietro</label>
+<label><input type="radio" name="stuck" value="Poco: mi manca una guida chiara" data-base="3"/> Poco: mi manca soprattutto una guida chiara</label>
+</div>
+<div class="question-block question-block--text">
+<label for="question-goal-detail">In una frase, cosa vorresti cambiare nei prossimi 3 mesi?</label>
+<textarea id="question-goal-detail" name="goalDetail" rows="3" placeholder="Es. perdere 5 kg senza diete drastiche, imparare ad allenarmi bene, costruire muscolo..."></textarea>
+</div>
+</section>
+
+<section class="questionnaire-step" data-questionnaire-step>
+<div class="questionnaire-step__head">
+<span>Sezione 02</span>
+<h2>Allenamento, esperienza e disponibilità</h2>
+<p>Qui capiamo quanto serve personalizzare scheda, progressioni e feedback tecnico.</p>
+</div>
+<div class="question-block">
+<h3>Da quanto ti alleni con continuità?</h3>
+<label><input type="radio" name="experience" value="Principiante o riparto da zero" data-premium="2" data-base="2" required/> Principiante o riparto da zero</label>
+<label><input type="radio" name="experience" value="6-18 mesi" data-base="3"/> Da 6 a 18 mesi</label>
+<label><input type="radio" name="experience" value="Oltre 18 mesi" data-base="2" data-premium="1"/> Oltre 18 mesi</label>
+</div>
+<div class="question-block">
+<h3>Quante sedute realistiche riesci a sostenere?</h3>
+<label><input type="radio" name="sessions" value="2 sedute" data-premium="2" data-base="2" required/> 2 a settimana</label>
+<label><input type="radio" name="sessions" value="3-4 sedute" data-base="3"/> 3-4 a settimana</label>
+<label><input type="radio" name="sessions" value="5+ sedute" data-premium="1" data-base="2"/> 5 o più, ma voglio ottimizzarle</label>
+</div>
+<div class="question-block">
+<h3>Dove ti alleni principalmente?</h3>
+<label><input type="radio" name="place" value="Palestra" data-base="2" required/> Palestra</label>
+<label><input type="radio" name="place" value="Casa/minima attrezzatura" data-premium="2" data-base="1"/> Casa o minima attrezzatura</label>
+<label><input type="radio" name="place" value="Misto" data-premium="1" data-base="2"/> Misto: palestra, casa o viaggi</label>
+</div>
+<div class="question-block">
+<h3>Hai dolori, infortuni o esercizi che non riesci a gestire bene?</h3>
+<label><input type="radio" name="limits" value="Sì, limitano spesso" data-premium="3" required/> Sì, mi limitano spesso e ho bisogno di adattamenti</label>
+<label><input type="radio" name="limits" value="Qualche fastidio" data-premium="2" data-base="1"/> Qualche fastidio o dubbio tecnico</label>
+<label><input type="radio" name="limits" value="No" data-base="2"/> No, nessun limite rilevante</label>
+</div>
+</section>
+
+<section class="questionnaire-step" data-questionnaire-step>
+<div class="questionnaire-step__head">
+<span>Sezione 03</span>
+<h2>Nutrizione, carboidrati e aderenza</h2>
+<p>Le domande sono volutamente specifiche: se qui emergono criticità, spesso la soluzione non è “allenarsi di più”, ma strutturare meglio la nutrizione.</p>
+</div>
+<div class="question-block">
+<h3>Come gestisci i carboidrati nella settimana?</h3>
+<label><input type="radio" name="carbs" value="Li taglio e poi sgarro" data-premium="5" required/> Li taglio molto, poi ho fame o episodi di sgarro</label>
+<label><input type="radio" name="carbs" value="Non so dosarli" data-premium="4"/> Non so dosarli tra giorni di allenamento e riposo</label>
+<label><input type="radio" name="carbs" value="Li gestisco abbastanza" data-base="2" data-premium="1"/> Li gestisco abbastanza bene</label>
+</div>
+<div class="question-block">
+<h3>Proteine e pasti: quanto sei regolare?</h3>
+<label><input type="radio" name="protein" value="Spesso salto pasti/proteine basse" data-premium="4" required/> Spesso salto pasti o arrivo basso con le proteine</label>
+<label><input type="radio" name="protein" value="Discreto ma non preciso" data-premium="2" data-base="1"/> Discreto, ma non so se sto facendo bene</label>
+<label><input type="radio" name="protein" value="Regolare" data-base="3"/> Regolare e sostenibile</label>
+</div>
+<div class="question-block">
+<h3>Weekend, cene fuori e vita sociale cosa provocano?</h3>
+<label><input type="radio" name="social" value="Mi fanno perdere il controllo" data-premium="5" required/> Mi fanno perdere il controllo o compensare dopo</label>
+<label><input type="radio" name="social" value="Mi confondono" data-premium="3"/> Mi confondono: non so come inserirli nel piano</label>
+<label><input type="radio" name="social" value="Li gestisco" data-base="2"/> Li gestisco senza grandi problemi</label>
+</div>
+<div class="question-block">
+<h3>Hai già provato diete o app calorie?</h3>
+<label><input type="radio" name="dietHistory" value="Sì, tante e mi stancano" data-premium="5" required/> Sì, tante: mi stancano o durano poco</label>
+<label><input type="radio" name="dietHistory" value="Sì, ma senza strategia" data-premium="3"/> Sì, ma senza una strategia chiara</label>
+<label><input type="radio" name="dietHistory" value="No o poche" data-base="2"/> No, o poche esperienze</label>
+</div>
+<div class="question-block">
+<h3>Energia, fame e recupero durante la giornata</h3>
+<label><input type="radio" name="energy" value="Fame/energia instabili" data-premium="4" required/> Fame, energia o recupero sono spesso instabili</label>
+<label><input type="radio" name="energy" value="A volte instabili" data-premium="2" data-base="1"/> A volte, soprattutto quando lavoro/studio molto</label>
+<label><input type="radio" name="energy" value="Stabili" data-base="2"/> Abbastanza stabili</label>
+</div>
+</section>
+
+<section class="questionnaire-step" data-questionnaire-step>
+<div class="questionnaire-step__head">
+<span>Sezione 04</span>
+<h2>Routine, supporto e preferenze</h2>
+<p>Il percorso giusto deve funzionare nella tua vita reale, non solo sulla carta.</p>
+</div>
+<div class="question-block">
+<h3>Che tipo di supporto senti più utile?</h3>
+<label><input type="radio" name="support" value="Completo e ravvicinato" data-premium="4" required/> Completo e ravvicinato: allenamento, alimentazione e check frequenti</label>
+<label><input type="radio" name="support" value="Allenamento con feedback" data-base="3"/> Allenamento con feedback e progressioni chiare</label>
+<label><input type="radio" name="support" value="Non lo so" data-premium="2" data-base="1"/> Non lo so: voglio capire cosa serve davvero</label>
+</div>
+<div class="question-block">
+<h3>Quanto vuoi che la nutrizione sia parte del percorso?</h3>
+<label><input type="radio" name="nutritionNeed" value="Centrale" data-premium="5" required/> Centrale: voglio smettere di improvvisare cibo, fame e carboidrati</label>
+<label><input type="radio" name="nutritionNeed" value="Utile ma non so" data-premium="3" data-base="1"/> Utile, ma non so quanto mi serva</label>
+<label><input type="radio" name="nutritionNeed" value="Non prioritaria" data-base="4"/> Non prioritaria: ho già una gestione alimentare stabile</label>
+</div>
+<div class="question-block question-block--text">
+<label for="question-notes">C'è qualcosa che Leonardo dovrebbe sapere prima di ricontattarti?</label>
+<textarea id="question-notes" name="notes" rows="3" placeholder="Orari, turni, preferenze alimentari, viaggi, difficoltà, eventuali note importanti..."></textarea>
+</div>
+</section>
+
+<div class="questionnaire-controls">
+<button class="btn btn-outline" type="button" data-prev-step>Indietro</button>
+<button class="btn btn-primary" type="button" data-next-step>Continua</button>
+<button class="btn btn-primary" type="submit" data-submit-quiz hidden>Mostra il risultato</button>
+</div>
+</form>
+</div>
+</section>
+
+<section class="section questionnaire-result-section" id="risultato" hidden data-result-section>
+<div class="container">
+<div class="questionnaire-result-card">
+<div class="questionnaire-result-card__top">
+<p class="eyebrow">Il tuo risultato</p>
+<h2 data-result-title>Il percorso più adatto a te</h2>
+<p data-result-summary></p>
+</div>
+<div class="questionnaire-result-grid">
+<div>
+<h3>Perché questa scelta</h3>
+<ul data-result-reasons></ul>
+</div>
+<div class="questionnaire-result-next">
+<h3>Prossimo passo</h3>
+<p>Lascia la tua email per essere ricontattato per una consulenza gratuita, oppure visita subito la pagina del percorso consigliato.</p>
+<div class="result-email-row">
+<label class="sr-only" for="result-email">Email</label>
+<input id="result-email" type="email" placeholder="La tua email" data-result-email/>
+<a class="btn btn-primary" href="consulenza.html" data-contact-link>Voglio essere ricontattato</a>
+</div>
+<a class="btn btn-outline" href="coaching-premium.html" data-plan-link>Vedi il percorso consigliato</a>
+<p class="small-note">Nota: il risultato è orientativo e non sostituisce valutazioni mediche o nutrizionali individuali. In consulenza lo rendiamo davvero personale.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<p>© 2025 Leonardo Santini. Tutti i diritti riservati.</p>
+<div class="footer-links">
+<a href="index.html#come-funziona">Come funziona</a>
+<a href="index.html#programmi">Programmi</a>
+<a href="contenuti-gratuiti.html">Contenuti gratuiti</a>
+</div>
+</div>
+</footer>
+<script src="main.js"></script>
+<script src="questionario.js"></script>
+</body>
+</html>

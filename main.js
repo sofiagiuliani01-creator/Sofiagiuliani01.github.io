@@ -2139,3 +2139,33 @@ window.addEventListener('DOMContentLoaded', () => {
     initProgramEnhancements();
   }
 })();
+
+// QUESTIONARIO: precompila il form contatti se l'utente arriva dal risultato
+// del questionario percorso ideale.
+document.addEventListener('DOMContentLoaded', () => {
+  const contactForm = document.querySelector('.contact-form');
+  if (!contactForm) return;
+
+  let payload = null;
+  try {
+    payload = JSON.parse(sessionStorage.getItem('lsQuestionarioLead') || 'null');
+  } catch (error) {
+    payload = null;
+  }
+
+  if (!payload) return;
+
+  const email = contactForm.querySelector('#email');
+  const obiettivo = contactForm.querySelector('#obiettivo');
+  const messaggio = contactForm.querySelector('#messaggio');
+
+  if (email && payload.email) email.value = payload.email;
+  if (obiettivo && payload.obiettivo) obiettivo.value = payload.obiettivo;
+  if (messaggio && payload.messaggio) messaggio.value = payload.messaggio;
+
+  try {
+    sessionStorage.removeItem('lsQuestionarioLead');
+  } catch (error) {
+    // Nessuna azione necessaria: la precompilazione è solo un supporto UX.
+  }
+});

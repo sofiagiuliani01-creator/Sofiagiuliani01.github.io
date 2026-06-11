@@ -13320,7 +13320,6 @@ body.app-page {
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
 .page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
 
-}
 
 .page-home .pixel,
 .page-home .pixel-dot,
@@ -13353,7 +13352,6 @@ body.app-page {
   opacity: 0;
 }
 
-}
 
 .page-home .pixel-seed {
   width: 10px;
@@ -13486,7 +13484,6 @@ body.app-page {
 .page-home .dot-c { transform: translate(calc(-50% + 130px), calc(-50% + 130px)); }
 .page-home .dot-d { transform: translate(calc(-50% - 130px), calc(-50% + 130px)); }
 
-}
 
 .page-home .pixel,
 .page-home .pixel-dot,

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="page-program page-program-base">
+  <div class="program-scroll-progress" aria-hidden="true"><span></span></div>
 
   <!-- HEADER uguale alle altre pagine, nessuna voce nuova nel menu -->
 
@@ -62,10 +63,18 @@
               Se oltre all’allenamento vuoi anche una strategia nutrizionale, in call ti spiego quando conviene passare al Premium.
             </span>
           </div>
+          <div class="program-hero-proof" data-animate="fade-up" data-delay="0.2" aria-label="Punti forti Coaching Base">
+            <span><i data-lucide="check-circle-2"></i> Semplice da seguire</span>
+            <span><i data-lucide="video"></i> Feedback tecnica</span>
+            <span><i data-lucide="trending-up"></i> Progressioni chiare</span>
+          </div>
         </div>
 
-        <div class="hero-program-visual" data-animate="fade-up" data-delay="0.1">
-          <div class="program-floating-card">
+        <div class="hero-program-visual" data-animate="fade-left" data-delay="0.1">
+          <div class="program-orbit" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="program-floating-card program-dashboard-card" data-tilt-card>
             <div class="program-icon-badge">
               <i data-lucide="dumbbell"></i>
             </div>
@@ -74,7 +83,57 @@
               Programma, tecnica, progressioni e check: tutto è orientato a rendere ogni seduta più efficace,
               sostenibile e misurabile.
             </p>
+            <div class="program-mini-dashboard" aria-label="Anteprima del percorso Base">
+              <div><strong>3-5</strong><span>sedute sostenibili</span></div>
+              <div><strong>100%</strong><span>scheda personale</span></div>
+              <div><strong>Check</strong><span>e correzioni</span></div>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SCELTA INTERATTIVA -->
+    <section class="section program-path-section">
+      <div class="container program-path-card" data-animate="scale-in">
+        <div class="program-path-copy">
+          <p class="eyebrow">Decidi in 20 secondi</p>
+          <h2>Seleziona la tua situazione e guarda cosa conviene fare.</h2>
+          <p class="section-subtitle">
+            Una scelta semplice riduce i dubbi: parti dal livello di supporto che ti fa essere costante subito.
+          </p>
+        </div>
+        <div class="program-path-interactive" data-program-picker>
+          <div class="program-path-options" role="tablist" aria-label="Situazioni Coaching Base">
+            <button type="button" class="program-path-option is-active" data-program-option="routine">Ho poca routine</button>
+            <button type="button" class="program-path-option" data-program-option="technique">Voglio tecnica</button>
+            <button type="button" class="program-path-option" data-program-option="nutrition">Mi blocca la dieta</button>
+          </div>
+          <div class="program-path-result" data-program-result>
+            <span class="program-result-kicker">Consiglio rapido</span>
+            <h3>Parti dal Base e rendi l’allenamento automatico.</h3>
+            <p>Costruiamo una scheda sostenibile, con obiettivi di seduta chiari e check per non perdere direzione.</p>
+            <a href="consulenza.html" class="btn btn-primary">Voglio capire se è adatto a me</a>
+          </div>
+          <template data-program-template="routine">
+            <span class="program-result-kicker">Consiglio rapido</span>
+            <h3>Parti dal Base e rendi l’allenamento automatico.</h3>
+            <p>Costruiamo una scheda sostenibile, con obiettivi di seduta chiari e check per non perdere direzione.</p>
+            <a href="consulenza.html" class="btn btn-primary">Voglio capire se è adatto a me</a>
+          </template>
+          <template data-program-template="technique">
+            <span class="program-result-kicker">Focus giusto</span>
+            <h3>Il Base è ideale se vuoi eseguire meglio e progredire.</h3>
+            <p>Video, feedback e progressioni ti aiutano a trasformare ogni seduta in un passo misurabile.</p>
+            <a href="consulenza.html" class="btn btn-primary">Prenota il confronto gratuito</a>
+          </template>
+          <template data-program-template="nutrition">
+            <span class="program-result-kicker">Upgrade consigliato</span>
+            <h3>Valuta Premium se il limite è soprattutto alimentare.</h3>
+            <p>Se allenamento e dieta non parlano tra loro, il percorso completo può farti risparmiare tempo e tentativi.</p>
+            <a href="coaching-premium.html" class="btn btn-outline">Scopri Premium</a>
+          </template>
         </div>
       </div>
     </section>

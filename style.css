@@ -17149,18 +17149,22 @@ body.app-page {
 
 .questionnaire-hero__panel {
   border-radius: 34px;
-  padding: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
   background:
-    radial-gradient(circle at 50% 20%, rgba(25,218,213,0.28), transparent 45%),
-    linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+    radial-gradient(circle at 50% 14%, rgba(25,218,213,0.24), transparent 42%),
+    linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
   border: 1px solid rgba(255,255,255,0.15);
   box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+  overflow: hidden;
 }
 
 .questionnaire-hero__panel img {
-  width: min(100%, 430px);
+  display: block;
+  width: min(100%, 390px);
+  max-height: 420px;
   margin: 0 auto;
-  filter: drop-shadow(0 28px 42px rgba(0,0,0,0.4));
+  object-fit: contain;
+  filter: drop-shadow(0 28px 42px rgba(0,0,0,0.36));
 }
 
 .questionnaire-hero__stats {
@@ -17368,7 +17372,12 @@ body.app-page {
 
 .question-block input[type="radio"] {
   flex: 0 0 auto;
-  margin-top: 0.18rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  min-width: 1.1rem;
+  margin: 0.18rem 0 0;
+  padding: 0;
+  border-radius: 999px;
   accent-color: var(--accent-petrol);
 }
 
@@ -17642,6 +17651,8 @@ body.app-page {
 .question-block input[type="radio"] {
   width: 1.1rem;
   height: 1.1rem;
+  min-width: 1.1rem;
+  padding: 0;
 }
 
 .questionnaire-progress-card li {

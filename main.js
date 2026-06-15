@@ -1855,6 +1855,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
+    const startTimelineName = "traction";
+    const finalTimelineCandidates = ["position", "last"];
+
+    function getAvailableRiveAnimations() {
+      if (!riveInstance) return [];
+      const candidates = [
+        riveInstance.animationNames,
+        riveInstance.animations,
+        riveInstance.contents?.animations
+      ];
+      for (const value of candidates) {
+        if (Array.isArray(value)) return value.map(String);
+      }
+      return [];
+    }
+
+    function resolveRiveTimeline(preferredName, fallbackNames = []) {
+      const available = getAvailableRiveAnimations();
+      const names = [preferredName, ...fallbackNames].filter(Boolean);
+      if (!available.length) return names[0];
+      return names.find((name) => available.includes(name)) || names[0];
+    }
+
+    function getFinalTimelineName() {
+      return resolveRiveTimeline(finalTimelineCandidates[0], finalTimelineCandidates.slice(1));
+    }
 
     function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
     function getSlotForCard(card) { if (!card) return null; return (card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge") || card.querySelector(".step-content")); }
@@ -1907,11 +1933,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll("[data-rive-test]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const name = btn.getAttribute("data-rive-test");
+        const requestedName = btn.getAttribute("data-rive-test");
+        const name = requestedName === finalTimelineCandidates[0] ? getFinalTimelineName() : requestedName;
         debugPlay(name);
       });
     });
-    function getBarAnchor() { return { x: Math.max(40, section.clientWidth * 0.15), y: -layer.offsetHeight * 0.78 }; }
+    function getBarAnchor() {
+      const timelineRect = getLocalRect(timeline, section);
+      const line = timeline.querySelector(".timeline-line");
+      const lineRect = getLocalRect(line, section);
+      const fallbackX = Math.max(40, section.clientWidth * 0.15);
+      const x = lineRect ? lineRect.left + lineRect.width * 0.5 - layer.offsetWidth * 0.5 : fallbackX;
+      const y = timelineRect ? Math.max(8, timelineRect.top - layer.offsetHeight * 0.42) : 8;
+      return { x, y };
+    }
     function getAboveCardAnchor(index) { const card = steps[index]; const rect = getLocalRect(card, section); if (!rect) return null; return { x: rect.left + rect.width * 0.16, y: rect.top - layer.offsetHeight * 0.72 }; }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; const isStep5 = index === 4; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isStep5 ? -layer.offsetWidth * 0.10 : 0), y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + (isStep5 ? -layer.offsetHeight * 0.08 : 0) }; }
     function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top - layer.offsetHeight * 0.86 }; }
@@ -1935,7 +1970,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (currentPhase === phase) return;
       const token = beginPhase(phase);
       if (phase === "hidden") { clearActiveSlotCards(); hideCharacter(); return; }
-      if (phase === "traction") { showCharacter(); clearActiveSlotCards(); setLayerAt(getBarAnchor()); forceRiveTimeline("traction"); return; }
+      if (phase === "traction") { showCharacter(); clearActiveSlotCards(); setLayerAt(getBarAnchor()); forceRiveTimeline(startTimelineName); return; }
       if (phase === "jump_1_card") { showCharacter(); clearActiveSlotCards(); setLayerAt(getBarAnchor()); forceRiveTimeline("jump_1_card"); const target = getAboveCardAnchor(0); if (!target) { hideCharacter(); return; } moveLayerTo(target, { duration: 0.8, ease: "power3.inOut" }); return; }
       if (phase === "enter_to_1_card") { showCharacter(); clearActiveSlotCards(); forceRiveTimeline("enter_to_1_card"); const target = getCardSlotAnchor(0); if (!target) { hideCharacter(); return; } moveLayerTo(target, { duration: 0.55, ease: "power2.out", onComplete: () => { if (token !== phaseToken) return; setActiveSlotCard(0); forceRiveTimeline("card_1_action"); currentPhase = "card_1"; } }); return; }
       if (phase === "card_1") return enterCard(0, token);
@@ -1947,7 +1982,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (phase === "card_4") return enterCard(3, token);
       if (phase === "to_card_5") return transitionToCard(4, token);
       if (phase === "card_5") return enterCard(4, token);
-      if (phase === "last") { const from = getCardSlotAnchor(4); const target = getCtaAnchor(); if (!target) { hideCharacter(); return; } clearActiveSlotCards(); showCharacter(); if (from) setLayerAt(from); forceRiveTimeline("last"); moveLayerTo(target, { duration: 0.9, ease: "power3.inOut" }); return; }
+      if (phase === "last") { const from = getCardSlotAnchor(4); const target = getCtaAnchor(); if (!target) { hideCharacter(); return; } clearActiveSlotCards(); showCharacter(); if (from) setLayerAt(from); forceRiveTimeline(getFinalTimelineName()); moveLayerTo(target, { duration: 0.9, ease: "power3.inOut" }); return; }
       clearActiveSlotCards(); hideCharacter();
     }
 
@@ -1978,7 +2013,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     try {
       riveInstance = new rive.Rive({
-        src: "omino_def.riv", canvas, autoplay: false, animations: ["traction"],
+        src: "omino_def.riv", canvas, autoplay: false,
         onLoad: () => {
           console.log("[RIVE] loaded");
 
@@ -1991,7 +2026,7 @@ window.addEventListener('DOMContentLoaded', () => {
           debugPlaceCharacter();
 
           // Test temporaneo: deve vedersi traction senza scroll.
-          debugPlay("traction");
+          debugPlay(startTimelineName);
 
           startDirector();
         },

@@ -1864,9 +1864,14 @@ window.addEventListener('DOMContentLoaded', () => {
         riveInstance.animations,
         riveInstance.contents?.animations
       ];
+
       for (const value of candidates) {
-        if (Array.isArray(value)) return value.map(String);
+        if (!Array.isArray(value)) continue;
+        return value
+          .map((item) => (typeof item === "string" ? item : item?.name))
+          .filter(Boolean);
       }
+
       return [];
     }
 
@@ -1885,7 +1890,15 @@ window.addEventListener('DOMContentLoaded', () => {
       const animations = riveInstance?.contents?.animations;
       if (!Array.isArray(animations)) return 1;
       const animation = animations.find((item) => item?.name === name);
-      return Number(animation?.duration) > 0 ? Number(animation.duration) : 1;
+      const rawDuration = Number(
+        animation?.duration
+        ?? animation?.animation?.duration
+        ?? animation?.workEnd
+        ?? animation?.endTime
+      );
+
+      if (!Number.isFinite(rawDuration) || rawDuration <= 0) return 1;
+      return rawDuration > 100 ? rawDuration / 1000 : rawDuration;
     }
 
     function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
@@ -1907,21 +1920,29 @@ window.addEventListener('DOMContentLoaded', () => {
     function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top - layer.offsetHeight * 0.86 }; }
     function forceRiveTimeline(name, progress = 0) {
       if (!riveInstance || !name) return;
+
+      const resolvedName = resolveRiveTimeline(name);
+      const clampedProgress = gsap.utils.clamp(0, 1, progress);
+
       try {
+        if (currentAnimation !== resolvedName) {
+          if (typeof riveInstance.stop === "function" && currentAnimation) {
+            riveInstance.stop(currentAnimation);
+          }
+          currentAnimation = resolvedName;
+        }
+
         if (typeof riveInstance.scrub === "function") {
-          currentAnimation = name;
-          riveInstance.scrub(name, gsap.utils.clamp(0, 1, progress) * getRiveAnimationDuration(name));
+          riveInstance.scrub(resolvedName, clampedProgress * getRiveAnimationDuration(resolvedName));
+          if (typeof riveInstance.pause === "function") riveInstance.pause(resolvedName);
           return;
         }
 
-        if (currentAnimation === name) return;
-        if (typeof riveInstance.stop === "function") {
-          riveInstance.stop();
+        if (typeof riveInstance.play === "function") {
+          riveInstance.play(resolvedName);
         }
-        currentAnimation = name;
-        riveInstance.play(name);
       } catch (error) {
-        console.warn("[RIVE] Impossibile sincronizzare timeline:", name, error);
+        console.warn("[RIVE] Impossibile sincronizzare timeline:", resolvedName, error);
       }
     }
 

@@ -1916,8 +1916,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const y = timelineRect ? Math.max(8, timelineRect.top - layer.offsetHeight * 0.42) : 8;
       return { x, y };
     }
-    function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; const isStep5 = index === 4; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + (isStep5 ? -layer.offsetWidth * 0.10 : 0), y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + (isStep5 ? -layer.offsetHeight * 0.08 : 0) }; }
-    function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top - layer.offsetHeight * 0.86 }; }
+    function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top + rect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
     function forceRiveTimeline(name, progress = 0) {
       if (!riveInstance || !name) return;
 
@@ -1976,54 +1977,50 @@ window.addEventListener('DOMContentLoaded', () => {
       const sectionRect = section.getBoundingClientRect();
       const ctaRect = cta.getBoundingClientRect();
       const stepRects = steps.map((step) => step.getBoundingClientRect());
-      const y = vh * 0.58;
+      const screenCenterY = vh * 0.5;
 
-      if (sectionRect.top > vh * 0.88 || ctaRect.bottom < vh * 0.08) {
+      if (sectionRect.top > vh * 0.9 || ctaRect.bottom < vh * -0.12) {
         return { phase: "hidden", animation: null, point: null, activeIndex: null };
       }
 
       const anchors = [getBarAnchor(), ...steps.map((_, index) => getCardSlotAnchor(index)), getCtaAnchor()];
       const triggers = [
-        sectionRect.top + vh * 0.18,
-        stepRects[0].top,
-        stepRects[1].top,
-        stepRects[2].top,
-        stepRects[3].top,
-        stepRects[4].top,
-        ctaRect.top - vh * 0.18
+        sectionRect.top + vh * 0.14,
+        ...stepRects.map(getViewportCenterTrigger),
+        getViewportCenterTrigger(ctaRect)
       ].map((value, index, arr) => {
         if (index === 0) return value;
         return Math.max(value, arr[index - 1] + 1);
       });
 
       let segment = 0;
-      while (segment < triggers.length - 1 && y >= triggers[segment + 1]) segment += 1;
+      while (segment < triggers.length - 1 && screenCenterY >= triggers[segment + 1]) segment += 1;
 
       const start = triggers[segment];
       const end = triggers[Math.min(segment + 1, triggers.length - 1)];
-      const progress = end > start ? gsap.utils.clamp(0, 1, (y - start) / (end - start)) : 1;
-      const point = lerpPoint(anchors[segment], anchors[Math.min(segment + 1, anchors.length - 1)], progress);
+      const progress = end > start ? gsap.utils.clamp(0, 1, (screenCenterY - start) / (end - start)) : 1;
 
       if (segment === 0) {
-        if (progress < 0.46) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.46, point, activeIndex: null };
-        const jumpProgress = gsap.utils.clamp(0, 1, (progress - 0.46) / 0.28);
-        const enterProgress = gsap.utils.clamp(0, 1, (progress - 0.74) / 0.26);
-        return { phase: "jump_1_card", animation: progress < 0.74 ? "jump_1_card" : "enter_to_1_card", animationProgress: progress < 0.74 ? jumpProgress : enterProgress, point, activeIndex: null };
+        const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.62));
+        if (progress < 0.38) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.38, point, activeIndex: null };
+        if (progress < 0.62) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: (progress - 0.38) / 0.24, point, activeIndex: null };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.62) / 0.38, point: anchors[1], activeIndex: 0 };
       }
 
       if (segment >= 5) {
+        const point = lerpPoint(anchors[5], anchors[6], progress);
         return { phase: "last", animation: getFinalTimelineName(), animationProgress: progress, point, activeIndex: null };
       }
 
       const cardIndex = segment - 1;
       const nextCardIndex = segment;
-      if (progress < 0.34) {
-        return { phase: `card_${cardIndex + 1}`, animation: cardActions[cardIndex], animationProgress: progress / 0.34, point, activeIndex: cardIndex };
+      if (progress < 0.48) {
+        return { phase: `card_${cardIndex + 1}`, animation: cardActions[cardIndex], animationProgress: progress / 0.48, point: anchors[segment], activeIndex: cardIndex };
       }
-      if (progress < 0.72) {
-        return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.34) / 0.38, point, activeIndex: null };
+      if (progress < 0.78) {
+        return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
       }
-      return { phase: `card_${nextCardIndex + 1}`, animation: cardActions[nextCardIndex], animationProgress: (progress - 0.72) / 0.28, point, activeIndex: nextCardIndex };
+      return { phase: `card_${nextCardIndex + 1}`, animation: cardActions[nextCardIndex], animationProgress: (progress - 0.78) / 0.22, point: anchors[segment + 1], activeIndex: nextCardIndex };
     }
 
     let raf = 0;

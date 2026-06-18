@@ -2004,7 +2004,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.62));
         if (progress < 0.38) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.38, point, activeIndex: null };
         if (progress < 0.62) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: (progress - 0.38) / 0.24, point, activeIndex: null };
-        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.62) / 0.38, point: anchors[1], activeIndex: 0 };
+        if (progress < 0.82) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.62) / 0.20, point: anchors[1], activeIndex: null };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.82) / 0.18, point: anchors[1], activeIndex: 0 };
       }
 
       if (segment >= 5) {

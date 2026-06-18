@@ -1851,6 +1851,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let currentAnimation = null;
     let currentPhase = null;
     let activeMoveTween = null;
+    let cardActionPlayback = null;
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
@@ -1972,6 +1973,34 @@ window.addEventListener('DOMContentLoaded', () => {
       };
     }
 
+    function getHybridCardActionProgress(state) {
+      if (!state?.isCardAction || !state.animation) {
+        cardActionPlayback = null;
+        return state?.animationProgress ?? 0;
+      }
+
+      const resolvedName = resolveRiveTimeline(state.animation);
+      const scrollProgress = gsap.utils.clamp(0, 1, state.animationProgress ?? 0);
+      const now = performance.now();
+
+      if (!cardActionPlayback || cardActionPlayback.phase !== state.phase || cardActionPlayback.animation !== resolvedName) {
+        cardActionPlayback = {
+          phase: state.phase,
+          animation: resolvedName,
+          startedAt: now - (scrollProgress * getRiveAnimationDuration(resolvedName) * 1000)
+        };
+      }
+
+      const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * 1000);
+      const timedProgress = gsap.utils.clamp(0, 1, (now - cardActionPlayback.startedAt) / durationMs);
+
+      // Le animazioni interne alle card avanzano anche a tempo reale: una volta
+      // raggiunto il centro della card possono completarsi senza dipendere da
+      // altro scroll. Se però l'utente scrolla più velocemente della durata
+      // della timeline Rive, il progresso scroll-linked resta prioritario.
+      return Math.max(scrollProgress, timedProgress);
+    }
+
     function getScrollLinkedState() {
       const vh = window.innerHeight || 800;
       const sectionRect = section.getBoundingClientRect();
@@ -2005,7 +2034,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (progress < 0.38) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.38, point, activeIndex: null };
         if (progress < 0.62) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: (progress - 0.38) / 0.24, point, activeIndex: null };
         if (progress < 0.82) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.62) / 0.20, point: anchors[1], activeIndex: null };
-        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.82) / 0.18, point: anchors[1], activeIndex: 0 };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.82) / 0.18, point: anchors[1], activeIndex: 0, isCardAction: true };
       }
 
       if (segment >= 5) {
@@ -2016,12 +2045,12 @@ window.addEventListener('DOMContentLoaded', () => {
       const cardIndex = segment - 1;
       const nextCardIndex = segment;
       if (progress < 0.48) {
-        return { phase: `card_${cardIndex + 1}`, animation: cardActions[cardIndex], animationProgress: progress / 0.48, point: anchors[segment], activeIndex: cardIndex };
+        return { phase: `card_${cardIndex + 1}`, animation: cardActions[cardIndex], animationProgress: progress / 0.48, point: anchors[segment], activeIndex: cardIndex, isCardAction: true };
       }
       if (progress < 0.78) {
         return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
       }
-      return { phase: `card_${nextCardIndex + 1}`, animation: cardActions[nextCardIndex], animationProgress: (progress - 0.78) / 0.22, point: anchors[segment + 1], activeIndex: nextCardIndex };
+      return { phase: `card_${nextCardIndex + 1}`, animation: cardActions[nextCardIndex], animationProgress: (progress - 0.78) / 0.22, point: anchors[segment + 1], activeIndex: nextCardIndex, isCardAction: true };
     }
 
     let raf = 0;
@@ -2035,11 +2064,17 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       showCharacter();
+      const phaseChanged = currentPhase !== state.phase;
       currentPhase = state.phase;
       if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
       else clearActiveSlotCards();
-      forceRiveTimeline(state.animation, state.animationProgress);
+      const animationProgress = getHybridCardActionProgress(state);
+      forceRiveTimeline(state.animation, animationProgress);
       setLayerAt(state.point);
+
+      if (state.isCardAction && animationProgress < 1 && phaseChanged) {
+        window.setTimeout(onScroll, Math.max(16, getRiveAnimationDuration(state.animation) * 1000));
+      }
     }
 
     function onScroll() {

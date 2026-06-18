@@ -17788,3 +17788,173 @@ body.app-page {
 #come-funziona .timeline-step.rive-slot-active .step-generated-bg {
   filter: saturate(.88) contrast(.88) brightness(.72);
 }
+
+/* === Home programmi conversion refresh: clean, simple, no glow === */
+.page-home #programmi .plans-conversion {
+  align-items: stretch;
+  gap: clamp(20px, 3vw, 34px);
+  margin-top: clamp(34px, 5vw, 58px);
+}
+
+.page-home #programmi .plans-conversion .plan-card {
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: clamp(28px, 3.6vw, 44px);
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border-radius: 30px;
+  background: #ffffff !important;
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+  transform: none;
+  overflow: hidden;
+}
+
+.page-home #programmi .plans-conversion .plan-card::before,
+.page-home #programmi .plans-conversion .plan-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.page-home #programmi .plans-conversion .plan-card-premium {
+  border: 2px solid #111827 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  transform: translateY(-14px);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.13) !important;
+}
+
+.page-home #programmi .plans-conversion .plan-card-base {
+  margin-top: 18px;
+}
+
+.page-home #programmi .plans-conversion .plan-card-top {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.page-home #programmi .plans-conversion .plan-kicker,
+.page-home #programmi .mobile-plan-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-home #programmi .plans-conversion .plan-card-premium .plan-kicker,
+.page-home #programmi .mobile-plan-badge {
+  background: #111827;
+  color: #ffffff;
+}
+
+.page-home #programmi .plans-conversion .plan-card h3 {
+  margin: 18px 0 10px;
+  color: #0f172a !important;
+  font-size: clamp(1.75rem, 2.4vw, 2.35rem);
+  line-height: 1.02;
+}
+
+.page-home #programmi .plans-conversion .plan-tag {
+  max-width: 36ch;
+  color: #475569 !important;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.page-home #programmi .plans-conversion .plan-list {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-home #programmi .plans-conversion .plan-list li {
+  position: relative;
+  padding-left: 30px;
+  color: #334155 !important;
+  line-height: 1.45;
+}
+
+.page-home #programmi .plans-conversion .plan-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #111827;
+  box-shadow: inset 0 0 0 5px #ffffff;
+  border: 1px solid #111827;
+}
+
+.page-home #programmi .plans-conversion .plan-list strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.page-home #programmi .plans-conversion .plan-list span {
+  display: block;
+  color: #64748b;
+  font-size: 0.94rem;
+}
+
+.page-home #programmi .plans-conversion .plan-note {
+  margin-top: auto;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(15, 23, 42, 0.1);
+  color: #334155 !important;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.page-home #programmi .plans-conversion .plan-card-premium .plan-note {
+  color: #111827 !important;
+}
+
+.page-home #programmi .plans-conversion .plan-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.page-home #programmi .plans-conversion .plan-ribbon {
+  top: 22px;
+  right: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  border-radius: 999px;
+  background: #111827 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  letter-spacing: 0.08em;
+}
+
+.page-home #programmi .mobile-plan-card[data-plan-card="premium"] {
+  border: 2px solid #111827 !important;
+  background: #ffffff !important;
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.1) !important;
+}
+
+.page-home #programmi .mobile-plan-card::before,
+.page-home #programmi .mobile-plan-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+@media (max-width: 899px) {
+  .page-home #programmi .plans-conversion .plan-card-premium,
+  .page-home #programmi .plans-conversion .plan-card-base {
+    margin-top: 0;
+    transform: none;
+  }
+}

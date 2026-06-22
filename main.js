@@ -1853,7 +1853,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let activeMoveTween = null;
     let cardActionPlayback = null;
 
-    const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card"];
+    const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
     const finalTimelineCandidates = ["last"];
@@ -2075,17 +2075,6 @@ window.addEventListener('DOMContentLoaded', () => {
       if (progress < 0.78) {
         return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
       }
-      const isNextLastCard = nextCardIndex === steps.length - 1;
-      if (isNextLastCard) {
-        return {
-          phase: `card_${nextCardIndex + 1}_ready`,
-          animation: null,
-          animationProgress: 0,
-          point: anchors[segment + 1],
-          activeIndex: nextCardIndex
-        };
-      }
-
       return {
         phase: `card_${nextCardIndex + 1}`,
         animation: cardActions[nextCardIndex],

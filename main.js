@@ -2069,9 +2069,19 @@ window.addEventListener('DOMContentLoaded', () => {
         return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
       }
       const isNextLastCard = nextCardIndex === steps.length - 1;
+      if (isNextLastCard) {
+        return {
+          phase: `card_${nextCardIndex + 1}_ready`,
+          animation: null,
+          animationProgress: 0,
+          point: anchors[segment + 1],
+          activeIndex: nextCardIndex
+        };
+      }
+
       return {
-        phase: isNextLastCard ? "card_5_last" : `card_${nextCardIndex + 1}`,
-        animation: isNextLastCard ? getFinalTimelineName() : cardActions[nextCardIndex],
+        phase: `card_${nextCardIndex + 1}`,
+        animation: cardActions[nextCardIndex],
         animationProgress: (progress - 0.78) / 0.22,
         point: anchors[segment + 1],
         activeIndex: nextCardIndex,

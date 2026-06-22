@@ -1853,10 +1853,10 @@ window.addEventListener('DOMContentLoaded', () => {
     let activeMoveTween = null;
     let cardActionPlayback = null;
 
-    const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
+    const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
-    const finalTimelineCandidates = ["last", "position"];
+    const finalTimelineCandidates = ["last"];
 
     function getAvailableRiveAnimations() {
       if (!riveInstance) return [];
@@ -1867,10 +1867,20 @@ window.addEventListener('DOMContentLoaded', () => {
       ];
 
       for (const value of candidates) {
-        if (!Array.isArray(value)) continue;
-        return value
+        const source = typeof value === "function" ? value.call(riveInstance) : value;
+        const list = Array.isArray(source)
+          ? source
+          : source instanceof Set
+            ? Array.from(source)
+            : source && typeof source === "object"
+              ? Object.values(source)
+              : null;
+
+        if (!Array.isArray(list)) continue;
+        const names = list
           .map((item) => (typeof item === "string" ? item : item?.name))
           .filter(Boolean);
+        if (names.length) return names;
       }
 
       return [];
@@ -2045,12 +2055,28 @@ window.addEventListener('DOMContentLoaded', () => {
       const cardIndex = segment - 1;
       const nextCardIndex = segment;
       if (progress < 0.48) {
-        return { phase: `card_${cardIndex + 1}`, animation: cardActions[cardIndex], animationProgress: progress / 0.48, point: anchors[segment], activeIndex: cardIndex, isCardAction: true };
+        const isLastCard = cardIndex === steps.length - 1;
+        return {
+          phase: isLastCard ? "card_5_last" : `card_${cardIndex + 1}`,
+          animation: isLastCard ? getFinalTimelineName() : cardActions[cardIndex],
+          animationProgress: progress / 0.48,
+          point: anchors[segment],
+          activeIndex: cardIndex,
+          isCardAction: true
+        };
       }
       if (progress < 0.78) {
         return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
       }
-      return { phase: `card_${nextCardIndex + 1}`, animation: cardActions[nextCardIndex], animationProgress: (progress - 0.78) / 0.22, point: anchors[segment + 1], activeIndex: nextCardIndex, isCardAction: true };
+      const isNextLastCard = nextCardIndex === steps.length - 1;
+      return {
+        phase: isNextLastCard ? "card_5_last" : `card_${nextCardIndex + 1}`,
+        animation: isNextLastCard ? getFinalTimelineName() : cardActions[nextCardIndex],
+        animationProgress: (progress - 0.78) / 0.22,
+        point: anchors[segment + 1],
+        activeIndex: nextCardIndex,
+        isCardAction: true
+      };
     }
 
     let raf = 0;
@@ -2064,7 +2090,6 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       showCharacter();
-      const phaseChanged = currentPhase !== state.phase;
       currentPhase = state.phase;
       if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
       else clearActiveSlotCards();
@@ -2072,8 +2097,8 @@ window.addEventListener('DOMContentLoaded', () => {
       forceRiveTimeline(state.animation, animationProgress);
       setLayerAt(state.point);
 
-      if (state.isCardAction && animationProgress < 1 && phaseChanged) {
-        window.setTimeout(onScroll, Math.max(16, getRiveAnimationDuration(state.animation) * 1000));
+      if (state.isCardAction && animationProgress < 1) {
+        requestAnimationFrame(onScroll);
       }
     }
 

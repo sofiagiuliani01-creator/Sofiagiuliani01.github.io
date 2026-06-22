@@ -1937,7 +1937,9 @@ window.addEventListener('DOMContentLoaded', () => {
       const clampedProgress = gsap.utils.clamp(0, 1, progress);
 
       try {
-        if (currentAnimation !== resolvedName) {
+        const isNewAnimation = currentAnimation !== resolvedName;
+
+        if (isNewAnimation) {
           if (typeof riveInstance.stop === "function" && currentAnimation) {
             riveInstance.stop(currentAnimation);
           }
@@ -1946,10 +1948,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (typeof riveInstance.scrub === "function") {
           // In the canvas runtime, scrubbing is reliable only after the target
-          // animation has been bound to the instance. Without this warm-up,
-          // the standalone timeline clips (notably "traction" and "last") can
-          // remain on an empty frame and appear not to start.
-          if (typeof riveInstance.play === "function") {
+          // animation has been bound to the instance. Warm it up only when the
+          // clip changes: replaying the same timeline on every frame makes the
+          // character restart continuously, which shows up as blinking/stutter.
+          if (isNewAnimation && typeof riveInstance.play === "function") {
             riveInstance.play(resolvedName);
           }
           riveInstance.scrub(resolvedName, clampedProgress * getRiveAnimationDuration(resolvedName));

@@ -13,6 +13,41 @@
     const TRANSITION_DURATION = 1.15;
     const transitionNames = ['traction', 'jump_1_card', 'enter_to_1_card', '1_to_2', '2_to_3', '3_to_4', '4_to_5', 'last'];
     const cardAnimationNames = ['card_1_action', 'card_1_action', 'progress_monitor_card', 'optimize_results_card', 'healthy_lifestyle_card'];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const normalizeAnimation = (instance, name) => {
+      if (!instance || !Array.isArray(instance.animationNames)) return name;
+      return instance.animationNames.find((animationName) => animationName === name)
+        || instance.animationNames.find((animationName) => animationName.trim() === name)
+        || instance.animationNames.find((animationName) => animationName.toLowerCase().trim() === name.toLowerCase())
+        || name;
+    };
+
+    const resizeCanvasToDisplaySize = (canvas, ratio = 1.55) => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = Math.max(1, Math.round(rect.width * dpr));
+      const height = Math.max(1, Math.round((rect.height || rect.width * ratio) * dpr));
+      if (canvas.width !== width) canvas.width = width;
+      if (canvas.height !== height) canvas.height = height;
+    };
+
+    const makeRive = ({ canvas, autoplay = false, animation = null, onLoad = null }) => {
+      resizeCanvasToDisplaySize(canvas);
+      let instance = null;
+      instance = new window.rive.Rive({
+        src: RIVE_FILE,
+        canvas,
+        autoplay,
+        animations: animation || undefined,
+        layout: new window.rive.Layout({ fit: window.rive.Fit.Contain, alignment: window.rive.Alignment.Center }),
+        onLoad: () => {
+          if (instance && typeof instance.resizeDrawingSurfaceToCanvas === 'function') instance.resizeDrawingSurfaceToCanvas();
+          if (typeof onLoad === 'function') onLoad(instance);
+        }
+      });
+      return instance;
+    };
 
     const layer = document.createElement('div');
     layer.className = 'character-canvas-layer character-rive-layer is-hidden';
@@ -35,20 +70,12 @@
     let lastScrollY = window.scrollY || window.pageYOffset;
     let lastScrollTs = performance.now();
     let scrollSpeed = 0;
-
-    const normalizeAnimation = (name) => {
-      if (!riveInstance || !Array.isArray(riveInstance.animationNames)) return name;
-      return riveInstance.animationNames.find((animationName) => animationName === name)
-        || riveInstance.animationNames.find((animationName) => animationName.trim() === name)
-        || riveInstance.animationNames.find((animationName) => animationName.toLowerCase().trim() === name.toLowerCase())
-        || name;
-    };
+    const cardInstances = [];
 
     const setSize = () => {
       const width = window.innerWidth <= MOBILE_BREAKPOINT ? 132 : 190;
       wrap.style.width = `${width}px`;
-      canvas.width = Math.round(width * Math.min(window.devicePixelRatio || 1, 2));
-      canvas.height = Math.round(width * 1.8 * Math.min(window.devicePixelRatio || 1, 2));
+      resizeCanvasToDisplaySize(canvas, 1.8);
     };
 
     const centerCharacter = () => {
@@ -62,7 +89,7 @@
 
     const playAnimation = (name, { reset = false } = {}) => {
       if (!riveInstance || !name) return;
-      const normalizedName = normalizeAnimation(name);
+      const normalizedName = normalizeAnimation(riveInstance, name);
       if (activeAnimation === normalizedName && !reset) return;
       activeAnimation = normalizedName;
       if (reset && typeof riveInstance.reset === 'function') {
@@ -75,7 +102,7 @@
 
     const scrubAnimation = (name, progress, assumedDuration) => {
       if (!riveInstance || !name) return;
-      const normalizedName = normalizeAnimation(name);
+      const normalizedName = normalizeAnimation(riveInstance, name);
       const clamped = gsap.utils.clamp(0, 1, progress);
       activeAnimation = normalizedName;
       try {
@@ -83,7 +110,7 @@
           riveInstance.scrub(normalizedName, clamped * assumedDuration);
           safePause();
         } else {
-          playAnimation(normalizedName);
+          playAnimation(normalizedName, { reset: clamped < 0.04 });
         }
       } catch (_) {
         playAnimation(normalizedName);
@@ -91,12 +118,22 @@
     };
 
     const playCardAnimation = (index, { force = false } = {}) => {
+      const card = cardInstances[index];
       const animationName = cardAnimationNames[index];
-      if (!animationName) return;
-      if (!force && activeCardIndex === index && activeAnimation === normalizeAnimation(animationName)) return;
-      const isNewCard = activeCardIndex !== index;
+      if (!card || !card.instance || !animationName) return;
+      if (!force && activeCardIndex === index) return;
       activeCardIndex = index;
-      playAnimation(animationName, { reset: isNewCard || force });
+      cardInstances.forEach((item, itemIndex) => {
+        item.el.classList.toggle('is-rive-active', itemIndex === index);
+        if (itemIndex !== index && item.instance && typeof item.instance.pause === 'function') {
+          try { item.instance.pause(); } catch (_) {}
+        }
+      });
+      const normalizedName = normalizeAnimation(card.instance, animationName);
+      try {
+        if (typeof card.instance.reset === 'function') card.instance.reset({ animations: normalizedName });
+        if (typeof card.instance.play === 'function') card.instance.play(normalizedName);
+      } catch (_) {}
     };
 
     const updateScrollSpeed = () => {
@@ -112,17 +149,32 @@
       }, scrollSpeed > 2.2 ? 180 : 80);
     };
 
+    document.querySelectorAll('[data-rive-card]').forEach((el) => {
+      const index = Number(el.getAttribute('data-rive-card'));
+      const cardCanvas = el.querySelector('[data-rive-card-canvas]');
+      const animation = cardAnimationNames[index];
+      if (!cardCanvas || !animation) return;
+      const item = { el, canvas: cardCanvas, instance: null };
+      cardInstances[index] = item;
+      item.instance = makeRive({
+        canvas: cardCanvas,
+        autoplay: !reduceMotion && index === 0,
+        animation,
+        onLoad: (instance) => {
+          if (index === 0) playCardAnimation(0, { force: true });
+          if (instance && typeof instance.resizeDrawingSurfaceToCanvas === 'function') instance.resizeDrawingSurfaceToCanvas();
+        }
+      });
+    });
+
     setSize();
     centerCharacter();
 
-    riveInstance = new window.rive.Rive({
-      src: RIVE_FILE,
+    riveInstance = makeRive({
       canvas,
       autoplay: false,
-      layout: new window.rive.Layout({ fit: window.rive.Fit.Contain, alignment: window.rive.Alignment.Center }),
       onLoad: () => {
         layer.classList.remove('is-hidden');
-        if (typeof riveInstance.resizeDrawingSurfaceToCanvas === 'function') riveInstance.resizeDrawingSurfaceToCanvas();
         scrubAnimation('traction', 0, TRANSITION_DURATION);
         ScrollTrigger.refresh();
       }
@@ -132,6 +184,11 @@
     window.addEventListener('resize', () => {
       setSize();
       centerCharacter();
+      cardInstances.forEach((item) => {
+        if (!item) return;
+        resizeCanvasToDisplaySize(item.canvas);
+        if (item.instance && typeof item.instance.resizeDrawingSurfaceToCanvas === 'function') item.instance.resizeDrawingSurfaceToCanvas();
+      });
       if (riveInstance && typeof riveInstance.resizeDrawingSurfaceToCanvas === 'function') riveInstance.resizeDrawingSurfaceToCanvas();
       ScrollTrigger.refresh();
     }, { passive: true });
@@ -146,21 +203,8 @@
       onEnterBack: () => layer.classList.remove('is-hidden')
     });
 
-    ScrollTrigger.create({
-      trigger: steps[0],
-      start: 'top 86%',
-      end: 'top 68%',
-      scrub: true,
-      onUpdate: (self) => scrubAnimation('jump_1_card', self.progress, TRANSITION_DURATION)
-    });
-
-    ScrollTrigger.create({
-      trigger: steps[0],
-      start: 'top 68%',
-      end: 'top center',
-      scrub: true,
-      onUpdate: (self) => scrubAnimation('enter_to_1_card', self.progress, TRANSITION_DURATION)
-    });
+    ScrollTrigger.create({ trigger: steps[0], start: 'top 86%', end: 'top 68%', scrub: true, onUpdate: (self) => scrubAnimation('jump_1_card', self.progress, TRANSITION_DURATION) });
+    ScrollTrigger.create({ trigger: steps[0], start: 'top 68%', end: 'top center', scrub: true, onUpdate: (self) => scrubAnimation('enter_to_1_card', self.progress, TRANSITION_DURATION) });
 
     steps.forEach((step, index) => {
       ScrollTrigger.create({
@@ -183,12 +227,6 @@
       }
     });
 
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'bottom 70%',
-      end: 'bottom top',
-      scrub: true,
-      onUpdate: (self) => scrubAnimation('last', self.progress, TRANSITION_DURATION)
-    });
+    ScrollTrigger.create({ trigger: section, start: 'bottom 70%', end: 'bottom top', scrub: true, onUpdate: (self) => scrubAnimation('last', self.progress, TRANSITION_DURATION) });
   });
 })();

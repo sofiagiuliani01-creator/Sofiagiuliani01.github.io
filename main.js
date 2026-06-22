@@ -1945,6 +1945,13 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (typeof riveInstance.scrub === "function") {
+          // In the canvas runtime, scrubbing is reliable only after the target
+          // animation has been bound to the instance. Without this warm-up,
+          // the standalone timeline clips (notably "traction" and "last") can
+          // remain on an empty frame and appear not to start.
+          if (typeof riveInstance.play === "function") {
+            riveInstance.play(resolvedName);
+          }
           riveInstance.scrub(resolvedName, clampedProgress * getRiveAnimationDuration(resolvedName));
           if (typeof riveInstance.pause === "function") riveInstance.pause(resolvedName);
           return;

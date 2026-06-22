@@ -14331,88 +14331,6 @@ body.app-page {
   overflow: visible !important;
 }
 
-#come-funziona .timeline-scene {
-  position: absolute;
-  inset: 0;
-  z-index: 80;
-  pointer-events: none;
-  overflow: visible !important;
-}
-
-#come-funziona .rive-character-layer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 240px;
-  height: 300px;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 1;
-  visibility: visible;
-  transform-origin: center center;
-  will-change: transform, width, height, opacity;
-  overflow: visible !important;
-}
-
-#come-funziona .rive-character-layer.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-#come-funziona .rive-character-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: transparent;
-  overflow: visible !important;
-}
-
-#come-funziona .timeline-step,
-#come-funziona .step-content,
-#come-funziona .step-row,
-#come-funziona .step-visual {
-  overflow: visible !important;
-}
-
-#come-funziona .timeline-step.rive-slot-active .step-visual {
-  opacity: 0;
-  visibility: hidden;
-}
-
-#come-funziona .rive-character-layer.is-step-5 {
-  width: 340px;
-  height: 380px;
-}
-
-@media (max-width: 900px) {
-  #come-funziona .rive-character-layer {
-    width: 170px;
-    height: 215px;
-  }
-
-  #come-funziona .rive-character-layer.is-step-5 {
-    width: 250px;
-    height: 290px;
-  }
-}
-
-@media (max-width: 520px) {
-  #come-funziona .rive-character-layer {
-    width: 140px;
-    height: 180px;
-  }
-
-  #come-funziona .rive-character-layer.is-step-5 {
-    width: 220px;
-    height: 260px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #come-funziona .timeline-scene {
-    display: none;
-  }
-}
 
 /* ==========================================================
    PAGINA CHI SONO — layout minimal e strategia chiara
@@ -17780,14 +17698,6 @@ body.app-page {
     linear-gradient(135deg, #0a161c 0%, #112022 54%, #070d13 100%);
 }
 
-#come-funziona .timeline-step.rive-slot-active .step-visual {
-  opacity: .38;
-  visibility: visible;
-}
-
-#come-funziona .timeline-step.rive-slot-active .step-generated-bg {
-  filter: saturate(.88) contrast(.88) brightness(.72);
-}
 
 /* === Home programmi conversion refresh: clean, simple, no glow === */
 .page-home #programmi .plans-conversion {

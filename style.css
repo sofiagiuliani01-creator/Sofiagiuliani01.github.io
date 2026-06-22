@@ -18210,3 +18210,21 @@ body.app-page {
     margin-left: 0;
   }
 }
+
+/* Rive scroll character: fixed point tied to the viewport center. */
+.character-rive-layer {
+  pointer-events: none;
+  z-index: 34;
+}
+
+.character-rive-wrap {
+  left: 0;
+  top: 0;
+  transform-origin: 50% 50%;
+}
+
+.character-rive-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}

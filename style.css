@@ -18300,3 +18300,45 @@ body.app-page {
     margin-left: 0;
   }
 }
+
+/* === Coaching pages: stronger conversion copy layout === */
+.page-program .program-compact-hero .hero-program-text h1 {
+  max-width: 14ch;
+}
+
+.page-program .program-score-row {
+  align-items: flex-start;
+}
+
+.page-program .program-score-row strong {
+  flex: 0 0 auto;
+}
+
+.page-program .program-score-row span {
+  max-width: 22ch;
+  line-height: 1.35;
+}
+
+.page-program .program-compare-table td {
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.page-program .program-compare-table td:first-child {
+  color: #0f172a;
+}
+
+.page-program .program-compare-table td:nth-child(n+2) {
+  font-weight: 700;
+  color: #334155;
+}
+
+@media (max-width: 900px) {
+  .page-program .program-compact-hero .hero-program-text h1 {
+    max-width: 100%;
+  }
+
+  .page-program .program-score-row span {
+    max-width: 28ch;
+  }
+}

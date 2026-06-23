@@ -105,6 +105,17 @@
 </section>
 <!-- STORYLINE: COME FUNZIONA -->
 <section class="section section-light" data-mobile-theme="flow" id="come-funziona">
+<div class="timeline-scene" aria-hidden="true">
+  <div id="riveCharacterLayer" class="rive-character-layer is-hidden">
+    <canvas
+      id="riveCharacterCanvas"
+      class="rive-character-canvas"
+      width="520"
+      height="520">
+    </canvas>
+  </div>
+</div>
+
 <div class="container-wide">
 <div class="section-header center">
 <h2>Un percorso lineare, spiegato in 5 step.</h2>
@@ -121,9 +132,7 @@
 <div class="step-content">
 <div class="step-row">
 <figure class="step-visual">
-<div class="step-rive-card" data-rive-card="0" role="img" aria-label="Animazione Rive step 1">
-  <canvas class="step-rive-canvas" data-rive-card-canvas></canvas>
-</div>
+<div class="step-generated-bg step-generated-bg--analysis" aria-hidden="true"></div>
 </figure>
 <div class="step-meta">
 <p class="step-kicker">STEP 01</p>
@@ -139,9 +148,7 @@
 <div class="step-content">
 <div class="step-row">
 <figure class="step-visual">
-<div class="step-rive-card" data-rive-card="1" role="img" aria-label="Animazione Rive step 2">
-  <canvas class="step-rive-canvas" data-rive-card-canvas></canvas>
-</div>
+<div class="step-generated-bg step-generated-bg--plan" aria-hidden="true"></div>
 </figure>
 <div class="step-meta">
 <p class="step-kicker">STEP 02</p>
@@ -157,9 +164,7 @@
 <div class="step-content">
 <div class="step-row">
 <figure class="step-visual">
-<div class="step-rive-card" data-rive-card="2" role="img" aria-label="Animazione Rive step 3">
-  <canvas class="step-rive-canvas" data-rive-card-canvas></canvas>
-</div>
+<div class="step-generated-bg step-generated-bg--project" aria-hidden="true"></div>
 </figure>
 <div class="step-meta">
 <p class="step-kicker">STEP 03</p>
@@ -175,9 +180,7 @@
 <div class="step-content">
 <div class="step-row">
 <figure class="step-visual">
-<div class="step-rive-card" data-rive-card="3" role="img" aria-label="Animazione Rive step 4">
-  <canvas class="step-rive-canvas" data-rive-card-canvas></canvas>
-</div>
+<div class="step-generated-bg step-generated-bg--monitor" aria-hidden="true"></div>
 </figure>
 <div class="step-meta">
 <p class="step-kicker">STEP 04</p>
@@ -193,9 +196,7 @@
 <div class="step-content">
 <div class="step-row">
 <figure class="step-visual">
-<div class="step-rive-card" data-rive-card="4" role="img" aria-label="Animazione Rive step 5">
-  <canvas class="step-rive-canvas" data-rive-card-canvas></canvas>
-</div>
+<div class="step-generated-bg step-generated-bg--autonomy" aria-hidden="true"></div>
 </figure>
 <div class="step-meta">
 <p class="step-kicker">STEP 05</p>
@@ -803,8 +804,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-<script src="https://unpkg.com/@rive-app/canvas@2.20.0"></script>
-<script src="scripts/character/character-rive-scroll-controller.js"></script>
+<script src="https://unpkg.com/@rive-app/canvas@2.31.4"></script>
 <script src="trustpilot.js"></script>
 <script src="main.js"></script>
 </body>

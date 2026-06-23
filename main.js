@@ -1815,6 +1815,336 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+(function initRiveCharacterTimelineDirector() {
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("come-funziona");
+    const layer = document.getElementById("riveCharacterLayer");
+    const canvas = document.getElementById("riveCharacterCanvas");
+
+    if (!section || !layer || !canvas) {
+      console.warn("[RIVE] Mancano section/layer/canvas.");
+      return;
+    }
+
+    if (!window.rive || !window.rive.Rive) {
+      console.warn("[RIVE] Runtime Rive non trovato.");
+      return;
+    }
+
+    if (!window.gsap) {
+      console.warn("[RIVE] GSAP non trovato.");
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timeline = section.querySelector(".timeline[data-timeline]");
+    const steps = timeline ? Array.from(timeline.querySelectorAll(".timeline-step")) : [];
+    const cta = section.querySelector(".timeline-cta .btn, .timeline-cta a");
+
+    if (!timeline || steps.length < 5 || !cta) {
+      console.warn("[RIVE] Timeline, step o CTA non trovati.");
+      return;
+    }
+
+    let riveInstance = null;
+    let currentAnimation = null;
+    let currentPhase = null;
+    let activeMoveTween = null;
+    let cardActionPlayback = null;
+
+    const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
+    const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
+    const startTimelineName = "traction";
+    const finalTimelineCandidates = ["last"];
+
+    function getAvailableRiveAnimations() {
+      if (!riveInstance) return [];
+      const candidates = [
+        riveInstance.animationNames,
+        riveInstance.animations,
+        riveInstance.contents?.animations
+      ];
+
+      for (const value of candidates) {
+        const source = typeof value === "function" ? value.call(riveInstance) : value;
+        const list = Array.isArray(source)
+          ? source
+          : source instanceof Set
+            ? Array.from(source)
+            : source && typeof source === "object"
+              ? Object.values(source)
+              : null;
+
+        if (!Array.isArray(list)) continue;
+        const names = list
+          .map((item) => (typeof item === "string" ? item : item?.name))
+          .filter(Boolean);
+        if (names.length) return names;
+      }
+
+      return [];
+    }
+
+    function resolveRiveTimeline(preferredName, fallbackNames = []) {
+      const available = getAvailableRiveAnimations();
+      const names = [preferredName, ...fallbackNames].filter(Boolean);
+      if (!available.length) return names[0];
+      return names.find((name) => available.includes(name)) || names[0];
+    }
+
+    function getFinalTimelineName() {
+      return resolveRiveTimeline(finalTimelineCandidates[0], finalTimelineCandidates.slice(1));
+    }
+
+    function getRiveAnimationDuration(name) {
+      const animations = riveInstance?.contents?.animations;
+      if (!Array.isArray(animations)) return 1;
+      const animation = animations.find((item) => item?.name === name);
+      const rawDuration = Number(
+        animation?.duration
+        ?? animation?.animation?.duration
+        ?? animation?.workEnd
+        ?? animation?.endTime
+      );
+
+      if (!Number.isFinite(rawDuration) || rawDuration <= 0) return 1;
+      return rawDuration > 100 ? rawDuration / 1000 : rawDuration;
+    }
+
+    function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
+    function getSlotForCard(card) { if (!card) return null; return (card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge") || card.querySelector(".step-content")); }
+    function showCharacter() { layer.classList.remove("is-hidden"); }
+    function hideCharacter() { layer.classList.add("is-hidden"); }
+    function setActiveSlotCard(index) { steps.forEach((step, i) => { step.classList.toggle("rive-slot-active", i === index); }); layer.classList.toggle("is-step-5", index === 4); try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
+    function clearActiveSlotCards() { steps.forEach((step) => step.classList.remove("rive-slot-active")); layer.classList.remove("is-step-5"); }
+    function getBarAnchor() {
+      const timelineRect = getLocalRect(timeline, section);
+      const line = timeline.querySelector(".timeline-line");
+      const lineRect = getLocalRect(line, section);
+      const fallbackX = Math.max(40, section.clientWidth * 0.15);
+      const x = lineRect ? lineRect.left + lineRect.width * 0.5 - layer.offsetWidth * 0.5 : fallbackX;
+      const y = timelineRect ? Math.max(8, timelineRect.top - layer.offsetHeight * 0.42) : 8;
+      return { x, y };
+    }
+    function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top + rect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
+    function forceRiveTimeline(name, progress = 0) {
+      if (!riveInstance || !name) return;
+
+      const resolvedName = resolveRiveTimeline(name);
+      const clampedProgress = gsap.utils.clamp(0, 1, progress);
+
+      try {
+        const isNewAnimation = currentAnimation !== resolvedName;
+
+        if (isNewAnimation) {
+          if (typeof riveInstance.stop === "function" && currentAnimation) {
+            riveInstance.stop(currentAnimation);
+          }
+          currentAnimation = resolvedName;
+        }
+
+        if (typeof riveInstance.scrub === "function") {
+          // In the canvas runtime, scrubbing is reliable only after the target
+          // animation has been bound to the instance. Warm it up only when the
+          // clip changes: replaying the same timeline on every frame makes the
+          // character restart continuously, which shows up as blinking/stutter.
+          if (isNewAnimation && typeof riveInstance.play === "function") {
+            riveInstance.play(resolvedName);
+          }
+          riveInstance.scrub(resolvedName, clampedProgress * getRiveAnimationDuration(resolvedName));
+          if (typeof riveInstance.pause === "function") riveInstance.pause(resolvedName);
+          return;
+        }
+
+        if (typeof riveInstance.play === "function") {
+          riveInstance.play(resolvedName);
+        }
+      } catch (error) {
+        console.warn("[RIVE] Impossibile sincronizzare timeline:", resolvedName, error);
+      }
+    }
+
+    function killActiveMotion() {
+      if (activeMoveTween) {
+        activeMoveTween.kill();
+        activeMoveTween = null;
+      }
+      gsap.killTweensOf(layer);
+    }
+
+    function setLayerAt(point) {
+      if (!point) return;
+      killActiveMotion();
+      gsap.set(layer, { x: point.x, y: point.y });
+      try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {}
+    }
+
+    function lerpPoint(from, to, progress) {
+      if (!from) return to;
+      if (!to) return from;
+      const p = gsap.utils.clamp(0, 1, progress);
+      return {
+        x: gsap.utils.interpolate(from.x, to.x, p),
+        y: gsap.utils.interpolate(from.y, to.y, p)
+      };
+    }
+
+    function getHybridCardActionProgress(state) {
+      if (!state?.isCardAction || !state.animation) {
+        cardActionPlayback = null;
+        return state?.animationProgress ?? 0;
+      }
+
+      const resolvedName = resolveRiveTimeline(state.animation);
+      const scrollProgress = gsap.utils.clamp(0, 1, state.animationProgress ?? 0);
+      const now = performance.now();
+
+      if (!cardActionPlayback || cardActionPlayback.phase !== state.phase || cardActionPlayback.animation !== resolvedName) {
+        cardActionPlayback = {
+          phase: state.phase,
+          animation: resolvedName,
+          startedAt: now - (scrollProgress * getRiveAnimationDuration(resolvedName) * 1000)
+        };
+      }
+
+      const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * 1000);
+      const timedProgress = gsap.utils.clamp(0, 1, (now - cardActionPlayback.startedAt) / durationMs);
+
+      // Le animazioni interne alle card avanzano anche a tempo reale: una volta
+      // raggiunto il centro della card possono completarsi senza dipendere da
+      // altro scroll. Se però l'utente scrolla più velocemente della durata
+      // della timeline Rive, il progresso scroll-linked resta prioritario.
+      return Math.max(scrollProgress, timedProgress);
+    }
+
+    function getScrollLinkedState() {
+      const vh = window.innerHeight || 800;
+      const sectionRect = section.getBoundingClientRect();
+      const ctaRect = cta.getBoundingClientRect();
+      const stepRects = steps.map((step) => step.getBoundingClientRect());
+      const screenCenterY = vh * 0.5;
+
+      if (sectionRect.top > vh * 0.9 || ctaRect.bottom < vh * -0.12) {
+        return { phase: "hidden", animation: null, point: null, activeIndex: null };
+      }
+
+      const anchors = [getBarAnchor(), ...steps.map((_, index) => getCardSlotAnchor(index)), getCtaAnchor()];
+      const triggers = [
+        sectionRect.top + vh * 0.14,
+        ...stepRects.map(getViewportCenterTrigger),
+        getViewportCenterTrigger(ctaRect)
+      ].map((value, index, arr) => {
+        if (index === 0) return value;
+        return Math.max(value, arr[index - 1] + 1);
+      });
+
+      let segment = 0;
+      while (segment < triggers.length - 1 && screenCenterY >= triggers[segment + 1]) segment += 1;
+
+      const start = triggers[segment];
+      const end = triggers[Math.min(segment + 1, triggers.length - 1)];
+      const progress = end > start ? gsap.utils.clamp(0, 1, (screenCenterY - start) / (end - start)) : 1;
+
+      if (segment === 0) {
+        const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.62));
+        if (progress < 0.38) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.38, point, activeIndex: null };
+        if (progress < 0.62) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: (progress - 0.38) / 0.24, point, activeIndex: null };
+        if (progress < 0.82) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.62) / 0.20, point: anchors[1], activeIndex: null };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.82) / 0.18, point: anchors[1], activeIndex: 0, isCardAction: true };
+      }
+
+      if (segment >= 5) {
+        const point = lerpPoint(anchors[5], anchors[6], progress);
+        return { phase: "last", animation: getFinalTimelineName(), animationProgress: progress, point, activeIndex: null };
+      }
+
+      const cardIndex = segment - 1;
+      const nextCardIndex = segment;
+      if (progress < 0.48) {
+        const isLastCard = cardIndex === steps.length - 1;
+        return {
+          phase: isLastCard ? "card_5_last" : `card_${cardIndex + 1}`,
+          animation: isLastCard ? getFinalTimelineName() : cardActions[cardIndex],
+          animationProgress: progress / 0.48,
+          point: anchors[segment],
+          activeIndex: cardIndex,
+          isCardAction: true
+        };
+      }
+      if (progress < 0.78) {
+        return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
+      }
+      return {
+        phase: `card_${nextCardIndex + 1}`,
+        animation: cardActions[nextCardIndex],
+        animationProgress: (progress - 0.78) / 0.22,
+        point: anchors[segment + 1],
+        activeIndex: nextCardIndex,
+        isCardAction: true
+      };
+    }
+
+    let raf = 0;
+    function applyScrollLinkedState() {
+      const state = getScrollLinkedState();
+      if (state.phase === "hidden" || !state.point) {
+        currentPhase = "hidden";
+        clearActiveSlotCards();
+        hideCharacter();
+        return;
+      }
+
+      showCharacter();
+      currentPhase = state.phase;
+      if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
+      else clearActiveSlotCards();
+      const animationProgress = getHybridCardActionProgress(state);
+      forceRiveTimeline(state.animation, animationProgress);
+      setLayerAt(state.point);
+
+      if (state.isCardAction && animationProgress < 1) {
+        requestAnimationFrame(onScroll);
+      }
+    }
+
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        applyScrollLinkedState();
+      });
+    }
+
+    function startDirector() {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      applyScrollLinkedState();
+    }
+
+    try {
+      riveInstance = new rive.Rive({
+        src: "omino_def.riv", canvas, autoplay: false,
+        onLoad: () => {
+          console.log("[RIVE] loaded");
+
+          try {
+            riveInstance.resizeDrawingSurfaceToCanvas();
+          } catch (error) {
+            console.warn("[RIVE] resize failed", error);
+          }
+
+          startDirector();
+        },
+        onLoadError: (error) => { console.warn("[RIVE] errore caricamento omino_def.riv", error); }
+      });
+    } catch (error) { console.warn("[RIVE] errore inizializzazione", error); }
+  });
+})();
+;
+
 // CHI SONO: storytelling narrativo guidato dallo scroll
 (() => {
   const page = document.querySelector('.page-chi-sono');

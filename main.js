@@ -2064,7 +2064,15 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (segment >= 5) {
-        const cardHoldEnd = 0.45;
+        // Dopo la quinta card, `last` deve essere una transizione visibile
+        // verso la CTA, non lo stato finale in cui il personaggio rimane
+        // bloccato. Anticipiamo quindi l'uscita da healthy_lifestyle_card e
+        // riserviamo la parte centrale del tratto Step 05 → CTA alla timeline
+        // Rive `last`; terminata la transizione, lasciamo fermo il suo ultimo
+        // frame senza riattivare healthy_lifestyle_card.
+        const cardHoldEnd = 0.18;
+        const lastTransitionEnd = 0.78;
+
         if (progress < cardHoldEnd) {
           return {
             phase: "card_5",
@@ -2076,18 +2084,23 @@ window.addEventListener('DOMContentLoaded', () => {
           };
         }
 
-        const finalProgress = (progress - cardHoldEnd) / (1 - cardHoldEnd);
-        const point = lerpPoint(anchors[5], anchors[6], finalProgress);
-        return { phase: "last", animation: getFinalTimelineName(), animationProgress: finalProgress, point, activeIndex: null };
+        const lastProgress = gsap.utils.clamp(0, 1, (progress - cardHoldEnd) / (lastTransitionEnd - cardHoldEnd));
+        const point = lerpPoint(anchors[5], anchors[6], lastProgress);
+        return {
+          phase: progress < lastTransitionEnd ? "last_transition" : "last_transition_done",
+          animation: getFinalTimelineName(),
+          animationProgress: lastProgress,
+          point,
+          activeIndex: null
+        };
       }
 
       const cardIndex = segment - 1;
       const nextCardIndex = segment;
       if (progress < 0.48) {
-        const isLastCard = cardIndex === steps.length - 1;
         return {
-          phase: isLastCard ? "card_5_last" : `card_${cardIndex + 1}`,
-          animation: isLastCard ? getFinalTimelineName() : cardActions[cardIndex],
+          phase: `card_${cardIndex + 1}`,
+          animation: cardActions[cardIndex],
           animationProgress: progress / 0.48,
           point: anchors[segment],
           activeIndex: cardIndex,

@@ -1928,7 +1928,14 @@ window.addEventListener('DOMContentLoaded', () => {
       return { x, y };
     }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
-    function getCtaAnchor() { const rect = getLocalRect(cta, section); if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; } return { x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5, y: rect.top + rect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function getCtaAnchor() {
+      const rect = getLocalRect(cta, section);
+      if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; }
+      return {
+        x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,
+        y: rect.top - layer.offsetHeight * 0.78
+      };
+    }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
     function forceRiveTimeline(name, progress = 0) {
       if (!riveInstance || !name) return;
@@ -2057,8 +2064,21 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (segment >= 5) {
-        const point = lerpPoint(anchors[5], anchors[6], progress);
-        return { phase: "last", animation: getFinalTimelineName(), animationProgress: progress, point, activeIndex: null };
+        const cardHoldEnd = 0.45;
+        if (progress < cardHoldEnd) {
+          return {
+            phase: "card_5",
+            animation: cardActions[4],
+            animationProgress: progress / cardHoldEnd,
+            point: anchors[5],
+            activeIndex: 4,
+            isCardAction: true
+          };
+        }
+
+        const finalProgress = (progress - cardHoldEnd) / (1 - cardHoldEnd);
+        const point = lerpPoint(anchors[5], anchors[6], finalProgress);
+        return { phase: "last", animation: getFinalTimelineName(), animationProgress: finalProgress, point, activeIndex: null };
       }
 
       const cardIndex = segment - 1;

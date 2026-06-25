@@ -1947,9 +1947,22 @@ window.addEventListener('DOMContentLoaded', () => {
         const isNewAnimation = currentAnimation !== resolvedName;
 
         if (isNewAnimation) {
+          const previousAnimation = currentAnimation;
+
           if (typeof riveInstance.stop === "function" && currentAnimation) {
             riveInstance.stop(currentAnimation);
           }
+
+          // La timeline `optimize_results_card` accende la grafica a barre blu
+          // della quarta card. Le timeline successive non ne animano sempre lo
+          // stato di visibilità, quindi il runtime Rive può conservarla sul
+          // canvas anche durante `4_to_5` e `healthy_lifestyle_card`. Quando
+          // usciamo dalla quarta card resettiamo l'artboard prima di agganciare
+          // la timeline successiva, così la grafica resta confinata alla card 04.
+          if (previousAnimation === cardActions[3] && typeof riveInstance.reset === "function") {
+            riveInstance.reset({ animations: resolvedName, autoplay: false });
+          }
+
           currentAnimation = resolvedName;
         }
 

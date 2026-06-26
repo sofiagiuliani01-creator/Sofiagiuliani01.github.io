@@ -1856,7 +1856,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
-    const finalTimelineCandidates = ["last"];
+    const finalTimelineCandidates = ["last", "last "];
 
     function getAvailableRiveAnimations() {
       if (!riveInstance) return [];
@@ -1890,7 +1890,13 @@ window.addEventListener('DOMContentLoaded', () => {
       const available = getAvailableRiveAnimations();
       const names = [preferredName, ...fallbackNames].filter(Boolean);
       if (!available.length) return names[0];
-      return names.find((name) => available.includes(name)) || names[0];
+
+      const exactMatch = names.find((name) => available.includes(name));
+      if (exactMatch) return exactMatch;
+
+      const normalizedNames = names.map((name) => name.trim().toLowerCase());
+      const normalizedMatch = available.find((name) => normalizedNames.includes(String(name).trim().toLowerCase()));
+      return normalizedMatch || names[0];
     }
 
     function getFinalTimelineName() {
@@ -1916,8 +1922,9 @@ window.addEventListener('DOMContentLoaded', () => {
     function getSlotForCard(card) { if (!card) return null; return (card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge") || card.querySelector(".step-content")); }
     function showCharacter() { layer.classList.remove("is-hidden"); }
     function hideCharacter() { layer.classList.add("is-hidden"); }
-    function setActiveSlotCard(index) { steps.forEach((step, i) => { step.classList.toggle("rive-slot-active", i === index); }); layer.classList.toggle("is-step-5", index === 4); try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
+    function setActiveSlotCard(index) { steps.forEach((step, i) => { step.classList.toggle("rive-slot-active", i === index); }); layer.classList.toggle("is-step-5", index === 4); layer.classList.remove("is-final-transition"); try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {} }
     function clearActiveSlotCards() { steps.forEach((step) => step.classList.remove("rive-slot-active")); layer.classList.remove("is-step-5"); }
+    function setFinalTransitionMode(isFinal) { layer.classList.toggle("is-final-transition", Boolean(isFinal)); }
     function getBarAnchor() {
       const timelineRect = getLocalRect(timeline, section);
       const line = timeline.querySelector(".timeline-line");
@@ -2139,6 +2146,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (state.phase === "hidden" || !state.point) {
         currentPhase = "hidden";
         clearActiveSlotCards();
+        setFinalTransitionMode(false);
         hideCharacter();
         return;
       }
@@ -2147,6 +2155,7 @@ window.addEventListener('DOMContentLoaded', () => {
       currentPhase = state.phase;
       if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
       else clearActiveSlotCards();
+      setFinalTransitionMode(state.phase === "last_transition" || state.phase === "last_transition_done");
       const animationProgress = getHybridCardActionProgress(state);
       forceRiveTimeline(state.animation, animationProgress);
       setLayerAt(state.point);

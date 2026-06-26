@@ -2415,3 +2415,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Nessuna azione necessaria: la precompilazione è solo un supporto UX.
   }
 });
+
+/* === 2026-06 fix: timeline progress reaches every card and final step === */
+(function () {
+  const section = document.querySelector('#come-funziona');
+  const timeline = section && section.querySelector('.timeline[data-timeline]');
+  const steps = timeline ? Array.from(timeline.querySelectorAll('.timeline-step')) : [];
+  const lineBase = timeline && (timeline.querySelector('.timeline-line-base') || timeline.querySelector('.timeline-line'));
+  if (!section || !timeline || !steps.length || !lineBase) return;
+
+  let raf = 0;
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+  function getStepCenter(step) {
+    const box = step.getBoundingClientRect();
+    return box.top + box.height / 2;
+  }
+
+  function paintTimeline() {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
+    const triggerY = viewportHeight * 0.58;
+    const firstCenter = getStepCenter(steps[0]);
+    const lastCenter = getStepCenter(steps[steps.length - 1]);
+    const span = Math.max(1, lastCenter - firstCenter);
+    const progress = steps.length === 1 ? 1 : clamp((triggerY - firstCenter) / span, 0, 1);
+    const activeIndex = clamp(Math.round(progress * (steps.length - 1)), 0, steps.length - 1);
+
+    timeline.style.setProperty('--tl-progress', progress.toFixed(4));
+
+    steps.forEach((step, index) => {
+      const isPassed = index <= activeIndex;
+      step.classList.toggle('is-visible', isPassed);
+      step.classList.toggle('is-revealed', isPassed);
+      step.classList.toggle('is-active', index === activeIndex);
+    });
+  }
+
+  function schedulePaint() {
+    if (raf) return;
+    raf = window.requestAnimationFrame(() => {
+      raf = 0;
+      paintTimeline();
+    });
+  }
+
+  paintTimeline();
+  window.addEventListener('scroll', schedulePaint, { passive: true });
+  window.addEventListener('resize', schedulePaint, { passive: true });
+  window.addEventListener('load', schedulePaint, { once: true });
+})();

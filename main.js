@@ -2190,7 +2190,7 @@ window.addEventListener('DOMContentLoaded', () => {
       forceRiveTimeline(state.animation, animationProgress);
       setLayerAt(state.point);
 
-      if (state.isCardAction) {
+      if (state.isCardAction && animationProgress < 1) {
         requestAnimationFrame(onScroll);
       }
     }

@@ -1856,7 +1856,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
-    const finalTimelineCandidates = ["last", "last "];
+    const finalTimelineCandidates = ["last ", "last"];
 
     function getAvailableRiveAnimations() {
       if (!riveInstance) return [];
@@ -1960,13 +1960,12 @@ window.addEventListener('DOMContentLoaded', () => {
             riveInstance.stop(currentAnimation);
           }
 
-          // La timeline `optimize_results_card` accende la grafica a barre blu
-          // della quarta card. Le timeline successive non ne animano sempre lo
-          // stato di visibilità, quindi il runtime Rive può conservarla sul
-          // canvas anche durante `4_to_5` e `healthy_lifestyle_card`. Quando
-          // usciamo dalla quarta card resettiamo l'artboard prima di agganciare
-          // la timeline successiva, così la grafica resta confinata alla card 04.
-          if (previousAnimation === cardActions[3] && typeof riveInstance.reset === "function") {
+          // Alcune timeline Rive lasciano elementi/stati visivi sul canvas.
+          // Quando usciamo dalle card 04/05 resettiamo l'artboard prima di
+          // agganciare la timeline successiva: questo evita che la card 04 resti
+          // visibile dopo `optimize_results_card` e che `healthy_lifestyle_card`
+          // continui a coprire la transizione finale `last ` verso la CTA.
+          if ((previousAnimation === cardActions[3] || previousAnimation === cardActions[4]) && typeof riveInstance.reset === "function") {
             riveInstance.reset({ animations: resolvedName, autoplay: false });
           }
 

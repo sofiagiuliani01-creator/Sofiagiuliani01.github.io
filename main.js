@@ -2094,8 +2094,8 @@ window.addEventListener('DOMContentLoaded', () => {
         // riserviamo la parte centrale del tratto Step 05 → CTA alla timeline
         // Rive `last`; terminata la transizione, lasciamo fermo il suo ultimo
         // frame senza riattivare healthy_lifestyle_card.
-        const cardHoldEnd = 0.18;
-        const lastTransitionEnd = 0.78;
+        const cardHoldEnd = 0.14;
+        const lastTransitionEnd = 0.64;
 
         if (progress < cardHoldEnd) {
           return {

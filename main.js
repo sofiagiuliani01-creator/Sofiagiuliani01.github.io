@@ -1935,25 +1935,13 @@ window.addEventListener('DOMContentLoaded', () => {
       };
     }
 
-    function isLoopingCardTimeline(name) {
-      const resolvedName = resolveRiveTimeline(name);
-      return cardActions.some((action) => resolveRiveTimeline(action) === resolvedName);
-    }
-
     function getRiveAnimationDuration(name) {
-      const timing = getRiveAnimationTiming(name);
-      // Le timeline Rive usate in loop sulle card hanno la parte disegnata
-      // esportata nella prima metà del work area. Se usiamo tutta la durata
-      // metadata, il personaggio completa il giro a metà e poi resta vuoto /
-      // invisibile fino al riavvio. Per i loop calcoliamo quindi il tempo
-      // reale sul tratto visibile, così ogni giro resta presente fino alla fine.
-      return timing.duration * (isLoopingCardTimeline(name) ? 0.5 : 1);
+      return getRiveAnimationTiming(name).duration;
     }
 
     function getRiveScrubTime(name, progress) {
       const timing = getRiveAnimationTiming(name);
-      const visibleDuration = timing.duration * (isLoopingCardTimeline(name) ? 0.5 : 1);
-      return timing.start + (gsap.utils.clamp(0, 1, progress) * visibleDuration);
+      return timing.start + (gsap.utils.clamp(0, 1, progress) * timing.duration);
     }
 
     function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
@@ -2078,12 +2066,12 @@ window.addEventListener('DOMContentLoaded', () => {
       const elapsedProgress = (now - cardActionPlayback.startedAt) / durationMs;
       const scrollIsSettled = now - lastScrollMoveAt > 140;
 
-      // Solo le timeline interne alle card girano a tempo reale: quando lo
-      // scroll si ferma sulla card attiva, la timeline completa il primo giro
-      // e poi riparte in loop finché l'utente non scrolla di nuovo. Le timeline
-      // di transizione, inclusa `last`, restano invece scroll-linked.
+      // Le timeline interne alle card devono rispettare il work area esportato
+      // in Rive: avanzano a tempo reale fino al 100%, poi restano ferme
+      // sull'ultimo frame invece di ricominciare in loop. Le timeline di
+      // transizione, inclusa `last`, restano invece scroll-linked.
       if (scrollIsSettled && elapsedProgress >= 1) {
-        return elapsedProgress % 1;
+        return 1;
       }
 
       return Math.max(scrollProgress, gsap.utils.clamp(0, 1, elapsedProgress));

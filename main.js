@@ -1602,25 +1602,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function progressByScroll() {
     const vh = window.innerHeight || 800;
     const triggerY = vh * 0.58;
-    const centers = steps.map((step) => {
-      const r = step.getBoundingClientRect();
-      return r.top + r.height / 2;
-    });
+    const lineBox = timeline.getBoundingClientRect();
+    const stepBoxes = steps.map((step) => step.getBoundingClientRect());
 
     if (steps.length === 1) return { progress: 1, active: 0 };
-    if (triggerY <= centers[0]) return { progress: 0, active: 0 };
-    if (triggerY >= centers[centers.length - 1]) return { progress: 1, active: centers.length - 1 };
 
-    for (let i = 0; i < centers.length - 1; i += 1) {
-      const a = centers[i];
-      const b = centers[i + 1];
-      if (triggerY >= a && triggerY <= b) {
-        const t = clamp((triggerY - a) / Math.max(1, b - a), 0, 1);
-        const p = (i + t) / (centers.length - 1);
-        return { progress: p, active: Math.round((centers.length - 1) * p) };
-      }
-    }
-    return { progress: 0, active: 0 };
+    let active = 0;
+    stepBoxes.forEach((box, index) => {
+      if (box.top <= triggerY) active = index;
+    });
+
+    const firstBox = stepBoxes[0];
+    const lastBox = stepBoxes[stepBoxes.length - 1];
+
+    if (triggerY <= firstBox.top) return { progress: 0, active: 0 };
+    if (triggerY >= lastBox.bottom) return { progress: 1, active: steps.length - 1 };
+
+    const activeBox = stepBoxes[active];
+    const activeCardEnd = Math.min(activeBox.bottom, lineBox.bottom);
+    const rawProgress = (activeCardEnd - lineBox.top) / Math.max(1, lineBox.height);
+
+    return {
+      progress: clamp(rawProgress, 0, 1),
+      active
+    };
   }
 
   function paint() {

@@ -1910,19 +1910,33 @@ window.addEventListener('DOMContentLoaded', () => {
       return resolveRiveTimeline(finalTimelineCandidates[0], finalTimelineCandidates.slice(1));
     }
 
-    function getRiveAnimationDuration(name) {
+    function getRiveAnimationTiming(name) {
+      const fallback = { start: 0, duration: 1 };
       const animations = riveInstance?.contents?.animations;
-      if (!Array.isArray(animations)) return 1;
+      if (!Array.isArray(animations)) return fallback;
+
       const animation = animations.find((item) => item?.name === name);
-      const rawDuration = Number(
-        animation?.duration
-        ?? animation?.animation?.duration
-        ?? animation?.workEnd
-        ?? animation?.endTime
+      if (!animation) return fallback;
+
+      const start = Number(animation?.workStart ?? animation?.startTime ?? 0);
+      const end = Number(animation?.workEnd ?? animation?.endTime);
+      const explicitDuration = Number(animation?.duration ?? animation?.animation?.duration);
+      const rangedDuration = Number.isFinite(start) && Number.isFinite(end) ? end - start : NaN;
+      const duration = Math.max(
+        Number.isFinite(rangedDuration) ? rangedDuration : 0,
+        Number.isFinite(explicitDuration) ? explicitDuration : 0
       );
 
-      if (!Number.isFinite(rawDuration) || rawDuration <= 0) return 1;
-      return rawDuration > 100 ? rawDuration / 1000 : rawDuration;
+      if (!Number.isFinite(duration) || duration <= 0) return fallback;
+
+      return {
+        start: Number.isFinite(start) && start > 0 ? start : 0,
+        duration
+      };
+    }
+
+    function getRiveAnimationDuration(name) {
+      return getRiveAnimationTiming(name).duration;
     }
 
     function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
@@ -1987,7 +2001,8 @@ window.addEventListener('DOMContentLoaded', () => {
           if (isNewAnimation && typeof riveInstance.play === "function") {
             riveInstance.play(resolvedName);
           }
-          riveInstance.scrub(resolvedName, clampedProgress * getRiveAnimationDuration(resolvedName));
+          const timing = getRiveAnimationTiming(resolvedName);
+          riveInstance.scrub(resolvedName, timing.start + (clampedProgress * timing.duration));
           if (typeof riveInstance.pause === "function") riveInstance.pause(resolvedName);
           return;
         }

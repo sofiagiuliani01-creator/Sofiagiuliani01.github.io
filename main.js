@@ -2446,19 +2446,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let raf = 0;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
-  function getStepCenter(step) {
-    const box = step.getBoundingClientRect();
-    return box.top + box.height / 2;
+  function getStepMetrics() {
+    return steps.map((step) => step.getBoundingClientRect());
   }
 
   function paintTimeline() {
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
     const triggerY = viewportHeight * 0.58;
-    const firstCenter = getStepCenter(steps[0]);
-    const lastCenter = getStepCenter(steps[steps.length - 1]);
-    const span = Math.max(1, lastCenter - firstCenter);
-    const progress = steps.length === 1 ? 1 : clamp((triggerY - firstCenter) / span, 0, 1);
-    const activeIndex = clamp(Math.round(progress * (steps.length - 1)), 0, steps.length - 1);
+    const stepBoxes = getStepMetrics();
+    const firstTop = stepBoxes[0].top;
+    const lastBottom = stepBoxes[stepBoxes.length - 1].bottom;
+    const span = Math.max(1, lastBottom - firstTop);
+    const progress = steps.length === 1 ? 1 : clamp((triggerY - firstTop) / span, 0, 1);
+
+    let activeIndex = 0;
+    stepBoxes.forEach((box, index) => {
+      const cardProgress = clamp((triggerY - box.top) / Math.max(1, box.height), 0, 1);
+      if (cardProgress >= 0.5) activeIndex = index;
+    });
 
     timeline.style.setProperty('--tl-progress', progress.toFixed(4));
 

@@ -18312,3 +18312,12 @@ body.app-page {
     margin-left: 0;
   }
 }
+
+/* === 2026-06 hard fix: timeline fill spans full card stack === */
+#come-funziona .timeline-line-active {
+  top: 8% !important;
+  bottom: 8% !important;
+  height: auto !important;
+  transform-origin: top center !important;
+  transform: scaleY(var(--tl-progress, 0)) !important;
+}

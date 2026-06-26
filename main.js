@@ -1857,6 +1857,8 @@ window.addEventListener('DOMContentLoaded', () => {
     let currentPhase = null;
     let activeMoveTween = null;
     let cardActionPlayback = null;
+    let lastScrollY = window.scrollY || window.pageYOffset || 0;
+    let lastScrollMoveAt = performance.now();
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
@@ -2032,23 +2034,28 @@ window.addEventListener('DOMContentLoaded', () => {
       const resolvedName = resolveRiveTimeline(state.animation);
       const scrollProgress = gsap.utils.clamp(0, 1, state.animationProgress ?? 0);
       const now = performance.now();
+      const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * 1000);
 
       if (!cardActionPlayback || cardActionPlayback.phase !== state.phase || cardActionPlayback.animation !== resolvedName) {
         cardActionPlayback = {
           phase: state.phase,
           animation: resolvedName,
-          startedAt: now - (scrollProgress * getRiveAnimationDuration(resolvedName) * 1000)
+          startedAt: now - (scrollProgress * durationMs)
         };
       }
 
-      const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * 1000);
-      const timedProgress = gsap.utils.clamp(0, 1, (now - cardActionPlayback.startedAt) / durationMs);
+      const elapsedProgress = (now - cardActionPlayback.startedAt) / durationMs;
+      const scrollIsSettled = now - lastScrollMoveAt > 140;
 
-      // Le animazioni interne alle card avanzano anche a tempo reale: una volta
-      // raggiunto il centro della card possono completarsi senza dipendere da
-      // altro scroll. Se però l'utente scrolla più velocemente della durata
-      // della timeline Rive, il progresso scroll-linked resta prioritario.
-      return Math.max(scrollProgress, timedProgress);
+      // Solo le timeline interne alle card girano a tempo reale: quando lo
+      // scroll si ferma sulla card attiva, la timeline completa il primo giro
+      // e poi riparte in loop finché l'utente non scrolla di nuovo. Le timeline
+      // di transizione, inclusa `last`, restano invece scroll-linked.
+      if (scrollIsSettled && elapsedProgress >= 1) {
+        return elapsedProgress % 1;
+      }
+
+      return Math.max(scrollProgress, gsap.utils.clamp(0, 1, elapsedProgress));
     }
 
     function getScrollLinkedState() {
@@ -2164,12 +2171,18 @@ window.addEventListener('DOMContentLoaded', () => {
       forceRiveTimeline(state.animation, animationProgress);
       setLayerAt(state.point);
 
-      if (state.isCardAction && animationProgress < 1) {
+      if (state.isCardAction) {
         requestAnimationFrame(onScroll);
       }
     }
 
     function onScroll() {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0;
+      if (Math.abs(currentScrollY - lastScrollY) > 0.5) {
+        lastScrollY = currentScrollY;
+        lastScrollMoveAt = performance.now();
+      }
+
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;

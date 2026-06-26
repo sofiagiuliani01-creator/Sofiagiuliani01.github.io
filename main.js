@@ -1935,8 +1935,25 @@ window.addEventListener('DOMContentLoaded', () => {
       };
     }
 
+    function isLoopingCardTimeline(name) {
+      const resolvedName = resolveRiveTimeline(name);
+      return cardActions.some((action) => resolveRiveTimeline(action) === resolvedName);
+    }
+
     function getRiveAnimationDuration(name) {
-      return getRiveAnimationTiming(name).duration;
+      const timing = getRiveAnimationTiming(name);
+      // Le timeline Rive usate in loop sulle card hanno la parte disegnata
+      // esportata nella prima metà del work area. Se usiamo tutta la durata
+      // metadata, il personaggio completa il giro a metà e poi resta vuoto /
+      // invisibile fino al riavvio. Per i loop calcoliamo quindi il tempo
+      // reale sul tratto visibile, così ogni giro resta presente fino alla fine.
+      return timing.duration * (isLoopingCardTimeline(name) ? 0.5 : 1);
+    }
+
+    function getRiveScrubTime(name, progress) {
+      const timing = getRiveAnimationTiming(name);
+      const visibleDuration = timing.duration * (isLoopingCardTimeline(name) ? 0.5 : 1);
+      return timing.start + (gsap.utils.clamp(0, 1, progress) * visibleDuration);
     }
 
     function getLocalRect(el, container) { if (!el || !container) return null; const er = el.getBoundingClientRect(); const cr = container.getBoundingClientRect(); return { left: er.left - cr.left, top: er.top - cr.top, width: er.width, height: er.height, right: er.right - cr.left, bottom: er.bottom - cr.top }; }
@@ -2001,8 +2018,7 @@ window.addEventListener('DOMContentLoaded', () => {
           if (isNewAnimation && typeof riveInstance.play === "function") {
             riveInstance.play(resolvedName);
           }
-          const timing = getRiveAnimationTiming(resolvedName);
-          riveInstance.scrub(resolvedName, timing.start + (clampedProgress * timing.duration));
+          riveInstance.scrub(resolvedName, getRiveScrubTime(resolvedName, clampedProgress));
           if (typeof riveInstance.pause === "function") riveInstance.pause(resolvedName);
           return;
         }

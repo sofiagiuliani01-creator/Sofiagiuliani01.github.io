@@ -1861,6 +1861,13 @@ window.addEventListener('DOMContentLoaded', () => {
     let lastScrollMoveAt = performance.now();
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
+    const cardActionDurations = {
+      card_1_action: 2.10,
+      working_at_desk: 3,
+      progress_monitor_card: 4.19,
+      optimize_results_card: 5,
+      healthy_lifestyle_card: 5
+    };
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
     const finalTimelineCandidates = ["last ", "last"];
@@ -1936,7 +1943,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function getRiveAnimationDuration(name) {
-      return getRiveAnimationTiming(name).duration;
+      const resolvedName = resolveRiveTimeline(name);
+      const fixedCardDuration = cardActionDurations[resolvedName] ?? cardActionDurations[name];
+      if (Number.isFinite(fixedCardDuration) && fixedCardDuration > 0) return fixedCardDuration;
+      return getRiveAnimationTiming(resolvedName).duration;
     }
 
     function getRiveScrubTime(name, progress) {
@@ -2051,7 +2061,6 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       const resolvedName = resolveRiveTimeline(state.animation);
-      const scrollProgress = gsap.utils.clamp(0, 1, state.animationProgress ?? 0);
       const now = performance.now();
       const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * 1000);
 
@@ -2059,22 +2068,18 @@ window.addEventListener('DOMContentLoaded', () => {
         cardActionPlayback = {
           phase: state.phase,
           animation: resolvedName,
-          startedAt: now - (scrollProgress * durationMs)
+          startedAt: now
         };
       }
 
       const elapsedProgress = (now - cardActionPlayback.startedAt) / durationMs;
-      const scrollIsSettled = now - lastScrollMoveAt > 140;
 
-      // Le timeline interne alle card devono rispettare il work area esportato
-      // in Rive: avanzano a tempo reale fino al 100%, poi restano ferme
-      // sull'ultimo frame invece di ricominciare in loop. Le timeline di
-      // transizione, inclusa `last`, restano invece scroll-linked.
-      if (scrollIsSettled && elapsedProgress >= 1) {
-        return 1;
-      }
-
-      return Math.max(scrollProgress, gsap.utils.clamp(0, 1, elapsedProgress));
+      // Le timeline interne alle card devono progredire a tempo reale con le
+      // durate richieste (card_1_action 2.10s, working_at_desk 3s,
+      // progress_monitor_card 4.19s, optimize_results_card 5s,
+      // healthy_lifestyle_card 5s). Lo scroll decide quale card è attiva, ma
+      // non può accelerare il playback della timeline interna della card.
+      return gsap.utils.clamp(0, 1, elapsedProgress);
     }
 
     function getScrollLinkedState() {

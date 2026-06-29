@@ -18321,3 +18321,25 @@ body.app-page {
   transform-origin: top center !important;
   transform: scaleY(var(--tl-progress, 0)) !important;
 }
+
+/* === 2026-06 tune: calmer timeline cards and earlier scroll reveal === */
+#come-funziona .step-illu .s-dot,
+#come-funziona .step-illu .s-spark,
+#come-funziona .step-illu .s-accent{
+  animation-duration: 7.5s !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+@keyframes stepPulse{
+  0%,100%{ transform: scale(1); opacity: .86; }
+  50%{ transform: scale(1.025); opacity: .96; }
+}
+
+#come-funziona .timeline-step{
+  transition: opacity .24s ease, transform .24s ease !important;
+}
+
+#come-funziona .timeline-step:not(.is-visible){
+  opacity: .58 !important;
+  transform: translateY(10px) scale(.995) !important;
+}

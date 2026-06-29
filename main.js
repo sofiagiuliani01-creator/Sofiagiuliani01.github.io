@@ -2526,7 +2526,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function paintTimeline() {
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
-    const triggerY = viewportHeight * 0.58;
+    const triggerY = viewportHeight * 0.78;
     const stepBoxes = getStepMetrics();
     const firstTop = stepBoxes[0].top;
     const lastBottom = stepBoxes[stepBoxes.length - 1].bottom;
@@ -2536,7 +2536,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeIndex = 0;
     stepBoxes.forEach((box, index) => {
       const cardProgress = clamp((triggerY - box.top) / Math.max(1, box.height), 0, 1);
-      if (cardProgress >= 0.5) activeIndex = index;
+      if (cardProgress >= 0.18) activeIndex = index;
     });
 
     timeline.style.setProperty('--tl-progress', progress.toFixed(4));

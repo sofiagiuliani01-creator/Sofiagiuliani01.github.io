@@ -1980,11 +1980,12 @@ window.addEventListener('DOMContentLoaded', () => {
       };
     }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
-    function forceRiveTimeline(name, progress = 0) {
+    function forceRiveTimeline(name, progress = 0, options = {}) {
       if (!riveInstance || !name) return;
 
       const resolvedName = resolveRiveTimeline(name);
       const clampedProgress = gsap.utils.clamp(0, 1, progress);
+      const useNativePlayback = Boolean(options.nativePlayback);
 
       try {
         const isNewAnimation = currentAnimation !== resolvedName;
@@ -2006,6 +2007,19 @@ window.addEventListener('DOMContentLoaded', () => {
           }
 
           currentAnimation = resolvedName;
+        }
+
+        if (useNativePlayback) {
+          // Le action interne delle card devono girare alla velocità nativa di
+          // Rive: le durate fornite sono la durata reale del clip, non un tempo
+          // su cui riscalare/scrubbare metà timeline. Quando una card diventa
+          // attiva avviamo quindi il clip e lo lasciamo scorrere normalmente,
+          // senza pause/scrub frame-by-frame che possono farlo sembrare
+          // rallentato o bloccarlo prima della fine.
+          if (isNewAnimation && typeof riveInstance.play === "function") {
+            riveInstance.play(resolvedName);
+          }
+          return;
         }
 
         if (typeof riveInstance.scrub === "function") {
@@ -2068,8 +2082,15 @@ window.addEventListener('DOMContentLoaded', () => {
         cardActionPlayback = {
           phase: state.phase,
           animation: resolvedName,
-          startedAt: now
+          startedAt: now,
+          durationMs,
+          point: state.point,
+          activeIndex: state.activeIndex
         };
+      } else {
+        cardActionPlayback.durationMs = durationMs;
+        cardActionPlayback.point = state.point;
+        cardActionPlayback.activeIndex = state.activeIndex;
       }
 
       const elapsedProgress = (now - cardActionPlayback.startedAt) / durationMs;
@@ -2080,6 +2101,29 @@ window.addEventListener('DOMContentLoaded', () => {
       // healthy_lifestyle_card 5s). Lo scroll decide quale card è attiva, ma
       // non può accelerare il playback della timeline interna della card.
       return gsap.utils.clamp(0, 1, elapsedProgress);
+    }
+
+    function getLockedCardActionState(candidateState) {
+      if (!cardActionPlayback || candidateState?.phase === cardActionPlayback.phase) return candidateState;
+
+      const elapsed = performance.now() - cardActionPlayback.startedAt;
+      if (elapsed >= cardActionPlayback.durationMs) {
+        cardActionPlayback = null;
+        return candidateState;
+      }
+
+      // Se lo scroll passa oltre una card prima che la sua action sia finita,
+      // manteniamo in scena quella card fino alla fine reale del clip Rive.
+      // Così l'azione si vede completa alla velocità originale, invece di
+      // tagliarsi a metà per entrare subito nella transizione successiva.
+      return {
+        phase: cardActionPlayback.phase,
+        animation: cardActionPlayback.animation,
+        animationProgress: elapsed / cardActionPlayback.durationMs,
+        point: cardActionPlayback.point,
+        activeIndex: cardActionPlayback.activeIndex,
+        isCardAction: true
+      };
     }
 
     function getScrollLinkedState() {
@@ -2177,7 +2221,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let raf = 0;
     function applyScrollLinkedState() {
-      const state = getScrollLinkedState();
+      const state = getLockedCardActionState(getScrollLinkedState());
       if (state.phase === "hidden" || !state.point) {
         currentPhase = "hidden";
         clearActiveSlotCards();
@@ -2192,7 +2236,7 @@ window.addEventListener('DOMContentLoaded', () => {
       else clearActiveSlotCards();
       setFinalTransitionMode(state.phase === "last_transition" || state.phase === "last_transition_done");
       const animationProgress = getHybridCardActionProgress(state);
-      forceRiveTimeline(state.animation, animationProgress);
+      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction) });
       setLayerAt(state.point);
 
       if (state.isCardAction && animationProgress < 1) {

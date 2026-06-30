@@ -1861,6 +1861,8 @@ window.addEventListener('DOMContentLoaded', () => {
     let lastScrollMoveAt = performance.now();
     let activeSlotIndex = null;
     let isFinalTransitionMode = false;
+    let finalTransitionScrubMode = false;
+    let lastFinalTransitionProgress = null;
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const cardActionDurations = {
@@ -2266,10 +2268,24 @@ window.addEventListener('DOMContentLoaded', () => {
       else clearActiveSlotCards();
       setFinalTransitionMode(state.phase === "last_transition" || state.phase === "last_transition_done");
       const animationProgress = getHybridCardActionProgress(state);
+      const isFinalTransition = Boolean(state.isFinalTransition);
+
+      if (isFinalTransition) {
+        const enteredFinalFromJump = lastFinalTransitionProgress === null && animationProgress > 0.08;
+        const reversedInsideFinal = lastFinalTransitionProgress !== null && animationProgress < lastFinalTransitionProgress - 0.015;
+        finalTransitionScrubMode = finalTransitionScrubMode || enteredFinalFromJump || reversedInsideFinal;
+        lastFinalTransitionProgress = animationProgress;
+      } else {
+        finalTransitionScrubMode = false;
+        lastFinalTransitionProgress = null;
+      }
+
       // La timeline finale `last` deve rispettare la durata nativa impostata
-      // dentro Rive. Scrubbarla con lo scroll la tagliava circa a meta' clip
-      // quando i metadati di durata non erano esposti dal runtime canvas.
-      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction || state.isFinalTransition) });
+      // dentro Rive quando ci si arriva linearmente da Step 05. Se invece la
+      // pagina viene ripristinata o l'utente salta/torna dentro il tratto gia'
+      // avanzato, lo scrub conserva la posa coerente con la posizione CTA.
+      const shouldUseFinalNativePlayback = isFinalTransition && !finalTransitionScrubMode;
+      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction || shouldUseFinalNativePlayback) });
       setLayerAt(state.point);
 
       // Durante le action native Rive non serve forzare un loop JS continuo:

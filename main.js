@@ -1863,6 +1863,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let isFinalTransitionMode = false;
     let finalTransitionScrubMode = false;
     let lastFinalTransitionProgress = null;
+    let finalButtonActionPlayback = null;
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const cardActionDurations = {
@@ -2106,7 +2107,43 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function getHybridCardActionProgress(state) {
-      if (!state?.isCardAction || !state.animation) {
+      if (!state?.animation) {
+        cardActionPlayback = null;
+        finalButtonActionPlayback = null;
+        return state?.animationProgress ?? 0;
+      }
+
+      if (state.isFinalButtonAction) {
+        cardActionPlayback = null;
+        const resolvedName = resolveRiveTimeline(state.animation);
+        const now = performance.now();
+        const startProgress = gsap.utils.clamp(0, 1, state.animationProgress ?? 0);
+        const remainingProgress = Math.max(0.001, 1 - startProgress);
+        const durationMs = Math.max(1, getRiveAnimationDuration(resolvedName) * remainingProgress * 1000);
+
+        if (!finalButtonActionPlayback || finalButtonActionPlayback.phase !== state.phase || finalButtonActionPlayback.animation !== resolvedName) {
+          finalButtonActionPlayback = {
+            phase: state.phase,
+            animation: resolvedName,
+            startedAt: now,
+            durationMs,
+            startProgress
+          };
+        } else {
+          finalButtonActionPlayback.durationMs = durationMs;
+        }
+
+        const elapsedProgress = (now - finalButtonActionPlayback.startedAt) / finalButtonActionPlayback.durationMs;
+        return gsap.utils.clamp(
+          finalButtonActionPlayback.startProgress,
+          1,
+          finalButtonActionPlayback.startProgress + (elapsedProgress * (1 - finalButtonActionPlayback.startProgress))
+        );
+      }
+
+      finalButtonActionPlayback = null;
+
+      if (!state.isCardAction) {
         cardActionPlayback = null;
         return state?.animationProgress ?? 0;
       }
@@ -2199,19 +2236,13 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (segment >= 5) {
-        // Dopo la quinta card, `last` deve essere una transizione visibile
-        // verso la CTA, non lo stato finale in cui il personaggio rimane
-        // bloccato. Anticipiamo quindi l'uscita da healthy_lifestyle_card e
-        // riserviamo la parte centrale del tratto Step 05 → CTA alla timeline
-        // Rive `last` su tutto lo spazio di scroll rimanente: in questo modo
-        // la transizione finale non viene compressa a circa metà del tratto
-        // Step 05 → CTA e resta visibile per la sua durata completa.
+        // La timeline Rive `last` contiene due momenti distinti:
+        // 1) il salto/trasferimento verso la CTA, che deve restare legato allo
+        //    scroll come una vera timeline di transizione;
+        // 2) l'inizio della posa sdraiata sul bottone, che invece deve partire
+        //    solo quando l'omino è già effettivamente appoggiato alla CTA, come
+        //    succede per le action interne delle card.
         const cardHoldEnd = 0.14;
-        const lastTransitionEnd = 1;
-        // La posa sdraiata della timeline `last` inizia prima della fine del
-        // clip: acceleriamo solo lo spostamento Step 05 → CTA fino a quel
-        // punto, poi lasciamo proseguire la timeline Rive con l’omino fermo
-        // esattamente sopra il bottone.
         const ctaArrivalAtLieStart = 0.58;
 
         if (progress < cardHoldEnd) {
@@ -2225,16 +2256,28 @@ window.addEventListener('DOMContentLoaded', () => {
           };
         }
 
-        const lastProgress = gsap.utils.clamp(0, 1, (progress - cardHoldEnd) / (lastTransitionEnd - cardHoldEnd));
-        const motionProgress = gsap.utils.clamp(0, 1, lastProgress / ctaArrivalAtLieStart);
-        const point = lerpPoint(anchors[5], anchors[6], motionProgress);
+        const lastProgress = gsap.utils.clamp(0, 1, (progress - cardHoldEnd) / (1 - cardHoldEnd));
+
+        if (lastProgress < ctaArrivalAtLieStart) {
+          const point = lerpPoint(anchors[5], anchors[6], lastProgress / ctaArrivalAtLieStart);
+          return {
+            phase: "last_jump_to_cta",
+            animation: getFinalTimelineName(),
+            animationProgress: lastProgress,
+            point,
+            activeIndex: null,
+            isFinalTransition: true
+          };
+        }
+
         return {
-          phase: progress < lastTransitionEnd ? "last_transition" : "last_transition_done",
+          phase: "last_lie_on_cta",
           animation: getFinalTimelineName(),
-          animationProgress: lastProgress,
-          point,
+          animationProgress: ctaArrivalAtLieStart,
+          point: anchors[6],
           activeIndex: null,
-          isFinalTransition: true
+          isFinalTransition: true,
+          isFinalButtonAction: true
         };
       }
 
@@ -2278,7 +2321,7 @@ window.addEventListener('DOMContentLoaded', () => {
       currentPhase = state.phase;
       if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
       else clearActiveSlotCards();
-      setFinalTransitionMode(state.phase === "last_transition" || state.phase === "last_transition_done");
+      setFinalTransitionMode(Boolean(state.isFinalTransition));
       const animationProgress = getHybridCardActionProgress(state);
       const isFinalTransition = Boolean(state.isFinalTransition);
 
@@ -2292,13 +2335,19 @@ window.addEventListener('DOMContentLoaded', () => {
         lastFinalTransitionProgress = null;
       }
 
-      // La timeline finale `last` deve rispettare la durata nativa impostata
-      // dentro Rive quando ci si arriva linearmente da Step 05. Se invece la
-      // pagina viene ripristinata o l'utente salta/torna dentro il tratto gia'
-      // avanzato, lo scrub conserva la posa coerente con la posizione CTA.
-      const shouldUseFinalNativePlayback = isFinalTransition && !finalTransitionScrubMode;
-      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction || shouldUseFinalNativePlayback) });
+      // La prima parte di `last` resta scrub-linked allo scroll. La seconda
+      // parte viene avanzata a tempo reale solo dopo l'arrivo sul bottone CTA,
+      // ma tramite scrub da quel punto del clip per evitare che Rive riparta
+      // dall'inizio del salto.
+      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction) });
       setLayerAt(state.point);
+
+      if (state.isFinalButtonAction && animationProgress < 1 && !raf) {
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          applyScrollLinkedState();
+        });
+      }
 
       // Durante le action native Rive non serve forzare un loop JS continuo:
       // il runtime anima da solo. Aggiorniamo solo su scroll/resize, riducendo

@@ -2195,10 +2195,11 @@ window.addEventListener('DOMContentLoaded', () => {
         // verso la CTA, non lo stato finale in cui il personaggio rimane
         // bloccato. Anticipiamo quindi l'uscita da healthy_lifestyle_card e
         // riserviamo la parte centrale del tratto Step 05 → CTA alla timeline
-        // Rive `last`; terminata la transizione, lasciamo fermo il suo ultimo
-        // frame senza riattivare healthy_lifestyle_card.
+        // Rive `last` su tutto lo spazio di scroll rimanente: in questo modo
+        // la transizione finale non viene compressa a circa metà del tratto
+        // Step 05 → CTA e resta visibile per la sua durata completa.
         const cardHoldEnd = 0.14;
-        const lastTransitionEnd = 0.64;
+        const lastTransitionEnd = 1;
 
         if (progress < cardHoldEnd) {
           return {

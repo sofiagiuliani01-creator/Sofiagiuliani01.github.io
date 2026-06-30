@@ -2015,6 +2015,29 @@ window.addEventListener('DOMContentLoaded', () => {
         y: rect.top - ctaTopRestOffset
       };
     }
+
+    function getVisibleCtaLieAnchor() {
+      const rect = cta.getBoundingClientRect();
+      const sectionRect = section.getBoundingClientRect();
+      const localAnchor = getCtaAnchor("lie");
+      if (!localAnchor) return null;
+
+      // La seconda parte di `last` procede a tempo reale: se l'utente continua
+      // a scrollare verso la fine della sezione, l'anchor assoluto della CTA può
+      // uscire dal viewport prima che il clip abbia finito. Manteniamo quindi
+      // la posa finale in un range visibile, convertendo poi la coordinata di
+      // viewport nella stessa coordinata locale usata dalla timeline scene.
+      const vh = window.innerHeight || 800;
+      const minViewportY = Math.max(16, vh * 0.10);
+      const maxViewportY = Math.max(minViewportY, vh - layer.offsetHeight - 16);
+      const preferredViewportY = rect.top - (layer.offsetHeight * 0.76);
+      const clampedViewportY = gsap.utils.clamp(minViewportY, maxViewportY, preferredViewportY);
+
+      return {
+        x: localAnchor.x,
+        y: clampedViewportY - sectionRect.top
+      };
+    }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
     function forceRiveTimeline(name, progress = 0, options = {}) {
       if (!riveInstance || !name) return;
@@ -2277,7 +2300,7 @@ window.addEventListener('DOMContentLoaded', () => {
           phase: "last_lie_on_cta",
           animation: getFinalTimelineName(),
           animationProgress: ctaArrivalAtLieStart,
-          point: ctaLieAnchor || anchors[6],
+          point: getVisibleCtaLieAnchor() || ctaLieAnchor || anchors[6],
           activeIndex: null,
           isFinalTransition: true,
           isFinalButtonAction: true

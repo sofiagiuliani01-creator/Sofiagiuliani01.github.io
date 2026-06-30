@@ -1999,14 +1999,16 @@ window.addEventListener('DOMContentLoaded', () => {
       return { x, y };
     }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
-    function getCtaAnchor() {
+    function getCtaAnchor(mode = "lie") {
       const rect = getLocalRect(cta, section);
       if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; }
 
-      // Nella timeline finale l’omino si sdraia: l’anchor deve quindi mettere
-      // la sua base esattamente sul bordo superiore del bottone CTA, non molto
-      // più in alto come per le card verticali.
-      const ctaTopRestOffset = layer.offsetHeight * 0.62;
+      // La timeline `last` ha due agganci diversi sullo stesso bottone:
+      // - durante il salto l'omino deve arrivare con i piedi sul bordo alto;
+      // - durante la posa sdraiata il corpo deve restare sopra la linea alta,
+      //   non dietro/dentro al bottone. Usiamo quindi offset separati, entrambi
+      //   volutamente più alti del precedente 0.62.
+      const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.9 : 0.76);
 
       return {
         x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,
@@ -2129,8 +2131,6 @@ window.addEventListener('DOMContentLoaded', () => {
             durationMs,
             startProgress
           };
-        } else {
-          finalButtonActionPlayback.durationMs = durationMs;
         }
 
         const elapsedProgress = (now - finalButtonActionPlayback.startedAt) / finalButtonActionPlayback.durationMs;
@@ -2206,11 +2206,14 @@ window.addEventListener('DOMContentLoaded', () => {
       const stepRects = steps.map((step) => step.getBoundingClientRect());
       const screenCenterY = vh * 0.5;
 
-      if (sectionRect.top > vh * 0.9 || ctaRect.bottom < vh * -0.12) {
+      const finalActionStillPlaying = finalButtonActionPlayback && performance.now() - finalButtonActionPlayback.startedAt < finalButtonActionPlayback.durationMs;
+      if (sectionRect.top > vh * 0.9 || (ctaRect.bottom < vh * -0.45 && !finalActionStillPlaying)) {
         return { phase: "hidden", animation: null, point: null, activeIndex: null };
       }
 
-      const anchors = [getBarAnchor(), ...steps.map((_, index) => getCardSlotAnchor(index)), getCtaAnchor()];
+      const ctaFeetAnchor = getCtaAnchor("feet");
+      const ctaLieAnchor = getCtaAnchor("lie");
+      const anchors = [getBarAnchor(), ...steps.map((_, index) => getCardSlotAnchor(index)), ctaFeetAnchor];
       const triggers = [
         sectionRect.top + vh * 0.14,
         ...stepRects.map(getViewportCenterTrigger),
@@ -2242,8 +2245,8 @@ window.addEventListener('DOMContentLoaded', () => {
         // 2) l'inizio della posa sdraiata sul bottone, che invece deve partire
         //    solo quando l'omino è già effettivamente appoggiato alla CTA, come
         //    succede per le action interne delle card.
-        const cardHoldEnd = 0.14;
-        const ctaArrivalAtLieStart = 0.58;
+        const cardHoldEnd = 0.10;
+        const ctaArrivalAtLieStart = 0.52;
 
         if (progress < cardHoldEnd) {
           return {
@@ -2274,7 +2277,7 @@ window.addEventListener('DOMContentLoaded', () => {
           phase: "last_lie_on_cta",
           animation: getFinalTimelineName(),
           animationProgress: ctaArrivalAtLieStart,
-          point: anchors[6],
+          point: ctaLieAnchor || anchors[6],
           activeIndex: null,
           isFinalTransition: true,
           isFinalButtonAction: true

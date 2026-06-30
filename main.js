@@ -2076,11 +2076,15 @@ window.addEventListener('DOMContentLoaded', () => {
       gsap.killTweensOf(layer);
     }
 
+    const setLayerX = gsap.quickSetter(layer, "x", "px");
+    const setLayerY = gsap.quickSetter(layer, "y", "px");
+
     function setLayerAt(point) {
       if (!point) return;
-      killActiveMotion();
-      gsap.set(layer, { x: point.x, y: point.y });
-      try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {}
+      // Posizionamento diretto e leggero: evitare kill/resize a ogni frame
+      // elimina micro-scatti e lampeggi del canvas durante lo scroll.
+      setLayerX(point.x);
+      setLayerY(point.y);
     }
 
     function lerpPoint(from, to, progress) {
@@ -2137,18 +2141,17 @@ window.addEventListener('DOMContentLoaded', () => {
         return candidateState;
       }
 
-      // Se lo scroll passa oltre una card prima che la sua action sia finita,
-      // manteniamo in scena quella card fino alla fine reale del clip Rive.
-      // Così l'azione si vede completa alla velocità originale, invece di
-      // tagliarsi a metà per entrare subito nella transizione successiva.
-      return {
-        phase: cardActionPlayback.phase,
-        animation: cardActionPlayback.animation,
-        animationProgress: elapsed / cardActionPlayback.durationMs,
-        point: cardActionPlayback.point,
-        activeIndex: cardActionPlayback.activeIndex,
-        isCardAction: true
-      };
+      // Non blocchiamo più lo scroll fino alla fine completa della action:
+      // dalla terza card in poi le action durano diversi secondi e coprivano
+      // le transizioni successive. Le card continuano a girare in modo nativo
+      // finché sono attive, ma appena l'utente entra nel tratto di passaggio
+      // lasciamo partire subito la timeline di transizione.
+      if (candidateState && !candidateState.isCardAction) {
+        cardActionPlayback = null;
+        return candidateState;
+      }
+
+      return candidateState;
     }
 
     function getScrollLinkedState() {
@@ -2264,9 +2267,9 @@ window.addEventListener('DOMContentLoaded', () => {
       forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction) });
       setLayerAt(state.point);
 
-      if (state.isCardAction && animationProgress < 1) {
-        requestAnimationFrame(onScroll);
-      }
+      // Durante le action native Rive non serve forzare un loop JS continuo:
+      // il runtime anima da solo. Aggiorniamo solo su scroll/resize, riducendo
+      // riavvii percepiti e lampeggi del personaggio.
     }
 
     function onScroll() {

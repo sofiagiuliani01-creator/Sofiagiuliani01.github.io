@@ -2219,7 +2219,8 @@ window.addEventListener('DOMContentLoaded', () => {
           animation: getFinalTimelineName(),
           animationProgress: lastProgress,
           point,
-          activeIndex: null
+          activeIndex: null,
+          isFinalTransition: true
         };
       }
 
@@ -2265,7 +2266,10 @@ window.addEventListener('DOMContentLoaded', () => {
       else clearActiveSlotCards();
       setFinalTransitionMode(state.phase === "last_transition" || state.phase === "last_transition_done");
       const animationProgress = getHybridCardActionProgress(state);
-      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction) });
+      // La timeline finale `last` deve rispettare la durata nativa impostata
+      // dentro Rive. Scrubbarla con lo scroll la tagliava circa a meta' clip
+      // quando i metadati di durata non erano esposti dal runtime canvas.
+      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction || state.isFinalTransition) });
       setLayerAt(state.point);
 
       // Durante le action native Rive non serve forzare un loop JS continuo:

@@ -2001,9 +2001,15 @@ window.addEventListener('DOMContentLoaded', () => {
     function getCtaAnchor() {
       const rect = getLocalRect(cta, section);
       if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; }
+
+      // Nella timeline finale l’omino si sdraia: l’anchor deve quindi mettere
+      // la sua base esattamente sul bordo superiore del bottone CTA, non molto
+      // più in alto come per le card verticali.
+      const ctaTopRestOffset = layer.offsetHeight * 0.62;
+
       return {
         x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,
-        y: rect.top - layer.offsetHeight * 0.78
+        y: rect.top - ctaTopRestOffset
       };
     }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
@@ -2202,6 +2208,11 @@ window.addEventListener('DOMContentLoaded', () => {
         // Step 05 → CTA e resta visibile per la sua durata completa.
         const cardHoldEnd = 0.14;
         const lastTransitionEnd = 1;
+        // La posa sdraiata della timeline `last` inizia prima della fine del
+        // clip: acceleriamo solo lo spostamento Step 05 → CTA fino a quel
+        // punto, poi lasciamo proseguire la timeline Rive con l’omino fermo
+        // esattamente sopra il bottone.
+        const ctaArrivalAtLieStart = 0.58;
 
         if (progress < cardHoldEnd) {
           return {
@@ -2215,7 +2226,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         const lastProgress = gsap.utils.clamp(0, 1, (progress - cardHoldEnd) / (lastTransitionEnd - cardHoldEnd));
-        const point = lerpPoint(anchors[5], anchors[6], lastProgress);
+        const motionProgress = gsap.utils.clamp(0, 1, lastProgress / ctaArrivalAtLieStart);
+        const point = lerpPoint(anchors[5], anchors[6], motionProgress);
         return {
           phase: progress < lastTransitionEnd ? "last_transition" : "last_transition_done",
           animation: getFinalTimelineName(),

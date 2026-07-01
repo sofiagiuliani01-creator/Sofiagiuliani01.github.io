@@ -2268,8 +2268,13 @@ window.addEventListener('DOMContentLoaded', () => {
         // 2) l'inizio della posa sdraiata sul bottone, che invece deve partire
         //    solo quando l'omino è già effettivamente appoggiato alla CTA, come
         //    succede per le action interne delle card.
-        const cardHoldEnd = 0.10;
-        const ctaArrivalAtLieStart = 0.52;
+        const cardHoldEnd = 0.08;
+        // Nel file Rive la timeline finale `last` continua ben oltre il salto:
+        // la posa in cui l'omino si sdraia inizia nella seconda metà del clip.
+        // Prima usavamo 0.52 come frame fisso di ingresso alla posa, quindi lo
+        // scrub non mostrava mai davvero la parte finale. Facciamo arrivare i
+        // piedi alla CTA un po' prima e lasciamo poi avanzare `last` fino a 1.
+        const ctaArrivalAtLieStart = 0.42;
 
         if (progress < cardHoldEnd) {
           return {
@@ -2299,7 +2304,9 @@ window.addEventListener('DOMContentLoaded', () => {
         return {
           phase: "last_lie_on_cta",
           animation: getFinalTimelineName(),
-          animationProgress: ctaArrivalAtLieStart,
+          // Continua dal punto corrente dello scroll invece di restare bloccato
+          // al frame di arrivo: così si vede anche la chiusura sdraiata.
+          animationProgress: lastProgress,
           point: getVisibleCtaLieAnchor() || ctaLieAnchor || anchors[6],
           activeIndex: null,
           isFinalTransition: true,

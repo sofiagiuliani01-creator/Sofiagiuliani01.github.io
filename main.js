@@ -2008,7 +2008,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // - durante la posa sdraiata il corpo deve restare sopra la linea alta,
       //   non dietro/dentro al bottone. Usiamo quindi offset separati, entrambi
       //   volutamente più alti del precedente 0.62.
-      const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.9 : 0.76);
+      const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.9 : 0.84);
 
       return {
         x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,
@@ -2017,26 +2017,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function getVisibleCtaLieAnchor() {
-      const rect = cta.getBoundingClientRect();
-      const sectionRect = section.getBoundingClientRect();
-      const localAnchor = getCtaAnchor("lie");
-      if (!localAnchor) return null;
-
-      // La seconda parte di `last` procede a tempo reale: se l'utente continua
-      // a scrollare verso la fine della sezione, l'anchor assoluto della CTA può
-      // uscire dal viewport prima che il clip abbia finito. Manteniamo quindi
-      // la posa finale in un range visibile, convertendo poi la coordinata di
-      // viewport nella stessa coordinata locale usata dalla timeline scene.
-      const vh = window.innerHeight || 800;
-      const minViewportY = Math.max(16, vh * 0.10);
-      const maxViewportY = Math.max(minViewportY, vh - layer.offsetHeight - 16);
-      const preferredViewportY = rect.top - (layer.offsetHeight * 0.76);
-      const clampedViewportY = gsap.utils.clamp(minViewportY, maxViewportY, preferredViewportY);
-
-      return {
-        x: localAnchor.x,
-        y: clampedViewportY - sectionRect.top
-      };
+      // Non blocchiamo più la posa finale dentro al viewport: quando l'utente
+      // continua a scrollare verso il footer, il personaggio deve restare
+      // agganciato sopra il bottone CTA (quindi muoversi insieme al bottone),
+      // mentre la timeline Rive `last` completa la sua durata in autonomia.
+      return getCtaAnchor("lie");
     }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
     function forceRiveTimeline(name, progress = 0, options = {}) {
@@ -2304,8 +2289,9 @@ window.addEventListener('DOMContentLoaded', () => {
         return {
           phase: "last_lie_on_cta",
           animation: getFinalTimelineName(),
-          // Continua dal punto corrente dello scroll invece di restare bloccato
-          // al frame di arrivo: così si vede anche la chiusura sdraiata.
+          // Da qui la posa finale continua a tempo reale tramite
+          // getHybridCardActionProgress: lo scroll decide solo quando entrare
+          // nella fase, non deve bloccare `last` subito dopo il salto.
           animationProgress: lastProgress,
           point: getVisibleCtaLieAnchor() || ctaLieAnchor || anchors[6],
           activeIndex: null,

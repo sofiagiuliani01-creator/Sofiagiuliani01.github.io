@@ -1880,6 +1880,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let finalTransitionScrubMode = false;
     let lastFinalTransitionProgress = null;
     let finalButtonActionPlayback = null;
+    let nativePlaybackKey = null;
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const cardActionDurations = {
@@ -2078,17 +2079,26 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (useNativePlayback) {
-          // Le action interne delle card devono girare alla velocità nativa di
-          // Rive: le durate fornite sono la durata reale del clip, non un tempo
-          // su cui riscalare/scrubbare metà timeline. Quando una card diventa
-          // attiva avviamo quindi il clip e lo lasciamo scorrere normalmente,
-          // senza pause/scrub frame-by-frame che possono farlo sembrare
-          // rallentato o bloccarlo prima della fine.
-          if (isNewAnimation && typeof riveInstance.play === "function") {
-            riveInstance.play(resolvedName);
+          // Le action interne e la seconda metà di `last` devono girare alla
+          // velocità nativa di Rive: le durate fornite sono la durata reale del
+          // clip, non un tempo da comprimere nello scroll residuo. Quando
+          // entriamo nella posa finale, però, la timeline `last` è già stata
+          // scrub-bata fino al punto di arrivo sulla CTA: prima la riallineiamo
+          // al frame richiesto e poi lasciamo che Rive completi esattamente il
+          // resto della sua timeline, fino all'ultimo frame della durata.
+          const playbackKey = `${resolvedName}:${options.playFromProgress ? "from-progress" : "native"}`;
+          if (nativePlaybackKey !== playbackKey) {
+            if (options.playFromProgress && typeof riveInstance.scrub === "function") {
+              if (typeof riveInstance.play === "function") riveInstance.play(resolvedName);
+              riveInstance.scrub(resolvedName, getRiveScrubTime(resolvedName, clampedProgress));
+            }
+            if (typeof riveInstance.play === "function") riveInstance.play(resolvedName);
+            nativePlaybackKey = playbackKey;
           }
           return;
         }
+
+        nativePlaybackKey = null;
 
         if (typeof riveInstance.scrub === "function") {
           // In the canvas runtime, scrubbing is reliable only after the target
@@ -2401,10 +2411,13 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       // La prima parte di `last` resta scrub-linked allo scroll. La seconda
-      // parte viene avanzata a tempo reale solo dopo l'arrivo sul bottone CTA,
-      // ma tramite scrub da quel punto del clip per evitare che Rive riparta
-      // dall'inizio del salto.
-      forceRiveTimeline(state.animation, animationProgress, { nativePlayback: Boolean(state.isCardAction) });
+      // parte viene invece consegnata al playback nativo di Rive dal frame di
+      // appoggio sulla CTA: così la metà finale non viene più tagliata o
+      // riscalata dallo scroll e arriva alla fine reale della timeline Rive.
+      forceRiveTimeline(state.animation, animationProgress, {
+        nativePlayback: Boolean(state.isCardAction || state.isFinalButtonAction),
+        playFromProgress: Boolean(state.isFinalButtonAction)
+      });
       setLayerAt(state.point);
 
       if (state.isFinalButtonAction && animationProgress < 1 && !raf) {

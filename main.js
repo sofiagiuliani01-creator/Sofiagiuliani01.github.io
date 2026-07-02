@@ -2014,13 +2014,24 @@ window.addEventListener('DOMContentLoaded', () => {
       layer.classList.toggle("is-final-transition", nextValue);
       resizeRiveSurfaceOnce();
     }
+    function setTractionMode(isTraction) {
+      const nextValue = Boolean(isTraction);
+      if (layer.classList.contains("is-traction") === nextValue) return;
+      layer.classList.toggle("is-traction", nextValue);
+      resizeRiveSurfaceOnce();
+    }
     function getBarAnchor() {
+      const sectionRect = section.getBoundingClientRect();
       const timelineRect = getLocalRect(timeline, section);
       const line = timeline.querySelector(".timeline-line");
       const lineRect = getLocalRect(line, section);
-      const fallbackX = Math.max(40, section.clientWidth * 0.15);
-      const x = lineRect ? lineRect.left + lineRect.width * 0.5 - layer.offsetWidth * 0.5 : fallbackX;
-      const y = timelineRect ? Math.max(8, timelineRect.top - layer.offsetHeight * 0.42) : 8;
+      const viewportLeftInSection = -sectionRect.left;
+      const preferredX = viewportLeftInSection + (window.innerWidth * 0.36) - (layer.offsetWidth * 0.5);
+      const lineX = lineRect ? lineRect.left + lineRect.width * 0.5 - layer.offsetWidth * 0.5 : preferredX;
+      const x = gsap.utils.clamp(18, Math.max(18, section.clientWidth - layer.offsetWidth - 18), preferredX || lineX);
+      const heroDividerY = -layer.offsetHeight * 0.50;
+      const timelineTopY = timelineRect ? timelineRect.top - layer.offsetHeight * 0.42 : heroDividerY;
+      const y = Math.min(timelineTopY, heroDividerY);
       return { x, y };
     }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
@@ -2269,7 +2280,7 @@ window.addEventListener('DOMContentLoaded', () => {
         };
       }
 
-      if (sectionRect.top > vh * 0.9 || ctaRect.bottom < vh * -0.45) {
+      if (sectionRect.top > vh * 1.08 || ctaRect.bottom < vh * -0.45) {
         return { phase: "hidden", animation: null, point: null, activeIndex: null };
       }
 
@@ -2292,12 +2303,15 @@ window.addEventListener('DOMContentLoaded', () => {
       const end = triggers[Math.min(segment + 1, triggers.length - 1)];
       const progress = end > start ? gsap.utils.clamp(0, 1, (screenCenterY - start) / (end - start)) : 1;
 
+      if (segment === 0 && screenCenterY < triggers[0]) {
+        return { phase: "traction", animation: startTimelineName, animationProgress: 0, point: anchors[0], activeIndex: null, isTractionLoop: true };
+      }
+
       if (segment === 0) {
-        const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.62));
-        if (progress < 0.38) return { phase: "traction", animation: startTimelineName, animationProgress: progress / 0.38, point, activeIndex: null };
-        if (progress < 0.62) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: (progress - 0.38) / 0.24, point, activeIndex: null };
-        if (progress < 0.82) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.62) / 0.20, point: anchors[1], activeIndex: null };
-        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.82) / 0.18, point: anchors[1], activeIndex: 0, isCardAction: true };
+        const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.56));
+        if (progress < 0.56) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: progress / 0.56, point, activeIndex: null };
+        if (progress < 0.76) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.56) / 0.20, point: anchors[1], activeIndex: null };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.76) / 0.24, point: anchors[1], activeIndex: 0, isCardAction: true };
       }
 
       if (segment >= 5) {
@@ -2388,6 +2402,7 @@ window.addEventListener('DOMContentLoaded', () => {
         currentPhase = "hidden";
         clearActiveSlotCards();
         setFinalTransitionMode(false);
+        setTractionMode(false);
         hideCharacter();
         return;
       }
@@ -2397,6 +2412,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (Number.isInteger(state.activeIndex)) setActiveSlotCard(state.activeIndex);
       else clearActiveSlotCards();
       setFinalTransitionMode(Boolean(state.isFinalTransition));
+      setTractionMode(Boolean(state.isTractionLoop));
       const animationProgress = getHybridCardActionProgress(state);
       const isFinalTransition = Boolean(state.isFinalTransition);
 
@@ -2415,12 +2431,12 @@ window.addEventListener('DOMContentLoaded', () => {
       // appoggio sulla CTA: così la metà finale non viene più tagliata o
       // riscalata dallo scroll e arriva alla fine reale della timeline Rive.
       forceRiveTimeline(state.animation, animationProgress, {
-        nativePlayback: Boolean(state.isCardAction || state.isFinalButtonAction),
+        nativePlayback: Boolean(state.isCardAction || state.isFinalButtonAction || state.isTractionLoop),
         playFromProgress: Boolean(state.isFinalButtonAction)
       });
       setLayerAt(state.point);
 
-      if (state.isFinalButtonAction && animationProgress < 1 && !raf) {
+      if ((state.isFinalButtonAction || state.isTractionLoop) && animationProgress < 1 && !raf) {
         raf = requestAnimationFrame(() => {
           raf = 0;
           applyScrollLinkedState();

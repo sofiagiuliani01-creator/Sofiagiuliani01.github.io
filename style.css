@@ -14408,6 +14408,11 @@ body.app-page {
   visibility: hidden;
 }
 
+#come-funziona .rive-character-layer.is-traction {
+  width: 300px;
+  height: 350px;
+}
+
 #come-funziona .rive-character-layer.is-step-5,
 #come-funziona .rive-character-layer.is-final-transition {
   width: 340px;
@@ -14418,6 +14423,11 @@ body.app-page {
   #come-funziona .rive-character-layer {
     width: 170px;
     height: 215px;
+  }
+
+  #come-funziona .rive-character-layer.is-traction {
+    width: 210px;
+    height: 260px;
   }
 
   #come-funziona .rive-character-layer.is-step-5,
@@ -14431,6 +14441,11 @@ body.app-page {
   #come-funziona .rive-character-layer {
     width: 140px;
     height: 180px;
+  }
+
+  #come-funziona .rive-character-layer.is-traction {
+    width: 180px;
+    height: 225px;
   }
 
   #come-funziona .rive-character-layer.is-step-5,

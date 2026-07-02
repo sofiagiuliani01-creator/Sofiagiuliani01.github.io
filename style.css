@@ -13179,8 +13179,8 @@ body.app-page {
   width: 100%;
   transform: translateY(0);
   transition: transform .35s ease, background .35s ease, border-color .35s ease;
-  background: rgba(5, 7, 16, .2);
-  border-bottom-color: rgba(148, 163, 184, .15);
+  background: rgba(5, 7, 16, .94);
+  border-bottom-color: rgba(148, 163, 184, .4);
 }
 
 .page-home .site-header-home.is-scrolled {

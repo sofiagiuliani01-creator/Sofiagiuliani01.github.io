@@ -2030,10 +2030,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // La timeline `last` ha due agganci diversi sullo stesso bottone:
       // - durante il salto l'omino deve arrivare con i piedi sul bordo alto;
-      // - durante la posa sdraiata il corpo deve restare sopra la linea alta,
-      //   non dietro/dentro al bottone. Usiamo quindi offset separati, entrambi
-      //   volutamente più alti del precedente 0.62.
-      const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.9 : 0.84);
+      // - durante la posa sdraiata il corpo deve risultare appoggiato al CTA,
+      //   non sospeso sopra. Abbassiamo leggermente l'ancora finale, mantenendo
+      //   invece il salto un filo più alto per non farlo entrare nel bottone.
+      const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.86 : 0.74);
 
       return {
         x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,

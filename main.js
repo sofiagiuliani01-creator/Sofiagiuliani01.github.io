@@ -1706,6 +1706,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let autoAdvanceTween = null;
   let autoProgress = 0;
   const mergeAutoStart = 0.82;
+  const isHeroMobileViewport = () => window.matchMedia('(max-width: 900px)').matches;
 
   const renderCinematic = (cinematicProgress) => {
       autoProgress = cinematicProgress;
@@ -1792,6 +1793,10 @@ window.addEventListener('DOMContentLoaded', () => {
       stage.style.setProperty('--s-merge-x', `${gsap.utils.interpolate(0, -2.95, sLetterMerge).toFixed(3)}vw`);
   };
 
+  if (isHeroMobileViewport()) {
+    renderCinematic(0.18);
+  }
+
   ScrollTrigger.create({
     trigger: hero,
     start: 'top top',
@@ -1831,17 +1836,28 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const isRiveMobileViewport = () => window.matchMedia("(max-width: 900px)").matches;
+    const showMobileRiveStaticFallback = () => {
+      if (!isRiveMobileViewport()) return;
+      const sectionRect = section.getBoundingClientRect();
+      layer.classList.remove("is-hidden");
+      layer.classList.add("is-mobile-fallback");
+      layer.style.transform = `translate3d(${Math.max(18, window.innerWidth * 0.5 - 70)}px, ${Math.max(24, -sectionRect.top + 96)}px, 0)`;
+    };
+
     if (!window.rive || !window.rive.Rive) {
       console.warn("[RIVE] Runtime Rive non trovato.");
+      showMobileRiveStaticFallback();
       return;
     }
 
     if (!window.gsap) {
       console.warn("[RIVE] GSAP non trovato.");
+      showMobileRiveStaticFallback();
       return;
     }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches && !isRiveMobileViewport()) return;
 
     const timeline = section.querySelector(".timeline[data-timeline]");
     const steps = timeline ? Array.from(timeline.querySelectorAll(".timeline-step")) : [];
@@ -1963,6 +1979,14 @@ window.addEventListener('DOMContentLoaded', () => {
     function getSlotForCard(card) { if (!card) return null; return (card.querySelector(".step-visual") || card.querySelector(".step-icon") || card.querySelector(".timeline-step-visual") || card.querySelector(".timeline-icon") || card.querySelector(".step-badge") || card.querySelector(".step-content")); }
     function showCharacter() { layer.classList.remove("is-hidden"); }
     function hideCharacter() { layer.classList.add("is-hidden"); }
+    function showMobileRiveFallback() {
+      if (!isRiveMobileViewport()) return;
+      layer.classList.remove("is-hidden");
+      layer.classList.add("is-mobile-fallback");
+      const fallbackPoint = getBarAnchor() || getCardSlotAnchor(0);
+      if (fallbackPoint) setLayerAt(fallbackPoint);
+      else showMobileRiveStaticFallback();
+    }
     function resizeRiveSurfaceOnce() {
       try { riveInstance?.resizeDrawingSurfaceToCanvas(); } catch (e) {}
     }
@@ -2433,9 +2457,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
           startDirector();
         },
-        onLoadError: (error) => { console.warn("[RIVE] errore caricamento omino_def.riv", error); }
+        onLoadError: (error) => {
+          console.warn("[RIVE] errore caricamento omino_def.riv", error);
+          showMobileRiveFallback();
+        }
       });
-    } catch (error) { console.warn("[RIVE] errore inizializzazione", error); }
+    } catch (error) {
+      console.warn("[RIVE] errore inizializzazione", error);
+      showMobileRiveFallback();
+    }
   });
 })();
 ;

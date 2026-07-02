@@ -2253,13 +2253,15 @@ window.addEventListener('DOMContentLoaded', () => {
         // 2) l'inizio della posa sdraiata sul bottone, che invece deve partire
         //    solo quando l'omino è già effettivamente appoggiato alla CTA, come
         //    succede per le action interne delle card.
-        const cardHoldEnd = 0.08;
-        // Nel file Rive la timeline finale `last` continua ben oltre il salto:
-        // la posa in cui l'omino si sdraia inizia nella seconda metà del clip.
-        // Prima usavamo 0.52 come frame fisso di ingresso alla posa, quindi lo
-        // scrub non mostrava mai davvero la parte finale. Facciamo arrivare i
-        // piedi alla CTA un po' prima e lasciamo poi avanzare `last` fino a 1.
-        const ctaArrivalAtLieStart = 0.42;
+        const cardHoldEnd = 0.04;
+        // Nel file Rive la timeline finale `last` contiene ancora parecchi frame
+        // dopo il salto: se aspettiamo troppo scroll prima di entrare nella fase
+        // autonoma, su viewport alti/tablet il personaggio resta in piedi sul
+        // bottone e non arriva mai alla posa sdraiata. Portiamo quindi i piedi
+        // alla CTA prima e, appena appoggiato, facciamo partire la seconda metà
+        // del clip a tempo reale.
+        const ctaArrivalAtLieStart = 0.24;
+        const liePoseStartProgress = 0.52;
 
         if (progress < cardHoldEnd) {
           return {
@@ -2292,7 +2294,7 @@ window.addEventListener('DOMContentLoaded', () => {
           // Da qui la posa finale continua a tempo reale tramite
           // getHybridCardActionProgress: lo scroll decide solo quando entrare
           // nella fase, non deve bloccare `last` subito dopo il salto.
-          animationProgress: lastProgress,
+          animationProgress: Math.max(lastProgress, liePoseStartProgress),
           point: getVisibleCtaLieAnchor() || ctaLieAnchor || anchors[6],
           activeIndex: null,
           isFinalTransition: true,

@@ -2137,8 +2137,16 @@ window.addEventListener('DOMContentLoaded', () => {
             animation: resolvedName,
             startedAt: now,
             durationMs,
-            startProgress
+            startProgress,
+            point: state.point
           };
+        } else {
+          // Come per le timeline native nelle card, la seconda parte di `last`
+          // non deve dipendere dalla quantità di scroll rimasta disponibile.
+          // Manteniamo quindi invariati start/durata e aggiorniamo solo
+          // l'ancora visuale, così il clip può arrivare fino all'ultimo frame
+          // anche se la CTA esce progressivamente dal viewport.
+          finalButtonActionPlayback.point = state.point;
         }
 
         const elapsedProgress = (now - finalButtonActionPlayback.startedAt) / finalButtonActionPlayback.durationMs;
@@ -2215,7 +2223,19 @@ window.addEventListener('DOMContentLoaded', () => {
       const screenCenterY = vh * 0.5;
 
       const finalActionStillPlaying = finalButtonActionPlayback && performance.now() - finalButtonActionPlayback.startedAt < finalButtonActionPlayback.durationMs;
-      if (sectionRect.top > vh * 0.9 || (ctaRect.bottom < vh * -0.45 && !finalActionStillPlaying)) {
+      if (finalActionStillPlaying) {
+        return {
+          phase: finalButtonActionPlayback.phase,
+          animation: finalButtonActionPlayback.animation,
+          animationProgress: finalButtonActionPlayback.startProgress,
+          point: getVisibleCtaLieAnchor() || finalButtonActionPlayback.point || getCtaAnchor("lie"),
+          activeIndex: null,
+          isFinalTransition: true,
+          isFinalButtonAction: true
+        };
+      }
+
+      if (sectionRect.top > vh * 0.9 || ctaRect.bottom < vh * -0.45) {
         return { phase: "hidden", animation: null, point: null, activeIndex: null };
       }
 
@@ -2368,6 +2388,10 @@ window.addEventListener('DOMContentLoaded', () => {
           raf = 0;
           applyScrollLinkedState();
         });
+      }
+
+      if (state.isFinalButtonAction && animationProgress >= 1) {
+        finalButtonActionPlayback = null;
       }
 
       // Durante le action native Rive non serve forzare un loop JS continuo:

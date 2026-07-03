@@ -1881,6 +1881,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let lastFinalTransitionProgress = null;
     let finalButtonActionPlayback = null;
     let nativePlaybackKey = null;
+    let tractionLoopStartedAt = null;
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const cardActionDurations = {
@@ -2035,7 +2036,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const tractionDividerOffset = gsap.utils.clamp(22, 42, layer.offsetHeight * 0.12);
       const heroDividerY = (-layer.offsetHeight * 0.50) + tractionDividerOffset;
       const timelineTopY = timelineRect ? timelineRect.top - layer.offsetHeight * 0.42 + tractionDividerOffset : heroDividerY;
-      const y = Math.min(timelineTopY, heroDividerY);
+      const tractionLift = 8;
+      const y = Math.min(timelineTopY, heroDividerY) - tractionLift;
       return { x, y };
     }
     function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
@@ -2064,6 +2066,11 @@ window.addEventListener('DOMContentLoaded', () => {
       return getCtaAnchor("lie");
     }
     function getViewportCenterTrigger(rect) { return rect.top + rect.height * 0.5; }
+    function getTractionLoopProgress() {
+      if (tractionLoopStartedAt === null) tractionLoopStartedAt = performance.now();
+      const durationMs = Math.max(1, getRiveAnimationDuration(startTimelineName) * 1000);
+      return ((performance.now() - tractionLoopStartedAt) % durationMs) / durationMs;
+    }
     function forceRiveTimeline(name, progress = 0, options = {}) {
       if (!riveInstance || !name) return;
 
@@ -2308,7 +2315,7 @@ window.addEventListener('DOMContentLoaded', () => {
       const progress = end > start ? gsap.utils.clamp(0, 1, (screenCenterY - start) / (end - start)) : 1;
 
       if (segment === 0 && screenCenterY < triggers[0]) {
-        return { phase: "traction", animation: startTimelineName, animationProgress: 0, point: anchors[0], activeIndex: null, isTractionLoop: true };
+        return { phase: "traction", animation: startTimelineName, animationProgress: getTractionLoopProgress(), point: anchors[0], activeIndex: null, isTractionLoop: true };
       }
 
       if (segment === 0) {
@@ -2319,7 +2326,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const jumpEnd = 0.64;
 
         if (progress < tractionHoldEnd) {
-          return { phase: "traction", animation: startTimelineName, animationProgress: 0, point: anchors[0], activeIndex: null, isTractionLoop: true };
+          return { phase: "traction", animation: startTimelineName, animationProgress: getTractionLoopProgress(), point: anchors[0], activeIndex: null, isTractionLoop: true };
         }
 
         const jumpProgress = gsap.utils.clamp(0, 1, (progress - tractionHoldEnd) / (jumpEnd - tractionHoldEnd));
@@ -2418,6 +2425,7 @@ window.addEventListener('DOMContentLoaded', () => {
         clearActiveSlotCards();
         setFinalTransitionMode(false);
         setTractionMode(false);
+        tractionLoopStartedAt = null;
         hideCharacter();
         return;
       }
@@ -2428,6 +2436,7 @@ window.addEventListener('DOMContentLoaded', () => {
       else clearActiveSlotCards();
       setFinalTransitionMode(Boolean(state.isFinalTransition));
       setTractionMode(Boolean(state.isTractionLoop));
+      if (!state.isTractionLoop) tractionLoopStartedAt = null;
       const animationProgress = getHybridCardActionProgress(state);
       const isFinalTransition = Boolean(state.isFinalTransition);
 
@@ -2446,7 +2455,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // appoggio sulla CTA: così la metà finale non viene più tagliata o
       // riscalata dallo scroll e arriva alla fine reale della timeline Rive.
       forceRiveTimeline(state.animation, animationProgress, {
-        nativePlayback: Boolean(state.isCardAction || state.isFinalButtonAction || state.isTractionLoop),
+        nativePlayback: Boolean(state.isCardAction || state.isFinalButtonAction),
         playFromProgress: Boolean(state.isFinalButtonAction)
       });
       setLayerAt(state.point);

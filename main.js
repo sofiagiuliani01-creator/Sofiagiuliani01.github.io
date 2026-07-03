@@ -2029,8 +2029,12 @@ window.addEventListener('DOMContentLoaded', () => {
       const preferredX = viewportLeftInSection + (window.innerWidth * 0.36) - (layer.offsetWidth * 0.5);
       const lineX = lineRect ? lineRect.left + lineRect.width * 0.5 - layer.offsetWidth * 0.5 : preferredX;
       const x = gsap.utils.clamp(18, Math.max(18, section.clientWidth - layer.offsetWidth - 18), preferredX || lineX);
-      const heroDividerY = -layer.offsetHeight * 0.50;
-      const timelineTopY = timelineRect ? timelineRect.top - layer.offsetHeight * 0.42 : heroDividerY;
+      // In traction the character hangs from the divider between the hero and
+      // this section. Keep the canvas a little lower so the hands visually
+      // lock onto that separator line instead of floating above it.
+      const tractionDividerOffset = gsap.utils.clamp(22, 42, layer.offsetHeight * 0.12);
+      const heroDividerY = (-layer.offsetHeight * 0.50) + tractionDividerOffset;
+      const timelineTopY = timelineRect ? timelineRect.top - layer.offsetHeight * 0.42 + tractionDividerOffset : heroDividerY;
       const y = Math.min(timelineTopY, heroDividerY);
       return { x, y };
     }
@@ -2308,10 +2312,21 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (segment === 0) {
-        const point = lerpPoint(anchors[0], anchors[1], gsap.utils.clamp(0, 1, progress / 0.56));
-        if (progress < 0.56) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: progress / 0.56, point, activeIndex: null };
-        if (progress < 0.76) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - 0.56) / 0.20, point: anchors[1], activeIndex: null };
-        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.76) / 0.24, point: anchors[1], activeIndex: 0, isCardAction: true };
+        // Keep `traction` looping while the user is still near the section
+        // divider. Only when the scroll reaches the dedicated jump range do we
+        // switch to `jump_1_card`, avoiding a premature one-shot playback.
+        const tractionHoldEnd = 0.18;
+        const jumpEnd = 0.64;
+
+        if (progress < tractionHoldEnd) {
+          return { phase: "traction", animation: startTimelineName, animationProgress: 0, point: anchors[0], activeIndex: null, isTractionLoop: true };
+        }
+
+        const jumpProgress = gsap.utils.clamp(0, 1, (progress - tractionHoldEnd) / (jumpEnd - tractionHoldEnd));
+        const point = lerpPoint(anchors[0], anchors[1], jumpProgress);
+        if (progress < jumpEnd) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: jumpProgress, point, activeIndex: null };
+        if (progress < 0.80) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - jumpEnd) / (0.80 - jumpEnd), point: anchors[1], activeIndex: null };
+        return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.80) / 0.20, point: anchors[1], activeIndex: 0, isCardAction: true };
       }
 
       if (segment >= 5) {

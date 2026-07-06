@@ -10,7 +10,7 @@
   <div class="program-scroll-progress" aria-hidden="true"><span></span></div>
 
   <!-- HEADER identico alle altre pagine (niente voci nuove) -->
-   <header class="site-header">
+  <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
         <div class="logo-image-wrapper">
@@ -42,45 +42,50 @@
   </header>
 
   <main>
-    <section class="hero hero-program hero-program-premium program-compact-hero">
-      <div class="container hero-program-inner">
-        <div class="hero-program-text" data-animate="fade-up">
+    <section class="program-showcase program-showcase-premium" data-program-stage>
+      <div class="program-kinetic-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="container program-showcase-grid">
+        <div class="program-showcase-copy" data-animate="fade-up">
           <p class="eyebrow">Coaching Premium · completo</p>
           <h1>Allenamento e nutrizione. Una sola direzione.</h1>
-          <p class="hero-subtitle">Per dimagrire, ricomporti o sbloccare un plateau con decisioni semplici e coordinate.</p>
-          <div class="leoai-badge-premium"><i data-lucide="bot"></i><span>Incluso <strong>LeoAI Assistant</strong> per dubbi rapidi.</span></div>
+          <p class="hero-subtitle">Training, dieta e check si muovono insieme: una landing più ricca per raccontare il percorso completo con ritmo e profondità.</p>
+          <div class="program-hero-proof">
+            <span><i data-lucide="dumbbell"></i> training su misura</span>
+            <span><i data-lucide="video"></i> nutrizione pratica</span>
+            <span><i data-lucide="trending-up"></i> supporto prioritario</span>
+          </div>
           <div class="hero-actions">
             <a href="consulenza.html" class="btn btn-primary">Candidati al Premium</a>
             <a href="coaching-base.html" class="btn btn-outline">Confronta Base</a>
           </div>
         </div>
-        <div class="program-decision-panel premium" data-animate="fade-left" data-tilt-card>
-          <span class="choice-label premium">Più completo</span>
-          <div class="program-score-row"><strong>Training</strong><span>programma su misura</span></div>
-          <div class="program-score-row"><strong>Food</strong><span>calorie, macro, pasti</span></div>
-          <div class="program-score-row"><strong>Check+</strong><span>dati + sensazioni</span></div>
+        <div class="program-collage" data-animate="fade-left" data-tilt-card>
+          <div class="program-collage-card card-a"><img src="hero-nutrition.svg" alt="Nutrizione personalizzata"><strong>Food</strong><span>macro sostenibili</span></div>
+          <div class="program-collage-card card-b"><img src="step-04.svg" alt="Check dei progressi"><strong>Check+</strong><span>dati e sensazioni</span></div>
+          <div class="program-collage-card card-c"><img src="preload-nutrition.svg" alt="Runner in movimento"><strong>LeoAI</strong><span>dubbi rapidi</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="program-marquee" aria-label="Benefici Coaching Premium"><div class="program-marquee-track"><span>TRAINING</span><span>NUTRIZIONE</span><span>CHECK COMPLETI</span><span>MACRO</span><span>SUPPORTO</span><span>TRAINING</span></div></section>
+
+    <section class="section program-split-feature">
+      <div class="container program-split-grid">
+        <div class="program-sticky-title" data-animate="fade-up"><p class="eyebrow">Finally</p><h2>No tentativi a caso.</h2></div>
+        <div class="program-feature-stack">
+          <article class="program-feature-panel" data-animate="scale-in"><span>01</span><h3>Allinei palestra e tavola.</h3><p>Allenamento, calorie e macro lavorano nella stessa direzione, così ogni modifica ha un senso.</p></article>
+          <article class="program-feature-panel accent" data-animate="scale-in"><span>02</span><h3>Sblocchi plateau e oscillazioni.</h3><p>Peso, fame, energia e performance vengono letti insieme per capire cosa cambiare davvero.</p></article>
+          <article class="program-feature-panel" data-animate="scale-in"><span>03</span><h3>Hai più supporto nei momenti critici.</h3><p>Check completi e risposte rapide ti aiutano a restare lucido quando la routine si complica.</p></article>
         </div>
       </div>
     </section>
 
     <section class="section program-path-section">
-      <div class="container program-path-card program-path-card-premium" data-animate="scale-in">
-        <div class="program-path-copy">
-          <p class="eyebrow">Scegli rapido</p>
-          <h2>Dove perdi risultati?</h2>
-        </div>
+      <div class="container program-path-card" data-animate="scale-in">
+        <div class="program-path-copy"><p class="eyebrow">Scegli rapido</p><h2>Dove perdi risultati?</h2></div>
         <div class="program-path-interactive" data-program-picker>
-          <div class="program-path-options" role="tablist" aria-label="Scelta rapida Coaching Premium">
-            <button type="button" class="program-path-option is-active" data-program-option="plateau">Plateau</button>
-            <button type="button" class="program-path-option" data-program-option="food">Dieta</button>
-            <button type="button" class="program-path-option" data-program-option="support">Supporto</button>
-          </div>
-          <div class="program-path-result" data-program-result>
-            <span class="program-result-kicker">Premium consigliato</span>
-            <h3>Correggiamo la leva giusta.</h3>
-            <p>Peso, fame, energia e performance vengono letti insieme.</p>
-            <a href="consulenza.html" class="btn btn-primary">Candidati</a>
-          </div>
+          <div class="program-path-options" role="tablist" aria-label="Scelta rapida Coaching Premium"><button type="button" class="program-path-option is-active" data-program-option="plateau">Plateau</button><button type="button" class="program-path-option" data-program-option="food">Dieta</button><button type="button" class="program-path-option" data-program-option="support">Supporto</button></div>
+          <div class="program-path-result" data-program-result><span class="program-result-kicker">Premium consigliato</span><h3>Correggiamo la leva giusta.</h3><p>Peso, fame, energia e performance vengono letti insieme.</p><a href="consulenza.html" class="btn btn-primary">Candidati</a></div>
           <template data-program-template="plateau"><span class="program-result-kicker">Premium consigliato</span><h3>Correggiamo la leva giusta.</h3><p>Peso, fame, energia e performance vengono letti insieme.</p><a href="consulenza.html" class="btn btn-primary">Candidati</a></template>
           <template data-program-template="food"><span class="program-result-kicker">Nutrizione pratica</span><h3>Pasti sostenibili, non regole infinite.</h3><p>Calorie e macro diventano strumenti semplici per la tua routine.</p><a href="consulenza.html" class="btn btn-primary">Voglio strategia</a></template>
           <template data-program-template="support"><span class="program-result-kicker">Più controllo</span><h3>Check completi e risposte rapide.</h3><p>Più contesto nelle settimane in cui di solito si molla.</p><a href="consulenza.html" class="btn btn-primary">Prenota</a></template>
@@ -88,36 +93,11 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header compact-section-header">
-          <p class="eyebrow">Tabella chiara</p>
-          <h2>Premium toglie i dubbi tra palestra e tavola.</h2>
-        </div>
-        <div class="program-table-wrap" data-animate="fade-up">
-          <table class="program-compare-table premium-table">
-            <thead><tr><th>Obiettivo</th><th>Cosa facciamo</th><th>Perché converte</th></tr></thead>
-            <tbody>
-              <tr><td>Dimagrire</td><td>Deficit + pesi</td><td>Meno errori nascosti</td></tr>
-              <tr><td>Ricomposizione</td><td>Macro + progressioni</td><td>Più controllo sui dati</td></tr>
-              <tr><td>Massa</td><td>Surplus guidato</td><td>Performance e peso coerenti</td></tr>
-              <tr><td>Plateau</td><td>Check integrato</td><td>Modifiche precise</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <section class="section program-values-section"><div class="container"><div class="section-header center"><p class="eyebrow">Dentro il Premium</p><h2>Il percorso completo per togliere i dubbi.</h2></div><div class="program-values-grid"><article data-animate="fade-up"><span>01</span><h3>Training personalizzato</h3></article><article data-animate="fade-up"><span>02</span><h3>Nutrizione personalizzata</h3></article><article data-animate="fade-up"><span>03</span><h3>Check integrato</h3></article><article data-animate="fade-up"><span>04</span><h3>Supporto prioritario</h3></article></div></div></section>
 
-    <section class="section section-soft">
-      <div class="container program-cta program-cta-premium" data-animate="fade-up">
-        <div>
-          <p class="eyebrow">Prossimo step</p>
-          <h2>Vuoi il percorso completo? Candidati.</h2>
-        </div>
-        <a href="consulenza.html" class="btn btn-primary btn-large">Prenota gratis</a>
-      </div>
-    </section>
+    <section class="section section-soft"><div class="container program-cta" data-animate="fade-up"><div><p class="eyebrow">Prossimo step</p><h2>Vuoi il percorso completo? Candidati.</h2></div><a href="consulenza.html" class="btn btn-primary btn-large">Prenota gratis</a></div></section>
   </main>
+
 
   <footer class="site-footer">
     <div class="container footer-inner">

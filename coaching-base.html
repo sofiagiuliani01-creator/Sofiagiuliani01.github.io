@@ -44,44 +44,50 @@
   </header>
 
   <main>
-    <section class="hero hero-program hero-program-base program-compact-hero">
-      <div class="container hero-program-inner">
-        <div class="hero-program-text" data-animate="fade-up">
+    <section class="program-showcase program-showcase-base" data-program-stage>
+      <div class="program-kinetic-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="container program-showcase-grid">
+        <div class="program-showcase-copy" data-animate="fade-up">
           <p class="eyebrow">Coaching Base · allenamento</p>
           <h1>Scheda chiara. Progressi misurabili.</h1>
-          <p class="hero-subtitle">Per allenarti meglio senza dieta inclusa: pochi step, feedback pratici, zero confusione.</p>
+          <p class="hero-subtitle">Una pagina più viva, ritmata e guidata: come una landing dinamica, ma costruita sul tuo tono e sui tuoi obiettivi.</p>
+          <div class="program-hero-proof">
+            <span><i data-lucide="dumbbell"></i> 3-5 sedute su misura</span>
+            <span><i data-lucide="video"></i> feedback tecnica</span>
+            <span><i data-lucide="trending-up"></i> progressioni chiare</span>
+          </div>
           <div class="hero-actions">
             <a href="consulenza.html" class="btn btn-primary">Prenota consulenza gratuita</a>
             <a href="coaching-premium.html" class="btn btn-outline">Vedi Premium</a>
           </div>
         </div>
-        <div class="program-decision-panel" data-animate="fade-left" data-tilt-card>
-          <span class="choice-label">In breve</span>
-          <div class="program-score-row"><strong>3-5</strong><span>sedute su misura</span></div>
-          <div class="program-score-row"><strong>Check</strong><span>tecnica e progressioni</span></div>
-          <div class="program-score-row"><strong>No</strong><span>piano nutrizionale</span></div>
+        <div class="program-collage" data-animate="fade-left" data-tilt-card>
+          <div class="program-collage-card card-a"><img src="hero-training.svg" alt="Allenamento personalizzato"><strong>Training</strong><span>routine sostenibile</span></div>
+          <div class="program-collage-card card-b"><img src="step-03.svg" alt="Check dei progressi"><strong>Check</strong><span>correzioni settimanali</span></div>
+          <div class="program-collage-card card-c"><img src="preload-runner.svg" alt="Runner in movimento"><strong>Focus</strong><span>zero confusione</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="program-marquee" aria-label="Benefici Coaching Base"><div class="program-marquee-track"><span>ALLENAMENTO SU MISURA</span><span>TECNICA</span><span>PROGRESSIONI</span><span>COSTANZA</span><span>CHECK</span><span>ALLENAMENTO SU MISURA</span></div></section>
+
+    <section class="section program-split-feature">
+      <div class="container program-split-grid">
+        <div class="program-sticky-title" data-animate="fade-up"><p class="eyebrow">Finally</p><h2>No schede copia-incolla.</h2></div>
+        <div class="program-feature-stack">
+          <article class="program-feature-panel" data-animate="scale-in"><span>01</span><h3>Parti da una struttura semplice.</h3><p>Sedute realistiche per tempo, livello e attrezzatura: sai cosa fare appena entri in palestra.</p></article>
+          <article class="program-feature-panel accent" data-animate="scale-in"><span>02</span><h3>Correggi quello che blocca i carichi.</h3><p>Video e cue tecnici rendono ogni esercizio più comprensibile, senza mille indicazioni inutili.</p></article>
+          <article class="program-feature-panel" data-animate="scale-in"><span>03</span><h3>Misuri il progresso senza ansia.</h3><p>Volumi, recuperi e sensazioni vengono letti insieme per aggiornare la scheda quando serve.</p></article>
         </div>
       </div>
     </section>
 
     <section class="section program-path-section">
       <div class="container program-path-card" data-animate="scale-in">
-        <div class="program-path-copy">
-          <p class="eyebrow">Scegli rapido</p>
-          <h2>Cosa ti serve adesso?</h2>
-        </div>
+        <div class="program-path-copy"><p class="eyebrow">Scegli rapido</p><h2>Cosa ti serve adesso?</h2></div>
         <div class="program-path-interactive" data-program-picker>
-          <div class="program-path-options" role="tablist" aria-label="Scelta rapida Coaching Base">
-            <button type="button" class="program-path-option is-active" data-program-option="routine">Costanza</button>
-            <button type="button" class="program-path-option" data-program-option="technique">Tecnica</button>
-            <button type="button" class="program-path-option" data-program-option="nutrition">Dieta</button>
-          </div>
-          <div class="program-path-result" data-program-result>
-            <span class="program-result-kicker">Base consigliato</span>
-            <h3>Routine semplice da seguire.</h3>
-            <p>Sedute realistiche, obiettivi chiari e check per non mollare.</p>
-            <a href="consulenza.html" class="btn btn-primary">Parto dal Base</a>
-          </div>
+          <div class="program-path-options" role="tablist" aria-label="Scelta rapida Coaching Base"><button type="button" class="program-path-option is-active" data-program-option="routine">Costanza</button><button type="button" class="program-path-option" data-program-option="technique">Tecnica</button><button type="button" class="program-path-option" data-program-option="nutrition">Dieta</button></div>
+          <div class="program-path-result" data-program-result><span class="program-result-kicker">Base consigliato</span><h3>Routine semplice da seguire.</h3><p>Sedute realistiche, obiettivi chiari e check per non mollare.</p><a href="consulenza.html" class="btn btn-primary">Parto dal Base</a></div>
           <template data-program-template="routine"><span class="program-result-kicker">Base consigliato</span><h3>Routine semplice da seguire.</h3><p>Sedute realistiche, obiettivi chiari e check per non mollare.</p><a href="consulenza.html" class="btn btn-primary">Parto dal Base</a></template>
           <template data-program-template="technique"><span class="program-result-kicker">Base perfetto</span><h3>Correzioni pratiche.</h3><p>Video, cue tecnici e progressioni: sai cosa migliorare ogni settimana.</p><a href="consulenza.html" class="btn btn-primary">Voglio feedback</a></template>
           <template data-program-template="nutrition"><span class="program-result-kicker">Meglio Premium</span><h3>Se ti blocca il cibo, serve il percorso completo.</h3><p>Allenamento e nutrizione insieme evitano tentativi casuali.</p><a href="coaching-premium.html" class="btn btn-outline">Passa a Premium</a></template>
@@ -89,37 +95,11 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header compact-section-header">
-          <p class="eyebrow">Tabella chiara</p>
-          <h2>Base è per te se vuoi allenarti meglio.</h2>
-        </div>
-        <div class="program-table-wrap" data-animate="fade-up">
-          <table class="program-compare-table">
-            <thead><tr><th>Include</th><th>Base</th><th>Premium</th></tr></thead>
-            <tbody>
-              <tr><td>Scheda personalizzata</td><td>✓</td><td>✓</td></tr>
-              <tr><td>Feedback tecnica</td><td>✓</td><td>✓</td></tr>
-              <tr><td>Progressioni</td><td>✓</td><td>✓</td></tr>
-              <tr><td>Nutrizione personalizzata</td><td>—</td><td>✓</td></tr>
-              <tr><td>Supporto prioritario</td><td>—</td><td>✓</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <section class="section program-values-section"><div class="container"><div class="section-header center"><p class="eyebrow">Dentro il Base</p><h2>Un percorso essenziale, ma curato.</h2></div><div class="program-values-grid"><article data-animate="fade-up"><span>01</span><h3>Scheda personalizzata</h3></article><article data-animate="fade-up"><span>02</span><h3>Feedback tecnica</h3></article><article data-animate="fade-up"><span>03</span><h3>Progressioni</h3></article><article data-animate="fade-up"><span>04</span><h3>Check sostenibili</h3></article></div></div></section>
 
-    <section class="section section-soft">
-      <div class="container program-cta" data-animate="fade-up">
-        <div>
-          <p class="eyebrow">Prossimo step</p>
-          <h2>Vuoi solo allenamento? Parti leggero.</h2>
-        </div>
-        <a href="consulenza.html" class="btn btn-primary btn-large">Prenota gratis</a>
-      </div>
-    </section>
+    <section class="section section-soft"><div class="container program-cta" data-animate="fade-up"><div><p class="eyebrow">Prossimo step</p><h2>Vuoi solo allenamento? Parti leggero.</h2></div><a href="consulenza.html" class="btn btn-primary btn-large">Prenota gratis</a></div></section>
   </main>
+
 
   <footer class="site-footer">
     <div class="container footer-inner">

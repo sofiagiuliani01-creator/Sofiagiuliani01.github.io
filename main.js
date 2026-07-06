@@ -2639,6 +2639,26 @@ window.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('resize', updateProgress);
     }
 
+    const stage = document.querySelector('[data-program-stage]');
+    if (stage && programPage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let ticking = false;
+      const paintStage = () => {
+        const rect = stage.getBoundingClientRect();
+        const travel = Math.max(1, window.innerHeight + rect.height);
+        const ratio = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / travel));
+        document.documentElement.style.setProperty('--program-scroll', ratio.toFixed(4));
+        ticking = false;
+      };
+      const scheduleStagePaint = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(paintStage);
+      };
+      paintStage();
+      window.addEventListener('scroll', scheduleStagePaint, { passive: true });
+      window.addEventListener('resize', scheduleStagePaint);
+    }
+
     document.querySelectorAll('[data-program-picker]').forEach((picker) => {
       const options = Array.from(picker.querySelectorAll('[data-program-option]'));
       const result = picker.querySelector('[data-program-result]');

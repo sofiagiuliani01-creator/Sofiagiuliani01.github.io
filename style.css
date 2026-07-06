@@ -19366,3 +19366,369 @@ body.app-page {
     gap: 0.8rem;
   }
 }
+
+/* ================================
+   Chi sono — premium integrated redesign
+   ================================ */
+.page-chi-sono {
+  background: #141414;
+  color: #f8fafc;
+}
+
+.page-chi-sono .site-header {
+  background: rgba(20, 20, 20, 0.82);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.about-premium {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 3%, rgba(25, 218, 213, 0.18), transparent 29rem),
+    radial-gradient(circle at 88% 18%, rgba(13, 76, 74, 0.38), transparent 31rem),
+    linear-gradient(180deg, #141414 0%, #090b10 56%, #141414 100%);
+}
+
+.about-hero {
+  position: relative;
+  padding: clamp(4.6rem, 8vw, 8rem) 0 clamp(3rem, 7vw, 6rem);
+}
+
+.about-orb {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(22px);
+  opacity: 0.7;
+}
+
+.about-orb-one {
+  width: min(34vw, 28rem);
+  aspect-ratio: 1;
+  right: -8rem;
+  top: 8rem;
+  background: rgba(25, 218, 213, 0.16);
+}
+
+.about-orb-two {
+  width: 16rem;
+  aspect-ratio: 1;
+  left: -6rem;
+  bottom: 3rem;
+  background: rgba(25, 218, 213, 0.09);
+}
+
+.about-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(20rem, 0.72fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.about-hero-copy h1,
+.about-analysis h2,
+.about-method h2,
+.about-difference h2,
+.about-cta h2 {
+  text-wrap: balance;
+}
+
+.about-hero-copy h1 {
+  max-width: 12.5ch;
+  margin: 0.45rem 0 1.1rem;
+  font-size: clamp(3rem, 7.2vw, 6.7rem);
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+}
+
+.about-hero-lead {
+  max-width: 46rem;
+  margin: 0;
+  color: #c9d1df;
+  font-size: clamp(1.05rem, 1.55vw, 1.24rem);
+  line-height: 1.78;
+}
+
+.about-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.about-portrait-card {
+  position: relative;
+}
+
+.about-portrait-frame {
+  position: relative;
+  padding: 1px;
+  border-radius: 34px;
+  background: linear-gradient(145deg, rgba(25, 218, 213, 0.86), rgba(255,255,255,0.10), rgba(13,76,74,0.68));
+  box-shadow: 0 34px 90px rgba(0,0,0,0.58), 0 0 60px rgba(25,218,213,0.18);
+}
+
+.about-portrait-frame img {
+  display: block;
+  width: 100%;
+  min-height: 480px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 33px;
+  background: rgba(255,255,255,0.04);
+}
+
+.about-credentials {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin: -2.3rem 1rem 0;
+}
+
+.about-credentials div,
+.about-analysis-list article,
+.about-method-card,
+.about-manifesto-panel,
+.about-difference-card,
+.about-cta-panel {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 24px 70px rgba(0,0,0,0.24);
+  backdrop-filter: blur(18px);
+}
+
+.about-credentials div {
+  min-height: 92px;
+  padding: 1rem 0.75rem;
+  border-radius: 18px;
+}
+
+.about-credentials strong {
+  display: block;
+  color: var(--accent-aqua);
+  font-size: clamp(1.45rem, 3vw, 2.08rem);
+  line-height: 1;
+}
+
+.about-credentials span {
+  display: block;
+  margin-top: 0.4rem;
+  color: #d8dee9;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.about-manifesto-panel {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 1.4rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border-radius: 28px;
+}
+
+.about-manifesto-panel span,
+.about-analysis-list span,
+.about-method-card span {
+  color: var(--accent-aqua);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.about-manifesto-panel p {
+  margin: 0;
+  color: #f5f7fb;
+  font-size: clamp(1.2rem, 2.1vw, 2rem);
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+}
+
+.about-split-grid,
+.about-difference-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(2rem, 6vw, 4.8rem);
+  align-items: start;
+}
+
+.about-sticky-copy {
+  position: sticky;
+  top: 7rem;
+}
+
+.about-sticky-copy h2,
+.about-method h2,
+.about-difference h2,
+.about-cta h2 {
+  margin: 0.45rem 0 1rem;
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.about-sticky-copy p,
+.about-method .section-subtitle,
+.about-difference-points p,
+.about-difference-points li,
+.about-cta-panel p,
+.about-analysis-list p,
+.about-method-card p {
+  color: #c9d1df;
+  line-height: 1.72;
+}
+
+.about-analysis-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.about-analysis-list article,
+.about-method-card {
+  padding: clamp(1.25rem, 3vw, 1.8rem);
+  border-radius: 24px;
+}
+
+.about-analysis-list h3,
+.about-method-card h3 {
+  margin: 1.25rem 0 0.6rem;
+  color: #fff;
+  font-size: 1.18rem;
+  letter-spacing: -0.025em;
+}
+
+.about-method .about-method-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2.2rem;
+}
+
+.about-method-card {
+  min-height: 260px;
+}
+
+.about-difference-card,
+.about-cta-panel {
+  padding: clamp(1.6rem, 4vw, 3rem);
+  border-radius: 32px;
+}
+
+.about-difference-card {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(25,218,213,0.14), rgba(255,255,255,0.045));
+}
+
+.about-difference-points ul {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-difference-points li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.about-difference-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: 999px;
+  background: var(--accent-aqua);
+  box-shadow: 0 0 18px rgba(25,218,213,0.75);
+}
+
+.about-cta-panel {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, rgba(25,218,213,0.2), rgba(255,255,255,0.06) 42%, rgba(255,255,255,0.035));
+}
+
+.about-cta-panel p {
+  max-width: 620px;
+  margin: 0 auto 1.6rem;
+}
+
+.about-cta-panel .btn {
+  margin-inline: auto;
+}
+
+.page-chi-sono [data-about-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.page-chi-sono [data-about-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1100px) {
+  .about-method .about-method-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
+  .about-hero-grid,
+  .about-split-grid,
+  .about-difference-card,
+  .about-manifesto-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .about-sticky-copy {
+    position: static;
+  }
+
+  .about-portrait-card {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding-top: 3.4rem;
+  }
+
+  .about-hero-copy h1 {
+    font-size: clamp(2.65rem, 13vw, 4.45rem);
+  }
+
+  .about-hero-actions .btn,
+  .about-cta-panel .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-portrait-frame img {
+    min-height: 340px;
+  }
+
+  .about-credentials,
+  .about-method .about-method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-credentials {
+    margin: 0.85rem 0 0;
+  }
+
+  .about-credentials div {
+    min-height: 0;
+  }
+}

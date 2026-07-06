@@ -18704,3 +18704,196 @@ body.app-page {
 @media (max-width: 900px) {
   .program-included-grid { grid-template-columns: 1fr; }
 }
+
+/* Chi sono refresh: kinetic, cleaner Champions4Good-inspired motion */
+.page-chi-sono {
+  --story-card-radius: clamp(24px, 4vw, 46px);
+}
+
+.page-chi-sono .site-header {
+  background: rgba(3, 5, 10, 0.78);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.story-hero {
+  overflow: hidden;
+}
+
+.story-hero::after {
+  content: "CHI SONO";
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1rem, 5vw, 4rem);
+  z-index: 0;
+  color: rgba(255, 255, 255, 0.035);
+  font-size: clamp(5.4rem, 19vw, 19rem);
+  font-weight: 950;
+  letter-spacing: -0.12em;
+  line-height: 0.7;
+  white-space: nowrap;
+  transform: translateX(-50%) translateY(calc(var(--about-scroll, 0) * -90px));
+  pointer-events: none;
+}
+
+.story-hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.story-hero-copy h1 {
+  max-width: 10.6ch;
+  text-transform: uppercase;
+}
+
+.story-hero-ticker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.45rem;
+}
+
+.story-hero-ticker span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.48rem 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(247, 248, 252, 0.82);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+.story-photo-stack {
+  position: absolute;
+  inset: auto -1.4rem 11% auto;
+  z-index: 3;
+  display: grid;
+  gap: 0.55rem;
+  transform: rotate(4deg) translateY(calc(var(--story-local-progress, 0) * -18px));
+}
+
+.story-photo-stack span {
+  width: max-content;
+  padding: 0.55rem 0.78rem;
+  border: 1px solid rgba(25, 218, 213, 0.28);
+  border-radius: 999px;
+  background: rgba(4, 5, 11, 0.74);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 18px 42px rgba(0,0,0,.28);
+  backdrop-filter: blur(16px);
+}
+
+.story-portrait-frame {
+  border-radius: var(--story-card-radius);
+  transform: rotate(-2deg);
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.5s ease;
+}
+
+.story-portrait:hover .story-portrait-frame {
+  transform: rotate(0deg) translateY(-8px);
+  box-shadow: 0 55px 120px rgba(0, 0, 0, 0.55), 0 0 90px rgba(25, 218, 213, 0.2);
+}
+
+.story-portrait-caption {
+  transform: rotate(1.5deg);
+}
+
+.story-scroll-stage {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(25, 218, 213, 0.045) 26%, transparent 58%),
+    radial-gradient(circle at 50% 28%, rgba(25, 218, 213, 0.1), transparent 34rem);
+}
+
+.story-core-card,
+.story-strength-grid article,
+.story-fit-list div,
+.story-final-card {
+  border-radius: var(--story-card-radius);
+}
+
+.story-chapter {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.story-chapter.is-active .story-chapter-number {
+  background: #fff;
+  color: #04050b;
+  border-color: #fff;
+  box-shadow: 0 0 0 10px rgba(255,255,255,.06), 0 0 34px rgba(25,218,213,.34);
+}
+
+.story-values-ribbon {
+  width: min(100%, 980px);
+  margin: -0.8rem auto 1.35rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.story-values-ribbon div {
+  display: flex;
+  width: max-content;
+  animation: story-marquee 22s linear infinite;
+}
+
+.story-values-ribbon span {
+  padding: 0.9rem 1.45rem;
+  color: rgba(255,255,255,.84);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.story-strength-grid article {
+  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.35s ease, background 0.35s ease;
+}
+
+.story-strength-grid article:hover {
+  transform: translateY(-10px) rotate(-1deg);
+  border-color: rgba(25, 218, 213, 0.42);
+  background: linear-gradient(145deg, rgba(25, 218, 213, 0.14), rgba(255,255,255,.05));
+}
+
+@keyframes story-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-values-ribbon div {
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .story-hero::after {
+    bottom: 0;
+    font-size: 26vw;
+  }
+
+  .story-photo-stack {
+    right: 0.35rem;
+    bottom: 18%;
+  }
+
+  .story-photo-stack span {
+    font-size: 0.62rem;
+  }
+
+  .story-values-ribbon {
+    border-radius: 24px;
+  }
+}

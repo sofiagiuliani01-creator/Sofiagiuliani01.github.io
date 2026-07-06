@@ -18897,3 +18897,246 @@ body.app-page {
     border-radius: 24px;
   }
 }
+
+/* ================================
+   Chi sono: layout pulito e focalizzato
+   ================================ */
+.page-chi-sono {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(25, 218, 213, 0.13), transparent 28rem),
+    linear-gradient(180deg, #f7fbfb 0%, #eef5f5 48%, #ffffff 100%);
+  color: var(--text-dark);
+}
+
+.page-chi-sono .site-header {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.about-clean {
+  overflow: hidden;
+}
+
+.about-clean-hero {
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
+}
+
+.about-clean-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: min(42vw, 34rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: rgba(25, 218, 213, 0.16);
+  filter: blur(42px);
+  transform: translate(18%, -28%);
+  pointer-events: none;
+}
+
+.about-clean-hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.03fr) minmax(18rem, 0.72fr);
+  gap: clamp(2rem, 6vw, 4.5rem);
+  align-items: center;
+}
+
+.about-clean-copy h1,
+.about-clean-priorities h2,
+.about-clean-method h2,
+.about-clean-fit h2 {
+  text-wrap: balance;
+}
+
+.about-clean-copy h1 {
+  max-width: 12ch;
+  margin: 0.45rem 0 1rem;
+  color: #06131f;
+  font-size: clamp(3rem, 7.4vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+
+.about-clean-lead {
+  max-width: 43rem;
+  margin: 0;
+  color: rgba(15, 23, 42, 0.72);
+  font-size: clamp(1.08rem, 1.7vw, 1.28rem);
+  line-height: 1.75;
+}
+
+.about-clean-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.about-clean-card {
+  position: relative;
+  padding: 0.75rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 34px;
+  background: #fff;
+  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.14);
+}
+
+.about-clean-card img {
+  width: 100%;
+  min-height: 430px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 26px;
+}
+
+.about-clean-card-note {
+  margin: -3.5rem 1rem 0;
+  position: relative;
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  background: rgba(4, 17, 31, 0.9);
+  color: #fff;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.24);
+}
+
+.about-clean-card-note span,
+.about-clean-priority-grid span {
+  display: block;
+  color: var(--accent-aqua);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.about-clean-card-note strong {
+  display: block;
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+
+.about-clean-priority-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-clean-priority-grid article,
+.about-clean-steps div,
+.about-clean-fit-card {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 22px 58px rgba(15, 23, 42, 0.08);
+}
+
+.about-clean-priority-grid article {
+  padding: clamp(1.35rem, 3vw, 2rem);
+}
+
+.about-clean-priority-grid h3 {
+  margin: 1.7rem 0 0.65rem;
+  color: #06131f;
+  font-size: 1.22rem;
+}
+
+.about-clean-priority-grid p,
+.about-clean-method p,
+.about-clean-steps span,
+.about-clean-fit-card p {
+  color: rgba(15, 23, 42, 0.68);
+  line-height: 1.72;
+}
+
+.about-clean-method-grid,
+.about-clean-fit-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 1fr);
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: center;
+}
+
+.about-clean-method h2,
+.about-clean-fit h2 {
+  margin: 0.45rem 0 1rem;
+  color: #06131f;
+  font-size: clamp(2.3rem, 5vw, 4.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.about-clean-steps {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.about-clean-steps div {
+  padding: 1.15rem 1.25rem;
+}
+
+.about-clean-steps strong,
+.about-clean-steps span {
+  display: block;
+}
+
+.about-clean-steps strong {
+  margin-bottom: 0.25rem;
+  color: #06131f;
+}
+
+.about-clean-fit-card {
+  padding: clamp(1.7rem, 4vw, 3rem);
+  background: linear-gradient(135deg, #06131f, #0d4c4a);
+}
+
+.about-clean-fit-card h2,
+.about-clean-fit-card p {
+  color: #fff;
+}
+
+.about-clean-fit-card p {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.about-clean-fit-card .btn {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+@media (max-width: 920px) {
+  .about-clean-hero-grid,
+  .about-clean-method-grid,
+  .about-clean-fit-card {
+    grid-template-columns: 1fr;
+  }
+
+  .about-clean-priority-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-clean-fit-card .btn {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 620px) {
+  .about-clean-hero {
+    padding-top: 3.2rem;
+  }
+
+  .about-clean-copy h1 {
+    font-size: clamp(2.65rem, 14vw, 4.5rem);
+  }
+
+  .about-clean-actions .btn,
+  .about-clean-fit-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-clean-card img {
+    min-height: 330px;
+  }
+}

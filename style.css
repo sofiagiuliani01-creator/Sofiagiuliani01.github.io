@@ -14356,8 +14356,8 @@ body.app-page {
   position: absolute;
   left: 0;
   top: 0;
-  width: 240px;
-  height: 300px;
+  width: 340px;
+  height: 380px;
   z-index: 90;
   pointer-events: none;
   opacity: 1;
@@ -14408,11 +14408,7 @@ body.app-page {
   visibility: hidden;
 }
 
-#come-funziona .rive-character-layer.is-traction {
-  width: 300px;
-  height: 350px;
-}
-
+#come-funziona .rive-character-layer.is-traction,
 #come-funziona .rive-character-layer.is-step-5,
 #come-funziona .rive-character-layer.is-final-transition {
   width: 340px;
@@ -14420,16 +14416,8 @@ body.app-page {
 }
 
 @media (max-width: 900px) {
-  #come-funziona .rive-character-layer {
-    width: 170px;
-    height: 215px;
-  }
-
-  #come-funziona .rive-character-layer.is-traction {
-    width: 210px;
-    height: 260px;
-  }
-
+  #come-funziona .rive-character-layer,
+  #come-funziona .rive-character-layer.is-traction,
   #come-funziona .rive-character-layer.is-step-5,
   #come-funziona .rive-character-layer.is-final-transition {
     width: 250px;
@@ -14438,16 +14426,8 @@ body.app-page {
 }
 
 @media (max-width: 520px) {
-  #come-funziona .rive-character-layer {
-    width: 140px;
-    height: 180px;
-  }
-
-  #come-funziona .rive-character-layer.is-traction {
-    width: 180px;
-    height: 225px;
-  }
-
+  #come-funziona .rive-character-layer,
+  #come-funziona .rive-character-layer.is-traction,
   #come-funziona .rive-character-layer.is-step-5,
   #come-funziona .rive-character-layer.is-final-transition {
     width: 220px;

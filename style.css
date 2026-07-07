@@ -19676,6 +19676,14 @@ body.app-page {
   transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .page-chi-sono [data-about-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media (max-width: 1100px) {
   .about-method .about-method-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

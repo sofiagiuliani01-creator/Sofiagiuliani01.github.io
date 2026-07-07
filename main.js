@@ -2795,3 +2795,47 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', schedulePaint, { passive: true });
   window.addEventListener('load', schedulePaint, { once: true });
 })();
+
+// MOBILE: ripristina il gesto nativo "swipe da sinistra" per tornare indietro.
+// Alcune sezioni con caroselli/scroll orizzontale possono intercettare lo swipe sul bordo
+// dello schermo prima che il browser lo trasformi in navigazione nella cronologia.
+(function () {
+  const EDGE_THRESHOLD = 28;
+  const MIN_SWIPE_X = 72;
+  const MAX_SWIPE_Y = 48;
+
+  let startX = 0;
+  let startY = 0;
+  let startedFromLeftEdge = false;
+
+  window.addEventListener(
+    'touchstart',
+    (event) => {
+      if (!event.touches || event.touches.length !== 1) return;
+
+      const touch = event.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      startedFromLeftEdge = startX <= EDGE_THRESHOLD;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'touchend',
+    (event) => {
+      if (!startedFromLeftEdge || !event.changedTouches || event.changedTouches.length !== 1) return;
+
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = Math.abs(touch.clientY - startY);
+
+      startedFromLeftEdge = false;
+
+      if (deltaX >= MIN_SWIPE_X && deltaY <= MAX_SWIPE_Y && window.history.length > 1) {
+        window.history.back();
+      }
+    },
+    { passive: true }
+  );
+})();

@@ -1320,7 +1320,22 @@ document.addEventListener('DOMContentLoaded', () => {
     return t * t * (3 - 2 * t);
   };
 
-  function update(){
+  let targetProg = 0;
+  let renderedProg = 0;
+  let smoothRaf = 0;
+
+  function readProgress(){
+    const stack = section.querySelector('.theia-mobile-stack');
+    if (!stack) return 0;
+
+    const rect = stack.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    const segment = vh * 1.05;
+
+    return -rect.top / segment;
+  }
+
+  function render(prog){
     if (!mq.matches) return;
     const stack = section.querySelector('.theia-mobile-stack');
     if (!stack) return;
@@ -1328,12 +1343,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = Array.from(stack.querySelectorAll('.theia-diff-card'));
     if (cards.length === 0) return;
 
-    const rect = stack.getBoundingClientRect();
-    const vh = window.innerHeight || 800;
-    const segment = vh * 1.05;
-
-    const y = -rect.top;
-    const prog = y / segment;
     const total = cards.length;
 
     let idx = Math.floor(prog);
@@ -1391,21 +1400,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  let raf=0;
-  const onScroll=()=>{
+  function smoothToTarget(){
+    smoothRaf = 0;
     if (!mq.matches) return;
-    if (raf) return;
-    raf=requestAnimationFrame(()=>{ raf=0; update(); });
+
+    // Low-pass filter: keeps the same scroll-linked choreography but removes
+    // mobile scroll quantization/stutter from address-bar and touch updates.
+    renderedProg += (targetProg - renderedProg) * 0.18;
+    if (Math.abs(targetProg - renderedProg) < 0.001) renderedProg = targetProg;
+
+    render(renderedProg);
+
+    if (renderedProg !== targetProg) {
+      smoothRaf = requestAnimationFrame(smoothToTarget);
+    }
+  }
+
+  const requestSmoothUpdate = (immediate = false) => {
+    if (!mq.matches) return;
+    targetProg = readProgress();
+    if (immediate) renderedProg = targetProg;
+    if (!smoothRaf) smoothRaf = requestAnimationFrame(smoothToTarget);
   };
+
+  const onScroll=()=> requestSmoothUpdate(false);
 
   const onInit=()=>{
     if (!mq.matches) return;
     build();
-    update();
+    requestSmoothUpdate(true);
   };
 
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('touchmove', onScroll, {passive:true});
   window.addEventListener('resize', onInit, {passive:true});
   mq.addEventListener?.('change', onInit);
 

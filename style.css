@@ -20105,3 +20105,78 @@ body.app-page {
   .tp-hero-visual .tp-hero-card-note { left: 0; bottom: 7%; width: 82%; }
   .tp-coach-card div { display: grid; }
 }
+
+/* === Coaching Premium: missing Theia-style comparison + FAQ sections === */
+.tp-comparison {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+  background: #fff;
+}
+.tp-comparison-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.tp-comparison h2 {
+  margin: 0;
+  color: var(--tp-ink);
+  font-size: clamp(2.8rem, 6.5vw, 6rem);
+  line-height: .94;
+  letter-spacing: -.06em;
+  font-weight: 950;
+}
+.tp-comparison p {
+  color: var(--tp-muted);
+  font-size: 1.12rem;
+  line-height: 1.65;
+}
+.tp-check-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.4rem 0 0;
+  display: grid;
+  gap: .75rem;
+}
+.tp-check-list li {
+  display: flex;
+  gap: .7rem;
+  color: #273449;
+  font-weight: 750;
+}
+.tp-check-list li::before {
+  content: "✓";
+  color: var(--tp-accent);
+  font-weight: 950;
+}
+.tp-compare-card {
+  border: 1px solid var(--tp-line);
+  border-radius: 38px;
+  background: linear-gradient(135deg, var(--tp-dark) 0%, #173d34 100%);
+  padding: clamp(1.2rem, 3vw, 2rem);
+  color: #fff;
+  display: grid;
+  gap: 1rem;
+}
+.tp-compare-card div {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 28px;
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  background: rgba(255,255,255,.08);
+}
+.tp-compare-card div:first-child {
+  background: #fff;
+  color: var(--tp-ink);
+}
+.tp-compare-card strong,
+.tp-compare-card span { display: block; }
+.tp-compare-card strong { font-size: clamp(1.5rem, 3vw, 2.3rem); letter-spacing: -.04em; }
+.tp-compare-card span { margin-top: .35rem; color: currentColor; opacity: .72; }
+
+.page-theia-inspired .tp-faq {
+  background: linear-gradient(180deg, #fff 0%, var(--tp-bg) 100%);
+}
+.page-theia-inspired .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+@media (max-width: 900px) {
+  .tp-comparison-grid { grid-template-columns: 1fr; }
+}

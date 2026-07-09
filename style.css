@@ -19940,3 +19940,168 @@ body.app-page {
   .tp-channel-card { grid-template-columns: 1fr; }
   .tp-channel-card span:first-child { grid-column: auto; }
 }
+
+/* === Coaching Premium: stronger Theia-style visual alignment === */
+.page-theia-inspired {
+  --tp-bg: #f6f8f6;
+  --tp-ink: #15211d;
+  --tp-muted: #66736f;
+  --tp-line: rgba(21, 33, 29, 0.12);
+  --tp-card: #ffffff;
+  --tp-accent: #0a5c4c;
+  --tp-accent-2: #19dad5;
+  --tp-cream: #eef4e9;
+  --tp-dark: #10231e;
+}
+
+.page-theia-inspired .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(18px);
+}
+
+.page-theia-inspired .tp-btn {
+  min-height: 3.45rem;
+  padding: 1rem 1.45rem;
+  background: var(--tp-accent);
+  color: #fff !important;
+  border: 1px solid transparent;
+}
+
+.page-theia-inspired .tp-btn-light {
+  background: #fff;
+  color: var(--tp-accent) !important;
+  border-color: var(--tp-line);
+}
+
+.tp-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 88px);
+  display: grid;
+  align-items: center;
+  padding: clamp(3rem, 7vw, 7.5rem) 0 clamp(3rem, 6vw, 5.5rem);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(25, 218, 213, 0.18), transparent 30rem),
+    linear-gradient(180deg, #fbfcf8 0%, var(--tp-bg) 100%);
+}
+
+.tp-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto -8vw -18vw 44vw;
+  height: 48vw;
+  border-radius: 999px 999px 0 0;
+  background: var(--tp-cream);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.tp-hero-grid { position: relative; z-index: 1; grid-template-columns: minmax(0, 1.04fr) minmax(320px, .82fr); }
+.tp-hero h1 { max-width: 12ch; font-size: clamp(4.2rem, 9.6vw, 8.9rem); letter-spacing: -.075em; }
+.tp-lead { max-width: 45rem; color: #53615c; }
+.tp-hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin: 0 0 1.25rem; }
+.tp-hero-points { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 48rem; }
+.tp-hero-points div { border-radius: 28px; padding: 1.1rem 1.15rem; }
+
+.tp-hero-visual {
+  position: relative;
+  min-height: clamp(33rem, 54vw, 46rem);
+  display: grid;
+  place-items: center;
+}
+
+.tp-phone-card {
+  width: min(86%, 28rem);
+  padding: 1.2rem;
+  border: 1px solid rgba(21, 33, 29, .1);
+  border-radius: 3.2rem;
+  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(238,244,233,.92));
+  box-shadow: 0 2rem 5rem rgba(14, 43, 37, .14);
+  transform: rotate(4deg);
+}
+
+.tp-phone-card img { width: 100%; display: block; border-radius: 2.4rem; }
+.tp-hero-visual .tp-hero-card-note {
+  position: absolute;
+  left: 0;
+  bottom: 11%;
+  width: min(21rem, 70%);
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(255,255,255,.64);
+  border-radius: 1.8rem;
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1rem 3rem rgba(14, 43, 37, .12);
+}
+
+.tp-floating-badge {
+  position: absolute;
+  padding: .8rem 1rem;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 999px;
+  background: rgba(255,255,255,.86);
+  color: var(--tp-accent);
+  font-weight: 950;
+  box-shadow: 0 1rem 2.5rem rgba(14,43,37,.1);
+}
+.tp-floating-badge-one { top: 10%; right: 0; }
+.tp-floating-badge-two { right: 4%; bottom: 24%; }
+
+.tp-review-strip { padding: 1.2rem 0; background: var(--tp-dark); color: #fff; }
+.tp-strip-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,.14); border-radius: 2rem; overflow: hidden; }
+.tp-strip-inner div { display: grid; gap: .2rem; padding: 1.35rem; background: var(--tp-dark); text-align: center; }
+.tp-strip-inner strong { font-size: clamp(1.45rem, 3vw, 2.1rem); letter-spacing: -.04em; }
+.tp-strip-inner span { color: rgba(255,255,255,.72); }
+
+.tp-section-intro.center { max-width: 920px; }
+.tp-section-intro.center p:not(.tp-kicker) { max-width: 680px; margin: 1rem auto 0; }
+.tp-review-grid article,
+.tp-steps article,
+.tp-difference-grid article,
+.tp-price-card,
+.tp-final-card { border-radius: 34px; }
+
+.tp-process { background: linear-gradient(180deg, #fff 0%, #f7faf6 100%); }
+.tp-steps article { transition: transform .18s ease, border-color .18s ease; }
+.tp-steps article:hover { transform: translateY(-2px); border-color: rgba(10, 92, 76, .28); }
+.tp-steps span { width: 3.2rem; height: 3.2rem; display: grid; place-items: center; border-radius: 50%; background: var(--tp-cream); font-size: 1.05rem; }
+
+.tp-coach-card { overflow: hidden; border: 1px solid var(--tp-line); border-radius: 38px; background: #fff; }
+.tp-coach-card img { width: 100%; display: block; aspect-ratio: 4 / 4.7; object-fit: cover; border: 0; border-radius: 0; }
+.tp-coach-card div { display: flex; justify-content: space-between; gap: 1rem; padding: 1.15rem 1.3rem; }
+.tp-coach-card strong { color: var(--tp-ink); font-size: 1.15rem; }
+.tp-coach-card span { color: var(--tp-muted); }
+
+.tp-support { background: radial-gradient(circle at 80% 20%, rgba(25,218,213,.16), transparent 24rem), var(--tp-dark); }
+.tp-support .tp-kicker { color: #7df2ed; }
+.tp-channel-card span:first-child { background: #fff; color: var(--tp-accent); }
+.tp-difference { background: var(--tp-bg); }
+.tp-difference-grid article { min-height: 13rem; display: flex; flex-direction: column; justify-content: space-between; }
+.tp-pricing { background: #fff; }
+.tp-price-card { padding: clamp(1.5rem, 3vw, 2.3rem); box-shadow: 0 2rem 5rem rgba(14,43,37,.08); }
+.tp-final-card { background: var(--tp-dark); color: #fff; }
+.tp-final-card h2 { color: #fff; }
+.tp-final-card p { color: rgba(255,255,255,.72); }
+
+@media (max-width: 900px) {
+  .tp-hero { min-height: 0; }
+  .tp-hero::before { inset: auto -22vw -12vw 10vw; height: 70vw; }
+  .tp-hero-visual { min-height: 34rem; }
+  .tp-strip-inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .tp-hero h1 { font-size: clamp(3.25rem, 16vw, 4.8rem); }
+  .tp-hero-actions .tp-btn { width: 100%; }
+  .tp-hero-points { grid-template-columns: 1fr; }
+  .tp-hero-visual { min-height: 30rem; }
+  .tp-phone-card { width: 92%; border-radius: 2.4rem; }
+  .tp-floating-badge { font-size: .82rem; }
+  .tp-floating-badge-one { top: 6%; }
+  .tp-floating-badge-two { bottom: 14%; }
+  .tp-hero-visual .tp-hero-card-note { left: 0; bottom: 7%; width: 82%; }
+  .tp-coach-card div { display: grid; }
+}

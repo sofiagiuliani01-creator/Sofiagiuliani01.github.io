@@ -34,56 +34,72 @@
   </header>
 
   <main>
-    <section class="tp-hero">
+    <section class="tp-hero" aria-labelledby="premium-title">
       <div class="container tp-hero-grid">
         <div class="tp-hero-copy">
-          <p class="tp-kicker">Coaching Premium Online</p>
-          <h1>Allenamento e nutrizione in un unico percorso.</h1>
-          <p class="tp-lead">Il tuo percorso completo con Leonardo: parti da una consulenza gratuita, poi decidi se continuare. Costruiamo insieme la tua ultima strategia fitness.</p>
-          <div class="tp-hero-points">
-            <div><strong>Figura unica</strong><span>Training, alimentazione e check coordinati</span></div>
-            <div><strong>2 check al mese</strong><span>Online, direttamente da casa tua</span></div>
+          <p class="tp-kicker">Coaching Premium online</p>
+          <h1 id="premium-title">Allenamento e nutrizione, da casa.</h1>
+          <p class="tp-lead">Un percorso online completo per dimagrire, ricomporre il corpo o tornare costante: consulenza iniziale gratuita, piano integrato, check periodici e supporto diretto.</p>
+          <div class="tp-hero-actions">
+            <a href="consulenza.html" class="tp-btn">Prenota una consulenza gratuita</a>
+            <a href="#come-funziona-premium" class="tp-btn tp-btn-light">Scopri come funziona</a>
           </div>
-          <div class="tp-rating">★ 4,9/5 · Percorsi personalizzati</div>
-          <div class="tp-price-pill"><strong>Coaching Premium</strong><span>Allenamento + nutrizione + supporto</span></div>
-          <a href="consulenza.html" class="tp-btn">Prenota una consulenza gratuita</a>
-        </div>
-        <div class="tp-hero-card" aria-label="Anteprima percorso Premium">
-          <img src="coaching.svg" alt="Coaching Premium online">
-          <div class="tp-hero-card-note">
-            <span>Piano integrato</span>
-            <strong>Training + Nutrizione</strong>
+          <div class="tp-hero-points" aria-label="Punti chiave del percorso">
+            <div><strong>100% online</strong><span>Visite, check e aggiornamenti senza spostamenti.</span></div>
+            <div><strong>Metodo integrato</strong><span>Allenamento e alimentazione non viaggiano separati.</span></div>
+            <div><strong>2 check al mese</strong><span>Foto, misure, peso, performance e aderenza.</span></div>
+            <div><strong>Supporto reale</strong><span>Dubbi pratici risolti durante il percorso.</span></div>
           </div>
         </div>
+        <div class="tp-hero-visual" aria-label="Anteprima coaching premium">
+          <div class="tp-phone-card">
+            <img src="mockup-10.png" alt="App con piano alimentare integrato" loading="eager" decoding="async">
+          </div>
+          <div class="tp-hero-card-note"><span>Piano integrato</span><strong>Training + Nutrizione</strong></div>
+          <div class="tp-floating-badge tp-floating-badge-one">Check online inclusi</div>
+          <div class="tp-floating-badge tp-floating-badge-two">Strategia su misura</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tp-review-strip" aria-label="Risultati e fiducia">
+      <div class="container tp-strip-inner">
+        <div><strong>4,9/5</strong><span>Valutazione media dei percorsi</span></div>
+        <div><strong>Da casa</strong><span>Consulenze e controlli online</span></div>
+        <div><strong>Zero copia-incolla</strong><span>Piano costruito sulla tua routine</span></div>
       </div>
     </section>
 
     <section class="tp-reviews">
       <div class="container">
-        <h2>Cosa cambia per chi sceglie il Premium</h2>
+        <div class="tp-section-intro center">
+          <p class="tp-kicker">Perché funziona</p>
+          <h2>Non ricevi una dieta isolata. Ricevi una direzione.</h2>
+          <p>Il Premium nasce per chi ha già provato schede, app o regole alimentari scollegate e vuole un sistema semplice da seguire.</p>
+        </div>
         <div class="tp-review-grid">
           <article><p>“Finalmente non devo capire da sola se modificare dieta o allenamento: ogni scelta ha una logica.”</p><strong>Metodo chiaro</strong></article>
           <article><p>“I check mi aiutano a leggere peso, fame, energia e performance senza andare nel panico.”</p><strong>Monitoraggio vero</strong></article>
           <article><p>“Il percorso resta sostenibile anche nelle settimane difficili, perché viene adattato alla mia routine.”</p><strong>Supporto pratico</strong></article>
         </div>
-        <p class="tp-trust">Primo obiettivo: renderti autonomo, non dipendente da regole infinite.</p>
       </div>
     </section>
 
-    <section class="tp-process">
+    <section class="tp-process" id="come-funziona-premium">
       <div class="container tp-process-grid">
         <div class="tp-section-intro">
           <p class="tp-kicker">Come funziona</p>
           <h2>Il percorso Premium, passo dopo passo.</h2>
+          <p>Dalla prima consulenza ai check: ogni fase ha un obiettivo preciso e ti lascia sempre sapere cosa fare.</p>
         </div>
         <div class="tp-steps">
-          <article><span>01</span><h3>Consulenza</h3><p>Parliamo dei tuoi obiettivi, della tua routine e di cosa ti ha bloccato finora.</p></article>
-          <article><span>02</span><h3>Analisi iniziale</h3><p>Raccogliamo dati, abitudini, allenamenti e preferenze alimentari per partire con precisione.</p></article>
-          <article><span>03</span><h3>Piano integrato</h3><p>Allenamento e nutrizione vengono costruiti insieme, così ogni leva lavora nella stessa direzione.</p></article>
-          <article><span>04</span><h3>Prima fase</h3><p>Imposti tecnica, progressioni, calorie e gestione dei pasti senza stravolgere la vita quotidiana.</p></article>
-          <article><span>05</span><h3>Supporto</h3><p>Hai una guida per dubbi pratici su sedute, pasti, recupero e organizzazione della settimana.</p></article>
-          <article><span>06</span><h3>Due check al mese</h3><p>Valutiamo peso, misure, foto, energia e performance per aggiornare il percorso in modo sensato.</p></article>
-          <article><span>07</span><h3>Autonomia</h3><p>Ti insegno a capire cosa funziona per te, fino a renderti indipendente nella gestione dei risultati.</p></article>
+          <article><span>01</span><h3>Consulenza gratuita</h3><p>Analizziamo obiettivi, routine, allenamenti passati, alimentazione e blocchi reali.</p></article>
+          <article><span>02</span><h3>Anamnesi e raccolta dati</h3><p>Foto, misure, preferenze, orari, attrezzatura, livello e abitudini alimentari.</p></article>
+          <article><span>03</span><h3>Piano integrato</h3><p>Allenamento, nutrizione e monitoraggio vengono costruiti insieme.</p></article>
+          <article><span>04</span><h3>Prima fase guidata</h3><p>Impari cosa fare in palestra, cosa mangiare e come gestire fame, weekend e imprevisti.</p></article>
+          <article><span>05</span><h3>Supporto diretto</h3><p>Hai una guida per dubbi pratici su sedute, pasti, recupero e organizzazione.</p></article>
+          <article><span>06</span><h3>Due check al mese</h3><p>Aggiorniamo il piano leggendo insieme peso, misure, foto, energia e performance.</p></article>
+          <article><span>07</span><h3>Autonomia</h3><p>L’obiettivo è renderti capace di capire cosa funziona per te, senza regole infinite.</p></article>
         </div>
       </div>
     </section>
@@ -92,87 +108,50 @@
       <div class="container tp-coach-grid">
         <div>
           <p class="tp-kicker">Chi ti segue</p>
-          <h2>Un coach che legge tutto il percorso, non solo un numero.</h2>
+          <h2>Un’unica figura legge tutto il percorso.</h2>
           <p>Nel Premium non separiamo allenamento e alimentazione: ogni check considera performance, recupero, fame, stress, aderenza e andamento fisico. Così capiamo davvero cosa cambiare e cosa lasciare stabile.</p>
           <a href="chi-sono.html" class="tp-link">Scopri chi sono</a>
         </div>
-        <img src="tua-foto-chi-sono.png" alt="Leonardo Santini">
+        <div class="tp-coach-card"><img src="tua-foto-chi-sono.png" alt="Leonardo Santini"><div><strong>Leonardo Santini</strong><span>Personal trainer e nutrizionista</span></div></div>
       </div>
     </section>
 
     <section class="tp-support">
       <div class="container tp-support-grid">
         <div>
-          <h2>Con il Premium non sei mai lasciato a caso.</h2>
+          <p class="tp-kicker">Supporto</p>
+          <h2>Online, ma seguito davvero.</h2>
           <p>Le settimane non sono tutte uguali. Per questo il percorso prevede supporto e correzioni pratiche quando cambiano lavoro, fame, energia o disponibilità ad allenarti.</p>
         </div>
-        <div class="tp-channel-card">
-          <span>WhatsApp</span><span>Check</span><span>Video</span><span>App</span><span>Feedback</span>
-        </div>
+        <div class="tp-channel-card"><span>WhatsApp</span><span>Check</span><span>Video</span><span>App</span><span>Feedback</span></div>
       </div>
     </section>
 
     <section class="tp-difference">
       <div class="container">
         <div class="tp-section-intro center">
-          <p class="tp-kicker">Non è il solito coaching</p>
-          <h2>Ci siamo quando serve davvero.</h2>
-          <p>Comodità, semplicità e metodo: meno rumore, più decisioni utili.</p>
+          <p class="tp-kicker">Cosa è incluso</p>
+          <h2>Molto più di una scheda e una dieta.</h2>
         </div>
         <div class="tp-difference-grid">
-          <article><h3>Professionista dedicato</h3><p>Hai una direzione unica per allenamento e nutrizione.</p></article>
-          <article><h3>Visite e check online</h3><p>Gestisci tutto da dove vuoi, senza perdere tempo.</p></article>
-          <article><h3>Supporto quotidiano</h3><p>Dubbi pratici risolti prima che diventino blocchi.</p></article>
-          <article><h3>Controlli inclusi</h3><p>I check sono parte del percorso, non un extra scollegato.</p></article>
-          <article><h3>App dedicata</h3><p>Schede, progressioni e dati sempre ordinati.</p></article>
-          <article><h3>Metodo sostenibile</h3><p>Strategie applicabili alla tua routine reale.</p></article>
+          <article><h3>Allenamento su misura</h3><p>Progressioni, esercizi e carichi adattati al tuo livello e alla tua attrezzatura.</p></article>
+          <article><h3>Piano nutrizionale pratico</h3><p>Indicazioni sostenibili, pasti gestibili e strategia per cene fuori e weekend.</p></article>
+          <article><h3>Check completi</h3><p>Foto, misure, peso, performance, fame, energia e aderenza letti insieme.</p></article>
+          <article><h3>App dedicata</h3><p>Schede, progressi, note e materiali del percorso sempre ordinati.</p></article>
+          <article><h3>Feedback tecnico</h3><p>Correzioni su esecuzioni e gestione degli allenamenti quando serve.</p></article>
+          <article><h3>Metodo sostenibile</h3><p>Non dipendi da restrizioni estreme: impari a gestire il risultato.</p></article>
         </div>
       </div>
     </section>
 
     <section class="tp-pricing">
       <div class="container">
-        <div class="tp-section-intro center">
-          <p class="tp-kicker">Sì, ma cosa include?</p>
-          <h2>Coaching Premium</h2>
-        </div>
-        <div class="tp-price-card">
-          <span class="tp-popular">Percorso completo</span>
-          <h3>Allenamento + Nutrizione</h3>
-          <p class="tp-price">Premium</p>
-          <p class="tp-price-sub">Per chi vuole un percorso coordinato e controllato.</p>
-          <ul>
-            <li>Allenamento personalizzato</li>
-            <li>Piano nutrizionale pratico</li>
-            <li>2 check completi al mese</li>
-            <li>Supporto per dubbi su pasti e sedute</li>
-            <li>Monitoraggio di peso, misure, foto e performance</li>
-            <li>Accesso agli strumenti digitali del percorso</li>
-          </ul>
-          <a href="consulenza.html" class="tp-btn">Candidati ora</a>
-          <small>Consulenza iniziale gratuita, senza obbligo di proseguire.</small>
-        </div>
+        <div class="tp-section-intro center"><p class="tp-kicker">Inizia da una call gratuita</p><h2>Coaching Premium</h2></div>
+        <div class="tp-price-card"><span class="tp-popular">Percorso completo</span><h3>Allenamento + Nutrizione</h3><p class="tp-price">Premium</p><p class="tp-price-sub">Per chi vuole un percorso coordinato e controllato.</p><ul><li>Allenamento personalizzato</li><li>Piano nutrizionale pratico</li><li>2 check completi al mese</li><li>Supporto per dubbi su pasti e sedute</li><li>Monitoraggio di peso, misure, foto e performance</li><li>Accesso agli strumenti digitali del percorso</li></ul><a href="consulenza.html" class="tp-btn">Prenota la consulenza gratuita</a><small>Consulenza iniziale gratuita, senza obbligo di proseguire.</small></div>
       </div>
     </section>
 
-    <section class="tp-final-cta">
-      <div class="container tp-final-card">
-        <h2>Non sei ancora sicuro?</h2>
-        <p>Parla con me: capiamo se il Premium è il percorso giusto per il tuo obiettivo.</p>
-        <a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a>
-      </div>
-    </section>
-
-    <section class="tp-faq">
-      <div class="container">
-        <h2>Ce lo chiedono spesso</h2>
-        <div class="faq-list">
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Il Premium è adatto anche se parto da zero?</span><span class="faq-icon"></span></button><div class="faq-answer"><p>Sì. Il piano viene costruito sul tuo livello, sulla tua routine e sulla tua disponibilità reale.</p></div></div>
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Allenamento e nutrizione sono sempre collegati?</span><span class="faq-icon"></span></button><div class="faq-answer"><p>Sì. Ogni modifica tiene conto di performance, recupero, fame, aderenza e obiettivo fisico.</p></div></div>
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Come posso iniziare?</span><span class="faq-icon"></span></button><div class="faq-answer"><p>Prenota una consulenza gratuita: analizziamo la situazione e ti spiego se ha senso iniziare il percorso.</p></div></div>
-        </div>
-      </div>
-    </section>
+    <section class="tp-final-cta"><div class="container tp-final-card"><h2>Non sai se è il percorso giusto?</h2><p>Parliamone: capiamo se ti basta il Base o se ha senso integrare anche la nutrizione.</p><a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a></div></section>
   </main>
 
   <footer class="site-footer">

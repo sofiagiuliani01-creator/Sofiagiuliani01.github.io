@@ -13173,23 +13173,13 @@ body.app-page {
 }
 
 .page-home .site-header-home {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: translateY(0);
-  transition: transform .35s ease, background .35s ease, border-color .35s ease;
-  background: rgba(5, 7, 16, .94);
-  border-bottom-color: rgba(148, 163, 184, .4);
+  position: sticky;
+  transform: none;
 }
 
-.page-home .site-header-home.is-scrolled {
-  background: rgba(5, 7, 16, .94);
-  border-bottom-color: rgba(148, 163, 184, .4);
-}
-
+.page-home .site-header-home.is-scrolled,
 .page-home .site-header-home.is-hidden {
-  transform: translateY(-105%);
+  transform: none;
 }
 
 

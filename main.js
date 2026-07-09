@@ -1315,6 +1315,11 @@ document.addEventListener('DOMContentLoaded', () => {
     card.style.setProperty('--cardShadow', shadow);
   }
 
+  const smoothstep = (v) => {
+    const t = clamp01(v);
+    return t * t * (3 - 2 * t);
+  };
+
   function update(){
     if (!mq.matches) return;
     const stack = section.querySelector('.theia-mobile-stack');
@@ -1335,7 +1340,7 @@ document.addEventListener('DOMContentLoaded', () => {
     idx = Math.max(0, Math.min(total - 1, idx));
     const tRaw = prog - idx; // 0..1
     const overlapStart = 0.32;
-    const t = clamp01((tRaw - overlapStart) / (1 - overlapStart));
+    const t = smoothstep((tRaw - overlapStart) / (1 - overlapStart));
 
     // Hide all by default
     for (let i=0; i<total; i++){
@@ -1362,7 +1367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Next rises from below
     const next = cards[idx+1];
     if (next){
-      const yPct = (1 - t) * 105; // start below and rise
+      const yPct = (1 - t) * 102; // start below and rise, eased for smoother mobile scroll
       setCardVars(next, {
         opacity: 0.75 + t*0.25,
         transform: `translate3d(0, ${Math.max(0, yPct)}%, 0) scale(1)`,
@@ -1371,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // As soon as overlap starts, current shrinks/darkens/fades to disappear
-      const eased = Math.pow(t, 1.08);
+      const eased = smoothstep(t);
       const scale = 1 - eased * 0.62;
       const op = 1 - eased * 1.12;
       const s = Math.max(0.35, scale);
@@ -1400,6 +1405,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('touchmove', onScroll, {passive:true});
   window.addEventListener('resize', onInit, {passive:true});
   mq.addEventListener?.('change', onInit);
 

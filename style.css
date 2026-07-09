@@ -19720,3 +19720,75 @@ body.app-page {
     min-height: 0;
   }
 }
+
+/* === 2026-07 mobile polish: timeline clearance, compact questionnaire CTA, smooth Leonardo stack === */
+@media (max-width: 900px) {
+  #come-funziona .section-header.center {
+    padding-top: clamp(8.5rem, 28vw, 12.5rem);
+    margin-bottom: clamp(1.4rem, 6vw, 2.4rem);
+  }
+
+  #come-funziona .section-header.center h2 {
+    max-width: 9.5em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  #come-funziona .section-header.center {
+    padding-top: clamp(9.25rem, 34vw, 13.5rem);
+  }
+}
+
+@media (max-width: 900px) {
+  #programmi .program-questionnaire-cta {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+    max-width: min(92vw, 430px);
+    padding: 1rem !important;
+    border-radius: 22px;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.72);
+  }
+
+  #programmi .program-questionnaire-cta__visual {
+    min-height: 104px !important;
+    max-height: 132px;
+    padding: 0.7rem;
+    border-radius: 18px;
+  }
+
+  #programmi .program-questionnaire-cta__visual img {
+    max-height: 112px;
+  }
+
+  #programmi .program-questionnaire-cta__content h3 {
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
+    margin-bottom: 0.45rem;
+  }
+
+  #programmi .program-questionnaire-cta__content p,
+  #programmi .program-questionnaire-cta__content li {
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  #programmi .program-questionnaire-cta__content ul {
+    margin: 0.65rem 0 0.9rem;
+  }
+
+  #programmi .program-questionnaire-cta .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 980px) {
+  #leonardo-diverso .theia-mobile-stack .theia-diff-card {
+    backface-visibility: hidden;
+    contain: layout paint;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+  }
+}

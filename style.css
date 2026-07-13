@@ -20298,3 +20298,32 @@ body.app-page {
 .page-theia-inspired .faq-item.is-open .faq-icon { transform: rotate(45deg); }
 @media (max-width: 760px) { .tp-price-grid { grid-template-columns: 1fr; } .tp-price-card.is-featured { transform: none; } .tp-pricing-tabs { width: 100%; justify-content: center; } }
 @media (prefers-reduced-motion: reduce) { .tp-marquee { animation: none; } .page-theia-inspired [data-tp-reveal] { opacity: 1; transform: none; } }
+
+/* === Coaching Premium final: Theia-like polish === */
+.page-program-premium .logo-image-wrapper{width:54px;height:54px}
+.page-program-premium .header-inner{padding:.72rem 0}
+.page-program-premium .main-nav ul{gap:1.05rem}
+.page-program-premium .btn-nav{background:#0a5c4c!important;color:#fff!important;border-color:#0a5c4c!important;box-shadow:none!important}
+.tp-product-nav{position:relative;z-index:2;display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:clamp(1.4rem,3vw,2.4rem)}
+.tp-product-nav a{display:inline-flex;align-items:center;min-height:2.55rem;padding:.68rem 1rem;border:1px solid rgba(21,33,29,.12);border-radius:999px;background:rgba(255,255,255,.78);color:#66736f;font-weight:850;backdrop-filter:blur(12px)}
+.tp-product-nav a.is-active{background:#10231e;color:#fff;border-color:#10231e}
+.page-program-premium .tp-hero{padding-top:clamp(1.8rem,4vw,3.2rem);background:radial-gradient(circle at 82% 18%,rgba(25,218,213,.20),transparent 24rem),radial-gradient(circle at 18% 0%,#fff 0,#fbfcf8 28rem,transparent 44rem),linear-gradient(180deg,#fbfcf8 0%,#f6f8f6 100%)}
+.page-program-premium .tp-hero h1{font-size:clamp(4.4rem,10.4vw,9.6rem);line-height:.88;max-width:10.6ch}
+.page-program-premium .tp-lead{font-size:clamp(1.15rem,2vw,1.42rem);max-width:48rem}
+.page-program-premium .tp-hero-points div,.page-program-premium .tp-price-pill,.page-program-premium .tp-rating{background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border-color:rgba(21,33,29,.10)}
+.page-program-premium .tp-rating span{color:#00b67a;margin-right:.25rem}
+.page-program-premium .tp-phone-card{width:min(90%,31rem);box-shadow:0 2.2rem 5.5rem rgba(14,43,37,.16);transform:rotate(3deg) translateY(-.3rem)}
+.page-program-premium .tp-floating-badge{border-color:rgba(255,255,255,.75);background:rgba(255,255,255,.88);backdrop-filter:blur(16px)}
+.page-program-premium .tp-strip-inner{border-radius:2.2rem;background:rgba(255,255,255,.12)}
+.page-program-premium .tp-process-grid{grid-template-columns:minmax(280px,.62fr) minmax(0,1.38fr)}
+.page-program-premium .tp-steps{counter-reset:premium-step}
+.page-program-premium .tp-steps article{border-radius:2rem;background:linear-gradient(180deg,#fff,#fbfcf8);box-shadow:0 1.2rem 3rem rgba(14,43,37,.055)}
+.page-program-premium .tp-steps span{background:#eef4e9;border-radius:999px;font-size:1.15rem;align-self:center}
+.page-program-premium .tp-coach-carousel article{box-shadow:0 1.1rem 3rem rgba(14,43,37,.055)}
+.page-program-premium .tp-medical-card,.page-program-premium .tp-price-card,.page-program-premium .tp-final-card{box-shadow:0 1.5rem 4rem rgba(14,43,37,.075)}
+.page-program-premium .tp-comparison{background:#fff}
+.page-program-premium .tp-compare-card{background:#10231e;border-radius:2.4rem;box-shadow:0 1.6rem 4rem rgba(14,43,37,.12)}
+.page-program-premium .tp-gallery{background:#fff;padding-top:1.5rem}
+.page-program-premium .tp-marquee img{box-shadow:0 1rem 2.5rem rgba(14,43,37,.06)}
+.page-program-premium .tp-faq .faq-item{border-radius:1.35rem}
+@media (max-width:900px){.tp-product-nav{overflow-x:auto;flex-wrap:nowrap;padding-bottom:.35rem;scrollbar-width:none}.tp-product-nav::-webkit-scrollbar{display:none}.tp-product-nav a{white-space:nowrap}.page-program-premium .tp-process-grid{grid-template-columns:1fr}.page-program-premium .tp-hero h1{font-size:clamp(3.4rem,16vw,5.8rem)}}

@@ -2892,3 +2892,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   items.forEach((item) => observer.observe(item));
 })();
+
+// Coaching Premium scroll progress
+document.addEventListener('DOMContentLoaded', () => {
+  const progress = document.querySelector('.page-theia-inspired .program-scroll-progress span');
+  if (!progress) return;
+  const update = () => {
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    progress.style.transform = `scaleX(${Math.min(1, Math.max(0, window.scrollY / max))})`;
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+});

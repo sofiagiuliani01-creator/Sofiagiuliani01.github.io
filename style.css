@@ -20275,3 +20275,26 @@ body.app-page {
   .tp-discover-grid { grid-template-columns: 1fr; }
   .tp-coach-carousel { grid-auto-columns: minmax(76vw, 1fr); }
 }
+
+/* Coaching Premium: closer Theia-style section parity and motion */
+.tp-price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: stretch; max-width: 1120px; margin: 1.4rem auto 0; }
+.tp-price-grid .tp-price-card { max-width: none; margin: 0; display: flex; flex-direction: column; }
+.tp-price-grid .tp-price-card .tp-btn { margin-top: auto; text-align: center; }
+.tp-price-card.is-featured { border-color: rgba(10, 92, 76, .28); transform: translateY(-.6rem); }
+.tp-pricing-tabs { width: fit-content; margin: 0 auto 1.4rem; padding: .35rem; border: 1px solid var(--tp-line); border-radius: 999px; background: #f7faf6; display: flex; gap: .25rem; }
+.tp-pricing-tabs button { border: 0; border-radius: 999px; padding: .75rem 1rem; background: transparent; color: var(--tp-muted); font-weight: 900; cursor: default; }
+.tp-pricing-tabs button.is-active { background: var(--tp-dark); color: #fff; }
+.tp-gallery { padding: clamp(2.5rem, 6vw, 5rem) 0; overflow: hidden; background: #fff; }
+.tp-marquee { display: flex; gap: 1rem; width: max-content; animation: tp-marquee 32s linear infinite; }
+.tp-marquee img { width: clamp(180px, 22vw, 300px); aspect-ratio: 4 / 5; object-fit: contain; border: 1px solid var(--tp-line); border-radius: 32px; background: var(--tp-cream); padding: .8rem; }
+@keyframes tp-marquee { from { transform: translateX(4vw); } to { transform: translateX(calc(-50% + 4vw)); } }
+.tp-channel-card span { min-height: 5.2rem; display: grid; place-items: center; }
+.tp-channel-card span:nth-child(4), .tp-channel-card span:nth-child(5) { opacity: .42; text-decoration: line-through; }
+.tp-hero-card-note { position: absolute; left: 0; bottom: 11%; width: min(82%, 25rem); padding: 1rem 1.1rem; border: 1px solid var(--tp-line); border-radius: 24px; background: rgba(255,255,255,.88); backdrop-filter: blur(14px); box-shadow: 0 1rem 3rem rgba(14,43,37,.1); }
+.tp-hero-card-note strong, .tp-hero-card-note span { display: block; }
+.tp-hero-card-note span { margin-top: .2rem; color: var(--tp-muted); }
+.page-theia-inspired .program-scroll-progress { background: rgba(10,92,76,.12); }
+.page-theia-inspired .program-scroll-progress span { background: var(--tp-accent); }
+.page-theia-inspired .faq-item.is-open .faq-icon { transform: rotate(45deg); }
+@media (max-width: 760px) { .tp-price-grid { grid-template-columns: 1fr; } .tp-price-card.is-featured { transform: none; } .tp-pricing-tabs { width: 100%; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .tp-marquee { animation: none; } .page-theia-inspired [data-tp-reveal] { opacity: 1; transform: none; } }

@@ -20327,3 +20327,92 @@ body.app-page {
 .page-program-premium .tp-marquee img{box-shadow:0 1rem 2.5rem rgba(14,43,37,.06)}
 .page-program-premium .tp-faq .faq-item{border-radius:1.35rem}
 @media (max-width:900px){.tp-product-nav{overflow-x:auto;flex-wrap:nowrap;padding-bottom:.35rem;scrollbar-width:none}.tp-product-nav::-webkit-scrollbar{display:none}.tp-product-nav a{white-space:nowrap}.page-program-premium .tp-process-grid{grid-template-columns:1fr}.page-program-premium .tp-hero h1{font-size:clamp(3.4rem,16vw,5.8rem)}}
+
+/* === Coaching Premium: Theia parity pass (layout, icons, motion) === */
+.page-program-premium {
+  --tp-green: #10231e;
+  --tp-mint: #eef4e9;
+  --tp-soft-white: rgba(255,255,255,.82);
+}
+.page-program-premium .site-header { box-shadow: 0 .5rem 2rem rgba(16,35,30,.04); }
+.page-program-premium .tp-product-nav { justify-content: flex-start; }
+.page-program-premium .tp-product-nav a { transition: background .18s ease, color .18s ease, transform .18s ease; }
+.page-program-premium .tp-product-nav a:hover { transform: translateY(-1px); background: #fff; color: var(--tp-green); }
+.page-program-premium .tp-hero::after {
+  content: "";
+  position: absolute;
+  width: min(42vw, 36rem);
+  aspect-ratio: 1;
+  right: -10vw;
+  top: 12%;
+  border-radius: 50%;
+  background: #e8f1e3;
+  opacity: .85;
+  pointer-events: none;
+  animation: tp-soft-float 9s ease-in-out infinite alternate;
+}
+.page-program-premium .tp-hero-grid { align-items: center; }
+.page-program-premium .tp-kicker { color: #0a5c4c; }
+.page-program-premium .tp-point-card { position: relative; padding-left: 4.8rem !important; min-height: 5.7rem; }
+.page-program-premium .tp-point-card i,
+.page-program-premium .tp-strip-inner i {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 950;
+}
+.page-program-premium .tp-point-card i {
+  position: absolute;
+  left: 1.05rem;
+  top: 1.05rem;
+  background: var(--tp-mint);
+  color: #0a5c4c;
+}
+.page-program-premium .tp-point-hybrid i::before { content: "↔"; }
+.page-program-premium .tp-point-check i::before { content: "✓"; }
+.page-program-premium .tp-phone-card,
+.page-program-premium .tp-floating-badge,
+.page-program-premium .tp-hero-card-note { will-change: transform; }
+.page-program-premium .tp-phone-card { animation: tp-phone-float 6.5s ease-in-out infinite alternate; }
+.page-program-premium .tp-floating-badge-one { animation: tp-badge-float 5s ease-in-out infinite alternate; }
+.page-program-premium .tp-floating-badge-two { animation: tp-badge-float 5.8s ease-in-out .4s infinite alternate-reverse; }
+.page-program-premium .tp-hero-card-note { animation: tp-note-float 6s ease-in-out .2s infinite alternate; }
+.page-program-premium .tp-strip-inner div { grid-template-columns: auto 1fr; text-align: left; align-items: center; }
+.page-program-premium .tp-strip-inner i { grid-row: span 2; background: rgba(255,255,255,.1); color: #7df2ed; }
+.page-program-premium .tp-strip-inner strong { line-height: 1; }
+.page-program-premium .tp-reviews { background: linear-gradient(180deg,#f6f8f6 0%,#fff 100%); }
+.page-program-premium .tp-review-grid article { position: relative; min-height: 17rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1rem 3rem rgba(14,43,37,.055); }
+.page-program-premium .tp-review-grid article::before { content: "“"; position: absolute; right: 1.2rem; top: .55rem; color: #eef4e9; font-size: 7rem; line-height: 1; font-weight: 950; z-index: 0; }
+.page-program-premium .tp-review-grid article > * { position: relative; z-index: 1; }
+.page-program-premium .tp-stars { color: #00b67a; letter-spacing: .08em; font-size: .9rem; font-weight: 950; }
+.page-program-premium .tp-process-grid .tp-section-intro { top: 6.4rem; }
+.page-program-premium .tp-steps article { grid-template-columns: 3.8rem 1fr; align-items: center; min-height: 8rem; }
+.page-program-premium .tp-steps article:nth-child(even) { transform: translateX(1.2rem); }
+.page-program-premium .tp-steps article:nth-child(even):hover { transform: translateX(1.2rem) translateY(-2px); }
+.page-program-premium .tp-coach-carousel { mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%); }
+.page-program-premium .tp-coach-carousel article { transition: transform .22s ease, box-shadow .22s ease; }
+.page-program-premium .tp-coach-carousel article:hover { transform: translateY(-4px) rotate(-.5deg); box-shadow: 0 1.6rem 4rem rgba(14,43,37,.1); }
+.page-program-premium .tp-channel-card { perspective: 900px; }
+.page-program-premium .tp-channel-card span { transition: transform .18s ease, background .18s ease; }
+.page-program-premium .tp-channel-card span:hover { transform: translateY(-3px) rotateX(3deg); }
+.page-program-premium .tp-check-list li::before,
+.page-program-premium .tp-price-card li::before { width: 1.35rem; height: 1.35rem; display: grid; place-items: center; flex: 0 0 1.35rem; border-radius: 999px; background: #eef4e9; font-size: .82rem; }
+.page-program-premium .tp-price-card.is-featured::before { content: "più popolare"; position: absolute; right: 1.25rem; top: 1.25rem; padding: .45rem .7rem; border-radius: 999px; background: #10231e; color: #fff; font-size: .75rem; font-weight: 950; text-transform: uppercase; letter-spacing: .08em; }
+@keyframes tp-phone-float { from { transform: rotate(3deg) translate3d(0,-.3rem,0); } to { transform: rotate(1.5deg) translate3d(0,.45rem,0); } }
+@keyframes tp-badge-float { from { transform: translate3d(0,0,0); } to { transform: translate3d(0,-.8rem,0); } }
+@keyframes tp-note-float { from { transform: translate3d(0,0,0) rotate(-.2deg); } to { transform: translate3d(.4rem,-.55rem,0) rotate(.4deg); } }
+@keyframes tp-soft-float { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-1.2rem,1rem,0) scale(1.04); } }
+@media (max-width: 900px) {
+  .page-program-premium .tp-steps article:nth-child(even),
+  .page-program-premium .tp-steps article:nth-child(even):hover { transform: none; }
+  .page-program-premium .tp-strip-inner div { grid-template-columns: auto 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-program-premium .tp-hero::after,
+  .page-program-premium .tp-phone-card,
+  .page-program-premium .tp-floating-badge,
+  .page-program-premium .tp-hero-card-note { animation: none !important; }
+}

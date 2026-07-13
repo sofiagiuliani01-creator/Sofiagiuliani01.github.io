@@ -20416,3 +20416,147 @@ body.app-page {
   .page-program-premium .tp-floating-badge,
   .page-program-premium .tp-hero-card-note { animation: none !important; }
 }
+
+/* === Coaching Premium: Theia-identical timeline + coach profile section === */
+.page-program-premium .tp-timeline {
+  position: relative;
+  display: grid;
+  gap: 1.05rem;
+  padding-left: 1.35rem;
+}
+.page-program-premium .tp-timeline::before {
+  content: "";
+  position: absolute;
+  left: 3.05rem;
+  top: 2.1rem;
+  bottom: 2.1rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg,#0a5c4c 0%,#16b8ad 18%,#86c76f 36%,#f0b45b 53%,#e77754 68%,#7f71d9 84%,#10231e 100%);
+  box-shadow: 0 0 0 7px rgba(238,244,233,.72);
+}
+.page-program-premium .tp-timeline article {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: 4.4rem minmax(0,1fr);
+  gap: 1.05rem;
+  align-items: stretch;
+  min-height: 9.15rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.page-program-premium .tp-timeline article:nth-child(even),
+.page-program-premium .tp-timeline article:nth-child(even):hover { transform: none; }
+.page-program-premium .tp-timeline article::before {
+  content: "";
+  position: absolute;
+  left: 4.35rem;
+  top: 50%;
+  width: 2.35rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--step-color, var(--tp-accent));
+  transform: translateY(-50%);
+  z-index: -1;
+}
+.page-program-premium .tp-timeline span {
+  position: relative;
+  width: 4.2rem;
+  height: 4.2rem;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  border: 7px solid #fff;
+  border-radius: 999px;
+  background: var(--step-color, var(--tp-accent));
+  color: #fff;
+  box-shadow: 0 1rem 2.2rem rgba(16,35,30,.12);
+  z-index: 2;
+}
+.page-program-premium .tp-timeline span i {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-style: normal;
+  font-size: 1.28rem;
+  line-height: 1;
+}
+.page-program-premium .tp-timeline span b {
+  position: absolute;
+  right: -.42rem;
+  bottom: -.42rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  display: grid;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: #10231e;
+  color: #fff;
+  font-size: .66rem;
+  letter-spacing: -.02em;
+}
+.page-program-premium .tp-timeline .tp-step-copy {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.2rem,2.2vw,1.65rem) clamp(1.25rem,2.6vw,2rem);
+  border: 1px solid rgba(21,33,29,.1);
+  border-left: .58rem solid var(--step-color, var(--tp-accent));
+  border-radius: 2rem;
+  background: linear-gradient(180deg,#fff 0%,#fbfcf8 100%);
+  box-shadow: 0 1.1rem 3rem rgba(14,43,37,.055);
+}
+.page-program-premium .tp-timeline .tp-step-copy::after {
+  content: "";
+  position: absolute;
+  right: -2.4rem;
+  top: -2.7rem;
+  width: 7rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--step-color, #0a5c4c) 15%, transparent);
+}
+.page-program-premium .tp-timeline h3 { margin: 0; color: #15211d; font-size: clamp(1.28rem,2vw,1.65rem); letter-spacing: -.045em; }
+.page-program-premium .tp-timeline p { max-width: 54rem; margin: .42rem 0 0; color: #66736f; line-height: 1.58; }
+
+.page-program-premium .tp-coach-profile { background: #f6f8f6; }
+.page-program-premium .tp-profile-card {
+  display: grid;
+  grid-template-columns: minmax(280px,.78fr) minmax(0,1.22fr);
+  gap: clamp(1.3rem,4vw,3rem);
+  align-items: center;
+  max-width: 1120px;
+  margin: 2rem auto 0;
+  padding: clamp(1rem,2vw,1.35rem);
+  border: 1px solid rgba(21,33,29,.1);
+  border-radius: 3rem;
+  background: #fff;
+  box-shadow: 0 1.6rem 4rem rgba(14,43,37,.08);
+}
+.page-program-premium .tp-profile-photo { position: relative; overflow: hidden; border-radius: 2.35rem; background: #eef4e9; }
+.page-program-premium .tp-profile-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; display: block; }
+.page-program-premium .tp-profile-photo span { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; padding: .85rem 1rem; border-radius: 999px; background: rgba(255,255,255,.86); backdrop-filter: blur(14px); color: #0a5c4c; font-weight: 950; text-align: center; }
+.page-program-premium .tp-profile-copy { padding: clamp(.5rem,2vw,1.5rem); }
+.page-program-premium .tp-profile-copy h3 { margin: 0; color: #15211d; font-size: clamp(3.4rem,8vw,7rem); line-height: .88; letter-spacing: -.075em; font-weight: 950; }
+.page-program-premium .tp-profile-copy p { color: #66736f; font-size: 1.1rem; line-height: 1.65; }
+.page-program-premium .tp-profile-role { color: #273449 !important; font-size: clamp(1.2rem,2.2vw,1.55rem) !important; line-height: 1.42 !important; font-weight: 850; letter-spacing: -.035em; }
+.page-program-premium .tp-profile-tags { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.25rem; }
+.page-program-premium .tp-profile-tags span { padding: .72rem .9rem; border-radius: 999px; background: #eef4e9; color: #0a5c4c; font-weight: 900; }
+@media (max-width: 900px) {
+  .page-program-premium .tp-timeline { padding-left: 0; }
+  .page-program-premium .tp-timeline::before { left: 2.08rem; }
+  .page-program-premium .tp-timeline article { grid-template-columns: 4.1rem minmax(0,1fr); }
+  .page-program-premium .tp-timeline article::before { left: 4.05rem; width: 1.2rem; }
+  .page-program-premium .tp-profile-card { grid-template-columns: 1fr; border-radius: 2.2rem; }
+}
+@media (max-width: 560px) {
+  .page-program-premium .tp-timeline article { grid-template-columns: 1fr; gap: .55rem; }
+  .page-program-premium .tp-timeline::before { left: 2.1rem; top: 1.8rem; bottom: auto; height: calc(100% - 12rem); }
+  .page-program-premium .tp-timeline article::before { display: none; }
+  .page-program-premium .tp-timeline span { margin-left: .1rem; }
+  .page-program-premium .tp-timeline .tp-step-copy { border-left-width: .42rem; }
+}

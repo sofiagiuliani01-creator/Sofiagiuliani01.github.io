@@ -20718,3 +20718,83 @@ body.app-page {
   .page-program-premium .tp-hero-points { grid-template-columns: 1fr; gap: 1.25rem; }
   .page-program-premium .tp-btn { width: 100%; }
 }
+
+/* Fix support channel carousel: compact aqua card with vertical motion */
+.page-program-premium .tp-theia-support .tp-support-grid {
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.page-program-premium .tp-theia-channel-card {
+  --channel-row-height: clamp(4.1rem, 6.2vw, 5.25rem);
+  --channel-row-gap: clamp(.75rem, 1.5vw, 1rem);
+  overflow: hidden;
+  align-self: center;
+  max-height: clamp(25rem, 46vw, 34rem);
+  padding: clamp(1.25rem, 2.6vw, 2rem);
+  border: 1px solid rgba(14, 117, 105, .16);
+  background:
+    radial-gradient(circle at 86% 12%, rgba(255,255,255,.34), transparent 12rem),
+    linear-gradient(135deg, #bdf2ea 0%, #7ddbd0 52%, #3fb9b0 100%);
+  box-shadow: 0 1.4rem 3.4rem rgba(7, 92, 86, .18);
+}
+
+.page-program-premium .tp-theia-channel-card .tp-channel-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--channel-row-gap);
+  animation: tp-channel-scroll 11s linear infinite;
+  will-change: transform;
+}
+
+.page-program-premium .tp-theia-channel-card span {
+  min-height: var(--channel-row-height);
+  gap: clamp(.75rem, 1.5vw, 1rem);
+  font-size: clamp(1.55rem, 3.4vw, 2.65rem);
+  line-height: .98;
+}
+
+.page-program-premium .tp-theia-channel-card span i {
+  width: var(--channel-row-height);
+  height: var(--channel-row-height);
+  flex-basis: var(--channel-row-height);
+  border-radius: 1rem;
+  box-shadow: 0 .65rem 1.4rem rgba(5, 75, 70, .08);
+}
+
+.page-program-premium .tp-theia-channel-card .is-muted,
+.page-program-premium .tp-theia-channel-card .is-active {
+  opacity: .48;
+}
+
+.page-program-premium .tp-theia-channel-card:hover .tp-channel-track,
+.page-program-premium .tp-theia-channel-card:focus-within .tp-channel-track {
+  animation-play-state: paused;
+}
+
+@keyframes tp-channel-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-5 * var(--channel-row-height) - 5 * var(--channel-row-gap))); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-program-premium .tp-theia-channel-card .tp-channel-track {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .page-program-premium .tp-theia-support {
+    padding: clamp(3rem, 8vw, 4.5rem) 0;
+  }
+
+  .page-program-premium .tp-theia-support .tp-support-grid {
+    gap: 1.75rem;
+  }
+
+  .page-program-premium .tp-theia-channel-card {
+    --channel-row-height: clamp(3.65rem, 12vw, 4.6rem);
+    max-height: clamp(19rem, 66vw, 26rem);
+    width: min(100%, 34rem);
+    margin-inline: auto;
+  }
+}

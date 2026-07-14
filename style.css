@@ -20567,3 +20567,56 @@ body.app-page {
 .page-program-premium .tp-theia-pricing{background:#fff;padding:clamp(3.5rem,7vw,6rem) 0}.page-program-premium .tp-theia-pricing .tp-price-grid{gap:clamp(1.4rem,3vw,2.2rem);max-width:1020px}.page-program-premium .tp-theia-price-card{min-height:46rem;padding:clamp(1.9rem,3vw,2.9rem);border:0;border-radius:2rem;background:#ffd0a0;box-shadow:none}.page-program-premium .tp-theia-price-card.is-featured{background:#111216;color:#fff;transform:none}.page-program-premium .tp-theia-price-card.is-featured::before{display:none}.page-program-premium .tp-theia-price-card .tp-popular{position:absolute;top:-1.1rem;left:50%;transform:translateX(-50%);margin:0;background:#ffd0a0;color:#222;text-transform:none;letter-spacing:0;font-size:1rem}.page-program-premium .tp-theia-price-card h3{font-size:clamp(2.2rem,4vw,3.15rem);line-height:1.12;color:inherit}.page-program-premium .tp-theia-price-card .tp-price{margin:2.8rem 0 .6rem;color:inherit;font-size:clamp(2.1rem,3.8vw,2.9rem)}.page-program-premium .tp-theia-price-card .tp-price-sub{color:currentColor;font-size:1.25rem;line-height:1.35;opacity:.9}.page-program-premium .tp-theia-price-card ul{gap:1rem;margin:1.8rem 0}.page-program-premium .tp-theia-price-card li{color:currentColor;font-size:1.1rem;line-height:1.35}.page-program-premium .tp-theia-price-card li::before{background:transparent;color:#00bd87;font-size:1.45rem}.page-program-premium .tp-addon{margin:.75rem 0 0;padding:.85rem 1rem;border-radius:.28rem;font-size:1.18rem;font-weight:700}.page-program-premium .tp-addon-peach{background:#ffd0a0;color:#222}.page-program-premium .tp-addon-purple{background:#bfc4ff;color:#25284f}.page-program-premium .tp-theia-price-card .tp-btn{align-self:center;margin-top:auto;background:#111216!important;color:#fff!important;min-width:12rem}.page-program-premium .tp-theia-price-card.is-featured .tp-btn{background:#fff!important;color:#111216!important}.page-program-premium .tp-theia-price-card small{color:currentColor;font-size:1.05rem;line-height:1.35;opacity:.9}
 @media (max-width:900px){.page-program-premium .tp-theia-support .tp-support-grid,.page-program-premium .tp-theia-comparison-grid{grid-template-columns:1fr}.page-program-premium .tp-comparison-panel{min-height:24rem}.page-program-premium .tp-compare-matrix{grid-template-columns:minmax(190px,1fr) 5rem minmax(6rem,.55fr);gap:1rem}.page-program-premium .tp-matrix-col{grid-template-rows:4rem repeat(7,3.7rem)}.page-program-premium .tp-matrix-labels{grid-template-rows:repeat(7,3.7rem);padding-top:4rem;font-size:1rem}.page-program-premium .tp-matrix-col span{font-size:2rem}.page-program-premium .tp-theia-channel-card span{font-size:clamp(1.7rem,8vw,2.5rem)}}
 @media (max-width:560px){.page-program-premium .tp-compare-matrix{grid-template-columns:1fr 4.4rem 5.4rem;gap:.55rem}.page-program-premium .tp-matrix-labels{font-size:.88rem}.page-program-premium .tp-matrix-premium{padding:0 .5rem .6rem}.page-program-premium .tp-matrix-traditional strong{font-size:.95rem}.page-program-premium .tp-theia-price-card{min-height:auto}.page-program-premium .tp-theia-channel-card{border-radius:1.5rem}.page-program-premium .tp-theia-channel-card span i{width:3.8rem;height:3.8rem;flex-basis:3.8rem}}
+
+/* Coaching Premium: card contatti verde acqua con scroll verticale continuo */
+.page-program-premium .tp-theia-channel-card {
+  height: clamp(27rem, 38vw, 36rem);
+  display: block;
+  overflow: hidden;
+  background: linear-gradient(180deg, #93ede6 0%, #6edbd2 100%);
+  box-shadow: 0 1.7rem 4.5rem rgba(16, 137, 128, .18);
+}
+
+.page-program-premium .tp-theia-channel-card::before,
+.page-program-premium .tp-theia-channel-card::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 5.2rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.page-program-premium .tp-theia-channel-card::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(147, 237, 230, .96), rgba(147, 237, 230, 0));
+}
+
+.page-program-premium .tp-theia-channel-card::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(110, 219, 210, .96), rgba(110, 219, 210, 0));
+}
+
+.page-program-premium .tp-theia-channel-card .tp-channel-track {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+  animation: tp-channel-scroll 13s linear infinite;
+  will-change: transform;
+}
+
+.page-program-premium .tp-theia-channel-card:hover .tp-channel-track {
+  animation-play-state: paused;
+}
+
+@keyframes tp-channel-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-50% - .8rem)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-program-premium .tp-theia-channel-card .tp-channel-track {
+    animation: none;
+  }
+}

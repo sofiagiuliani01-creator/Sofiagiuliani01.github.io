@@ -2893,6 +2893,32 @@ document.addEventListener('DOMContentLoaded', () => {
   items.forEach((item) => observer.observe(item));
 })();
 
+// Coaching Premium support carousel: keep the vertical loop moving with a measured distance.
+(() => {
+  const tracks = document.querySelectorAll('.page-program-premium .tp-theia-channel-card .tp-channel-track');
+  if (!tracks.length) return;
+
+  const updateDistances = () => {
+    tracks.forEach((track) => {
+      const items = Array.from(track.children);
+      const midpoint = Math.floor(items.length / 2);
+      const first = items[0];
+      const repeatedFirst = items[midpoint];
+
+      if (!first || !repeatedFirst) return;
+
+      const distance = repeatedFirst.offsetTop - first.offsetTop;
+      if (distance > 0) {
+        track.style.setProperty('--channel-scroll-distance', `${-distance}px`);
+      }
+    });
+  };
+
+  window.addEventListener('resize', updateDistances);
+  window.addEventListener('load', updateDistances, { once: true });
+  updateDistances();
+})();
+
 // Coaching Premium scroll progress
 document.addEventListener('DOMContentLoaded', () => {
   const progress = document.querySelector('.page-theia-inspired .program-scroll-progress span');

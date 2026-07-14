@@ -20568,55 +20568,151 @@ body.app-page {
 @media (max-width:900px){.page-program-premium .tp-theia-support .tp-support-grid,.page-program-premium .tp-theia-comparison-grid{grid-template-columns:1fr}.page-program-premium .tp-comparison-panel{min-height:24rem}.page-program-premium .tp-compare-matrix{grid-template-columns:minmax(190px,1fr) 5rem minmax(6rem,.55fr);gap:1rem}.page-program-premium .tp-matrix-col{grid-template-rows:4rem repeat(7,3.7rem)}.page-program-premium .tp-matrix-labels{grid-template-rows:repeat(7,3.7rem);padding-top:4rem;font-size:1rem}.page-program-premium .tp-matrix-col span{font-size:2rem}.page-program-premium .tp-theia-channel-card span{font-size:clamp(1.7rem,8vw,2.5rem)}}
 @media (max-width:560px){.page-program-premium .tp-compare-matrix{grid-template-columns:1fr 4.4rem 5.4rem;gap:.55rem}.page-program-premium .tp-matrix-labels{font-size:.88rem}.page-program-premium .tp-matrix-premium{padding:0 .5rem .6rem}.page-program-premium .tp-matrix-traditional strong{font-size:.95rem}.page-program-premium .tp-theia-price-card{min-height:auto}.page-program-premium .tp-theia-channel-card{border-radius:1.5rem}.page-program-premium .tp-theia-channel-card span i{width:3.8rem;height:3.8rem;flex-basis:3.8rem}}
 
-/* Coaching Premium: card contatti verde acqua con scroll verticale continuo */
-.page-program-premium .tp-theia-channel-card {
-  height: clamp(27rem, 38vw, 36rem);
-  display: block;
-  overflow: hidden;
-  background: linear-gradient(180deg, #93ede6 0%, #6edbd2 100%);
-  box-shadow: 0 1.7rem 4.5rem rgba(16, 137, 128, .18);
+/* === Coaching Premium: hero aligned to provided Theia reference === */
+.page-program-premium.page-theia-inspired {
+  --tp-bg: #ffffff;
+  --tp-ink: #050505;
+  --tp-muted: #191a1f;
+  --tp-peach: #f7c99b;
+  --tp-aqua-card: #a7ebe3;
 }
 
-.page-program-premium .tp-theia-channel-card::before,
-.page-program-premium .tp-theia-channel-card::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  left: 0;
-  height: 5.2rem;
-  z-index: 2;
-  pointer-events: none;
+.page-program-premium.page-theia-inspired .site-header {
+  background: #050505;
+  border-bottom-color: rgba(255,255,255,.12);
 }
-
-.page-program-premium .tp-theia-channel-card::before {
-  top: 0;
-  background: linear-gradient(180deg, rgba(147, 237, 230, .96), rgba(147, 237, 230, 0));
+.page-program-premium.page-theia-inspired .logo-text,
+.page-program-premium.page-theia-inspired .logo-sub,
+.page-program-premium.page-theia-inspired .main-nav a {
+  color: #fff;
 }
-
-.page-program-premium .tp-theia-channel-card::after {
-  bottom: 0;
-  background: linear-gradient(0deg, rgba(110, 219, 210, .96), rgba(110, 219, 210, 0));
+.page-program-premium.page-theia-inspired .main-nav a:hover,
+.page-program-premium.page-theia-inspired .main-nav a.active {
+  color: var(--accent-aqua);
 }
+.page-program-premium.page-theia-inspired .btn-nav {
+  background: #fff;
+  color: #050505 !important;
+}
+.page-program-premium.page-theia-inspired .burger span { background: #fff; }
 
-.page-program-premium .tp-theia-channel-card .tp-channel-track {
+.page-program-premium .tp-product-nav { display: none; }
+.page-program-premium .tp-hero {
+  min-height: calc(100vh - 86px);
+  padding: clamp(5.5rem, 9vw, 9.5rem) 0 clamp(4rem, 7vw, 6.5rem);
+  background: #fff;
+}
+.page-program-premium .tp-hero::before { display: none; }
+.page-program-premium .tp-hero-grid {
+  grid-template-columns: minmax(0, .95fr) minmax(380px, .98fr);
+  gap: clamp(2.2rem, 7vw, 6.5rem);
+  align-items: center;
+}
+.page-program-premium .tp-hero h1 {
+  max-width: 9.5ch;
+  color: #000;
+  font-size: clamp(4.8rem, 8.4vw, 7.8rem);
+  line-height: .92;
+  letter-spacing: -.075em;
+}
+.page-program-premium .tp-lead {
+  max-width: 43rem;
+  margin: 1.35rem 0 2.2rem;
+  color: #17181d;
+  font-size: clamp(1.35rem, 2.1vw, 1.82rem);
+  line-height: 1.42;
+}
+.page-program-premium .tp-lead strong { font-weight: 950; }
+.page-program-premium .tp-hero-points {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.6rem;
-  animation: tp-channel-scroll 13s linear infinite;
-  will-change: transform;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.55rem 2.8rem;
+  max-width: 42rem;
+  margin-bottom: 2.35rem;
+}
+.page-program-premium .tp-hero-points div {
+  display: grid;
+  grid-template-columns: 3.05rem 1fr;
+  gap: .15rem .85rem;
+  align-items: start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.page-program-premium .tp-hero-points i {
+  grid-row: span 2;
+  width: 3.05rem;
+  height: 3.05rem;
+  display: grid;
+  place-items: center;
+  border-radius: .42rem;
+  background: var(--tp-peach);
+  color: #000;
+  font-size: 1.35rem;
+  font-style: normal;
+  font-weight: 950;
+}
+.page-program-premium .tp-hero-points strong,
+.page-program-premium .tp-hero-points strong a {
+  color: #111216;
+  font-size: clamp(1.18rem, 1.75vw, 1.5rem);
+  line-height: 1.15;
+  font-weight: 950;
+}
+.page-program-premium .tp-hero-points span {
+  margin-top: .4rem;
+  color: #202126;
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  line-height: 1.25;
+}
+.page-program-premium .tp-hero-points .tp-stars {
+  color: #ffc400;
+  font-size: 1.35rem;
+  letter-spacing: .08em;
+  line-height: 1;
+}
+.page-program-premium .tp-btn {
+  min-height: 3.35rem;
+  padding: .92rem 1.8rem;
+  background: #111216;
+  color: #fff !important;
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+.page-program-premium .tp-btn:hover { background: #000; }
+.page-program-premium .tp-hero-visual {
+  min-height: auto;
+  display: block;
+}
+.page-program-premium .tp-doctor-card {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: end center;
+  border-radius: 2.2rem;
+  background: var(--tp-peach);
+}
+.page-program-premium .tp-doctor-card img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.page-program-premium .tp-review-grid article {
+  background: var(--tp-aqua-card);
+  border-color: rgba(0,0,0,.08);
 }
 
-.page-program-premium .tp-theia-channel-card:hover .tp-channel-track {
-  animation-play-state: paused;
+@media (max-width: 900px) {
+  .page-program-premium .tp-hero-grid { grid-template-columns: 1fr; }
+  .page-program-premium .tp-hero { min-height: 0; padding-top: 4rem; }
+  .page-program-premium .tp-doctor-card { max-width: 36rem; margin: 0 auto; }
 }
-
-@keyframes tp-channel-scroll {
-  from { transform: translateY(0); }
-  to { transform: translateY(calc(-50% - .8rem)); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-program-premium .tp-theia-channel-card .tp-channel-track {
-    animation: none;
-  }
+@media (max-width: 560px) {
+  .page-program-premium .tp-hero h1 { font-size: clamp(3.9rem, 17vw, 5.6rem); }
+  .page-program-premium .tp-lead { font-size: 1.15rem; }
+  .page-program-premium .tp-hero-points { grid-template-columns: 1fr; gap: 1.25rem; }
+  .page-program-premium .tp-btn { width: 100%; }
 }

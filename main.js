@@ -2893,8 +2893,8 @@ document.addEventListener('DOMContentLoaded', () => {
   items.forEach((item) => observer.observe(item));
 })();
 
-// Coaching Premium support carousel: keep the vertical loop moving with a measured distance
-// and always highlight the three options closest to the center of the card.
+// Coaching Premium support carousel: keep the vertical loop moving with a measured distance.
+// The card edges fade the loop with CSS overlays, so every channel item stays equally highlighted.
 (() => {
   const tracks = document.querySelectorAll('.page-program-premium .tp-theia-channel-card .tp-channel-track');
   if (!tracks.length) return;
@@ -2915,49 +2915,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const updateFocus = () => {
-    tracks.forEach((track) => {
-      const card = track.closest('.tp-theia-channel-card');
-      if (!card) return;
-
-      const cardRect = card.getBoundingClientRect();
-      const cardCenter = cardRect.top + (cardRect.height / 2);
-      const items = Array.from(track.children);
-      const visibleItems = items
-        .map((item) => {
-          const rect = item.getBoundingClientRect();
-          return {
-            item,
-            distance: Math.abs((rect.top + (rect.height / 2)) - cardCenter),
-          };
-        })
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, 3)
-        .map(({ item }) => item);
-
-      items.forEach((item) => {
-        const isFocused = visibleItems.includes(item);
-        item.classList.toggle('is-channel-focus', isFocused);
-        item.classList.toggle('is-channel-faded', !isFocused);
-      });
-    });
-  };
-
-  const tick = () => {
-    updateFocus();
-    window.requestAnimationFrame(tick);
-  };
-
   window.addEventListener('resize', () => {
     updateDistances();
-    updateFocus();
   });
   window.addEventListener('load', () => {
     updateDistances();
-    updateFocus();
   }, { once: true });
   updateDistances();
-  tick();
 })();
 
 // Coaching Premium scroll progress

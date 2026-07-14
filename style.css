@@ -20719,7 +20719,7 @@ body.app-page {
   .page-program-premium .tp-btn { width: 100%; }
 }
 
-/* Fix support channel carousel: compact aqua card with continuous vertical motion */
+/* Fix support channel carousel: compact peach card with continuous vertical motion */
 .page-program-premium .tp-theia-support .tp-support-grid {
   gap: clamp(2.5rem, 6vw, 5rem);
 }
@@ -20732,11 +20732,11 @@ body.app-page {
   height: calc(var(--channel-row-height) + var(--channel-row-height) + var(--channel-row-height) + var(--channel-row-height) + var(--channel-row-height) + var(--channel-row-gap) + var(--channel-row-gap) + var(--channel-row-gap) + var(--channel-row-gap) + clamp(1.25rem, 2.6vw, 2rem) + clamp(1.25rem, 2.6vw, 2rem));
   max-height: none;
   padding: clamp(1.25rem, 2.6vw, 2rem);
-  border: 1px solid rgba(14, 117, 105, .16);
+  border: 1px solid rgba(236, 154, 84, .18);
   background:
     radial-gradient(circle at 86% 12%, rgba(255,255,255,.34), transparent 12rem),
-    linear-gradient(135deg, #bdf2ea 0%, #7ddbd0 52%, #3fb9b0 100%);
-  box-shadow: 0 1.4rem 3.4rem rgba(7, 92, 86, .18);
+    linear-gradient(135deg, #ffdcb8 0%, #ffd0a0 55%, #ffc38e 100%);
+  box-shadow: 0 1.4rem 3.4rem rgba(177, 100, 35, .16);
 }
 
 .page-program-premium .tp-theia-channel-card .tp-channel-track {
@@ -20760,25 +20760,40 @@ body.app-page {
   height: var(--channel-row-height);
   flex-basis: var(--channel-row-height);
   border-radius: 1rem;
-  box-shadow: 0 .65rem 1.4rem rgba(5, 75, 70, .08);
+  box-shadow: 0 .65rem 1.4rem rgba(137, 75, 21, .08);
 }
 
-.page-program-premium .tp-theia-channel-card span {
-  color: rgba(255, 255, 255, .46);
-  opacity: .46;
-  transition: opacity .14s linear, color .14s linear, background .14s linear, border-color .14s linear;
-}
-
-.page-program-premium .tp-theia-channel-card span.is-channel-focus {
-  color: #fff;
-  opacity: 1;
-  background: rgba(255, 255, 255, .16);
-  border-color: rgba(255, 255, 255, .26);
-}
-
+.page-program-premium .tp-theia-channel-card span,
+.page-program-premium .tp-theia-channel-card .is-muted,
+.page-program-premium .tp-theia-channel-card .is-active,
+.page-program-premium .tp-theia-channel-card span.is-channel-focus,
 .page-program-premium .tp-theia-channel-card span.is-channel-faded {
-  color: rgba(255, 255, 255, .44);
-  opacity: .44;
+  color: #020307;
+  opacity: 1;
+  background: transparent;
+  border-color: transparent;
+  text-decoration: none;
+}
+
+.page-program-premium .tp-theia-channel-card::before,
+.page-program-premium .tp-theia-channel-card::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  height: clamp(5.5rem, 11vw, 8.5rem);
+  pointer-events: none;
+}
+
+.page-program-premium .tp-theia-channel-card::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 220, 184, .96) 0%, rgba(255, 220, 184, .7) 42%, rgba(255, 220, 184, 0) 100%);
+}
+
+.page-program-premium .tp-theia-channel-card::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 195, 142, .96) 0%, rgba(255, 195, 142, .7) 42%, rgba(255, 195, 142, 0) 100%);
 }
 
 .page-program-premium .tp-theia-channel-card:hover .tp-channel-track,

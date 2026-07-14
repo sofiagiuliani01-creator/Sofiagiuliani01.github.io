@@ -20630,17 +20630,19 @@ body.app-page {
   max-width: 42rem;
   margin-bottom: 2.35rem;
 }
-.page-program-premium .tp-hero-points div {
+.page-program-premium .tp-hero-points .tp-point-card {
   display: grid;
   grid-template-columns: 3.05rem 1fr;
   gap: .15rem .85rem;
   align-items: start;
-  padding: 0;
+  min-height: 0;
+  padding: 0 !important;
   border: 0;
   border-radius: 0;
   background: transparent;
 }
 .page-program-premium .tp-hero-points i {
+  position: static;
   grid-row: span 2;
   width: 3.05rem;
   height: 3.05rem;

@@ -20763,9 +20763,22 @@ body.app-page {
   box-shadow: 0 .65rem 1.4rem rgba(5, 75, 70, .08);
 }
 
-.page-program-premium .tp-theia-channel-card .is-muted,
-.page-program-premium .tp-theia-channel-card .is-active {
-  opacity: .48;
+.page-program-premium .tp-theia-channel-card span {
+  color: rgba(255, 255, 255, .46);
+  opacity: .46;
+  transition: opacity .14s linear, color .14s linear, background .14s linear, border-color .14s linear;
+}
+
+.page-program-premium .tp-theia-channel-card span.is-channel-focus {
+  color: #fff;
+  opacity: 1;
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .26);
+}
+
+.page-program-premium .tp-theia-channel-card span.is-channel-faded {
+  color: rgba(255, 255, 255, .44);
+  opacity: .44;
 }
 
 .page-program-premium .tp-theia-channel-card:hover .tp-channel-track,

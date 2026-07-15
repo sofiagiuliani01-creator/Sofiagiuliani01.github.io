@@ -20986,3 +20986,174 @@ body.app-page {
     font-size: clamp(3rem, 13vw, 4.5rem);
   }
 }
+
+/* =========================
+   2026-07: LS coaching diverso - desktop SVG nude animate
+   ========================= */
+@media (min-width: 981px) {
+  #leonardo-diverso .theia-diff-card .different-icon {
+    width: 58px !important;
+    height: 58px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    color: #0f1115 !important;
+    transform-origin: 50% 70%;
+    animation: lsIconFloat 3.2s ease-in-out infinite !important;
+  }
+
+  #leonardo-diverso .theia-diff-card .different-icon::before,
+  #leonardo-diverso .theia-diff-card .different-icon::after,
+  #leonardo-diverso .theia-diff-card .different-icon .mblob {
+    content: none !important;
+    display: none !important;
+  }
+
+  #leonardo-diverso .theia-diff-card .different-icon svg {
+    width: 54px !important;
+    height: 54px !important;
+    overflow: visible !important;
+    fill: none !important;
+    filter: none !important;
+    stroke: #0f1115 !important;
+    stroke-width: 2.15 !important;
+    animation: lsIconDraw 3.2s ease-in-out infinite !important;
+  }
+
+  #leonardo-diverso .theia-diff-card .different-icon svg path,
+  #leonardo-diverso .theia-diff-card .different-icon svg circle:not(.mblob) {
+    fill: none !important;
+    stroke: #0f1115 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+
+  #leonardo-diverso .theia-diff-card .different-icon svg path {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0;
+  }
+
+  #leonardo-diverso .theia-diff-card:hover .different-icon {
+    animation-duration: 1.45s !important;
+  }
+
+  #leonardo-diverso .theia-diff-card:hover .different-icon svg {
+    animation-duration: 1.45s !important;
+  }
+
+  #leonardo-diverso .icon-heart .mh-heart {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lsHeartBeat 1.55s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .icon-heart .mh-pop {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lsPop 1.55s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .icon-heart .mh-pop.p2 { animation-delay: .12s; }
+  #leonardo-diverso .icon-heart .mh-pop.p3 { animation-delay: .24s; }
+
+  #leonardo-diverso .icon-graph .mline {
+    stroke-dasharray: 90;
+    stroke-dashoffset: 90;
+    animation: lsGraphTrace 2.2s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .icon-graph .mdot {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lsDotPulse 2.2s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .micon-sliders .mknob {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lsKnobSlide 2.35s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .micon-sliders .k2 { animation-delay: .18s; }
+  #leonardo-diverso .micon-sliders .k3 { animation-delay: .36s; }
+
+  #leonardo-diverso .micon-clock .min,
+  #leonardo-diverso .micon-clock .hour {
+    transform-box: fill-box;
+    transform-origin: left center;
+  }
+
+  #leonardo-diverso .micon-clock .min { animation: lsClockSpin 2.4s linear infinite; }
+  #leonardo-diverso .micon-clock .hour { animation: lsClockSpin 7.2s linear infinite; }
+
+  #leonardo-diverso .micon-leaf path:first-of-type {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lsLeafSway 2.8s ease-in-out infinite;
+  }
+
+  #leonardo-diverso .theia-col-1 .theia-diff-card:nth-child(2) .different-icon { animation-delay: .22s !important; }
+  #leonardo-diverso .theia-col-2 .theia-diff-card:nth-child(1) .different-icon { animation-delay: .38s !important; }
+  #leonardo-diverso .theia-col-2 .theia-diff-card:nth-child(2) .different-icon { animation-delay: .54s !important; }
+  #leonardo-diverso .theia-col-3 .theia-diff-card:nth-child(1) .different-icon { animation-delay: .7s !important; }
+}
+
+@keyframes lsIconFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  32% { transform: translate3d(0, -7px, 0) rotate(-4deg) scale(1.04); }
+  64% { transform: translate3d(0, 3px, 0) rotate(3deg) scale(.98); }
+}
+
+@keyframes lsIconDraw {
+  0%, 100% { stroke-dashoffset: 0; transform: scale(1); }
+  45% { stroke-dashoffset: 34; transform: scale(1.04); }
+  70% { stroke-dashoffset: 0; transform: scale(1); }
+}
+
+@keyframes lsHeartBeat {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.14); }
+  36% { transform: scale(.96); }
+  54% { transform: scale(1.08); }
+}
+
+@keyframes lsPop {
+  0%, 34%, 100% { opacity: .35; transform: translateY(2px) scale(.75); }
+  50% { opacity: 1; transform: translateY(-2px) scale(1.18); }
+}
+
+@keyframes lsGraphTrace {
+  0% { stroke-dashoffset: 90; }
+  48%, 72% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -90; }
+}
+
+@keyframes lsDotPulse {
+  0%, 38%, 100% { transform: scale(.75); opacity: .45; }
+  56% { transform: scale(1.35); opacity: 1; }
+}
+
+@keyframes lsKnobSlide {
+  0%, 100% { transform: translateX(-5px) scale(.95); }
+  50% { transform: translateX(7px) scale(1.15); }
+}
+
+@keyframes lsClockSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes lsLeafSway {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50% { transform: rotate(6deg) translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #leonardo-diverso .theia-diff-card .different-icon,
+  #leonardo-diverso .theia-diff-card .different-icon svg,
+  #leonardo-diverso .theia-diff-card .different-icon svg * {
+    animation: none !important;
+  }
+}

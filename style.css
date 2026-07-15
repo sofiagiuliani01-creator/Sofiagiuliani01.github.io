@@ -21157,3 +21157,149 @@ body.app-page {
     animation: none !important;
   }
 }
+
+/* === Coaching Base/Premium: mobile animation recovery + layout optimization === */
+@media (max-width: 760px) {
+  .page-theia-inspired {
+    overflow-x: hidden;
+  }
+
+  .page-theia-inspired [data-tp-reveal] {
+    transform: translate3d(0, 18px, 0);
+    transition-duration: .52s;
+    will-change: opacity, transform;
+  }
+
+  .page-theia-inspired [data-tp-reveal].is-visible {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .page-program-premium .tp-hero {
+    padding: 2.25rem 0 3.25rem;
+  }
+
+  .page-program-premium .tp-hero-grid,
+  .page-program-base .tp-video-coaching-grid,
+  .page-program-base .tp-app-spotlight-grid,
+  .page-program-premium .tp-medical-grid,
+  .page-program-premium .tp-theia-support .tp-support-grid,
+  .page-program-premium .tp-theia-comparison-grid {
+    gap: 1.35rem;
+  }
+
+  .page-program-premium .tp-hero h1,
+  .page-program-premium .tp-section-intro h2,
+  .page-program-premium .tp-video-coaching h2,
+  .page-program-premium .tp-app-spotlight h2,
+  .page-program-premium .tp-medical h2,
+  .page-program-premium .tp-theia-support h2,
+  .page-program-premium .tp-comparison-panel h2 {
+    letter-spacing: -.055em;
+    text-wrap: balance;
+  }
+
+  .page-program-premium .tp-hero h1 {
+    max-width: 8.8ch;
+    font-size: clamp(3.35rem, 15.5vw, 4.85rem);
+  }
+
+  .page-program-premium .tp-lead {
+    margin: 1rem 0 1.45rem;
+    font-size: 1.06rem;
+    line-height: 1.5;
+  }
+
+  .page-program-premium .tp-hero-points {
+    gap: .85rem;
+    margin-bottom: 1.45rem;
+  }
+
+  .page-program-premium .tp-hero-points .tp-point-card {
+    grid-template-columns: 2.65rem minmax(0, 1fr);
+    gap: .1rem .72rem;
+  }
+
+  .page-program-premium .tp-hero-points i {
+    width: 2.65rem;
+    height: 2.65rem;
+    font-size: 1.12rem;
+  }
+
+  .page-program-premium .tp-doctor-card {
+    width: min(100%, 25rem);
+    aspect-ratio: 1.05 / 1;
+    border-radius: 1.55rem;
+  }
+
+  .page-program-premium .tp-review-grid,
+  .page-program-premium .tp-price-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-program-premium .tp-review-grid article,
+  .page-program-premium .tp-theia-price-card,
+  .page-program-premium .tp-profile-card,
+  .page-program-premium .tp-medical-card,
+  .page-program-premium .tp-final-card {
+    border-radius: 1.45rem;
+  }
+
+  .page-program-premium .tp-timeline {
+    display: grid;
+    gap: .95rem;
+  }
+
+  .page-program-premium .tp-timeline article {
+    min-width: 0;
+  }
+
+  .page-program-premium .tp-timeline .tp-step-copy {
+    padding: 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .page-program-premium .tp-theia-channel-card .tp-channel-track,
+  .page-program-premium .tp-marquee {
+    animation-play-state: running !important;
+    backface-visibility: hidden;
+  }
+
+  .page-program-premium .tp-theia-channel-card {
+    width: 100%;
+    max-width: 28rem;
+    border-radius: 1.25rem;
+  }
+
+  .page-program-premium .tp-compare-matrix {
+    grid-template-columns: minmax(8.5rem, 1fr) 4rem 4.7rem;
+    gap: .45rem;
+    overflow: visible;
+  }
+
+  .page-program-premium .tp-matrix-labels {
+    font-size: .82rem;
+    line-height: 1.15;
+  }
+
+  .page-program-premium .tp-matrix-col span {
+    font-size: 1.65rem;
+  }
+
+  .page-program-base .tp-app-spotlight-phone {
+    min-height: 18rem;
+    transform: none;
+  }
+
+  .page-program-base .tp-app-spotlight-phone img {
+    width: min(46vw, 11.5rem);
+  }
+
+  .page-program-premium .tp-marquee {
+    animation-duration: 24s;
+  }
+
+  .page-program-premium .tp-marquee img {
+    width: min(54vw, 13rem);
+    border-radius: 1.35rem;
+  }
+}

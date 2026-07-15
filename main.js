@@ -2872,25 +2872,53 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 })();
 
-// Theia-inspired Coaching Premium reveal animations
+// Theia-inspired Coaching pages reveal animations
 (() => {
-  const items = document.querySelectorAll('.page-theia-inspired [data-tp-reveal]');
-  if (!items.length) return;
+  const initReveals = () => {
+    const items = Array.from(document.querySelectorAll('.page-theia-inspired [data-tp-reveal]'));
+    if (!items.length) return;
 
-  if (!('IntersectionObserver' in window)) {
-    items.forEach((item) => item.classList.add('is-visible'));
-    return;
-  }
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    const showItem = (item) => item.classList.add('is-visible');
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
+    // On mobile the browser address bar changes the viewport while scrolling: make
+    // elements already inside the first screen visible immediately, then observe the rest.
+    if (isMobile) {
+      requestAnimationFrame(() => {
+        const viewportBottom = window.innerHeight || document.documentElement.clientHeight;
+        items.forEach((item) => {
+          const rect = item.getBoundingClientRect();
+          if (rect.top < viewportBottom * 0.96) showItem(item);
+        });
+      });
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(showItem);
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        showItem(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: isMobile ? 0.04 : 0.16,
+      rootMargin: isMobile ? '0px 0px 10% 0px' : '0px 0px -8% 0px',
     });
-  }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
 
-  items.forEach((item) => observer.observe(item));
+    items.forEach((item) => {
+      if (!item.classList.contains('is-visible')) observer.observe(item);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReveals, { once: true });
+  } else {
+    initReveals();
+  }
 })();
 
 // Coaching Premium support carousel: keep the vertical loop moving with a measured distance.

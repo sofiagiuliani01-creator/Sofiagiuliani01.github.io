@@ -21082,8 +21082,8 @@ body.app-page {
 
   #leonardo-diverso .micon-clock .min,
   #leonardo-diverso .micon-clock .hour {
-    transform-box: fill-box;
-    transform-origin: left center;
+    transform-box: view-box;
+    transform-origin: 32px 32px;
   }
 
   #leonardo-diverso .micon-clock .min { animation: lsClockSpin 2.4s linear infinite; }

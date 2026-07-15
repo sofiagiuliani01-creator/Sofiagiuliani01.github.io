@@ -21306,20 +21306,24 @@ body.app-page {
 
 /* === 2026-07 mobile-only coaching base/premium layout refinements === */
 @media (max-width: 560px) {
+  .page-program-base .tp-process,
   .page-program-premium .tp-process {
     overflow: hidden;
   }
 
+  .page-program-base .tp-process-grid,
   .page-program-premium .tp-process-grid {
     gap: 1.7rem;
   }
 
+  .page-program-base .tp-timeline,
   .page-program-premium .tp-timeline {
     --mobile-line-x: 2rem;
     gap: 0;
     padding-left: 0;
   }
 
+  .page-program-base .tp-timeline::before,
   .page-program-premium .tp-timeline::before {
     left: var(--mobile-line-x);
     top: 2rem;
@@ -21330,6 +21334,7 @@ body.app-page {
     box-shadow: 0 0 0 6px rgba(238,244,233,.78);
   }
 
+  .page-program-base .tp-timeline article,
   .page-program-premium .tp-timeline article {
     display: grid;
     grid-template-columns: 4rem minmax(0, 1fr);
@@ -21339,10 +21344,12 @@ body.app-page {
     padding: 0 0 1.05rem;
   }
 
+  .page-program-base .tp-timeline article:last-child,
   .page-program-premium .tp-timeline article:last-child {
     padding-bottom: 0;
   }
 
+  .page-program-base .tp-timeline article::before,
   .page-program-premium .tp-timeline article::before {
     display: block;
     left: 3.78rem;
@@ -21352,6 +21359,7 @@ body.app-page {
     transform: none;
   }
 
+  .page-program-base .tp-timeline span,
   .page-program-premium .tp-timeline span {
     width: 4rem;
     height: 4rem;
@@ -21361,15 +21369,18 @@ body.app-page {
     transform: translateZ(0);
   }
 
+  .page-program-base .tp-timeline span i,
   .page-program-premium .tp-timeline span i {
     font-size: 1.08rem;
   }
 
+  .page-program-base .tp-timeline span b,
   .page-program-premium .tp-timeline span b {
     right: -.34rem;
     bottom: -.34rem;
   }
 
+  .page-program-base .tp-timeline .tp-step-copy,
   .page-program-premium .tp-timeline .tp-step-copy {
     padding: 1rem 1rem 1.05rem;
     border-left-width: .42rem;
@@ -21377,19 +21388,23 @@ body.app-page {
     box-shadow: 0 .95rem 2.2rem rgba(14,43,37,.07);
   }
 
+  .page-program-base .tp-timeline h3,
   .page-program-premium .tp-timeline h3 {
     font-size: 1.22rem;
   }
 
+  .page-program-base .tp-timeline p,
   .page-program-premium .tp-timeline p {
     font-size: .95rem;
     line-height: 1.5;
   }
 
+  .page-program-base .tp-theia-support,
   .page-program-premium .tp-theia-support {
     padding: 3.6rem 0;
   }
 
+  .page-program-base .tp-theia-support .tp-support-grid,
   .page-program-premium .tp-theia-support .tp-support-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -21397,18 +21412,21 @@ body.app-page {
     align-items: stretch;
   }
 
+  .page-program-base .tp-theia-support h2,
   .page-program-premium .tp-theia-support h2 {
     font-size: clamp(3rem, 15vw, 4.4rem);
     line-height: .95;
     max-width: 7.4ch;
   }
 
+  .page-program-base .tp-theia-support p,
   .page-program-premium .tp-theia-support p {
     margin-top: 1rem;
     font-size: 1.08rem;
     line-height: 1.42;
   }
 
+  .page-program-base .tp-theia-channel-card,
   .page-program-premium .tp-theia-channel-card {
     --channel-row-height: 4.15rem;
     max-width: none;
@@ -21417,12 +21435,14 @@ body.app-page {
     border-radius: 1.55rem;
   }
 
+  .page-program-base .tp-theia-channel-card span,
   .page-program-premium .tp-theia-channel-card span {
     min-height: 4.15rem;
     gap: .75rem;
     font-size: clamp(1.55rem, 8.8vw, 2.25rem);
   }
 
+  .page-program-base .tp-theia-channel-card span i,
   .page-program-premium .tp-theia-channel-card span i {
     width: 3.65rem;
     height: 3.65rem;

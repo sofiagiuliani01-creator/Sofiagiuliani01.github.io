@@ -21524,3 +21524,43 @@ body.app-page {
     border-radius: 24px;
   }
 }
+
+/* Home programmi: layout mobile compatto stile card Theia */
+@media (max-width: 780px) {
+  .page-home #programmi .program-choice-cards {
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .page-home #programmi .program-choice-card {
+    min-height: 0;
+    height: clamp(10.8rem, 27.8vw, 12.9rem);
+    border-radius: 1.35rem;
+    box-shadow: none;
+  }
+
+  .page-home #programmi .program-choice-card:hover,
+  .page-home #programmi .program-choice-card:focus-visible {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .page-home #programmi .program-choice-card img {
+    object-fit: cover;
+    object-position: center 34%;
+  }
+
+  .page-home #programmi .program-choice-title {
+    top: 50%;
+    left: 1.55rem;
+    right: 7.3rem;
+    transform: translateY(-50%);
+    font-size: clamp(1.72rem, 7.25vw, 2.15rem);
+    line-height: 1.28;
+    letter-spacing: -0.06em;
+  }
+
+  .page-home #programmi .program-choice-arrow {
+    display: none;
+  }
+}

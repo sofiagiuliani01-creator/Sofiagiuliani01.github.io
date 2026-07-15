@@ -21410,6 +21410,7 @@ body.app-page {
   }
 
   .page-program-premium .tp-theia-channel-card {
+    --channel-row-height: 4.15rem;
     max-width: none;
     min-height: 22rem;
     padding: 1.25rem;

@@ -32,6 +32,7 @@
     const characterState = { x: -9999, y: -9999, rotation: 0, scale: 1 };
     let jumpTween = null;
     let timelineDriftActive = false;
+    let activeCardIndex = 0;
 
     const setCharacterSize = () => {
       const width = window.innerWidth <= config.responsive.mobileBreakpoint
@@ -48,16 +49,23 @@
       };
     };
 
-    const getTimelineLandingPoint = () => {
-      const line = timeline.querySelector('.timeline-line-base');
-      const targetStep = steps[0];
-      if (!line || !targetStep) return { x: 80, y: window.innerHeight * 0.48 };
+    const getTimelineLandingPoint = (index = activeCardIndex) => {
+      const targetStep = steps[index] || steps[0];
+      const visual = targetStep && targetStep.querySelector('.step-visual, .step-illu');
+      const image = targetStep && targetStep.querySelector('.step-generated-img');
+      const anchor = (config.cardAnchors && config.cardAnchors[index]) || { x: 0.5, y: 0.8 };
+      const footRatio = config.cardFootRatio || 0.94;
+      const target = image || visual || targetStep;
 
-      const lineRect = line.getBoundingClientRect();
-      const stepRect = targetStep.getBoundingClientRect();
+      if (!target) return { x: 80, y: window.innerHeight * 0.48 };
+
+      const rect = target.getBoundingClientRect();
+      const anchorX = rect.left + rect.width * anchor.x;
+      const footY = rect.top + rect.height * anchor.y;
+
       return {
-        x: lineRect.left - renderer.logicalWidth * 0.6,
-        y: Math.min(stepRect.top + 40, window.innerHeight * 0.72)
+        x: anchorX - renderer.logicalWidth * 0.5,
+        y: footY - renderer.logicalHeight * footRatio
       };
     };
 
@@ -114,9 +122,25 @@
       });
     };
 
+    const moveToTimelineCard = (index, duration = 0.22) => {
+      const target = getTimelineLandingPoint(index);
+      gsap.to(characterState, {
+        x: target.x,
+        y: target.y,
+        rotation: 0,
+        duration,
+        ease: 'power2.out',
+        overwrite: 'auto',
+        onUpdate: applyState
+      });
+    };
+
     const activateTimelineAnimation = (index) => {
       const sequence = config.cardMap[index];
       if (!sequence) return;
+      activeCardIndex = index;
+      timelineDriftActive = true;
+      moveToTimelineCard(index);
       animationManager.play(sequence, { reset: false });
     };
 
@@ -167,10 +191,9 @@
         const p = self.progress;
         const target = getTimelineLandingPoint();
         if (p > 0.02) {
-          const driftY = p * 120;
           gsap.to(characterState, {
             x: target.x,
-            y: target.y + driftY,
+            y: target.y,
             rotation: 0,
             duration: 0.26,
             overwrite: 'auto',

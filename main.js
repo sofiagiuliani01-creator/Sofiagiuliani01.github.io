@@ -3265,14 +3265,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const string = section.querySelector('.goal-archer-svg--desktop #goal-string');
       const arrow = section.querySelector('.goal-archer-svg--desktop #goal-arrow');
       const target = section.querySelector('.goal-archer-svg--desktop #goal-target');
-      const backArm = section.querySelector('.goal-archer-svg--desktop #goal-back-arm');
-      const frontArm = section.querySelector('.goal-archer-svg--desktop #goal-front-arm');
-      const body = section.querySelector('.goal-archer-svg--desktop #goal-body');
+      const upperBody = section.querySelector('.goal-archer-svg--desktop #goal-upper-body');
+      const lowerBody = section.querySelector('.goal-archer-svg--desktop #goal-lower-body');
+      const stringTop = section.querySelector('.goal-archer-svg--desktop #goal-string-top');
+      const stringBottom = section.querySelector('.goal-archer-svg--desktop #goal-string-bottom');
       gsap.set(visual, { y: '20vh' });
       gsap.set(textBlock, { xPercent: 45 });
       gsap.set(chars, { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
-      gsap.set(target, { x: '55vw', rotation: 1, transformOrigin: '50% 50%' });
-      gsap.set(arrow, { x: -130, y: 0, rotation: 0, transformOrigin: '0% 50%' });
+      gsap.set(target, { x: '62vw', rotation: 1, transformOrigin: '50% 50%' });
+      gsap.set(arrow, { x: -260, y: 0, rotation: 0, transformOrigin: '0% 50%' });
       const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom bottom', scrub: 2, invalidateOnRefresh: true } });
       tl.to(visual, { y: 0, ease: 'power3.out', duration: 0.18 }, 0)
         .to(textBlock, { xPercent: 38, ease: 'none', duration: 0.20 }, 0)
@@ -3281,18 +3282,19 @@ document.addEventListener('DOMContentLoaded', () => {
         .to(textBlock, { xPercent: 4, ease: 'none', duration: 0.09 }, 0.48)
         .to(textBlock, { xPercent: 0.7, ease: 'none', duration: 0.10 }, 0.57)
         .to(textBlock, { xPercent: 0, ease: 'none', duration: 0.09 }, 0.67)
-        .to(string, { attr: { d: 'M638 -58 L 575 358 L638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(backArm, { x: -92, y: -12, rotation: -3, transformOrigin: '70% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(frontArm, { x: 58, y: 8, scaleX: 1.08, transformOrigin: '0% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(body, { rotation: -2.5, transformOrigin: '45% 55%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(bow, { attr: { d: 'M638 -58 Q 1032 558 638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(arrow, { x: -210, y: 0, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(string, { attr: { d: 'M638 -58 L 690 358 L638 1175' }, ease: 'power3.in', duration: 0.06 }, 0.44)
-        .to(backArm, { x: -70, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(stringTop, { attr: { x2: 498, y2: 550 }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(stringBottom, { attr: { x2: 498, y2: 550 }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(upperBody, { x: -64, y: -8, rotation: -2, transformOrigin: '70% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(lowerBody, { rotation: -1.4, transformOrigin: '45% 80%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(bow, { attr: { d: 'M605 -16 C922 274 1046 832 650 1206' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(arrow, { x: -360, y: 0, rotation: 0, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(stringTop, { attr: { x2: 640, y2: 550 }, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(stringBottom, { attr: { x2: 640, y2: 550 }, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(upperBody, { x: -42, ease: 'power3.in', duration: 0.06 }, 0.44)
         .to(reversedChars, { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: 0.0032, ease: 'power3.out', duration: 0.10 }, 0.45)
-        .to(arrow, { x: 0, y: 0, rotation: 0.6, ease: 'power1.out', duration: 0.16 }, 0.49)
+        .to(arrow, { x: 0, y: 0, rotation: 0, ease: 'power1.out', duration: 0.20 }, 0.49)
         .to(archer, { x: -980, ease: 'power2.in', duration: 0.16 }, 0.49)
-        .to(target, { x: 0, rotation: 0, ease: 'power2.out', duration: 0.15 }, 0.55)
+        .to(target, { x: 0, rotation: 0, ease: 'power2.out', duration: 0.18 }, 0.55)
         .to(target, { x: -6, ease: 'power2.out', duration: 0.03 }, 0.68)
         .to(target, { x: 0, ease: 'power1.out', duration: 0.05 }, 0.71)
         .to({}, { duration: 0.24 }, 0.76);

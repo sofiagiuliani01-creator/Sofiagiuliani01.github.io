@@ -22425,6 +22425,7 @@ body.app-page {
   background: var(--ls-aqua) !important;
   transform-origin: top center !important;
   transform: scaleY(0);
+  transition: opacity .35s ease !important;
 }
 
 #come-funziona .timeline-cta { position: relative; z-index: 2; }

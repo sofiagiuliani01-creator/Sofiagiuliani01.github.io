@@ -21772,3 +21772,291 @@ body.app-page {
     background: linear-gradient(100deg, #bdf3ee 0%, #a8ebe4 62%, #d2fbf7 100%);
   }
 }
+
+/* === 2026-07-16: desktop PNG più grandi + Coaching Base mobile recovery === */
+@media (min-width: 781px) {
+  .page-home #programmi .program-choice-card {
+    min-height: clamp(23rem, 33vw, 31rem);
+  }
+
+  .page-home #programmi .program-choice-card img {
+    right: clamp(.5rem, 1.5vw, 1.4rem);
+    bottom: -6%;
+    width: min(64%, 32rem);
+    height: 84%;
+    transform: scale(1.16);
+  }
+
+  .page-home #programmi .program-choice-card:hover img,
+  .page-home #programmi .program-choice-card:focus-visible img {
+    transform: scale(1.24);
+  }
+
+  .page-home #programmi .program-choice-title {
+    right: 42%;
+    max-width: 12.5ch;
+  }
+
+  .page-home #programmi .program-choice-arrow {
+    z-index: 2;
+  }
+}
+
+.page-program-base .tp-hero {
+  position: relative;
+  min-height: auto;
+  padding: clamp(1.8rem, 4vw, 3.2rem) 0 clamp(3.6rem, 7vw, 6rem);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(25,218,213,.18), transparent 24rem),
+    radial-gradient(circle at 18% 0%, #fff 0, #fbfcf8 28rem, transparent 44rem),
+    linear-gradient(180deg, #fbfcf8 0%, #f6f8f6 100%);
+}
+
+.page-program-base .tp-hero-grid {
+  align-items: center;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, .82fr);
+}
+
+.page-program-base .tp-hero h1 {
+  max-width: 10.8ch;
+  font-size: clamp(4.2rem, 9.6vw, 8.9rem);
+  line-height: .88;
+  letter-spacing: -.075em;
+}
+
+.page-program-base .tp-lead {
+  max-width: 48rem;
+  font-size: clamp(1.15rem, 2vw, 1.42rem);
+  line-height: 1.5;
+}
+
+.page-program-base .tp-hero-points {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 48rem;
+}
+
+.page-program-base .tp-point-card {
+  position: relative;
+  min-height: 5.7rem;
+  padding: 1.1rem 1.15rem 1.1rem 4.8rem !important;
+  border-radius: 28px;
+  background: rgba(255,255,255,.78);
+  backdrop-filter: blur(18px);
+  border-color: rgba(21,33,29,.10);
+}
+
+.page-program-base .tp-point-card i,
+.page-program-base .tp-strip-inner i {
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.page-program-base .tp-point-card i {
+  position: absolute;
+  left: 1.05rem;
+  top: 1.05rem;
+  background: #eef4e9;
+  color: #0a5c4c;
+}
+
+.page-program-base .tp-hero-visual {
+  min-height: auto;
+  display: block;
+}
+
+.page-program-base .tp-hero .tp-doctor-card {
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.page-program-base .tp-timeline {
+  position: relative;
+  display: grid;
+  gap: 1.05rem;
+  padding-left: 1.35rem;
+}
+
+.page-program-base .tp-timeline::before {
+  content: "";
+  position: absolute;
+  left: 3.05rem;
+  top: 2.1rem;
+  bottom: 2.1rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg,#0a5c4c 0%,#16b8ad 18%,#86c76f 36%,#0f6b66 53%,#0a4f4b 68%,#7f71d9 84%,#10231e 100%);
+  box-shadow: 0 0 0 7px rgba(238,244,233,.72);
+}
+
+.page-program-base .tp-timeline article {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 4.4rem minmax(0,1fr);
+  gap: 1.05rem;
+  align-items: stretch;
+  min-height: 9.15rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-program-base .tp-timeline article::before {
+  content: "";
+  position: absolute;
+  left: 4.35rem;
+  top: 50%;
+  width: 2.35rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--step-color, #0a5c4c);
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.page-program-base .tp-timeline span {
+  position: relative;
+  width: 4.2rem;
+  height: 4.2rem;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  border: 7px solid #fff;
+  border-radius: 999px;
+  background: var(--step-color, #0a5c4c);
+  color: #fff;
+  box-shadow: 0 1rem 2.2rem rgba(16,35,30,.12);
+  z-index: 2;
+}
+
+.page-program-base .tp-timeline span i {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-style: normal;
+  font-size: 1.28rem;
+  line-height: 1;
+}
+
+.page-program-base .tp-timeline span b {
+  position: absolute;
+  right: -.42rem;
+  bottom: -.42rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  display: grid;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: #10231e;
+  color: #fff;
+  font-size: .66rem;
+}
+
+.page-program-base .tp-timeline .tp-step-copy {
+  padding: clamp(1.05rem, 2.2vw, 1.45rem);
+  border: 1px solid rgba(10,92,76,.10);
+  border-left: .5rem solid var(--step-color, #0a5c4c);
+  border-radius: 1.55rem;
+  background: #fff;
+  box-shadow: 0 1.1rem 2.8rem rgba(14,43,37,.06);
+}
+
+.page-program-base .tp-timeline h3,
+.page-program-base .tp-timeline p {
+  margin: 0;
+}
+
+.page-program-base .tp-timeline p {
+  margin-top: .35rem;
+  color: #53615c;
+}
+
+@media (max-width: 900px) {
+  .page-program-base .tp-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .page-program-base .tp-hero {
+    padding-top: 4rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-program-base .tp-hero {
+    padding: 2.25rem 0 3.25rem;
+  }
+
+  .page-program-base .tp-hero-grid {
+    gap: 1.35rem;
+  }
+
+  .page-program-base .tp-hero h1,
+  .page-program-base .tp-section-intro h2,
+  .page-program-base .tp-medical h2,
+  .page-program-base .tp-video-coaching h2,
+  .page-program-base .tp-app-spotlight h2 {
+    letter-spacing: -.055em;
+    text-wrap: balance;
+  }
+
+  .page-program-base .tp-hero h1 {
+    max-width: 8.9ch;
+    font-size: clamp(3.35rem, 15.5vw, 4.85rem);
+  }
+
+  .page-program-base .tp-lead {
+    margin: 1rem 0 1.45rem;
+    font-size: 1.06rem;
+    line-height: 1.5;
+  }
+
+  .page-program-base .tp-hero-points {
+    grid-template-columns: 1fr;
+    gap: .85rem;
+    margin-bottom: 1.45rem;
+  }
+
+  .page-program-base .tp-hero-points .tp-point-card {
+    min-height: 0;
+    padding: .95rem 1rem .95rem 4.25rem !important;
+  }
+
+  .page-program-base .tp-hero-points i {
+    width: 2.65rem;
+    height: 2.65rem;
+    font-size: 1.12rem;
+  }
+
+  .page-program-base .tp-btn {
+    width: 100%;
+  }
+
+  .page-program-base .tp-doctor-card {
+    width: min(100%, 25rem);
+    aspect-ratio: 1.05 / 1;
+    border-radius: 1.55rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-program-base .tp-hero h1 {
+    max-width: 9ch;
+    font-size: clamp(3.15rem, 15vw, 4.35rem);
+  }
+
+  .page-program-base .tp-doctor-card img {
+    width: 92%;
+    height: 92%;
+  }
+}

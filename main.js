@@ -1926,6 +1926,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const transitions = [null,"1_to_2","2_to_3","3_to_4","4_to_5"];
     const startTimelineName = "traction";
     const finalTimelineCandidates = ["last ", "last"];
+    // Anticipa leggermente l’attivazione della card mentre l’omino sta per
+    // entrarci e mantieni attiva la card corrente durante la prima parte
+    // dell’uscita, evitando il “vuoto” visivo nelle transizioni tra card.
+    const cardEnterActivationProgress = 0.66;
 
     function getAvailableRiveAnimations() {
       if (!riveInstance) return [];
@@ -2363,8 +2367,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const jumpProgress = gsap.utils.clamp(0, 1, (progress - tractionHoldEnd) / (jumpEnd - tractionHoldEnd));
         const point = lerpPoint(anchors[0], anchors[1], jumpProgress);
-        if (progress < jumpEnd) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: jumpProgress, point, activeIndex: null };
-        if (progress < 0.80) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - jumpEnd) / (0.80 - jumpEnd), point: anchors[1], activeIndex: null };
+        if (progress < jumpEnd) return { phase: "jump_1_card", animation: "jump_1_card", animationProgress: jumpProgress, point, activeIndex: jumpProgress >= cardEnterActivationProgress ? 0 : null };
+        if (progress < 0.80) return { phase: "enter_to_1_card", animation: "enter_to_1_card", animationProgress: (progress - jumpEnd) / (0.80 - jumpEnd), point: anchors[1], activeIndex: 0 };
         return { phase: "card_1", animation: cardActions[0], animationProgress: (progress - 0.80) / 0.20, point: anchors[1], activeIndex: 0, isCardAction: true };
       }
 
@@ -2405,7 +2409,7 @@ window.addEventListener('DOMContentLoaded', () => {
             animation: getFinalTimelineName(),
             animationProgress: lastProgress,
             point,
-            activeIndex: null,
+            activeIndex: lastProgress < ctaArrivalAtLieStart * 0.72 ? 4 : null,
             isFinalTransition: true
           };
         }
@@ -2437,7 +2441,9 @@ window.addEventListener('DOMContentLoaded', () => {
         };
       }
       if (progress < 0.78) {
-        return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: (progress - 0.48) / 0.30, point: lerpPoint(anchors[segment], anchors[segment + 1], (progress - 0.48) / 0.30), activeIndex: null };
+        const transitionProgress = (progress - 0.48) / 0.30;
+        const activeIndex = transitionProgress >= cardEnterActivationProgress ? nextCardIndex : cardIndex;
+        return { phase: `to_card_${nextCardIndex + 1}`, animation: transitions[nextCardIndex], animationProgress: transitionProgress, point: lerpPoint(anchors[segment], anchors[segment + 1], transitionProgress), activeIndex };
       }
       return {
         phase: `card_${nextCardIndex + 1}`,

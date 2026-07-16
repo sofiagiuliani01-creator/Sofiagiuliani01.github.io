@@ -21652,8 +21652,7 @@ body.app-page {
 }
 
 .page-home #programmi .program-choice-card::after {
-  background: radial-gradient(circle at 78% 86%, rgba(255,255,255,.28), rgba(255,255,255,0) 42%), linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,0));
-  z-index: 0;
+  display: none;
 }
 
 .page-home #programmi .program-choice-title {
@@ -21691,11 +21690,11 @@ body.app-page {
   }
 
   .page-home #programmi .program-choice-card {
-    background: linear-gradient(100deg, #f4cfaa 0%, #f4c89b 62%, #f8d8b5 100%);
+    background: linear-gradient(100deg, #bfe3fb 0%, #bfe3fb 62%, #d7efff 100%);
   }
 
   .page-home #programmi .program-choice-card:nth-child(2) {
-    background: linear-gradient(100deg, #f7a987 0%, #f7a17d 62%, #ffbd9e 100%);
+    background: linear-gradient(100deg, #ffb08f 0%, #ffa581 62%, #ffc5ab 100%);
     color: #0d1324;
   }
 
@@ -21703,11 +21702,11 @@ body.app-page {
   .page-home #programmi .program-choice-card:hover img,
   .page-home #programmi .program-choice-card:focus-visible img {
     left: auto;
-    right: -.95rem;
-    bottom: -.78rem;
+    right: .7rem;
+    bottom: -.4rem;
     top: auto;
-    width: 42%;
-    height: 102%;
+    width: 34%;
+    height: 88%;
     object-fit: contain;
     object-position: right bottom;
     transform: none;
@@ -21716,7 +21715,7 @@ body.app-page {
   .page-home #programmi .program-choice-title {
     top: 50%;
     left: 1.55rem;
-    right: 8.8rem;
+    right: 9.4rem;
     transform: translateY(-50%);
     font-size: clamp(1.55rem, 7.2vw, 2.15rem);
     line-height: 1.32;

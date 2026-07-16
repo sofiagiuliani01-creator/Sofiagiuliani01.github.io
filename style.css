@@ -22521,7 +22521,7 @@ body.app-page {
 }
 
 #come-funziona .timeline-step .step-content {
-  background: linear-gradient(135deg, rgba(10, 12, 17, 0.78), rgba(15, 18, 24, 0.52)) !important;
+  background: #000 !important;
   border-color: var(--ls-aqua) !important;
   box-shadow: 0 0 0 1px rgba(25, 218, 213, 0.24), 0 28px 80px rgba(0, 0, 0, 0.42), 0 0 34px rgba(25, 218, 213, 0.18) !important;
   backdrop-filter: blur(8px) saturate(1.12);

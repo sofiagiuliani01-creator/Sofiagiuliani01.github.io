@@ -21570,13 +21570,11 @@ body.app-page {
   }
 
   .page-home #programmi .program-choice-card img {
-    inset: auto -0.85rem -0.95rem auto;
-    top: auto;
-    left: auto;
-    width: min(48%, 11.25rem);
-    height: 118%;
-    object-fit: contain;
-    object-position: right bottom;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 34%;
     mix-blend-mode: multiply;
     opacity: 0.98;
     z-index: 0;

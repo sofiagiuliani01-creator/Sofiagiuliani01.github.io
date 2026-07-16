@@ -2996,3 +2996,93 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', update);
   update();
 });
+
+/* === 2026-07-16 Theia-like home timeline triggers (scoped) === */
+(function () {
+  const section = document.querySelector('#come-funziona');
+  const timeline = section && section.querySelector('.timeline[data-timeline]');
+  if (!section || !timeline || !window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cards = Array.from(timeline.querySelectorAll('.timeline-step'));
+  const connectors = Array.from(timeline.querySelectorAll('.timeline-connector-line'));
+  const fixedBg = section.querySelector('.timeline-fixed-bg');
+  const textTargets = [section.querySelector('.section-header.center'), ...cards.map((card) => card.querySelector('.step-content'))].filter(Boolean);
+
+  if (reduceMotion) {
+    cards.forEach((card) => card.classList.add('ls-timeline-visible'));
+    connectors.forEach((line) => { line.style.transform = 'scaleY(1)'; });
+    if (fixedBg) fixedBg.style.opacity = '1';
+    textTargets.forEach((target) => { target.style.color = '#ffffff'; });
+    return;
+  }
+
+  const ctx = gsap.context(() => {
+    cards.forEach((card, index) => {
+      card.classList.remove('ls-timeline-pending', 'ls-timeline-visible');
+      if (index === 0) {
+        card.classList.add('ls-timeline-visible');
+      } else {
+        card.classList.add('ls-timeline-pending');
+      }
+    });
+
+    connectors.forEach((line) => {
+      gsap.set(line, { scaleY: 0, transformOrigin: 'top center' });
+      gsap.to(line, {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: line.parentElement,
+          start: 'top 102%',
+          end: 'top 55%',
+          scrub: 1
+        }
+      });
+    });
+
+    cards.slice(1).forEach((card) => {
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+          card.classList.remove('ls-timeline-pending');
+          card.classList.add('ls-timeline-visible');
+        }
+      });
+    });
+
+    if (fixedBg) {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 65%',
+        end: 'bottom 35%',
+        onEnter: () => {
+          gsap.to(fixedBg, { opacity: 1, duration: 1, ease: 'power1.inOut' });
+          gsap.to(textTargets, { color: '#ffffff', duration: 1, ease: 'power1.inOut' });
+        },
+        onLeave: () => {
+          gsap.to(fixedBg, { opacity: 0, duration: 1, ease: 'power1.inOut' });
+          gsap.to(textTargets, { color: '#111827', duration: 1, ease: 'power1.inOut' });
+        },
+        onEnterBack: () => {
+          gsap.to(fixedBg, { opacity: 1, duration: 1, ease: 'power1.inOut' });
+          gsap.to(textTargets, { color: '#ffffff', duration: 1, ease: 'power1.inOut' });
+        },
+        onLeaveBack: () => {
+          gsap.to(fixedBg, { opacity: 0, duration: 1, ease: 'power1.inOut' });
+          gsap.to(textTargets, { color: '#111827', duration: 1, ease: 'power1.inOut' });
+        }
+      });
+    }
+  }, section);
+
+  const refresh = () => ScrollTrigger.refresh();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  window.addEventListener('load', refresh, { once: true });
+
+  window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
+})();

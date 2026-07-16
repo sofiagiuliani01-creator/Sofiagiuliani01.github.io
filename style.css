@@ -22252,314 +22252,222 @@ body.app-page {
   }
 }
 
-/* === 2026-07-16: Coaching Base section recovery === */
-.page-program-base .tp-theia-support {
-  background: #fff;
-  color: #08090d;
-  padding: clamp(4rem, 8vw, 7rem) 0;
-}
-
-.page-program-base .tp-theia-support .tp-support-grid,
-.page-program-base .tp-theia-comparison-grid {
-  display: grid;
-  grid-template-columns: minmax(320px, .82fr) minmax(420px, 1.18fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: center;
-}
-
-.page-program-base .tp-theia-support h2,
-.page-program-base .tp-comparison-panel h2 {
-  margin: 0;
-  font-size: clamp(3.4rem, 7.5vw, 6.8rem);
-  line-height: .98;
-  letter-spacing: -.07em;
-  color: currentColor;
-}
-
-.page-program-base .tp-theia-support h2 strong { font-weight: 950; }
-
-.page-program-base .tp-theia-support p,
-.page-program-base .tp-comparison-panel p {
-  max-width: 38rem;
-  font-size: clamp(1.15rem, 2vw, 1.55rem);
-  line-height: 1.45;
-}
-
-.page-program-base .tp-theia-channel-card {
+/* === 2026-07-16 Theia-like home timeline cards (scoped override) === */
+#come-funziona {
+  --ls-aqua: var(--accent-aqua, #19dad5);
+  --ls-timeline-dark: #141414;
+  --ls-timeline-text-light: #ffffff;
+  --ls-timeline-text-dark: var(--text-dark, #111827);
   position: relative;
-  overflow: hidden;
-  display: grid;
-  padding: clamp(1.7rem, 4vw, 3rem);
-  border-radius: 2rem;
-  background: linear-gradient(135deg, #d9efff 0%, #c8e8ff 58%, #e6f6ff 100%);
-  box-shadow: 0 1.7rem 4.5rem rgba(30, 115, 170, .14);
+  isolation: isolate;
 }
 
-.page-program-base .tp-theia-channel-card .tp-channel-track {
-  display: grid;
-  gap: .7rem;
-  animation: tp-channel-scroll 12s linear infinite;
-  will-change: transform;
-}
-
-.page-program-base .tp-theia-channel-card span {
-  min-height: 4.7rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: #08090d;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 950;
-  letter-spacing: -.055em;
-}
-
-.page-program-base .tp-theia-channel-card span i {
-  width: 4.7rem;
-  height: 4.7rem;
-  display: grid;
-  place-items: center;
-  flex: 0 0 4.7rem;
-  border-radius: 1rem;
-  background: #fff;
-  color: #020307;
-  font-size: 1.55rem;
-  font-style: normal;
-}
-
-.page-program-base .tp-theia-channel-card .is-muted,
-.page-program-base .tp-theia-channel-card .is-active {
-  opacity: .5;
-}
-
-.page-program-base .tp-theia-channel-card::before,
-.page-program-base .tp-theia-channel-card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 4rem;
+#come-funziona .timeline-fixed-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--ls-timeline-dark);
+  opacity: 0;
   pointer-events: none;
+  z-index: -1;
+}
+
+#come-funziona > .container-wide,
+#come-funziona .timeline-scene {
+  position: relative;
+  z-index: 1;
+}
+
+#come-funziona .section-header.center {
+  margin-bottom: 36px !important;
+  color: var(--ls-timeline-text-dark);
+}
+
+#come-funziona .section-header.center h2 {
+  font-size: 43.2px !important;
+  line-height: 51.84px !important;
+  color: currentColor !important;
+}
+
+#come-funziona .timeline {
+  max-width: 1080px !important;
+  width: calc(100% - 48px) !important;
+  margin-inline: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  position: relative;
   z-index: 2;
 }
 
-.page-program-base .tp-theia-channel-card::before {
-  top: 0;
-  background: linear-gradient(180deg, rgba(217,239,255,.96), rgba(217,239,255,0));
+#come-funziona .timeline-steps {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
 }
 
-.page-program-base .tp-theia-channel-card::after {
-  bottom: 0;
-  background: linear-gradient(0deg, rgba(230,246,255,.96), rgba(230,246,255,0));
+#come-funziona .timeline-line,
+#come-funziona .timeline-line-base,
+#come-funziona .timeline-line-active,
+#come-funziona .timeline-step::before,
+#come-funziona .timeline-step::after { display: none !important; }
+
+#come-funziona .timeline-step,
+#come-funziona .timeline-step.is-active,
+#come-funziona .timeline-step.is-visible,
+#come-funziona .timeline-step:not(.is-visible) {
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  opacity: 1;
+  transform: translate3d(0,0,0);
+  filter: none !important;
+  transition: none !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
-.page-program-base .tp-theia-comparison {
-  background: #111216;
-  color: #fff;
-  padding: clamp(4rem, 8vw, 7rem) 0;
+#come-funziona .timeline-step .step-content {
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  box-sizing: border-box !important;
+  padding: 20px !important;
+  border: 2px solid var(--ls-aqua) !important;
+  border-radius: 39.6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  column-gap: 126.72px !important;
+  row-gap: 36px !important;
+  overflow: visible !important;
+  color: var(--ls-timeline-text-dark);
 }
 
-.page-program-base .tp-comparison-panel {
-  min-height: clamp(28rem, 48vw, 43rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(1.8rem, 3vw, 2.8rem);
-  border: 2px solid rgba(255,255,255,.78);
-  border-radius: 2rem;
+#come-funziona .timeline-step .step-row {
+  display: contents !important;
 }
 
-.page-program-base .tp-comparison-panel strong {
-  display: block;
-  color: #fff;
-  font-size: 1.35rem;
+#come-funziona .timeline-step .step-visual {
+  grid-column: 1 !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 456px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.page-program-base .tp-comparison-panel p { color: rgba(255,255,255,.86); }
-
-.page-program-base .tp-compare-matrix {
-  display: grid;
-  grid-template-columns: minmax(260px,1fr) 6.5rem minmax(8rem,.55fr);
-  gap: 2rem;
-  align-items: end;
+#come-funziona .timeline-step .step-meta {
+  grid-column: 2 !important;
+  height: 456px !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 21.6px !important;
+  color: currentColor !important;
 }
 
-.page-program-base .tp-matrix-col {
-  display: grid;
-  grid-template-rows: 4.8rem repeat(7, 4.3rem);
-  align-items: center;
-  text-align: center;
+#come-funziona .timeline-step .step-meta h3 {
+  margin: 0 !important;
+  font-size: 28.8px !important;
+  line-height: 34.56px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  color: currentColor !important;
 }
 
-.page-program-base .tp-matrix-labels {
-  display: grid;
-  grid-template-rows: repeat(7, 4.3rem);
-  align-items: center;
-  padding-top: 4.8rem;
-  color: rgba(255,255,255,.9);
-  font-size: clamp(1.12rem,1.8vw,1.55rem);
+#come-funziona .timeline-step .step-meta p {
+  margin: 0 !important;
+  font-size: 15.84px !important;
+  line-height: 23.76px !important;
+  letter-spacing: 0.5px !important;
+  color: currentColor !important;
 }
 
-.page-program-base .tp-matrix-labels span {
-  display: flex;
-  align-items: center;
-  min-height: 4.3rem;
+#come-funziona .timeline-step .step-kicker,
+#come-funziona .timeline-step .step-number { color: currentColor !important; }
+
+#come-funziona .timeline-step .step-number {
+  z-index: 0 !important;
+  pointer-events: none;
 }
 
-.page-program-base .tp-matrix-col strong {
-  display: grid;
-  place-items: center;
-  min-height: 4.8rem;
-  color: #fff;
-  font-size: 1.25rem;
-  line-height: 1.15;
+#come-funziona .timeline-step .step-content,
+#come-funziona .timeline-step .step-row,
+#come-funziona .timeline-step .step-visual,
+#come-funziona .timeline-step .step-meta { position: relative; z-index: 1; }
+
+#come-funziona .timeline-connector {
+  width: 2px !important;
+  height: 150px !important;
+  flex: none !important;
+  margin-inline: auto !important;
 }
 
-.page-program-base .tp-matrix-premium {
-  padding: 0 1rem 1rem;
-  border-radius: 1.55rem;
-  background: #2d7fb8;
+#come-funziona .timeline-connector-line {
+  width: 2px !important;
+  height: 100% !important;
+  background: var(--ls-aqua) !important;
+  transform-origin: top center !important;
+  transform: scaleY(0);
 }
 
-.page-program-base .tp-matrix-premium strong {
-  width: 3rem;
-  height: 1.25rem;
-  min-height: 0;
-  place-self: center;
-  border-radius: 999px;
-  background: #05060a;
-  font-size: .7rem;
-  letter-spacing: .22em;
+#come-funziona .timeline-cta { position: relative; z-index: 2; }
+
+@media (max-width: 991px) {
+  #come-funziona .timeline-step .step-content { column-gap: clamp(36px, 7vw, 86px) !important; }
 }
 
-.page-program-base .tp-matrix-col span { font-size: 2.5rem; line-height: 1; }
-.page-program-base .tp-matrix-col .yes { color: #00bd87; }
-.page-program-base .tp-matrix-col .no { color: #ff2d20; }
-.page-program-base .tp-matrix-traditional strong { text-align: left; justify-content: start; font-size: clamp(1.35rem,2vw,1.7rem); }
-
-.page-program-base .tp-theia-pricing {
-  background: #fff;
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-}
-
-.page-program-base .tp-theia-pricing .tp-price-grid {
-  gap: clamp(1.4rem,3vw,2.2rem);
-  max-width: 1020px;
-}
-
-.page-program-base .tp-theia-price-card {
-  min-height: 46rem;
-  padding: clamp(1.9rem,3vw,2.9rem);
-  border: 0;
-  border-radius: 2rem;
-  background: #d9efff;
-  color: #08090d;
-  box-shadow: none;
-}
-
-.page-program-base .tp-theia-price-card.is-featured {
-  background: #111216;
-  color: #fff;
-  transform: none;
-}
-
-.page-program-base .tp-theia-price-card.is-featured::before { display: none; }
-
-.page-program-base .tp-theia-price-card .tp-popular {
-  position: absolute;
-  top: -1.1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  background: #2d7fb8;
-  color: #fff;
-  text-transform: none;
-  letter-spacing: 0;
-  font-size: 1rem;
-}
-
-.page-program-base .tp-theia-price-card h3 {
-  font-size: clamp(2.2rem,4vw,3.15rem);
-  line-height: 1.12;
-  color: inherit;
-}
-
-.page-program-base .tp-theia-price-card .tp-price {
-  margin: 2.8rem 0 .6rem;
-  color: inherit;
-  font-size: clamp(2.1rem,3.8vw,2.9rem);
-}
-
-.page-program-base .tp-theia-price-card .tp-price-sub,
-.page-program-base .tp-theia-price-card li,
-.page-program-base .tp-theia-price-card small {
-  color: currentColor;
-}
-
-.page-program-base .tp-theia-price-card .tp-price-sub { font-size: 1.25rem; line-height: 1.35; opacity: .9; }
-.page-program-base .tp-theia-price-card ul { gap: 1rem; margin: 1.8rem 0; }
-.page-program-base .tp-theia-price-card li { font-size: 1.1rem; line-height: 1.35; }
-.page-program-base .tp-theia-price-card li::before { background: transparent; color: #00bd87; font-size: 1.45rem; }
-.page-program-base .tp-addon { margin: .75rem 0 0; padding: .85rem 1rem; border-radius: .28rem; font-size: 1.18rem; font-weight: 700; }
-.page-program-base .tp-addon-peach { background: #2d7fb8; color: #fff; }
-.page-program-base .tp-addon-purple { background: #bfc4ff; color: #25284f; }
-.page-program-base .tp-theia-price-card .tp-btn { align-self: center; margin-top: auto; background: #111216!important; color: #fff!important; min-width: 12rem; }
-.page-program-base .tp-theia-price-card.is-featured .tp-btn { background: #fff!important; color: #111216!important; }
-.page-program-base .tp-theia-price-card small { font-size: 1.05rem; line-height: 1.35; opacity: .9; }
-
-@media (max-width: 900px) {
-  .page-program-base .tp-theia-support .tp-support-grid,
-  .page-program-base .tp-theia-comparison-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 767px) {
+  #come-funziona .section-header.center h2 { font-size: clamp(32px, 9vw, 43.2px) !important; line-height: 1.2 !important; }
+  #come-funziona .timeline-step,
+  #come-funziona .timeline-step.is-active,
+  #come-funziona .timeline-step.is-visible,
+  #come-funziona .timeline-step:not(.is-visible) { height: auto !important; min-height: 0 !important; }
+  #come-funziona .timeline-step .step-content {
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    padding: 20px !important;
+    border-radius: 28px !important;
+    row-gap: 20px !important;
   }
-
-  .page-program-base .tp-comparison-panel { min-height: 24rem; }
-  .page-program-base .tp-compare-matrix { grid-template-columns: minmax(190px,1fr) 5rem minmax(6rem,.55fr); gap: 1rem; }
-  .page-program-base .tp-matrix-col { grid-template-rows: 4rem repeat(7,3.7rem); }
-  .page-program-base .tp-matrix-labels { grid-template-rows: repeat(7,3.7rem); padding-top: 4rem; font-size: 1rem; }
-  .page-program-base .tp-matrix-col span { font-size: 2rem; }
-  .page-program-base .tp-theia-channel-card span { font-size: clamp(1.7rem,8vw,2.5rem); }
+  #come-funziona .timeline-step .step-visual,
+  #come-funziona .timeline-step .step-meta { grid-column: 1 !important; height: auto !important; }
+  #come-funziona .timeline-connector { height: 96px !important; }
 }
 
-@media (max-width: 760px) {
-  .page-program-base .tp-review-grid,
-  .page-program-base .tp-price-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .page-program-base .tp-review-grid article,
-  .page-program-base .tp-theia-price-card,
-  .page-program-base .tp-profile-card,
-  .page-program-base .tp-medical-card,
-  .page-program-base .tp-final-card {
-    border-radius: 1.45rem;
-  }
-
-  .page-program-base .tp-theia-channel-card .tp-channel-track,
-  .page-program-base .tp-marquee {
-    animation-play-state: running !important;
-    backface-visibility: hidden;
-  }
-
-  .page-program-base .tp-compare-matrix {
-    grid-template-columns: minmax(8.5rem, 1fr) 4rem 4.7rem;
-    gap: .45rem;
-    overflow: visible;
-  }
-
-  .page-program-base .tp-matrix-labels {
-    font-size: .82rem;
-    line-height: 1.15;
-  }
-
-  .page-program-base .tp-matrix-col span { font-size: 1.65rem; }
-  .page-program-base .tp-marquee { animation-duration: 24s; }
-  .page-program-base .tp-marquee img { width: min(54vw, 13rem); border-radius: 1.35rem; }
+@media (prefers-reduced-motion: reduce) {
+  #come-funziona .timeline-step { opacity: 1 !important; transform: none !important; }
+  #come-funziona .timeline-connector-line { transform: scaleY(1) !important; }
+  #come-funziona .timeline-fixed-bg { opacity: 1; }
 }
 
-@media (max-width: 560px) {
-  .page-program-base .tp-compare-matrix { grid-template-columns: 1fr 4.4rem 5.4rem; gap: .55rem; }
-  .page-program-base .tp-matrix-labels { font-size: .88rem; }
-  .page-program-base .tp-matrix-premium { padding: 0 .5rem .6rem; }
-  .page-program-base .tp-matrix-traditional strong { font-size: .95rem; }
-  .page-program-base .tp-theia-price-card { min-height: auto; }
+#come-funziona .timeline-step.ls-timeline-pending {
+  opacity: 0 !important;
+  transform: translate3d(0, 50px, 0) !important;
+}
+#come-funziona .timeline-step.ls-timeline-pending .step-content {
+  border-color: transparent !important;
+}
+#come-funziona .timeline-step.ls-timeline-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: opacity 1s ease, transform 1s ease !important;
+}
+#come-funziona .timeline-step.ls-timeline-visible .step-content {
+  border-color: var(--ls-aqua) !important;
+  transition: border-color .2s ease .8s !important;
+}
+@media (max-width: 767px) {
+  #come-funziona .timeline-step.ls-timeline-pending {
+    transform: translate3d(0, 30px, 0) !important;
+  }
 }

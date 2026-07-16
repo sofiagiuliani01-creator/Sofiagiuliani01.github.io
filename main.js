@@ -3195,112 +3195,167 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
 })();
 
-// GoalArcherSection: sezione cinematografica autonoma con GSAP/ScrollTrigger.
+// GoalArcherSection: sezione cinematografica autonoma con SVG inline e GSAP/ScrollTrigger.
 document.addEventListener('DOMContentLoaded', () => {
   const section = document.querySelector('[data-goal-archer-section]');
   if (!section || typeof gsap === 'undefined') return;
 
-  const textBlock = section.querySelector('[data-goal-text]');
-  const cursor = section.querySelector('[data-goal-cursor]');
-  const stickersLayer = section.querySelector('[data-goal-stickers]');
-  let stickerIndex = 0;
+  const ASSETS = {
+    desktop: { archer: 'ls-goal-archer-desktop-simple.svg', target: 'ls-goal-target-desktop.svg' },
+    mobile: { archer: 'ls-goal-archer-mobile-simple.svg', target: 'ls-goal-target-mobile.svg' }
+  };
+  const PATHS = {
+    desktop: {
+      upperStart: 'M75 500 L245 390 L315 360 L450 365 L570 420 L545 520 L635 555 L790 650 L845 682 L970 770 L1045 865 L950 920 L735 790 L590 690 L80 650 Z',
+      upperEnd: 'M67 511 L247 408 L313 375 L448 367 L579 393 L558 514 L661 514 L892 467 L934 457 L1000 401 L1082 493 L1004 562 L769 616 L644 645 L67 654 Z',
+      head: 'M313 375 L313 243 L448 243 L448 367 Z',
+      bowTense: 'M605 -52 C849 214 957 797 650 1170', bowRelaxed: 'M605 -52 C765 250 820 790 650 1170',
+      arrow: 'M558 514 C798 517.333 1038 520.667 1278 524', flexUp: 'M558 514 C798 492 1038 490 1278 524', flexDown: 'M558 514 C798 536 1038 538 1278 524', flexSmall: 'M558 514 C798 506 1038 507 1278 524', flexEnd: 'M558 514 C798 516 1038 520 1278 524',
+      hand: [558, 514], stringRestX: 626, targetX: 760, targetOrigin: '1538px 550px', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1538, cy: 550, rx: 422, ry: 744 }
+    },
+    mobile: {
+      upperStart: 'M35 740 L205 620 L288 590 L440 600 L590 660 L565 775 L680 820 L900 980 L960 1020 L1080 1160 L1170 1280 L1050 1340 L800 1160 L650 970 L35 930 Z',
+      upperEnd: 'M31 754 L210 646 L286 608 L438 599 L590 631 L566 775 L682 775 L934 721 L982 708 L1054 644 L1143 747 L1059 823 L799 887 L656 920 L31 930 Z',
+      head: 'M286 608 L286 438 L438 438 L438 599 Z',
+      bowTense: 'M710 206 C1080 498 1244 1200 748 1584', bowRelaxed: 'M710 206 C930 530 1010 1180 748 1584',
+      arrow: 'M566 775 C818 778.333 1070 781.667 1322 785', flexUp: 'M566 775 C818 749 1070 751 1322 785', flexDown: 'M566 775 C818 798 1070 800 1322 785', flexSmall: 'M566 775 C818 767 1070 768 1322 785', flexEnd: 'M566 775 C818 777 1070 782 1322 785',
+      hand: [566, 775], stringRestX: 726, targetX: 820, targetOrigin: '1570px 900px', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1570, cy: 900, rx: 454, ry: 770 }
+    }
+  };
 
-  const splitWord = (node) => {
-    const text = node.textContent;
-    node.textContent = '';
-    node.setAttribute('aria-label', node.getAttribute('aria-label') || text);
-    [...text].forEach((char) => {
-      const span = document.createElement('span');
-      span.setAttribute('aria-hidden', 'true');
-      span.className = char === ' ' ? 'goal-scene__space' : 'goal-scene__char';
-      span.textContent = char === ' ' ? '\u00a0' : char;
-      node.appendChild(span);
+  const splitText = () => {
+    section.querySelectorAll('[data-goal-split]').forEach((node) => {
+      if (node.dataset.goalSplitReady) return;
+      const text = node.textContent;
+      node.dataset.goalSplitReady = 'true';
+      node.textContent = '';
+      [...text].forEach((char) => {
+        const span = document.createElement('span');
+        span.setAttribute('aria-hidden', 'true');
+        span.className = char === ' ' ? 'goal-scene__space' : 'goal-scene__char';
+        span.textContent = char === ' ' ? '\u00a0' : char;
+        node.appendChild(span);
+      });
     });
   };
 
-  section.querySelectorAll('[data-goal-split]').forEach(splitWord);
-  const chars = gsap.utils.toArray(section.querySelectorAll('.goal-scene__char'));
-  const wordGroups = gsap.utils.toArray(section.querySelectorAll('[data-goal-split]'));
-  const reversedChars = wordGroups.flatMap((word) => gsap.utils.toArray(word.querySelectorAll('.goal-scene__char')).reverse());
-
-  if (cursor && textBlock) {
-    textBlock.addEventListener('pointerenter', () => textBlock.classList.add('is-hovering'));
-    textBlock.addEventListener('pointerleave', () => textBlock.classList.remove('is-hovering'));
-    textBlock.addEventListener('pointermove', (event) => {
-      cursor.style.left = event.clientX + 'px';
-      cursor.style.top = event.clientY + 'px';
-    });
-  }
-
-  const stickerSvg = (type) => type === 0
-    ? '<svg viewBox="0 0 173 108" xmlns="http://www.w3.org/2000/svg"><path d="M10 58C4 25 37 5 88 8c50 3 82 21 76 55-5 33-44 43-86 38C36 96 15 87 10 58Z" fill="#94FFE4"/><text x="37" y="48" fill="#002629" font-size="34" font-weight="900" font-family="system-ui,sans-serif">LS</text><text x="36" y="72" fill="#002629" font-size="16" font-weight="900" font-family="system-ui,sans-serif">COACHING</text><text x="104" y="47" fill="#002629" font-size="15" font-weight="900" font-family="system-ui,sans-serif">2026</text></svg>'
-    : '<svg viewBox="0 0 130 154" xmlns="http://www.w3.org/2000/svg"><path d="M18 10 112 22 104 140 30 148 8 66Z" fill="#002629" stroke="#94FFE4" stroke-width="5"/><ellipse cx="65" cy="76" rx="34" ry="48" fill="none" stroke="#94FFE4" stroke-width="5"/><ellipse cx="65" cy="76" rx="18" ry="26" fill="none" stroke="#94FFE4" stroke-width="4"/><path d="M74 18 50 75h24l-18 61 43-76H75Z" fill="#94FFE4"/></svg>';
-
-  const addSticker = (event) => {
-    if (!stickersLayer || !textBlock) return;
-    const rect = textBlock.getBoundingClientRect();
-    const sticker = document.createElement('span');
-    const type = stickerIndex % 2;
-    sticker.className = `goal-sticker goal-sticker--${type === 0 ? 'one' : 'two'}`;
-    sticker.innerHTML = stickerSvg(type);
-    sticker.style.left = (event.clientX - rect.left) + 'px';
-    sticker.style.top = (event.clientY - rect.top) + 'px';
-    stickersLayer.appendChild(sticker);
-    gsap.fromTo(sticker, { opacity: 0, rotateY: 40, scaleY: 1.35, rotateZ: 0 }, { opacity: 1, rotateY: 0, scaleY: 1, rotateZ: gsap.utils.random(-11, 11), duration: gsap.utils.random(0.9, 1.1), ease: 'back.out(1.2)' });
-    stickerIndex += 1;
+  const loadSvg = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Cannot load ${url}`);
+    return response.text();
   };
-  textBlock?.addEventListener('click', addSticker);
-  textBlock?.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') addSticker({ clientX: textBlock.getBoundingClientRect().left + 120, clientY: textBlock.getBoundingClientRect().top + 120 }); });
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
+  const prepareSvg = (svg, kind, variant, cfg) => {
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.removeAttribute('role');
+    svg.removeAttribute('aria-labelledby');
+    svg.querySelector('title')?.remove();
+    svg.querySelector('desc')?.remove();
+    svg.querySelector('#goal-background')?.remove();
+    svg.querySelector('#goal-rig-guides')?.remove();
+    if (kind === 'archer') {
+      svg.querySelector('#goal-target')?.remove();
+      const upper = svg.querySelector('#goal-upper-body');
+      const head = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      head.setAttribute('id', 'goal-head'); head.setAttribute('data-animate', 'head'); head.setAttribute('fill', '#94ffe4'); head.setAttribute('d', cfg.head);
+      upper?.setAttribute('d', cfg.upperEnd); upper?.after(head);
+      const oldArrow = svg.querySelector('#goal-arrow-shaft');
+      const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      Array.from(oldArrow.attributes).forEach((a) => !/^x|^y/.test(a.name) && arrow.setAttribute(a.name, a.value));
+      arrow.setAttribute('d', cfg.arrow); oldArrow.replaceWith(arrow);
+    } else {
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      defs.innerHTML = `<clipPath id="goal-arrow-target-clip"><ellipse cx="${cfg.targetClip.cx}" cy="${cfg.targetClip.cy}" rx="${cfg.targetClip.rx}" ry="${cfg.targetClip.ry}"/></clipPath>`;
+      svg.prepend(defs);
+      const dark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      dark.setAttribute('id', 'goal-arrow-shaft-dark'); dark.setAttribute('d', cfg.arrow); dark.setAttribute('stroke', '#002629'); dark.setAttribute('stroke-width', '5'); dark.setAttribute('fill', 'none'); dark.setAttribute('clip-path', 'url(#goal-arrow-target-clip)'); dark.setAttribute('opacity', '0'); dark.setAttribute('vector-effect', 'non-scaling-stroke');
+      svg.querySelector('#goal-target')?.after(dark);
+    }
+    return svg;
+  };
 
+  const mountVariant = async (variant) => {
+    const cfg = PATHS[variant];
+    const [archerRaw, targetRaw] = await Promise.all([loadSvg(ASSETS[variant].archer), loadSvg(ASSETS[variant].target)]);
+    const parser = new DOMParser();
+    const archerSvg = prepareSvg(parser.parseFromString(archerRaw, 'image/svg+xml').documentElement, 'archer', variant, cfg);
+    const targetSvg = prepareSvg(parser.parseFromString(targetRaw, 'image/svg+xml').documentElement, 'target', variant, cfg);
+    section.querySelector('[data-goal-archer-svg]').replaceChildren(archerSvg);
+    section.querySelector('[data-goal-target-svg]').replaceChildren(targetSvg);
+    return { cfg, archerSvg, targetSvg };
+  };
+
+  const buildTimeline = ({ cfg, archerSvg, targetSvg, mobile = false, reduced = false }) => {
+    const qA = gsap.utils.selector(archerSvg), qT = gsap.utils.selector(targetSvg);
+    const upper = qA('#goal-upper-body')[0], head = qA('#goal-head')[0], lower = qA('#goal-lower-body')[0], bow = qA('#goal-bow')[0], string = qA('#goal-string')[0], stringTop = qA('#goal-string-top')[0], stringBottom = qA('#goal-string-bottom')[0], arrow = qA('#goal-arrow')[0], arrowShaft = qA('#goal-arrow-shaft')[0];
+    const target = qT('#goal-target')[0], darkArrow = qT('#goal-arrow-shaft-dark')[0];
+    const chars = gsap.utils.toArray(section.querySelectorAll('.goal-scene__char'));
+    const textBlock = section.querySelector('[data-goal-text]');
+    const archerParts = [upper, head, lower, bow, string].filter(Boolean);
+    gsap.set([archerSvg, targetSvg], { clearProps: 'all' });
+    gsap.set(target, { x: cfg.targetX, rotation: 0, svgOrigin: cfg.targetOrigin });
+    gsap.set(darkArrow, { opacity: 0, attr: { d: cfg.arrow } });
+    gsap.set(arrowShaft, { attr: { d: cfg.arrow } });
+    gsap.set(upper, { attr: { d: cfg.upperStart }, rotation: 12, x: -35, y: 45, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsap.set(head, { rotation: 29, x: 12, y: 24, svgOrigin: mobile ? '360 599' : '380 367' });
+    gsap.set([bow, string], { rotation: 28, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsap.set(arrow, { rotation: 37, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsap.set(chars, mobile ? { opacity: 1, x: 0, skewX: 0, scaleY: 1 } : { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
+    gsap.set(textBlock, mobile ? { x: 0, y: 0 } : { x: '-6vw', y: '2vh' });
+    if (reduced) { gsap.set(archerParts, { x: cfg.archerExit }); gsap.set(target, { x: 0 }); gsap.set(darkArrow, { opacity: 1, attr: { d: cfg.flexEnd } }); gsap.set(arrowShaft, { attr: { d: cfg.flexEnd } }); return null; }
+    const tl = gsap.timeline(mobile ? { duration: 4.037, repeat: -1, repeatDelay: 0, defaults: { ease: 'none' } } : { defaults: { ease: 'none' }, scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true } });
+    tl.to({ clock: 0 }, { clock: 1, duration: 1 }, 0)
+      .to(upper, { attr: { d: cfg.upperEnd }, rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to(head, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to([bow, string], { rotation: -2, x: 0, y: 0, ease: 'power2.out', duration: 0.06 }, 0).to([bow, string], { rotation: 0, duration: 0.02 }, 0.06)
+      .to(arrow, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to(upper, { rotation: 0.55, y: -2, yoyo: true, repeat: 1, duration: 0.11 }, 0.08)
+      .to(bow, { attr: { d: cfg.bowTense }, duration: 0.22 }, 0.08)
+      .to([stringTop, stringBottom], { attr: { x2: cfg.stringRestX, y2: cfg.hand[1] }, ease: 'power3.in', duration: 0.015 }, 0.300)
+      .to(bow, { attr: { d: cfg.bowRelaxed }, ease: 'power3.in', duration: 0.015 }, 0.300)
+      .to(upper, { x: -10, rotation: 0.6, duration: 0.015 }, 0.300)
+      .to(arrow, { x: cfg.arrowFlight, ease: 'power3.in', duration: 0.085 }, 0.315)
+      .to(archerParts, { x: cfg.archerExit, ease: 'power2.in', duration: 0.055 }, 0.345)
+      .to(textBlock, mobile ? {} : { x: 0, y: 0, duration: 0.12 }, 0.330)
+      .to(chars, mobile ? {} : { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: { amount: 0.085, from: 'end' }, duration: 0.035, ease: 'power3.out' }, 0.330)
+      .to(arrow, { x: cfg.arrowReframe, ease: 'power2.inOut', duration: 0.050 }, 0.400)
+      .to(target, { x: 0, ease: 'power2.inOut', duration: 0.065 }, 0.435)
+      .to(arrow, { x: 0, ease: 'power2.inOut', duration: 0.050 }, 0.450)
+      .set(darkArrow, { opacity: 1 }, 0.500)
+      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexUp }, duration: 0.020 }, 0.500).to(target, { rotation: 3, svgOrigin: cfg.targetOrigin, duration: 0.020 }, 0.500)
+      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexDown }, duration: 0.020 }, 0.520).to(target, { rotation: 2.3, duration: 0.020 }, 0.520)
+      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexSmall }, duration: 0.020 }, 0.540).to(target, { rotation: 1.2, duration: 0.020 }, 0.540)
+      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.560).to(target, { rotation: 0, duration: 0.040 }, 0.560);
+    if (mobile) tl.duration(4.037);
+    return tl;
+  };
+
+  splitText();
   gsap.registerPlugin(ScrollTrigger);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = gsap.context(() => {
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 992px)', () => {
-      const visual = section.querySelector('.goal-scene__visual');
-      const archer = section.querySelector('.goal-archer-svg--desktop .goal-archer');
-      const bow = section.querySelector('.goal-archer-svg--desktop #goal-bow');
-      const string = section.querySelector('.goal-archer-svg--desktop #goal-string');
-      const arrow = section.querySelector('.goal-archer-svg--desktop #goal-arrow');
-      const target = section.querySelector('.goal-archer-svg--desktop #goal-target');
-      const upperBody = section.querySelector('.goal-archer-svg--desktop #goal-upper-body');
-      const lowerBody = section.querySelector('.goal-archer-svg--desktop #goal-lower-body');
-      const stringTop = section.querySelector('.goal-archer-svg--desktop #goal-string-top');
-      const stringBottom = section.querySelector('.goal-archer-svg--desktop #goal-string-bottom');
-      gsap.set(visual, { y: '20vh' });
-      gsap.set(textBlock, { xPercent: 45 });
-      gsap.set(chars, { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
-      gsap.set(target, { x: '62vw', rotation: 1, transformOrigin: '50% 50%' });
-      gsap.set(arrow, { x: -260, y: 0, rotation: 0, transformOrigin: '0% 50%' });
-      const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom bottom', scrub: 2, invalidateOnRefresh: true } });
-      tl.to(visual, { y: 0, ease: 'power3.out', duration: 0.18 }, 0)
-        .to(textBlock, { xPercent: 38, ease: 'none', duration: 0.20 }, 0)
-        .to(textBlock, { xPercent: 26, ease: 'none', duration: 0.14 }, 0.20)
-        .to(textBlock, { xPercent: 11, ease: 'none', duration: 0.14 }, 0.34)
-        .to(textBlock, { xPercent: 4, ease: 'none', duration: 0.09 }, 0.48)
-        .to(textBlock, { xPercent: 0.7, ease: 'none', duration: 0.10 }, 0.57)
-        .to(textBlock, { xPercent: 0, ease: 'none', duration: 0.09 }, 0.67)
-        .to(stringTop, { attr: { x2: 498, y2: 550 }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(stringBottom, { attr: { x2: 498, y2: 550 }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(upperBody, { x: -64, y: -8, rotation: -2, transformOrigin: '70% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(lowerBody, { rotation: -1.4, transformOrigin: '45% 80%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(bow, { attr: { d: 'M605 -16 C922 274 1046 832 650 1206' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(arrow, { x: -360, y: 0, rotation: 0, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(stringTop, { attr: { x2: 640, y2: 550 }, ease: 'power3.in', duration: 0.06 }, 0.44)
-        .to(stringBottom, { attr: { x2: 640, y2: 550 }, ease: 'power3.in', duration: 0.06 }, 0.44)
-        .to(upperBody, { x: -42, ease: 'power3.in', duration: 0.06 }, 0.44)
-        .to(reversedChars, { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: 0.0032, ease: 'power3.out', duration: 0.10 }, 0.45)
-        .to(arrow, { x: 0, y: 0, rotation: 0, ease: 'power1.out', duration: 0.20 }, 0.49)
-        .to(archer, { x: -980, ease: 'power2.in', duration: 0.16 }, 0.49)
-        .to(target, { x: 0, rotation: 0, ease: 'power2.out', duration: 0.18 }, 0.55)
-        .to(target, { x: -6, ease: 'power2.out', duration: 0.03 }, 0.68)
-        .to(target, { x: 0, ease: 'power1.out', duration: 0.05 }, 0.71)
-        .to({}, { duration: 0.24 }, 0.76);
-    });
-    mm.add('(max-width: 991px)', () => {
-      gsap.set(chars, { opacity: 1, x: 0, skewX: 0, scaleY: 1 });
-    });
+    const addVariant = (query, variant, mobile) => {
+      mm.add(query, () => {
+        let active = true;
+        let tl;
+        mountVariant(variant).then(async (mounted) => {
+          if (!active) return;
+          tl = buildTimeline({ ...mounted, mobile, reduced });
+          await (document.fonts?.ready || Promise.resolve());
+          if (active) requestAnimationFrame(() => ScrollTrigger.refresh());
+        }).catch((error) => console.error('[goal sequence]', error));
+        return () => {
+          active = false;
+          tl?.kill();
+          section.querySelector('[data-goal-archer-svg]')?.replaceChildren();
+          section.querySelector('[data-goal-target-svg]')?.replaceChildren();
+        };
+      });
+    };
+    addVariant('(min-width: 768px)', 'desktop', false);
+    addVariant('(max-width: 767px)', 'mobile', true);
   }, section);
+  window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
 });

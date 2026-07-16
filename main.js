@@ -3086,3 +3086,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
 })();
+
+// GoalArcherSection: sezione cinematografica autonoma con GSAP/ScrollTrigger.
+document.addEventListener('DOMContentLoaded', () => {
+  const section = document.querySelector('[data-goal-archer-section]');
+  if (!section || typeof gsap === 'undefined') return;
+
+  const textBlock = section.querySelector('[data-goal-text]');
+  const cursor = section.querySelector('[data-goal-cursor]');
+  const stickersLayer = section.querySelector('[data-goal-stickers]');
+  let stickerIndex = 0;
+
+  const splitWord = (node) => {
+    const text = node.textContent;
+    node.textContent = '';
+    node.setAttribute('aria-label', node.getAttribute('aria-label') || text);
+    [...text].forEach((char) => {
+      const span = document.createElement('span');
+      span.setAttribute('aria-hidden', 'true');
+      span.className = char === ' ' ? 'goal-scene__space' : 'goal-scene__char';
+      span.textContent = char === ' ' ? '\u00a0' : char;
+      node.appendChild(span);
+    });
+  };
+
+  section.querySelectorAll('[data-goal-split]').forEach(splitWord);
+  const chars = gsap.utils.toArray(section.querySelectorAll('.goal-scene__char'));
+  const wordGroups = gsap.utils.toArray(section.querySelectorAll('[data-goal-split]'));
+  const reversedChars = wordGroups.flatMap((word) => gsap.utils.toArray(word.querySelectorAll('.goal-scene__char')).reverse());
+
+  if (cursor && textBlock) {
+    textBlock.addEventListener('pointerenter', () => textBlock.classList.add('is-hovering'));
+    textBlock.addEventListener('pointerleave', () => textBlock.classList.remove('is-hovering'));
+    textBlock.addEventListener('pointermove', (event) => {
+      cursor.style.left = event.clientX + 'px';
+      cursor.style.top = event.clientY + 'px';
+    });
+  }
+
+  const stickerSvg = (type) => type === 0
+    ? '<svg viewBox="0 0 173 108" xmlns="http://www.w3.org/2000/svg"><path d="M10 58C4 25 37 5 88 8c50 3 82 21 76 55-5 33-44 43-86 38C36 96 15 87 10 58Z" fill="#94FFE4"/><text x="37" y="48" fill="#002629" font-size="34" font-weight="900" font-family="system-ui,sans-serif">LS</text><text x="36" y="72" fill="#002629" font-size="16" font-weight="900" font-family="system-ui,sans-serif">COACHING</text><text x="104" y="47" fill="#002629" font-size="15" font-weight="900" font-family="system-ui,sans-serif">2026</text></svg>'
+    : '<svg viewBox="0 0 130 154" xmlns="http://www.w3.org/2000/svg"><path d="M18 10 112 22 104 140 30 148 8 66Z" fill="#002629" stroke="#94FFE4" stroke-width="5"/><ellipse cx="65" cy="76" rx="34" ry="48" fill="none" stroke="#94FFE4" stroke-width="5"/><ellipse cx="65" cy="76" rx="18" ry="26" fill="none" stroke="#94FFE4" stroke-width="4"/><path d="M74 18 50 75h24l-18 61 43-76H75Z" fill="#94FFE4"/></svg>';
+
+  const addSticker = (event) => {
+    if (!stickersLayer || !textBlock) return;
+    const rect = textBlock.getBoundingClientRect();
+    const sticker = document.createElement('span');
+    const type = stickerIndex % 2;
+    sticker.className = `goal-sticker goal-sticker--${type === 0 ? 'one' : 'two'}`;
+    sticker.innerHTML = stickerSvg(type);
+    sticker.style.left = (event.clientX - rect.left) + 'px';
+    sticker.style.top = (event.clientY - rect.top) + 'px';
+    stickersLayer.appendChild(sticker);
+    gsap.fromTo(sticker, { opacity: 0, rotateY: 40, scaleY: 1.35, rotateZ: 0 }, { opacity: 1, rotateY: 0, scaleY: 1, rotateZ: gsap.utils.random(-11, 11), duration: gsap.utils.random(0.9, 1.1), ease: 'back.out(1.2)' });
+    stickerIndex += 1;
+  };
+  textBlock?.addEventListener('click', addSticker);
+  textBlock?.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') addSticker({ clientX: textBlock.getBoundingClientRect().left + 120, clientY: textBlock.getBoundingClientRect().top + 120 }); });
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+  const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 992px)', () => {
+      const visual = section.querySelector('.goal-scene__visual');
+      const archer = section.querySelector('.goal-archer-svg--desktop .goal-archer');
+      const bow = section.querySelector('.goal-archer-svg--desktop #goal-bow');
+      const string = section.querySelector('.goal-archer-svg--desktop #goal-string');
+      const arrow = section.querySelector('.goal-archer-svg--desktop #goal-arrow');
+      const target = section.querySelector('.goal-archer-svg--desktop #goal-target');
+      const backArm = section.querySelector('.goal-archer-svg--desktop #goal-back-arm');
+      const frontArm = section.querySelector('.goal-archer-svg--desktop #goal-front-arm');
+      const body = section.querySelector('.goal-archer-svg--desktop #goal-body');
+      gsap.set(visual, { y: '20vh' });
+      gsap.set(textBlock, { xPercent: 45 });
+      gsap.set(chars, { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
+      gsap.set(target, { x: '55vw', rotation: 1, transformOrigin: '50% 50%' });
+      gsap.set(arrow, { x: -130, y: 0, rotation: 0, transformOrigin: '0% 50%' });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom bottom', scrub: 2, invalidateOnRefresh: true } });
+      tl.to(visual, { y: 0, ease: 'power3.out', duration: 0.18 }, 0)
+        .to(textBlock, { xPercent: 38, ease: 'none', duration: 0.20 }, 0)
+        .to(textBlock, { xPercent: 26, ease: 'none', duration: 0.14 }, 0.20)
+        .to(textBlock, { xPercent: 11, ease: 'none', duration: 0.14 }, 0.34)
+        .to(textBlock, { xPercent: 4, ease: 'none', duration: 0.09 }, 0.48)
+        .to(textBlock, { xPercent: 0.7, ease: 'none', duration: 0.10 }, 0.57)
+        .to(textBlock, { xPercent: 0, ease: 'none', duration: 0.09 }, 0.67)
+        .to(string, { attr: { d: 'M638 -58 L 575 358 L638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(backArm, { x: -92, y: -12, rotation: -3, transformOrigin: '70% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(frontArm, { x: 58, y: 8, scaleX: 1.08, transformOrigin: '0% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(body, { rotation: -2.5, transformOrigin: '45% 55%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(bow, { attr: { d: 'M638 -58 Q 1032 558 638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(arrow, { x: -210, y: 0, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(string, { attr: { d: 'M638 -58 L 690 358 L638 1175' }, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(backArm, { x: -70, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(reversedChars, { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: 0.0032, ease: 'power3.out', duration: 0.10 }, 0.45)
+        .to(arrow, { x: 0, y: 0, rotation: 0.6, ease: 'power1.out', duration: 0.16 }, 0.49)
+        .to(archer, { x: -980, ease: 'power2.in', duration: 0.16 }, 0.49)
+        .to(target, { x: 0, rotation: 0, ease: 'power2.out', duration: 0.15 }, 0.55)
+        .to(target, { x: -6, ease: 'power2.out', duration: 0.03 }, 0.68)
+        .to(target, { x: 0, ease: 'power1.out', duration: 0.05 }, 0.71)
+        .to({}, { duration: 0.24 }, 0.76);
+    });
+    mm.add('(max-width: 991px)', () => {
+      gsap.set(chars, { opacity: 1, x: 0, skewX: 0, scaleY: 1 });
+    });
+  }, section);
+});

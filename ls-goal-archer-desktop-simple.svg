@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1728 1117"
+     width="1728"
+     height="1117"
+     preserveAspectRatio="xMidYMid slice"
+     role="img"
+     aria-labelledby="goal-desktop-title goal-desktop-desc">
+  <title id="goal-desktop-title">LS Goal — arciere geometrico desktop</title>
+  <desc id="goal-desktop-desc">Pittogramma essenziale con una sola massa superiore, una forma inferiore, arco, corda, freccia e bersaglio.</desc>
+
+  <style>
+    .aqua-fill { fill: #94ffe4; }
+    .aqua-line {
+      fill: none;
+      stroke: #94ffe4;
+      stroke-width: 5;
+      stroke-linecap: butt;
+      stroke-linejoin: miter;
+      vector-effect: non-scaling-stroke;
+    }
+    .dark-line {
+      fill: none;
+      stroke: #002629;
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+
+  <rect id="goal-background" width="1728" height="1117" fill="#002629"/>
+
+  <!-- Posa finale del bersaglio. Impostare x:760 all'inizio dell'animazione. -->
+  <g id="goal-target" data-animate="target" transform="translate(760 0)" transform-origin="1538px 550px">
+    <ellipse id="goal-target-body" class="aqua-fill" cx="1538" cy="550" rx="422" ry="744"/>
+    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1512" cy="550" rx="332" ry="620"/>
+    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1485" cy="550" rx="226" ry="432"/>
+  </g>
+
+  <!--
+    Arciere volutamente ridotto a due sole masse piatte.
+    La forma superiore integra testa, busto e braccio teso, come un unico pittogramma.
+  -->
+  <g id="goal-archer" data-animate="archer" fill="#94ffe4">
+    <path id="goal-upper-body" data-animate="upper-body"
+          d="M67 511
+             L247 408
+             L313 375
+             L313 243
+             L448 243
+             L448 367
+             L579 393
+             L558 514
+             L661 514
+             L892 467
+             L934 457
+             L1000 401
+             L1082 493
+             L1004 562
+             L769 616
+             L644 645
+             L67 654 Z"/>
+
+    <path id="goal-lower-body" data-animate="lower-body"
+          d="M222 1117 L250 912 L620 755 L626 1117 Z"/>
+  </g>
+
+  <!-- Un solo arco, senza duplicazioni o dettagli aggiuntivi. -->
+  <path id="goal-bow" data-animate="bow" class="aqua-line"
+        d="M605 -52 C849 214 957 797 650 1170"/>
+
+  <!-- Corda in due segmenti che convergono nello stesso punto. -->
+  <g id="goal-string" data-animate="string" class="aqua-line">
+    <line id="goal-string-top" x1="605" y1="-52" x2="558" y2="514"/>
+    <line id="goal-string-bottom" x1="650" y1="1170" x2="558" y2="514"/>
+  </g>
+
+  <!-- Freccia originale: soltanto una linea, senza punta né piume. -->
+  <g id="goal-arrow" data-animate="arrow" transform-origin="558px 514px">
+    <line id="goal-arrow-shaft" class="aqua-line"
+          x1="558" y1="514" x2="1278" y2="524"/>
+  </g>
+
+  <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
+    <circle id="goal-bow-top-anchor" cx="605" cy="-52" r="2"/>
+    <circle id="goal-string-hand-anchor" cx="558" cy="514" r="2"/>
+    <circle id="goal-bow-bottom-anchor" cx="650" cy="1170" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1278" cy="524" r="2"/>
+  </g>
+</svg>

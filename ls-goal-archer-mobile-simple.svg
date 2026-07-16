@@ -27,8 +27,6 @@
     }
   </style>
 
-  <rect id="goal-background" width="1728" height="1650" fill="#002629"/>
-
   <g id="goal-target" data-animate="target" transform="translate(820 0)" transform-origin="1570px 900px">
     <ellipse id="goal-target-body" class="aqua-fill" cx="1570" cy="900" rx="454" ry="770"/>
     <ellipse id="goal-target-ring-outer" class="dark-line" cx="1542" cy="900" rx="358" ry="650"/>

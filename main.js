@@ -3195,11 +3195,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
 })();
 
-// GoalArcherSection: sezione cinematografica autonoma con SVG inline e GSAP/ScrollTrigger.
+// GoalArcherSection: sezione cinematografica autonoma con SVG inline e fallback statico.
 document.addEventListener('DOMContentLoaded', () => {
   const section = document.querySelector('[data-goal-archer-section]');
   if (!section) return;
 
+  const slots = {
+    archer: section.querySelector('[data-goal-archer-svg]'),
+    target: section.querySelector('[data-goal-target-svg]')
+  };
+  if (!slots.archer || !slots.target) return;
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
   const ASSETS = {
     desktop: { archer: 'ls-goal-archer-desktop-simple.svg', target: 'ls-goal-target-desktop.svg' },
     mobile: { archer: 'ls-goal-archer-mobile-simple.svg', target: 'ls-goal-target-mobile.svg' }
@@ -3211,7 +3218,7 @@ document.addEventListener('DOMContentLoaded', () => {
       head: 'M313 375 L313 243 L448 243 L448 367 Z',
       bowTense: 'M605 -52 C849 214 957 797 650 1170', bowRelaxed: 'M605 -52 C765 250 820 790 650 1170',
       arrow: 'M558 514 C798 517.333 1038 520.667 1278 524', flexUp: 'M558 514 C798 492 1038 490 1278 524', flexDown: 'M558 514 C798 536 1038 538 1278 524', flexSmall: 'M558 514 C798 506 1038 507 1278 524', flexEnd: 'M558 514 C798 516 1038 520 1278 524',
-      hand: [558, 514], stringRestX: 626, targetX: 760, targetOrigin: '1538px 550px', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1538, cy: 550, rx: 422, ry: 744 }
+      hand: [558, 514], stringRestX: 626, targetX: 760, targetOrigin: '1538 550', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1538, cy: 550, rx: 422, ry: 744 }
     },
     mobile: {
       upperStart: 'M35 740 L205 620 L288 590 L440 600 L590 660 L565 775 L680 820 L900 980 L960 1020 L1080 1160 L1170 1280 L1050 1340 L800 1160 L650 970 L35 930 Z',
@@ -3219,7 +3226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       head: 'M286 608 L286 438 L438 438 L438 599 Z',
       bowTense: 'M710 206 C1080 498 1244 1200 748 1584', bowRelaxed: 'M710 206 C930 530 1010 1180 748 1584',
       arrow: 'M566 775 C818 778.333 1070 781.667 1322 785', flexUp: 'M566 775 C818 749 1070 751 1322 785', flexDown: 'M566 775 C818 798 1070 800 1322 785', flexSmall: 'M566 775 C818 767 1070 768 1322 785', flexEnd: 'M566 775 C818 777 1070 782 1322 785',
-      hand: [566, 775], stringRestX: 726, targetX: 820, targetOrigin: '1570px 900px', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1570, cy: 900, rx: 454, ry: 770 }
+      hand: [566, 775], stringRestX: 726, targetX: 820, targetOrigin: '1570 900', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1570, cy: 900, rx: 454, ry: 770 }
     }
   };
 
@@ -3239,10 +3246,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const loadSvg = async (url) => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Cannot load ${url}`);
+  const requireNode = (root, selector, label = selector) => {
+    const node = root.querySelector(selector);
+    if (!node) throw new Error(`SVG incompleto: manca ${label}`);
+    return node;
+  };
+
+  const abortError = () => {
+    const error = new Error('Caricamento SVG annullato');
+    error.name = 'AbortError';
+    return error;
+  };
+
+  const loadSvg = async (asset, signal) => {
+    const url = new URL(asset, document.baseURI);
+    const response = await fetch(url.href, { signal, cache: 'force-cache' });
+    if (!response.ok) throw new Error(`Impossibile caricare ${asset} (${response.status})`);
     return response.text();
+  };
+
+  const parseSvg = (source, asset) => {
+    const documentNode = new DOMParser().parseFromString(source, 'image/svg+xml');
+    const svg = documentNode.documentElement;
+    if (documentNode.querySelector('parsererror') || svg.localName !== 'svg') {
+      throw new Error(`SVG non valido: ${asset}`);
+    }
+    return svg;
   };
 
   const prepareSvg = (svg, kind, variant, cfg) => {
@@ -3254,136 +3283,258 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.querySelector('desc')?.remove();
     svg.querySelector('#goal-background')?.remove();
     svg.querySelector('#goal-rig-guides')?.remove();
+
     if (kind === 'archer') {
       svg.querySelector('#goal-target')?.remove();
-      const upper = svg.querySelector('#goal-upper-body');
-      const head = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      head.setAttribute('id', 'goal-head'); head.setAttribute('data-animate', 'head'); head.setAttribute('fill', '#94ffe4'); head.setAttribute('d', cfg.head);
-      upper?.setAttribute('d', cfg.upperEnd); upper?.after(head);
-      const oldArrow = svg.querySelector('#goal-arrow-shaft');
-      const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      Array.from(oldArrow.attributes).forEach((a) => !/^x|^y/.test(a.name) && arrow.setAttribute(a.name, a.value));
-      arrow.setAttribute('d', cfg.arrow); oldArrow.replaceWith(arrow);
+      const upper = requireNode(svg, '#goal-upper-body');
+      const oldArrow = requireNode(svg, '#goal-arrow-shaft');
+      requireNode(svg, '#goal-lower-body');
+      requireNode(svg, '#goal-bow');
+      requireNode(svg, '#goal-string-top');
+      requireNode(svg, '#goal-string-bottom');
+      requireNode(svg, '#goal-arrow');
+
+      const head = document.createElementNS(SVG_NS, 'path');
+      head.setAttribute('id', 'goal-head');
+      head.setAttribute('data-animate', 'head');
+      head.setAttribute('fill', '#94ffe4');
+      head.setAttribute('d', cfg.head);
+      upper.setAttribute('d', cfg.upperEnd);
+      upper.after(head);
+
+      const arrow = document.createElementNS(SVG_NS, 'path');
+      Array.from(oldArrow.attributes).forEach((attribute) => {
+        if (!['x1', 'y1', 'x2', 'y2'].includes(attribute.name)) arrow.setAttribute(attribute.name, attribute.value);
+      });
+      arrow.setAttribute('d', cfg.arrow);
+      oldArrow.replaceWith(arrow);
     } else {
-      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      defs.innerHTML = `<clipPath id="goal-arrow-target-clip"><ellipse cx="${cfg.targetClip.cx}" cy="${cfg.targetClip.cy}" rx="${cfg.targetClip.rx}" ry="${cfg.targetClip.ry}"/></clipPath>`;
+      const target = requireNode(svg, '#goal-target');
+      requireNode(svg, '#goal-target-body');
+      requireNode(svg, '#goal-target-ring-outer');
+      requireNode(svg, '#goal-target-ring-inner');
+
+      const clipId = `goal-arrow-target-clip-${variant}`;
+      const defs = document.createElementNS(SVG_NS, 'defs');
+      const clipPath = document.createElementNS(SVG_NS, 'clipPath');
+      const ellipse = document.createElementNS(SVG_NS, 'ellipse');
+      clipPath.setAttribute('id', clipId);
+      ellipse.setAttribute('cx', cfg.targetClip.cx);
+      ellipse.setAttribute('cy', cfg.targetClip.cy);
+      ellipse.setAttribute('rx', cfg.targetClip.rx);
+      ellipse.setAttribute('ry', cfg.targetClip.ry);
+      clipPath.append(ellipse);
+      defs.append(clipPath);
       svg.prepend(defs);
-      const dark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      dark.setAttribute('id', 'goal-arrow-shaft-dark'); dark.setAttribute('d', cfg.arrow); dark.setAttribute('stroke', '#002629'); dark.setAttribute('stroke-width', '5'); dark.setAttribute('fill', 'none'); dark.setAttribute('clip-path', 'url(#goal-arrow-target-clip)'); dark.setAttribute('opacity', '0'); dark.setAttribute('vector-effect', 'non-scaling-stroke');
-      svg.querySelector('#goal-target')?.after(dark);
+
+      const dark = document.createElementNS(SVG_NS, 'path');
+      dark.setAttribute('id', 'goal-arrow-shaft-dark');
+      dark.setAttribute('d', cfg.arrow);
+      dark.setAttribute('stroke', '#002629');
+      dark.setAttribute('stroke-width', '5');
+      dark.setAttribute('fill', 'none');
+      dark.setAttribute('clip-path', `url(#${clipId})`);
+      dark.setAttribute('opacity', '0');
+      dark.setAttribute('vector-effect', 'non-scaling-stroke');
+      target.after(dark);
     }
     return svg;
   };
 
-  const mountVariant = async (variant) => {
+  const clearMountedSvgs = () => {
+    Object.values(slots).forEach((slot) => {
+      Array.from(slot.children).forEach((child) => {
+        if (child.localName === 'svg') child.remove();
+      });
+      slot.classList.remove('is-svg-mounted');
+    });
+    section.classList.remove('is-goal-mounted');
+  };
+
+  const markMounted = (staticMode = false) => {
+    slots.archer.classList.add('is-svg-mounted');
+    slots.target.classList.add('is-svg-mounted');
+    section.classList.add('is-goal-mounted');
+    section.classList.toggle('is-goal-static', staticMode);
+  };
+
+  const mountVariant = async (variant, signal) => {
     const cfg = PATHS[variant];
-    const [archerRaw, targetRaw] = await Promise.all([loadSvg(ASSETS[variant].archer), loadSvg(ASSETS[variant].target)]);
-    const parser = new DOMParser();
-    const archerSvg = prepareSvg(parser.parseFromString(archerRaw, 'image/svg+xml').documentElement, 'archer', variant, cfg);
-    const targetSvg = prepareSvg(parser.parseFromString(targetRaw, 'image/svg+xml').documentElement, 'target', variant, cfg);
-    const archerSlot = section.querySelector('[data-goal-archer-svg]');
-    const targetSlot = section.querySelector('[data-goal-target-svg]');
-    archerSlot.querySelectorAll('svg').forEach((node) => node.remove());
-    targetSlot.querySelectorAll('svg').forEach((node) => node.remove());
-    archerSlot.append(archerSvg);
-    targetSlot.append(targetSvg);
-    archerSlot.classList.add('is-svg-mounted');
-    targetSlot.classList.add('is-svg-mounted');
+    const assets = ASSETS[variant];
+    const [archerRaw, targetRaw] = await Promise.all([
+      loadSvg(assets.archer, signal),
+      loadSvg(assets.target, signal)
+    ]);
+    if (signal?.aborted) throw abortError();
+
+    const archerSvg = prepareSvg(parseSvg(archerRaw, assets.archer), 'archer', variant, cfg);
+    const targetSvg = prepareSvg(parseSvg(targetRaw, assets.target), 'target', variant, cfg);
+    if (signal?.aborted) throw abortError();
+
+    clearMountedSvgs();
+    slots.archer.append(archerSvg);
+    slots.target.append(targetSvg);
     return { cfg, archerSvg, targetSvg };
   };
 
-  const applyReducedState = ({ cfg, archerSvg, targetSvg }) => {
-    const qA = (selector) => archerSvg.querySelector(selector);
-    const qT = (selector) => targetSvg.querySelector(selector);
-    const archerParts = [qA('#goal-upper-body'), qA('#goal-head'), qA('#goal-lower-body'), qA('#goal-bow'), qA('#goal-string')].filter(Boolean);
-    archerParts.forEach((part) => part.setAttribute('transform', `translate(${cfg.archerExit} 0)`));
-    qT('#goal-target')?.removeAttribute('transform');
-    qT('#goal-arrow-shaft-dark')?.setAttribute('opacity', '1');
-    qT('#goal-arrow-shaft-dark')?.setAttribute('d', cfg.flexEnd);
-    qA('#goal-arrow-shaft')?.setAttribute('d', cfg.flexEnd);
+  const collectRig = (archerSvg, targetSvg) => ({
+    upper: requireNode(archerSvg, '#goal-upper-body'),
+    head: requireNode(archerSvg, '#goal-head'),
+    lower: requireNode(archerSvg, '#goal-lower-body'),
+    bow: requireNode(archerSvg, '#goal-bow'),
+    string: requireNode(archerSvg, '#goal-string'),
+    stringTop: requireNode(archerSvg, '#goal-string-top'),
+    stringBottom: requireNode(archerSvg, '#goal-string-bottom'),
+    arrow: requireNode(archerSvg, '#goal-arrow'),
+    arrowShaft: requireNode(archerSvg, '#goal-arrow-shaft'),
+    target: requireNode(targetSvg, '#goal-target'),
+    darkArrow: requireNode(targetSvg, '#goal-arrow-shaft-dark')
+  });
+
+  const applyStaticState = ({ cfg, archerSvg, targetSvg }) => {
+    const rig = collectRig(archerSvg, targetSvg);
+    [rig.upper, rig.head, rig.lower, rig.bow, rig.string, rig.arrow, rig.target].forEach((node) => {
+      node.removeAttribute('transform');
+      node.removeAttribute('style');
+    });
+    rig.upper.setAttribute('d', cfg.upperEnd);
+    rig.head.setAttribute('d', cfg.head);
+    rig.bow.setAttribute('d', cfg.bowTense);
+    rig.stringTop.setAttribute('x2', cfg.hand[0]);
+    rig.stringTop.setAttribute('y2', cfg.hand[1]);
+    rig.stringBottom.setAttribute('x2', cfg.hand[0]);
+    rig.stringBottom.setAttribute('y2', cfg.hand[1]);
+    rig.arrowShaft.setAttribute('d', cfg.flexEnd);
+    rig.darkArrow.setAttribute('d', cfg.flexEnd);
+    rig.darkArrow.setAttribute('opacity', '1');
   };
 
-  const buildTimeline = ({ cfg, archerSvg, targetSvg, mobile = false, reduced = false }) => {
-    const qA = gsap.utils.selector(archerSvg), qT = gsap.utils.selector(targetSvg);
-    const upper = qA('#goal-upper-body')[0], head = qA('#goal-head')[0], lower = qA('#goal-lower-body')[0], bow = qA('#goal-bow')[0], string = qA('#goal-string')[0], stringTop = qA('#goal-string-top')[0], stringBottom = qA('#goal-string-bottom')[0], arrow = qA('#goal-arrow')[0], arrowShaft = qA('#goal-arrow-shaft')[0];
-    const target = qT('#goal-target')[0], darkArrow = qT('#goal-arrow-shaft-dark')[0];
-    const chars = gsap.utils.toArray(section.querySelectorAll('.goal-scene__char'));
+  const showSafeFallback = (error) => {
+    clearMountedSvgs();
+    section.classList.add('is-goal-static');
+    section.querySelector('[data-goal-text]')?.removeAttribute('style');
+    section.querySelectorAll('.goal-scene__char').forEach((node) => node.removeAttribute('style'));
+    if (error?.name !== 'AbortError') console.error('[goal sequence]', error);
+  };
+
+  const buildTimeline = ({ cfg, archerSvg, targetSvg, mobile = false, reduced = false }, gsapApi) => {
+    const rig = collectRig(archerSvg, targetSvg);
+    const chars = gsapApi.utils.toArray(section.querySelectorAll('.goal-scene__char'));
     const textBlock = section.querySelector('[data-goal-text]');
-    const archerParts = [upper, head, lower, bow, string].filter(Boolean);
-    gsap.set([archerSvg, targetSvg], { clearProps: 'all' });
-    gsap.set(target, { x: cfg.targetX, rotation: 0, svgOrigin: cfg.targetOrigin });
-    gsap.set(darkArrow, { opacity: 0, attr: { d: cfg.arrow } });
-    gsap.set(arrowShaft, { attr: { d: cfg.arrow } });
-    gsap.set(upper, { attr: { d: cfg.upperStart }, rotation: 12, x: -35, y: 45, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
-    gsap.set(head, { rotation: 29, x: 12, y: 24, svgOrigin: mobile ? '360 599' : '380 367' });
-    gsap.set([bow, string], { rotation: 28, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
-    gsap.set(arrow, { rotation: 37, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
-    gsap.set(chars, mobile ? { opacity: 1, x: 0, skewX: 0, scaleY: 1 } : { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
-    gsap.set(textBlock, mobile ? { x: 0, y: 0 } : { x: '-6vw', y: '2vh' });
-    if (reduced) { gsap.set(archerParts, { x: cfg.archerExit }); gsap.set(target, { x: 0 }); gsap.set(darkArrow, { opacity: 1, attr: { d: cfg.flexEnd } }); gsap.set(arrowShaft, { attr: { d: cfg.flexEnd } }); return null; }
-    const tl = gsap.timeline(mobile ? { duration: 4.037, repeat: -1, repeatDelay: 0, defaults: { ease: 'none' } } : { defaults: { ease: 'none' }, scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true } });
-    tl.to({ clock: 0 }, { clock: 1, duration: 1 }, 0)
-      .to(upper, { attr: { d: cfg.upperEnd }, rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
-      .to(head, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
-      .to([bow, string], { rotation: -2, x: 0, y: 0, ease: 'power2.out', duration: 0.06 }, 0).to([bow, string], { rotation: 0, duration: 0.02 }, 0.06)
-      .to(arrow, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
-      .to(upper, { rotation: 0.55, y: -2, yoyo: true, repeat: 1, duration: 0.11 }, 0.08)
-      .to(bow, { attr: { d: cfg.bowTense }, duration: 0.22 }, 0.08)
-      .to([stringTop, stringBottom], { attr: { x2: cfg.stringRestX, y2: cfg.hand[1] }, ease: 'power3.in', duration: 0.015 }, 0.300)
-      .to(bow, { attr: { d: cfg.bowRelaxed }, ease: 'power3.in', duration: 0.015 }, 0.300)
-      .to(upper, { x: -10, rotation: 0.6, duration: 0.015 }, 0.300)
-      .to(arrow, { x: cfg.arrowFlight, ease: 'power3.in', duration: 0.085 }, 0.315)
+    if (!textBlock) throw new Error('Sezione obiettivo incompleta: manca il blocco di testo');
+
+    if (reduced) {
+      applyStaticState({ cfg, archerSvg, targetSvg });
+      gsapApi.set(chars, { opacity: 1, x: 0, skewX: 0, scaleY: 1 });
+      gsapApi.set(textBlock, { x: 0, y: 0 });
+      return null;
+    }
+
+    const archerParts = [rig.upper, rig.head, rig.lower, rig.bow, rig.string];
+    gsapApi.set([archerSvg, targetSvg], { clearProps: 'all' });
+    gsapApi.set(rig.target, { x: cfg.targetX, rotation: 0, svgOrigin: cfg.targetOrigin });
+    gsapApi.set(rig.darkArrow, { opacity: 0, attr: { d: cfg.arrow } });
+    gsapApi.set(rig.arrowShaft, { attr: { d: cfg.arrow } });
+    gsapApi.set(rig.upper, { attr: { d: cfg.upperStart }, rotation: 12, x: -35, y: 45, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsapApi.set(rig.head, { rotation: 29, x: 12, y: 24, svgOrigin: mobile ? '360 599' : '380 367' });
+    gsapApi.set([rig.bow, rig.string], { rotation: 28, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsapApi.set(rig.arrow, { rotation: 37, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
+    gsapApi.set(chars, mobile ? { opacity: 1, x: 0, skewX: 0, scaleY: 1 } : { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
+    gsapApi.set(textBlock, mobile ? { x: 0, y: 0 } : { x: '-6vw', y: '2vh' });
+
+    const timeline = gsapApi.timeline(mobile
+      ? { repeat: -1, repeatDelay: 0, defaults: { ease: 'none' } }
+      : { defaults: { ease: 'none' }, scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true } });
+
+    timeline.to({ clock: 0 }, { clock: 1, duration: 1 }, 0)
+      .to(rig.upper, { attr: { d: cfg.upperEnd }, rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to(rig.head, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to([rig.bow, rig.string], { rotation: -2, x: 0, y: 0, ease: 'power2.out', duration: 0.06 }, 0)
+      .to([rig.bow, rig.string], { rotation: 0, duration: 0.02 }, 0.06)
+      .to(rig.arrow, { rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
+      .to(rig.upper, { rotation: 0.55, y: -2, yoyo: true, repeat: 1, duration: 0.11 }, 0.08)
+      .to(rig.bow, { attr: { d: cfg.bowTense }, duration: 0.22 }, 0.08)
+      .to([rig.stringTop, rig.stringBottom], { attr: { x2: cfg.stringRestX, y2: cfg.hand[1] }, ease: 'power3.in', duration: 0.015 }, 0.300)
+      .to(rig.bow, { attr: { d: cfg.bowRelaxed }, ease: 'power3.in', duration: 0.015 }, 0.300)
+      .to(rig.upper, { x: -10, rotation: 0.6, duration: 0.015 }, 0.300)
+      .to(rig.arrow, { x: cfg.arrowFlight, ease: 'power3.in', duration: 0.085 }, 0.315)
       .to(archerParts, { x: cfg.archerExit, ease: 'power2.in', duration: 0.055 }, 0.345)
       .to(textBlock, mobile ? {} : { x: 0, y: 0, duration: 0.12 }, 0.330)
       .to(chars, mobile ? {} : { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: { amount: 0.085, from: 'end' }, duration: 0.035, ease: 'power3.out' }, 0.330)
-      .to(arrow, { x: cfg.arrowReframe, ease: 'power2.inOut', duration: 0.050 }, 0.400)
-      .to(target, { x: 0, ease: 'power2.inOut', duration: 0.065 }, 0.435)
-      .to(arrow, { x: 0, ease: 'power2.inOut', duration: 0.050 }, 0.450)
-      .set(darkArrow, { opacity: 1 }, 0.500)
-      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexUp }, duration: 0.020 }, 0.500).to(target, { rotation: 3, svgOrigin: cfg.targetOrigin, duration: 0.020 }, 0.500)
-      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexDown }, duration: 0.020 }, 0.520).to(target, { rotation: 2.3, duration: 0.020 }, 0.520)
-      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexSmall }, duration: 0.020 }, 0.540).to(target, { rotation: 1.2, duration: 0.020 }, 0.540)
-      .to([arrowShaft, darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.560).to(target, { rotation: 0, duration: 0.040 }, 0.560);
-    if (mobile) tl.duration(4.037);
-    return tl;
+      .to(rig.arrow, { x: cfg.arrowReframe, ease: 'power2.inOut', duration: 0.050 }, 0.400)
+      .to(rig.target, { x: 0, ease: 'power2.inOut', duration: 0.065 }, 0.435)
+      .to(rig.arrow, { x: 0, ease: 'power2.inOut', duration: 0.050 }, 0.450)
+      .set(rig.darkArrow, { opacity: 1 }, 0.500)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexUp }, duration: 0.020 }, 0.500)
+      .to(rig.target, { rotation: 3, svgOrigin: cfg.targetOrigin, duration: 0.020 }, 0.500)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexDown }, duration: 0.020 }, 0.520)
+      .to(rig.target, { rotation: 2.3, duration: 0.020 }, 0.520)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexSmall }, duration: 0.020 }, 0.540)
+      .to(rig.target, { rotation: 1.2, duration: 0.020 }, 0.540)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.560)
+      .to(rig.target, { rotation: 0, duration: 0.040 }, 0.560);
+
+    if (mobile) timeline.duration(4.037);
+    return timeline;
   };
 
-  const canAnimate = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+  const canAnimate = Boolean(window.gsap && window.ScrollTrigger);
   if (!canAnimate) {
+    section.classList.add('is-goal-static');
     const variant = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
     mountVariant(variant)
-      .then((mounted) => applyReducedState(mounted))
-      .catch((error) => console.error('[goal sequence]', error));
+      .then((mounted) => {
+        applyStaticState(mounted);
+        markMounted(true);
+      })
+      .catch(showSafeFallback);
     return;
   }
 
+  const gsapApi = window.gsap;
+  const ScrollTriggerApi = window.ScrollTrigger;
   splitText();
-  gsap.registerPlugin(ScrollTrigger);
+  gsapApi.registerPlugin(ScrollTriggerApi);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ctx = gsap.context(() => {
-    const mm = gsap.matchMedia();
+  if (reduced) section.classList.add('is-goal-static');
+
+  const ctx = gsapApi.context(() => {
+    const media = gsapApi.matchMedia();
     const addVariant = (query, variant, mobile) => {
-      mm.add(query, () => {
+      media.add(query, () => {
         let active = true;
-        let tl;
-        mountVariant(variant).then(async (mounted) => {
-          if (!active) return;
-          tl = buildTimeline({ ...mounted, mobile, reduced });
-          await (document.fonts?.ready || Promise.resolve());
-          if (active) requestAnimationFrame(() => ScrollTrigger.refresh());
-        }).catch((error) => console.error('[goal sequence]', error));
+        let timeline;
+        const controller = new AbortController();
+
+        mountVariant(variant, controller.signal)
+          .then(async (mounted) => {
+            if (!active) {
+              mounted.archerSvg.remove();
+              mounted.targetSvg.remove();
+              return;
+            }
+            timeline = buildTimeline({ ...mounted, mobile, reduced }, gsapApi);
+            markMounted(reduced);
+            await (document.fonts?.ready || Promise.resolve());
+            if (active && !reduced) requestAnimationFrame(() => ScrollTriggerApi.refresh());
+          })
+          .catch((error) => {
+            if (active && error?.name !== 'AbortError') showSafeFallback(error);
+          });
+
         return () => {
           active = false;
-          tl?.kill();
-          section.querySelector('[data-goal-archer-svg]')?.querySelectorAll('svg').forEach((node) => node.remove());
-          section.querySelector('[data-goal-target-svg]')?.querySelectorAll('svg').forEach((node) => node.remove());
-          section.querySelector('[data-goal-archer-svg]')?.classList.remove('is-svg-mounted');
-          section.querySelector('[data-goal-target-svg]')?.classList.remove('is-svg-mounted');
+          controller.abort();
+          timeline?.scrollTrigger?.kill();
+          timeline?.kill();
+          clearMountedSvgs();
         };
       });
     };
+
     addVariant('(min-width: 768px)', 'desktop', false);
     addVariant('(max-width: 767px)', 'mobile', true);
   }, section);
+
   window.addEventListener('beforeunload', () => ctx.revert(), { once: true });
 });

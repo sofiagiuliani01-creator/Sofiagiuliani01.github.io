@@ -27,8 +27,6 @@
     }
   </style>
 
-  <rect id="goal-background" width="1728" height="1117" fill="#002629"/>
-
   <!-- Posa finale del bersaglio. Impostare x:760 all'inizio dell'animazione. -->
   <g id="goal-target" data-animate="target" transform="translate(760 0)" transform-origin="1538px 550px">
     <ellipse id="goal-target-body" class="aqua-fill" cx="1538" cy="550" rx="422" ry="744"/>

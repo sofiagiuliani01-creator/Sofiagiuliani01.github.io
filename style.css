@@ -22479,3 +22479,32 @@ body.app-page {
     transform: translate3d(0, 30px, 0) !important;
   }
 }
+
+/* === 2026-07-16 timeline visibility recovery === */
+#come-funziona .timeline-connector {
+  width: 4px !important;
+  display: block !important;
+  position: relative;
+  z-index: 2;
+}
+
+#come-funziona .timeline-connector-line {
+  width: 4px !important;
+  min-height: 100% !important;
+  display: block !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(25, 218, 213, .28), var(--ls-aqua), rgba(25, 218, 213, .28)) !important;
+  box-shadow: 0 0 18px rgba(25, 218, 213, .45) !important;
+  opacity: .95 !important;
+  transform-origin: top center !important;
+  transition: transform .9s cubic-bezier(.22, 1, .36, 1), opacity .35s ease !important;
+}
+
+#come-funziona .timeline-connector-line.ls-connector-visible {
+  opacity: 1 !important;
+}
+
+#come-funziona .timeline-step.ls-timeline-pending,
+#come-funziona .timeline-step.ls-timeline-visible {
+  transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1) !important;
+}

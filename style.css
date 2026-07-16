@@ -22504,6 +22504,12 @@ body.app-page {
   margin-bottom: clamp(2.6rem, 6vw, 5rem);
 }
 
+@media (min-width: 781px) {
+  .page-home #programmi .program-choice-cards {
+    margin-bottom: clamp(4.5rem, 8vw, 7rem);
+  }
+}
+
 #programmi .program-questionnaire-cta {
   margin-top: 0;
 }

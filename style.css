@@ -22101,3 +22101,72 @@ body.app-page {
     border-radius: 20px;
   }
 }
+
+/* === 2026-07 desktop timeline sizing matched to provided reference === */
+@media (min-width: 981px) {
+  #come-funziona .timeline {
+    width: min(1640px, calc(100vw - 280px));
+  }
+
+  #come-funziona .timeline-step .step-content {
+    min-height: clamp(720px, 41.7vw, 800px) !important;
+    border-radius: 60px;
+    padding: clamp(76px, 5vw, 96px) clamp(72px, 5.2vw, 100px);
+  }
+
+  #come-funziona .timeline-step .step-row {
+    grid-template-columns: minmax(620px, 0.95fr) minmax(560px, 0.8fr) !important;
+    gap: clamp(80px, 7.2vw, 138px) !important;
+  }
+
+  #come-funziona .timeline-step .step-visual {
+    width: min(100%, 660px) !important;
+    justify-self: center;
+  }
+
+  #come-funziona .step-generated-img {
+    width: min(100%, 660px) !important;
+    max-width: 660px !important;
+  }
+
+  #come-funziona .timeline-step .step-meta {
+    max-width: 680px;
+    justify-self: start;
+  }
+
+  #come-funziona .timeline-step .step-meta h3 {
+    max-width: 15.5ch;
+    font-size: clamp(3rem, 2.6vw, 3.2rem) !important;
+    line-height: 1.13 !important;
+    letter-spacing: -0.045em;
+  }
+
+  #come-funziona .timeline-step .step-meta p {
+    max-width: 42ch;
+    margin-top: 34px;
+    font-size: clamp(1.45rem, 1.42vw, 1.72rem) !important;
+    line-height: 1.42;
+    letter-spacing: -0.025em;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1500px) {
+  #come-funziona .timeline {
+    width: min(92vw, 1340px);
+  }
+
+  #come-funziona .timeline-step .step-content {
+    min-height: 640px !important;
+    padding: 62px;
+  }
+
+  #come-funziona .timeline-step .step-row {
+    grid-template-columns: minmax(420px, 1fr) minmax(440px, 0.9fr) !important;
+    gap: 64px !important;
+  }
+
+  #come-funziona .step-generated-img,
+  #come-funziona .timeline-step .step-visual {
+    max-width: 560px !important;
+  }
+}

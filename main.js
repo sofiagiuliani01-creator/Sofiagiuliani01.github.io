@@ -15,6 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+// HOME PROGRAMMI: mantiene stabile l'attivazione desktop delle card mentre si espandono.
+document.addEventListener('DOMContentLoaded', () => {
+  const programCards = document.querySelector('.page-home #programmi .program-choice-cards');
+  if (!programCards) return;
+
+  const cards = Array.from(programCards.querySelectorAll('.program-choice-card'));
+  if (!cards.length) return;
+
+  const setActiveCard = (activeCard) => {
+    cards.forEach((card) => card.classList.toggle('is-active', card === activeCard));
+  };
+
+  cards.forEach((card) => {
+    card.addEventListener('pointerenter', () => setActiveCard(card));
+    card.addEventListener('focus', () => setActiveCard(card));
+  });
+
+  programCards.addEventListener('pointerleave', () => setActiveCard(null));
+  programCards.addEventListener('focusout', (event) => {
+    if (!programCards.contains(event.relatedTarget)) setActiveCard(null);
+  });
+});
+
 // MENÙ MOBILE
 const burger = document.querySelector('.burger');
 const mainNav = document.querySelector('.main-nav');

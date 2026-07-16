@@ -21621,14 +21621,16 @@ body.app-page {
 }
 
 .page-home #programmi .program-choice-card:hover,
-.page-home #programmi .program-choice-card:focus-visible {
+.page-home #programmi .program-choice-card:focus-visible,
+.page-home #programmi .program-choice-card.is-active {
   flex-grow: 1.48;
   transform: none;
   box-shadow: none;
 }
 
 .page-home #programmi .program-choice-cards:has(.program-choice-card:hover) .program-choice-card:not(:hover),
-.page-home #programmi .program-choice-cards:has(.program-choice-card:focus-visible) .program-choice-card:not(:focus-visible) {
+.page-home #programmi .program-choice-cards:has(.program-choice-card:focus-visible) .program-choice-card:not(:focus-visible),
+.page-home #programmi .program-choice-cards:has(.program-choice-card.is-active) .program-choice-card:not(.is-active) {
   flex-grow: .82;
 }
 
@@ -21647,7 +21649,8 @@ body.app-page {
 }
 
 .page-home #programmi .program-choice-card:hover img,
-.page-home #programmi .program-choice-card:focus-visible img {
+.page-home #programmi .program-choice-card:focus-visible img,
+.page-home #programmi .program-choice-card.is-active img {
   transform: scale(1.2);
 }
 
@@ -21676,7 +21679,8 @@ body.app-page {
 
   .page-home #programmi .program-choice-card,
   .page-home #programmi .program-choice-card:hover,
-  .page-home #programmi .program-choice-card:focus-visible {
+  .page-home #programmi .program-choice-card:focus-visible,
+  .page-home #programmi .program-choice-card.is-active {
     height: clamp(10.7rem, 42vw, 13.6rem);
     min-height: 0;
     flex: none;
@@ -21700,7 +21704,8 @@ body.app-page {
 
   .page-home #programmi .program-choice-card img,
   .page-home #programmi .program-choice-card:hover img,
-  .page-home #programmi .program-choice-card:focus-visible img {
+  .page-home #programmi .program-choice-card:focus-visible img,
+  .page-home #programmi .program-choice-card.is-active img {
     left: auto;
     right: .7rem;
     bottom: -.4rem;
@@ -21788,7 +21793,8 @@ body.app-page {
   }
 
   .page-home #programmi .program-choice-card:hover img,
-  .page-home #programmi .program-choice-card:focus-visible img {
+  .page-home #programmi .program-choice-card:focus-visible img,
+  .page-home #programmi .program-choice-card.is-active img {
     transform: scale(1.24);
   }
 

@@ -661,36 +661,26 @@
   <div class="goal-scene__sticky">
     <div class="goal-scene__visual" aria-hidden="true">
       <svg class="goal-archer-svg goal-archer-svg--desktop" viewBox="0 0 1728 1117" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <g id="goal-target" class="goal-target">
-          <ellipse class="goal-target__outer" cx="1504" cy="558" rx="386" ry="776"/>
-          <ellipse class="goal-target__ring" cx="1504" cy="558" rx="292" ry="588"/>
-          <ellipse class="goal-target__ring" cx="1504" cy="558" rx="188" ry="378"/>
-          <ellipse class="goal-target__ring" cx="1504" cy="558" rx="82" ry="166"/>
+        <g id="goal-target" data-animate="target" class="goal-target" transform-origin="1608px 550px">
+          <ellipse id="goal-target-body" class="aqua-fill goal-target__outer" cx="1608" cy="550" rx="422" ry="744"/>
+          <ellipse id="goal-target-ring-outer" class="dark-line goal-target__ring" cx="1608" cy="550" rx="332" ry="620"/>
+          <ellipse id="goal-target-ring-inner" class="dark-line goal-target__ring" cx="1608" cy="550" rx="226" ry="432"/>
+          <ellipse id="goal-target-ring-center" class="dark-line goal-target__ring" cx="1608" cy="550" rx="86" ry="166"/>
         </g>
-        <g id="goal-archer" class="goal-archer">
-          <g id="goal-body" class="goal-body">
-            <path d="M122 365 416 309 626 405 566 592 286 650 56 548Z"/>
-          </g>
-          <g id="goal-head" class="goal-head">
-            <path d="M210 96 392 124 372 260 182 238Z"/>
-          </g>
-          <g id="goal-legs" class="goal-legs">
-            <path d="M278 602 520 646 392 1198 106 1212Z"/>
-            <path d="M520 579 706 690 766 1192 490 1174Z"/>
-          </g>
-          <g id="goal-back-arm" class="goal-back-arm">
-            <path d="M328 378 192 456 438 528 642 472 602 392Z"/>
-          </g>
-          <g id="goal-front-arm" class="goal-front-arm">
-            <path d="M560 384 804 334 998 404 966 468 728 472 542 444Z"/>
-          </g>
-          <path id="goal-bow" class="goal-bow" d="M638 -58 Q 998 558 638 1175"/>
-          <path id="goal-string" class="goal-string" d="M638 -58 L 890 558 L 638 1175"/>
+        <g id="goal-archer" data-animate="archer" class="goal-archer" fill="#94ffe4" transform="translate(0 36)">
+          <path id="goal-upper-body" data-animate="upper-body"
+                d="M67 511 L247 408 L313 375 L313 243 L448 243 L448 367 L579 393 L558 514 L661 514 L892 467 L934 457 L1000 401 L1082 493 L1004 562 L769 616 L644 645 L67 654 Z"/>
+          <path id="goal-lower-body" data-animate="lower-body"
+                d="M222 1117 L250 912 L620 755 L626 1117 Z"/>
         </g>
-        <g id="goal-arrow" class="goal-arrow">
-          <path class="goal-arrow__shaft" d="M640 358 H1295"/>
-          <path class="goal-arrow__head" d="M1295 358 1260 338 1260 378Z"/>
-          <path class="goal-arrow__tail" d="M640 358 606 340 M640 358 606 376"/>
+        <path id="goal-bow" data-animate="bow" class="aqua-line goal-bow"
+              d="M605 -16 C849 250 957 833 650 1206"/>
+        <g id="goal-string" data-animate="string" class="aqua-line goal-string">
+          <line id="goal-string-top" x1="605" y1="-16" x2="558" y2="550"/>
+          <line id="goal-string-bottom" x1="650" y1="1206" x2="558" y2="550"/>
+        </g>
+        <g id="goal-arrow" data-animate="arrow" class="goal-arrow" transform-origin="558px 550px">
+          <line id="goal-arrow-shaft" class="aqua-line goal-arrow__shaft" x1="558" y1="550" x2="1608" y2="550"/>
         </g>
       </svg>
       <svg class="goal-archer-svg goal-archer-svg--mobile" viewBox="0 0 1728 1650" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">

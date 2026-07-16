@@ -29,18 +29,19 @@
 
   <rect id="goal-background" width="1728" height="1117" fill="#002629"/>
 
-  <!-- Posa finale del bersaglio. Impostare x:760 all'inizio dell'animazione. -->
-  <g id="goal-target" data-animate="target" transform="translate(760 0)" transform-origin="1538px 550px">
-    <ellipse id="goal-target-body" class="aqua-fill" cx="1538" cy="550" rx="422" ry="744"/>
-    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1512" cy="550" rx="332" ry="620"/>
-    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1485" cy="550" rx="226" ry="432"/>
+  <!-- Posa finale del bersaglio: più a destra e parzialmente fuori viewport. -->
+  <g id="goal-target" data-animate="target" transform-origin="1608px 550px">
+    <ellipse id="goal-target-body" class="aqua-fill" cx="1608" cy="550" rx="422" ry="744"/>
+    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1608" cy="550" rx="332" ry="620"/>
+    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1608" cy="550" rx="226" ry="432"/>
+    <ellipse id="goal-target-ring-center" class="dark-line" cx="1608" cy="550" rx="86" ry="166"/>
   </g>
 
   <!--
-    Arciere volutamente ridotto a due sole masse piatte.
+    Arciere volutamente ridotto a due sole masse piatte e abbassato per allineare la freccia al centro.
     La forma superiore integra testa, busto e braccio teso, come un unico pittogramma.
   -->
-  <g id="goal-archer" data-animate="archer" fill="#94ffe4">
+  <g id="goal-archer" data-animate="archer" fill="#94ffe4" transform="translate(0 36)">
     <path id="goal-upper-body" data-animate="upper-body"
           d="M67 511
              L247 408
@@ -66,24 +67,24 @@
 
   <!-- Un solo arco, senza duplicazioni o dettagli aggiuntivi. -->
   <path id="goal-bow" data-animate="bow" class="aqua-line"
-        d="M605 -52 C849 214 957 797 650 1170"/>
+        d="M605 -16 C849 250 957 833 650 1206"/>
 
   <!-- Corda in due segmenti che convergono nello stesso punto. -->
   <g id="goal-string" data-animate="string" class="aqua-line">
-    <line id="goal-string-top" x1="605" y1="-52" x2="558" y2="514"/>
-    <line id="goal-string-bottom" x1="650" y1="1170" x2="558" y2="514"/>
+    <line id="goal-string-top" x1="605" y1="-16" x2="558" y2="550"/>
+    <line id="goal-string-bottom" x1="650" y1="1206" x2="558" y2="550"/>
   </g>
 
   <!-- Freccia originale: soltanto una linea, senza punta né piume. -->
-  <g id="goal-arrow" data-animate="arrow" transform-origin="558px 514px">
+  <g id="goal-arrow" data-animate="arrow" transform-origin="558px 550px">
     <line id="goal-arrow-shaft" class="aqua-line"
-          x1="558" y1="514" x2="1278" y2="524"/>
+          x1="558" y1="550" x2="1608" y2="550"/>
   </g>
 
   <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
     <circle id="goal-bow-top-anchor" cx="605" cy="-52" r="2"/>
     <circle id="goal-string-hand-anchor" cx="558" cy="514" r="2"/>
     <circle id="goal-bow-bottom-anchor" cx="650" cy="1170" r="2"/>
-    <circle id="goal-target-impact-anchor" cx="1278" cy="524" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1608" cy="550" r="2"/>
   </g>
 </svg>

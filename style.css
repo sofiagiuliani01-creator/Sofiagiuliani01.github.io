@@ -22480,3 +22480,36 @@ body.app-page {
     transform: translate3d(0, 30px, 0) !important;
   }
 }
+
+/* === 2026-07-16: Programmi home dark backdrop + CTA spacing === */
+.page-home #programmi.section {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(25, 218, 213, 0.14), transparent 28rem),
+    radial-gradient(circle at 86% 18%, rgba(212, 169, 74, 0.12), transparent 24rem),
+    #05070b;
+  color: #ffffff;
+}
+
+.page-home #programmi .section-header .eyebrow,
+.page-home #programmi .section-header h2,
+.page-home #programmi .section-subtitle {
+  color: #ffffff;
+}
+
+.page-home #programmi .section-subtitle {
+  opacity: 0.82;
+}
+
+.page-home #programmi .program-choice-cards {
+  margin-bottom: clamp(2.6rem, 6vw, 5rem);
+}
+
+#programmi .program-questionnaire-cta {
+  margin-top: 0;
+}
+
+@media (max-width: 780px) {
+  .page-home #programmi .program-choice-cards {
+    margin-bottom: clamp(2rem, 9vw, 3rem);
+  }
+}

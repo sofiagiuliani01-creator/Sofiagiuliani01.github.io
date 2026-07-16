@@ -22568,8 +22568,11 @@ body.app-page {
 .goal-sequence { --goal-aqua:#94FFE4; --goal-background:#002629; --goal-dark:#002629; position:relative; width:100%; height:550svh; background:var(--goal-background); color:var(--goal-aqua); overflow:clip; }
 .goal-sticky { position:sticky; top:0; height:100svh; overflow:hidden; isolation:isolate; background:var(--goal-background); }
 .goal-scene { position:relative; width:100%; height:100%; background:var(--goal-background); overflow:hidden; }
-.goal-svg-slot, .goal-svg-slot > svg { position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
+.goal-svg-slot, .goal-svg-slot > svg, .goal-svg-fallback { position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
 .goal-svg-slot > svg { overflow:visible; }
+.goal-svg-fallback { object-fit:cover; opacity:1; transition:opacity .2s ease; }
+.goal-svg-fallback--mobile { display:none; }
+.goal-svg-slot.is-svg-mounted .goal-svg-fallback { opacity:0; visibility:hidden; }
 .goal-svg-slot svg [id="goal-background"] { display:none; }
 .goal-svg-slot .aqua-fill, .goal-svg-slot #goal-archer path, .goal-svg-slot #goal-target-body { fill:var(--goal-aqua); }
 .goal-svg-slot .aqua-line, .goal-svg-slot #goal-bow, .goal-svg-slot #goal-string, .goal-svg-slot #goal-arrow-shaft { fill:none; stroke:var(--goal-aqua); stroke-width:5; stroke-linecap:butt; stroke-linejoin:miter; vector-effect:non-scaling-stroke; }
@@ -22595,7 +22598,10 @@ body.app-page {
   .goal-scene__title { font-size:clamp(68px,18vw,112px); line-height:.8; letter-spacing:-.065em; }
   .goal-scene__char { opacity:1; transform:none; }
   .goal-svg-slot { position:relative; inset:auto; order:2; height:clamp(520px,125vw,760px); margin-top:24px; overflow:hidden; }
-  .goal-svg-slot > svg { position:absolute; inset:0; }
+  .goal-svg-slot[data-goal-target-svg] { position:absolute; left:0; right:0; bottom:0; margin-top:0; }
+  .goal-svg-slot > svg, .goal-svg-fallback { position:absolute; inset:0; }
+  .goal-svg-fallback--desktop { display:none; }
+  .goal-svg-fallback--mobile { display:block; }
 }
 @media (prefers-reduced-motion:reduce) {
   .goal-sequence { height:auto; min-height:100svh; padding:clamp(64px,10vw,96px) 24px; }

@@ -3001,9 +3001,10 @@ document.addEventListener('DOMContentLoaded', () => {
 (function () {
   const section = document.querySelector('#come-funziona');
   const timeline = section && section.querySelector('.timeline[data-timeline]');
-  if (!section || !timeline || !window.gsap || !window.ScrollTrigger) return;
+  if (!section || !timeline) return;
 
-  gsap.registerPlugin(ScrollTrigger);
+  const hasGsapTimeline = Boolean(window.gsap && window.ScrollTrigger);
+  if (hasGsapTimeline) gsap.registerPlugin(ScrollTrigger);
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cards = Array.from(timeline.querySelectorAll('.timeline-step'));
@@ -3013,9 +3014,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (reduceMotion) {
     cards.forEach((card) => card.classList.add('ls-timeline-visible'));
-    connectors.forEach((line) => { line.style.transform = 'scaleY(1)'; });
+    connectors.forEach((line) => {
+      line.style.transform = 'scaleY(1)';
+      line.classList.add('ls-connector-visible');
+    });
     if (fixedBg) fixedBg.style.opacity = '1';
     textTargets.forEach((target) => { target.style.color = '#ffffff'; });
+    return;
+  }
+
+  cards.forEach((card, index) => {
+    card.classList.toggle('ls-timeline-visible', index === 0);
+    card.classList.toggle('ls-timeline-pending', index !== 0);
+  });
+
+  if (!hasGsapTimeline) {
+    const revealCard = (card) => {
+      card.classList.remove('ls-timeline-pending');
+      card.classList.add('ls-timeline-visible');
+    };
+    const revealConnector = (line) => {
+      line.style.transform = 'scaleY(1)';
+      line.classList.add('ls-connector-visible');
+    };
+
+    if ('IntersectionObserver' in window) {
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealCard(entry.target);
+          cardObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.22, rootMargin: '0px 0px -10% 0px' });
+
+      const connectorObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealConnector(entry.target);
+          connectorObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      cards.slice(1).forEach((card) => cardObserver.observe(card));
+      connectors.forEach((line) => connectorObserver.observe(line));
+    } else {
+      cards.forEach(revealCard);
+      connectors.forEach(revealConnector);
+    }
     return;
   }
 
@@ -3034,6 +3079,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.to(line, {
         scaleY: 1,
         ease: 'none',
+        onStart: () => line.classList.add('ls-connector-visible'),
         scrollTrigger: {
           trigger: line.parentElement,
           start: 'top 102%',

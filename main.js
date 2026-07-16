@@ -3281,8 +3281,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const parser = new DOMParser();
     const archerSvg = prepareSvg(parser.parseFromString(archerRaw, 'image/svg+xml').documentElement, 'archer', variant, cfg);
     const targetSvg = prepareSvg(parser.parseFromString(targetRaw, 'image/svg+xml').documentElement, 'target', variant, cfg);
-    section.querySelector('[data-goal-archer-svg]').replaceChildren(archerSvg);
-    section.querySelector('[data-goal-target-svg]').replaceChildren(targetSvg);
+    const archerSlot = section.querySelector('[data-goal-archer-svg]');
+    const targetSlot = section.querySelector('[data-goal-target-svg]');
+    archerSlot.querySelectorAll('svg').forEach((node) => node.remove());
+    targetSlot.querySelectorAll('svg').forEach((node) => node.remove());
+    archerSlot.append(archerSvg);
+    targetSlot.append(targetSvg);
+    archerSlot.classList.add('is-svg-mounted');
+    targetSlot.classList.add('is-svg-mounted');
     return { cfg, archerSvg, targetSvg };
   };
 
@@ -3349,8 +3355,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return () => {
           active = false;
           tl?.kill();
-          section.querySelector('[data-goal-archer-svg]')?.replaceChildren();
-          section.querySelector('[data-goal-target-svg]')?.replaceChildren();
+          section.querySelector('[data-goal-archer-svg]')?.querySelectorAll('svg').forEach((node) => node.remove());
+          section.querySelector('[data-goal-target-svg]')?.querySelectorAll('svg').forEach((node) => node.remove());
+          section.querySelector('[data-goal-archer-svg]')?.classList.remove('is-svg-mounted');
+          section.querySelector('[data-goal-target-svg]')?.classList.remove('is-svg-mounted');
         };
       });
     };

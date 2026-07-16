@@ -21710,17 +21710,17 @@ body.app-page {
     right: .7rem;
     bottom: -.4rem;
     top: auto;
-    width: 34%;
-    height: 88%;
+    width: 43%;
+    height: 104%;
     object-fit: contain;
     object-position: right bottom;
-    transform: none;
+    transform: scale(1.08);
   }
 
   .page-home #programmi .program-choice-title {
     top: 50%;
     left: 1.55rem;
-    right: 9.4rem;
+    right: 11.2rem;
     transform: translateY(-50%);
     font-size: clamp(1.55rem, 7.2vw, 2.15rem);
     line-height: 1.32;
@@ -21787,19 +21787,19 @@ body.app-page {
   .page-home #programmi .program-choice-card img {
     right: clamp(.5rem, 1.5vw, 1.4rem);
     bottom: -6%;
-    width: min(64%, 32rem);
-    height: 84%;
-    transform: scale(1.16);
+    width: min(76%, 38rem);
+    height: 96%;
+    transform: scale(1.22);
   }
 
   .page-home #programmi .program-choice-card:hover img,
   .page-home #programmi .program-choice-card:focus-visible img,
   .page-home #programmi .program-choice-card.is-active img {
-    transform: scale(1.24);
+    transform: scale(1.32);
   }
 
   .page-home #programmi .program-choice-title {
-    right: 42%;
+    right: 48%;
     max-width: 12.5ch;
   }
 

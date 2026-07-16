@@ -21595,3 +21595,131 @@ body.app-page {
     display: none;
   }
 }
+
+/* Home programmi: PNG trasparenti con card espandibili orizzontalmente */
+.page-home #programmi .program-choice-cards {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(1rem, 2.6vw, 2rem);
+}
+
+.page-home #programmi .program-choice-card {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: clamp(18rem, 27vw, 25rem);
+  --program-card-art-offset: 0px;
+  border-radius: clamp(1.4rem, 2vw, 1.75rem);
+  background: linear-gradient(135deg, #d7e75d 0%, #cbdc4b 55%, #ddec77 100%);
+  box-shadow: none;
+  transform: none;
+  transition: flex-grow .42s cubic-bezier(.22, 1, .36, 1), flex-basis .42s cubic-bezier(.22, 1, .36, 1), box-shadow .3s ease;
+}
+
+.page-home #programmi .program-choice-card:nth-child(2) {
+  background: linear-gradient(135deg, #6f47f2 0%, #633ee8 55%, #7952ff 100%);
+  color: #fff;
+}
+
+.page-home #programmi .program-choice-card:hover,
+.page-home #programmi .program-choice-card:focus-visible {
+  flex-grow: 1.48;
+  transform: none;
+  box-shadow: none;
+}
+
+.page-home #programmi .program-choice-cards:has(.program-choice-card:hover) .program-choice-card:not(:hover),
+.page-home #programmi .program-choice-cards:has(.program-choice-card:focus-visible) .program-choice-card:not(:focus-visible) {
+  flex-grow: .82;
+}
+
+.page-home #programmi .program-choice-card img {
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 78%;
+  object-fit: contain;
+  object-position: center bottom;
+  mix-blend-mode: normal;
+  opacity: 1;
+  z-index: 0;
+  transform: scale(.98);
+  transform-origin: center bottom;
+  transition: transform .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+.page-home #programmi .program-choice-card:hover img,
+.page-home #programmi .program-choice-card:focus-visible img {
+  transform: scale(1.08);
+}
+
+.page-home #programmi .program-choice-card::after {
+  background: radial-gradient(circle at 78% 86%, rgba(255,255,255,.28), rgba(255,255,255,0) 42%), linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,0));
+  z-index: 0;
+}
+
+.page-home #programmi .program-choice-title {
+  z-index: 1;
+  font-size: clamp(1.75rem, 2.7vw, 3rem);
+  line-height: 1.2;
+  max-width: 13.5ch;
+}
+
+.page-home #programmi .program-choice-arrow {
+  z-index: 1;
+  color: currentColor;
+}
+
+@media (max-width: 780px) {
+  .page-home #programmi .program-choice-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .page-home #programmi .program-choice-card,
+  .page-home #programmi .program-choice-card:hover,
+  .page-home #programmi .program-choice-card:focus-visible {
+    height: clamp(10.7rem, 42vw, 13.6rem);
+    min-height: 0;
+    flex: none;
+    border-radius: 1.35rem;
+    transition: none;
+  }
+
+  .page-home #programmi .program-choice-cards:has(.program-choice-card:hover) .program-choice-card:not(:hover),
+  .page-home #programmi .program-choice-cards:has(.program-choice-card:focus-visible) .program-choice-card:not(:focus-visible) {
+    flex-grow: 1;
+  }
+
+  .page-home #programmi .program-choice-card {
+    background: linear-gradient(100deg, #f4cfaa 0%, #f4c89b 62%, #f8d8b5 100%);
+  }
+
+  .page-home #programmi .program-choice-card:nth-child(2) {
+    background: linear-gradient(100deg, #f7a987 0%, #f7a17d 62%, #ffbd9e 100%);
+    color: #0d1324;
+  }
+
+  .page-home #programmi .program-choice-card img,
+  .page-home #programmi .program-choice-card:hover img,
+  .page-home #programmi .program-choice-card:focus-visible img {
+    left: auto;
+    right: -.95rem;
+    bottom: -.78rem;
+    top: auto;
+    width: 42%;
+    height: 102%;
+    object-fit: contain;
+    object-position: right bottom;
+    transform: none;
+  }
+
+  .page-home #programmi .program-choice-title {
+    top: 50%;
+    left: 1.55rem;
+    right: 8.8rem;
+    transform: translateY(-50%);
+    font-size: clamp(1.55rem, 7.2vw, 2.15rem);
+    line-height: 1.32;
+    max-width: 9.5ch;
+  }
+}

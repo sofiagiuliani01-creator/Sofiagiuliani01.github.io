@@ -3271,7 +3271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.set(visual, { y: '20vh' });
       gsap.set(textBlock, { xPercent: 45 });
       gsap.set(chars, { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
-      gsap.set(target, { x: '55vw', rotation: 1, transformOrigin: '50% 50%' });
+      gsap.set(target, { x: '72vw', rotation: 1, transformOrigin: '50% 50%' });
       gsap.set(arrow, { x: -130, y: 0, rotation: 0, transformOrigin: '0% 50%' });
       const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom bottom', scrub: 2, invalidateOnRefresh: true } });
       tl.to(visual, { y: 0, ease: 'power3.out', duration: 0.18 }, 0)
@@ -3281,13 +3281,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .to(textBlock, { xPercent: 4, ease: 'none', duration: 0.09 }, 0.48)
         .to(textBlock, { xPercent: 0.7, ease: 'none', duration: 0.10 }, 0.57)
         .to(textBlock, { xPercent: 0, ease: 'none', duration: 0.09 }, 0.67)
-        .to(string, { attr: { d: 'M638 -58 L 575 358 L638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(string, { attr: { d: 'M646 -58 L 580 390 L646 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
         .to(backArm, { x: -92, y: -12, rotation: -3, transformOrigin: '70% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
         .to(frontArm, { x: 58, y: 8, scaleX: 1.08, transformOrigin: '0% 50%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
         .to(body, { rotation: -2.5, transformOrigin: '45% 55%', ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(bow, { attr: { d: 'M638 -58 Q 1032 558 638 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
+        .to(bow, { attr: { d: 'M646 -58 Q 1036 558 646 1175' }, ease: 'power2.inOut', duration: 0.26 }, 0.18)
         .to(arrow, { x: -210, y: 0, ease: 'power2.inOut', duration: 0.26 }, 0.18)
-        .to(string, { attr: { d: 'M638 -58 L 690 358 L638 1175' }, ease: 'power3.in', duration: 0.06 }, 0.44)
+        .to(string, { attr: { d: 'M646 -58 L 700 390 L646 1175' }, ease: 'power3.in', duration: 0.06 }, 0.44)
         .to(backArm, { x: -70, ease: 'power3.in', duration: 0.06 }, 0.44)
         .to(reversedChars, { opacity: 1, x: 0, skewX: 0, scaleY: 1, stagger: 0.0032, ease: 'power3.out', duration: 0.10 }, 0.45)
         .to(arrow, { x: 0, y: 0, rotation: 0.6, ease: 'power1.out', duration: 0.16 }, 0.49)

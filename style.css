@@ -22565,8 +22565,8 @@ body.app-page {
 .goal-archer-svg { width:100%; height:100%; overflow:visible; display:block; }
 .goal-archer-svg--mobile { display:none; }
 .goal-archer path:not(.goal-bow):not(.goal-string), .goal-target__outer { fill:var(--goal-aqua); }
-.goal-bow, .goal-string, .goal-arrow__shaft, .goal-arrow__tail { fill:none; stroke:var(--goal-aqua); stroke-width:4; vector-effect:non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; }
-.goal-string { stroke-width:3; }
+.goal-bow, .goal-string, .goal-arrow__shaft, .goal-arrow__tail { fill:none; stroke:var(--goal-aqua); stroke-width:5; vector-effect:non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; }
+.goal-string { stroke-width:4; }
 .goal-arrow__head { fill:var(--goal-aqua); }
 .goal-target__ring { fill:none; stroke:var(--goal-dark); stroke-width:2; vector-effect:non-scaling-stroke; }
 .goal-scene__content { position:relative; z-index:2; width:100%; height:100%; padding:12rem 32px 32px; pointer-events:none; }
@@ -22595,12 +22595,12 @@ body.app-page {
   .goal-scene__eyebrow { font-size:clamp(32px,5vw,48px); line-height:.9; }
   .goal-scene__title { font-size:clamp(86px,15vw,120px); line-height:.78; }
   .goal-scene__char { opacity:1; transform:none; }
-  .goal-target { transform:translateX(55vw); animation:goalMobileTarget 4.04s ease-in-out infinite; }
+  .goal-target { transform:translateX(72vw); animation:goalMobileTarget 4.04s ease-in-out infinite; }
   .goal-arrow { animation:goalMobileArrow 4.04s ease-in-out infinite; }
   .goal-string { animation:goalMobileString 4.04s ease-in-out infinite; }
 }
 @media (max-width:479px) { .goal-scene { padding:64px 24px; } .goal-scene__eyebrow { font-size:32px; line-height:.9; } .goal-scene__title { font-size:72px; line-height:.8; letter-spacing:-.065em; } .goal-scene__cursor { display:none!important; } .goal-scene__visual { height:520px; } .goal-sticker { width:132px; } .goal-sticker--two { width:104px; } }
-@keyframes goalMobileTarget { 0%,54%{transform:translateX(55vw) rotate(1deg)} 74%,100%{transform:translateX(0) rotate(0deg)} }
+@keyframes goalMobileTarget { 0%,54%{transform:translateX(72vw) rotate(1deg)} 74%,100%{transform:translateX(0) rotate(0deg)} }
 @keyframes goalMobileArrow { 0%,48%{transform:translateX(-210px)} 74%,100%{transform:translateX(0)} }
 @keyframes goalMobileString { 0%,42%{transform:translateX(-95px)} 55%,100%{transform:translateX(0)} }
 @media (prefers-reduced-motion:reduce) { .goal-scene { height:auto; min-height:100vh; padding:0; } .goal-scene__sticky { position:relative; height:100vh; } .goal-scene__char { opacity:1!important; transform:none!important; } .goal-archer { transform:translateX(-900px); } .goal-target, .goal-arrow, .goal-string { animation:none!important; } }

@@ -9,9 +9,6 @@
 <link href="trustpilot.css" rel="stylesheet"/>
 <!-- Trustpilot TrustBox -->
 <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
-<!-- GSAP & SCROLLTRIGGER -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body class="page-home">
 
@@ -660,13 +657,15 @@
 <section class="goal-sequence" data-goal-archer-section aria-label="Il mio obiettivo: nuove occasioni per ogni atleta">
   <div class="goal-sticky">
     <div class="goal-scene">
-      <div class="goal-svg-slot" data-goal-archer-svg aria-hidden="true">
-        <img class="goal-svg-fallback goal-svg-fallback--desktop" src="ls-goal-archer-desktop-simple.svg" alt="" loading="lazy" decoding="async">
-        <img class="goal-svg-fallback goal-svg-fallback--mobile" src="ls-goal-archer-mobile-simple.svg" alt="" loading="lazy" decoding="async">
-      </div>
-      <div class="goal-svg-slot" data-goal-target-svg aria-hidden="true">
-        <img class="goal-svg-fallback goal-svg-fallback--desktop" src="ls-goal-target-desktop.svg" alt="" loading="lazy" decoding="async">
-        <img class="goal-svg-fallback goal-svg-fallback--mobile" src="ls-goal-target-mobile.svg" alt="" loading="lazy" decoding="async">
+      <div class="goal-visual" aria-hidden="true">
+        <div class="goal-svg-slot" data-goal-archer-svg>
+          <img class="goal-svg-fallback goal-svg-fallback--desktop" src="ls-goal-archer-desktop-simple.svg" alt="" loading="lazy" decoding="async">
+          <img class="goal-svg-fallback goal-svg-fallback--mobile" src="ls-goal-archer-mobile-simple.svg" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="goal-svg-slot" data-goal-target-svg>
+          <img class="goal-svg-fallback goal-svg-fallback--desktop" src="ls-goal-target-desktop.svg" alt="" loading="lazy" decoding="async">
+          <img class="goal-svg-fallback goal-svg-fallback--mobile" src="ls-goal-target-mobile.svg" alt="" loading="lazy" decoding="async">
+        </div>
       </div>
       <div class="goal-scene__content">
         <div class="goal-scene__text" data-goal-text aria-label="IL MIO OBIETTIVO. NUOVE OCCASIONI PER OGNI ATLETA.">

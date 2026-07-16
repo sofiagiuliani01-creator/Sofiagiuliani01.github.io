@@ -22203,113 +22203,51 @@ body.app-page {
   transform: none !important;
 }
 
-/* === 2026-07-16: timeline home stile Theia con bordo e linea verde acqua === */
-#come-funziona .timeline {
-  --tl-acqua: #20d6c7;
-  --tl-acqua-rgb: 32, 214, 199;
-  isolation: isolate;
+/* === 2026-07-16: timeline PNG sempre visibili e più grandi dietro all'omino === */
+#come-funziona .timeline-step .step-visual,
+#come-funziona .timeline-step.rive-slot-active .step-visual {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
 }
 
-#come-funziona .timeline-line {
-  display: block !important;
-  position: absolute !important;
-  left: 50% !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  width: 3px !important;
-  transform: translateX(-50%) !important;
-  z-index: 0 !important;
-  pointer-events: none;
-}
-
-#come-funziona .timeline-line::before {
-  content: none !important;
-}
-
-#come-funziona .timeline-line-base,
-#come-funziona .timeline-line-active {
-  display: block !important;
-  position: absolute !important;
-  left: 50% !important;
-  width: 3px !important;
-  margin: 0 !important;
-  transform: translateX(-50%) !important;
-  border-radius: 999px !important;
-  background: var(--tl-acqua) !important;
-  box-shadow: 0 0 14px rgba(var(--tl-acqua-rgb), .28) !important;
-}
-
-#come-funziona .timeline-line-base {
-  top: 0 !important;
-  bottom: 0 !important;
-  height: auto !important;
-  opacity: .38;
-}
-
-#come-funziona .timeline-line-active {
-  top: 0 !important;
-  height: calc(100% * var(--tl-progress, 1)) !important;
-  opacity: 1;
-  transition: height .18s linear !important;
-}
-
-#come-funziona .timeline-steps {
-  position: relative;
-  z-index: 1;
-  gap: clamp(136px, 12vw, 230px) !important;
-  padding: 0 0 clamp(48px, 5vw, 84px) !important;
-}
-
-#come-funziona .timeline-step {
-  position: relative;
-  z-index: 1;
-}
-
-#come-funziona .timeline-step::before,
-#come-funziona .timeline-step::after {
-  content: none !important;
-  display: none !important;
-}
-
-#come-funziona .timeline-step .step-content {
-  position: relative;
-  z-index: 2;
-  overflow: hidden !important;
-  border: 3px solid rgba(var(--tl-acqua-rgb), .92) !important;
-  border-radius: clamp(38px, 3.2vw, 64px) !important;
-  background: #0f1117 !important;
-  box-shadow: none !important;
-}
-
-#come-funziona .timeline-step.is-active .step-content,
-#come-funziona .timeline-step.is-visible .step-content {
-  border-color: var(--tl-acqua) !important;
-  box-shadow: none !important;
+#come-funziona .timeline-step .step-generated-img,
+#come-funziona .timeline-step.rive-slot-active .step-generated-img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+  object-fit: contain;
 }
 
 @media (min-width: 981px) {
-  #come-funziona .timeline {
-    width: min(1640px, calc(100vw - 280px)) !important;
+  #come-funziona .timeline-step .step-visual {
+    width: min(100%, 820px) !important;
+    max-width: 820px !important;
   }
 
-  #come-funziona .timeline-step .step-content {
-    min-height: clamp(690px, 40vw, 780px) !important;
-    padding: clamp(72px, 5vw, 94px) clamp(72px, 5.2vw, 100px) !important;
+  #come-funziona .timeline-step .step-generated-img {
+    width: min(100%, 820px) !important;
+    max-width: 820px !important;
   }
 }
 
 @media (max-width: 980px) {
-  #come-funziona .timeline-line,
-  #come-funziona .timeline-line-base,
-  #come-funziona .timeline-line-active {
-    width: 2px !important;
+  #come-funziona .timeline-step .step-visual {
+    width: 100% !important;
+    max-width: 620px !important;
   }
 
-  #come-funziona .timeline-steps {
-    gap: 78px !important;
+  #come-funziona .timeline-step .step-generated-img {
+    width: 100% !important;
+    max-width: 620px !important;
+    min-height: 188px;
   }
+}
 
-  #come-funziona .timeline-step .step-content {
-    border-width: 2px !important;
+@media (max-width: 520px) {
+  #come-funziona .timeline-step .step-generated-img {
+    min-height: 154px;
   }
 }

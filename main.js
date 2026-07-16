@@ -3292,6 +3292,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return { cfg, archerSvg, targetSvg };
   };
 
+  const applyReducedState = ({ cfg, archerSvg, targetSvg }) => {
+    const qA = (selector) => archerSvg.querySelector(selector);
+    const qT = (selector) => targetSvg.querySelector(selector);
+    const archerParts = [qA('#goal-upper-body'), qA('#goal-head'), qA('#goal-lower-body'), qA('#goal-bow'), qA('#goal-string')].filter(Boolean);
+    archerParts.forEach((part) => part.setAttribute('transform', `translate(${cfg.archerExit} 0)`));
+    qT('#goal-target')?.removeAttribute('transform');
+    qT('#goal-arrow-shaft-dark')?.setAttribute('opacity', '1');
+    qT('#goal-arrow-shaft-dark')?.setAttribute('d', cfg.flexEnd);
+    qA('#goal-arrow-shaft')?.setAttribute('d', cfg.flexEnd);
+  };
+
   const buildTimeline = ({ cfg, archerSvg, targetSvg, mobile = false, reduced = false }) => {
     const qA = gsap.utils.selector(archerSvg), qT = gsap.utils.selector(targetSvg);
     const upper = qA('#goal-upper-body')[0], head = qA('#goal-head')[0], lower = qA('#goal-lower-body')[0], bow = qA('#goal-bow')[0], string = qA('#goal-string')[0], stringTop = qA('#goal-string-top')[0], stringBottom = qA('#goal-string-bottom')[0], arrow = qA('#goal-arrow')[0], arrowShaft = qA('#goal-arrow-shaft')[0];
@@ -3340,7 +3351,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const canAnimate = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
   if (!canAnimate) {
     const variant = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
-    mountVariant(variant).catch((error) => console.error('[goal sequence]', error));
+    mountVariant(variant)
+      .then((mounted) => applyReducedState(mounted))
+      .catch((error) => console.error('[goal sequence]', error));
     return;
   }
 

@@ -1938,6 +1938,22 @@ window.addEventListener('DOMContentLoaded', () => {
     let finalButtonActionPlayback = null;
     let nativePlaybackKey = null;
     let tractionLoopStartedAt = null;
+    let followRaf = 0;
+    let targetPoint = null;
+    let renderedPoint = null;
+    let lastFollowAt = performance.now();
+
+    const settleLayerThreshold = 0.16;
+    const maxFollowStepPx = 46;
+
+    function getResponsiveCanvasPadding() {
+      const isMobile = isRiveMobileViewport();
+      return {
+        x: layer.offsetWidth * (isMobile ? 0.18 : 0.14),
+        top: layer.offsetHeight * (isMobile ? 0.10 : 0.08),
+        bottom: layer.offsetHeight * (isMobile ? 0.15 : 0.12)
+      };
+    }
 
     const cardActions = ["card_1_action","working_at_desk","progress_monitor_card","optimize_results_card","healthy_lifestyle_card"];
     const cardActionDurations = {
@@ -2098,9 +2114,42 @@ window.addEventListener('DOMContentLoaded', () => {
       const timelineTopY = timelineRect ? timelineRect.top - layer.offsetHeight * 0.42 + tractionDividerOffset : heroDividerY;
       const tractionLift = 8;
       const y = Math.min(timelineTopY, heroDividerY) - tractionLift;
-      return { x, y };
+      return constrainLayerPoint({ x, y });
     }
-    function getCardSlotAnchor(index) { const card = steps[index]; const slot = getSlotForCard(card); if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; } const slotRect = getLocalRect(slot, section); if (!slotRect) return null; return { x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5, y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 }; }
+    function constrainLayerPoint(point) {
+      if (!point) return point;
+      const padding = getResponsiveCanvasPadding();
+      const minX = -padding.x;
+      const maxX = Math.max(minX, section.clientWidth - layer.offsetWidth + padding.x);
+      const minY = -layer.offsetHeight * 0.68;
+      const maxY = Math.max(minY, section.scrollHeight - layer.offsetHeight + padding.bottom);
+
+      return {
+        x: gsap.utils.clamp(minX, maxX, point.x),
+        y: gsap.utils.clamp(minY, maxY, point.y)
+      };
+    }
+
+    function getCardSlotAnchor(index) {
+      const card = steps[index];
+      const slot = getSlotForCard(card);
+      if (!card || !slot) { console.warn("[RIVE] Slot non trovato per card:", index + 1); return null; }
+      const slotRect = getLocalRect(slot, section);
+      if (!slotRect) return null;
+
+      // The Rive artboard has useful transparent breathing room around the
+      // figure. These tiny per-breakpoint offsets keep the visible body centred
+      // in the slot instead of centring the whole artboard, which makes the
+      // character look steadier on every card and viewport size.
+      const isMobile = isRiveMobileViewport();
+      const horizontalArtboardBias = layer.offsetWidth * (isMobile ? 0.015 : 0.025);
+      const verticalArtboardBias = layer.offsetHeight * (isMobile ? 0.025 : 0.035);
+
+      return constrainLayerPoint({
+        x: slotRect.left + slotRect.width * 0.5 - layer.offsetWidth * 0.5 + horizontalArtboardBias,
+        y: slotRect.top + slotRect.height * 0.5 - layer.offsetHeight * 0.5 + verticalArtboardBias
+      });
+    }
     function getCtaAnchor(mode = "lie") {
       const rect = getLocalRect(cta, section);
       if (!rect) { console.warn("[RIVE] CTA non trovata."); return null; }
@@ -2112,10 +2161,10 @@ window.addEventListener('DOMContentLoaded', () => {
       //   invece il salto un filo più alto per non farlo entrare nel bottone.
       const ctaTopRestOffset = layer.offsetHeight * (mode === "feet" ? 0.86 : 0.72);
 
-      return {
+      return constrainLayerPoint({
         x: rect.left + rect.width * 0.5 - layer.offsetWidth * 0.5,
         y: rect.top - ctaTopRestOffset
-      };
+      });
     }
 
     function getVisibleCtaLieAnchor() {
@@ -2214,12 +2263,68 @@ window.addEventListener('DOMContentLoaded', () => {
     const setLayerX = gsap.quickSetter(layer, "x", "px");
     const setLayerY = gsap.quickSetter(layer, "y", "px");
 
-    function setLayerAt(point) {
-      if (!point) return;
-      // Posizionamento diretto e leggero: evitare kill/resize a ogni frame
-      // elimina micro-scatti e lampeggi del canvas durante lo scroll.
+    function renderLayerPoint(point) {
+      renderedPoint = point;
       setLayerX(point.x);
       setLayerY(point.y);
+    }
+
+    function stopLayerFollow() {
+      if (followRaf) cancelAnimationFrame(followRaf);
+      followRaf = 0;
+    }
+
+    function followLayerTarget(now = performance.now()) {
+      followRaf = 0;
+      if (!targetPoint) return;
+
+      if (!renderedPoint) {
+        renderLayerPoint(targetPoint);
+        return;
+      }
+
+      const dt = Math.min(64, Math.max(1, now - lastFollowAt));
+      lastFollowAt = now;
+      const dx = targetPoint.x - renderedPoint.x;
+      const dy = targetPoint.y - renderedPoint.y;
+      const distance = Math.hypot(dx, dy);
+
+      if (distance <= settleLayerThreshold) {
+        renderLayerPoint(targetPoint);
+        return;
+      }
+
+      // Exponential smoothing keeps the figure flowing between scroll events,
+      // while the max step prevents a fast flick gesture from making the artboard
+      // overshoot the slot and briefly lose the character at screen edges.
+      const isUserScrolling = performance.now() - lastScrollMoveAt < 140;
+      const followStrength = isUserScrolling ? 0.34 : 0.22;
+      const eased = 1 - Math.pow(1 - followStrength, dt / 16.67);
+      const step = Math.min(distance * eased, maxFollowStepPx);
+      const ratio = step / distance;
+
+      renderLayerPoint({
+        x: renderedPoint.x + dx * ratio,
+        y: renderedPoint.y + dy * ratio
+      });
+
+      followRaf = requestAnimationFrame(followLayerTarget);
+    }
+
+    function setLayerAt(point, options = {}) {
+      if (!point) return;
+      const nextPoint = constrainLayerPoint(point);
+      targetPoint = nextPoint;
+      if (options.immediate || !renderedPoint) {
+        stopLayerFollow();
+        lastFollowAt = performance.now();
+        renderLayerPoint(nextPoint);
+        return;
+      }
+      if (!followRaf) {
+        lastFollowAt = performance.now();
+        followRaf = requestAnimationFrame(followLayerTarget);
+      }
     }
 
     function lerpPoint(from, to, progress) {
@@ -2488,6 +2593,9 @@ window.addEventListener('DOMContentLoaded', () => {
         setFinalTransitionMode(false);
         setTractionMode(false);
         tractionLoopStartedAt = null;
+        targetPoint = null;
+        renderedPoint = null;
+        stopLayerFollow();
         hideCharacter();
         return;
       }

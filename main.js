@@ -3198,7 +3198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // GoalArcherSection: sezione cinematografica autonoma con SVG inline e GSAP/ScrollTrigger.
 document.addEventListener('DOMContentLoaded', () => {
   const section = document.querySelector('[data-goal-archer-section]');
-  if (!section || typeof gsap === 'undefined') return;
+  if (!section) return;
 
   const ASSETS = {
     desktop: { archer: 'ls-goal-archer-desktop-simple.svg', target: 'ls-goal-target-desktop.svg' },
@@ -3330,6 +3330,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobile) tl.duration(4.037);
     return tl;
   };
+
+  const canAnimate = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+  if (!canAnimate) {
+    const variant = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
+    mountVariant(variant).catch((error) => console.error('[goal sequence]', error));
+    return;
+  }
 
   splitText();
   gsap.registerPlugin(ScrollTrigger);

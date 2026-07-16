@@ -2798,10 +2798,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const span = Math.max(1, lastBottom - firstTop);
     const progress = steps.length === 1 ? 1 : clamp((triggerY - firstTop) / span, 0, 1);
 
+    const activationY = viewportHeight * 0.58;
     let activeIndex = 0;
     stepBoxes.forEach((box, index) => {
-      const cardProgress = clamp((triggerY - box.top) / Math.max(1, box.height), 0, 1);
-      if (cardProgress >= 0.18) activeIndex = index;
+      const cardCenter = box.top + box.height * 0.5;
+      if (cardCenter <= activationY) activeIndex = index;
     });
 
     timeline.style.setProperty('--tl-progress', progress.toFixed(4));
@@ -2811,6 +2812,7 @@ document.addEventListener('DOMContentLoaded', () => {
       step.classList.toggle('is-visible', isPassed);
       step.classList.toggle('is-revealed', isPassed);
       step.classList.toggle('is-active', index === activeIndex);
+      step.classList.toggle('rive-slot-active', index === activeIndex);
     });
   }
 

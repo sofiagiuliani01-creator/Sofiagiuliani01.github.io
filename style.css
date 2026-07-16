@@ -21722,3 +21722,53 @@ body.app-page {
     max-width: 9.5ch;
   }
 }
+
+/* === Program assets: use each program PNG on its matching background === */
+.page-program-base.page-theia-inspired {
+  --program-asset-bg: #d9efff;
+  --program-asset-bg-2: #c8e8ff;
+  --program-asset-bg-3: #e6f6ff;
+}
+
+.page-program-premium.page-theia-inspired {
+  --program-asset-bg: #bdf3ee;
+  --program-asset-bg-2: #a8ebe4;
+  --program-asset-bg-3: #d2fbf7;
+}
+
+.page-program-base .tp-hero .tp-doctor-card,
+.page-program-premium .tp-hero .tp-doctor-card {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: end center;
+  border-radius: 2.2rem;
+  background: linear-gradient(135deg, var(--program-asset-bg) 0%, var(--program-asset-bg-2) 58%, var(--program-asset-bg-3) 100%);
+}
+
+.page-program-base .tp-hero .tp-doctor-card img,
+.page-program-premium .tp-hero .tp-doctor-card img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.page-home #programmi .program-choice-card[href="coaching-base.html"] {
+  background: linear-gradient(135deg, #d9efff 0%, #c8e8ff 58%, #e6f6ff 100%);
+}
+
+.page-home #programmi .program-choice-card[href="coaching-premium.html"] {
+  background: linear-gradient(135deg, #bdf3ee 0%, #a8ebe4 58%, #d2fbf7 100%);
+}
+
+@media (max-width: 780px) {
+  .page-home #programmi .program-choice-card[href="coaching-base.html"] {
+    background: linear-gradient(100deg, #d9efff 0%, #c8e8ff 62%, #e6f6ff 100%);
+  }
+
+  .page-home #programmi .program-choice-card[href="coaching-premium.html"] {
+    background: linear-gradient(100deg, #bdf3ee 0%, #a8ebe4 62%, #d2fbf7 100%);
+  }
+}

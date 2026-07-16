@@ -21606,18 +21606,18 @@ body.app-page {
 .page-home #programmi .program-choice-card {
   flex: 1 1 0;
   min-width: 0;
-  min-height: clamp(18rem, 27vw, 25rem);
+  min-height: clamp(20rem, 29vw, 27rem);
   --program-card-art-offset: 0px;
   border-radius: clamp(1.4rem, 2vw, 1.75rem);
-  background: linear-gradient(135deg, #d7e75d 0%, #cbdc4b 55%, #ddec77 100%);
+  background: linear-gradient(135deg, #d9efff 0%, #c8e8ff 58%, #e6f6ff 100%);
   box-shadow: none;
   transform: none;
   transition: flex-grow .42s cubic-bezier(.22, 1, .36, 1), flex-basis .42s cubic-bezier(.22, 1, .36, 1), box-shadow .3s ease;
 }
 
 .page-home #programmi .program-choice-card:nth-child(2) {
-  background: linear-gradient(135deg, #6f47f2 0%, #633ee8 55%, #7952ff 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #bdf3ee 0%, #a8ebe4 58%, #d2fbf7 100%);
+  color: #0d1324;
 }
 
 .page-home #programmi .program-choice-card:hover,
@@ -21633,22 +21633,22 @@ body.app-page {
 }
 
 .page-home #programmi .program-choice-card img {
-  inset: auto 0 0 0;
-  width: 100%;
-  height: 78%;
+  inset: auto 0 -4% auto;
+  width: min(56%, 27rem);
+  height: 76%;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: right bottom;
   mix-blend-mode: normal;
   opacity: 1;
   z-index: 0;
-  transform: scale(.98);
-  transform-origin: center bottom;
+  transform: scale(1.12);
+  transform-origin: right bottom;
   transition: transform .42s cubic-bezier(.22, 1, .36, 1);
 }
 
 .page-home #programmi .program-choice-card:hover img,
 .page-home #programmi .program-choice-card:focus-visible img {
-  transform: scale(1.08);
+  transform: scale(1.2);
 }
 
 .page-home #programmi .program-choice-card::after {
@@ -21659,7 +21659,7 @@ body.app-page {
   z-index: 1;
   font-size: clamp(1.75rem, 2.7vw, 3rem);
   line-height: 1.2;
-  max-width: 13.5ch;
+  max-width: 14ch;
 }
 
 .page-home #programmi .program-choice-arrow {
@@ -21690,11 +21690,11 @@ body.app-page {
   }
 
   .page-home #programmi .program-choice-card {
-    background: linear-gradient(100deg, #bfe3fb 0%, #bfe3fb 62%, #d7efff 100%);
+    background: linear-gradient(100deg, #d9efff 0%, #c8e8ff 62%, #e6f6ff 100%);
   }
 
   .page-home #programmi .program-choice-card:nth-child(2) {
-    background: linear-gradient(100deg, #ffb08f 0%, #ffa581 62%, #ffc5ab 100%);
+    background: linear-gradient(100deg, #bdf3ee 0%, #a8ebe4 62%, #d2fbf7 100%);
     color: #0d1324;
   }
 

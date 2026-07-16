@@ -22176,3 +22176,29 @@ body.app-page {
     max-width: 560px !important;
   }
 }
+
+/* === 2026-07-16: card e PNG sempre attivi, non legati allo scroll === */
+.page-home #programmi .program-choice-cards[data-animate],
+.page-home #programmi .program-choice-cards[data-animate].in-view {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+#come-funziona .timeline-step,
+#come-funziona .timeline-step.is-active,
+#come-funziona .timeline-step.is-visible,
+#come-funziona .timeline-step:not(.is-visible) {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
+#come-funziona .timeline-step .step-generated-img,
+#come-funziona .timeline-step.is-active .step-generated-img,
+#come-funziona .timeline-step.rive-slot-active .step-generated-img,
+#come-funziona .timeline-step:not(.is-visible) .step-generated-img {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}

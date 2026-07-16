@@ -23,6 +23,17 @@
       2: 'card-3',
       3: 'card-4',
       4: 'card-5'
-    }
+    },
+    // Anchor del personaggio dentro la PNG di ogni card.
+    // x/y sono percentuali del riquadro immagine; y indica la linea dei piedi,
+    // tenuta leggermente sopra il bordo inferiore per non uscire dalla grafica.
+    cardAnchors: {
+      0: { x: 0.50, y: 0.81 },
+      1: { x: 0.50, y: 0.81 },
+      2: { x: 0.50, y: 0.81 },
+      3: { x: 0.45, y: 0.80 },
+      4: { x: 0.56, y: 0.80 }
+    },
+    cardFootRatio: 0.94
   };
 })();

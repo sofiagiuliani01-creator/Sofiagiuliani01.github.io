@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1728 1650"
+     width="1728"
+     height="1650"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="target-mobile-title target-mobile-desc">
+  <title id="target-mobile-title">LS Goal — bersaglio mobile</title>
+  <desc id="target-mobile-desc">Bersaglio ellittico verde acqua nella composizione verticale mobile.</desc>
+
+  <style>
+    .target-line {
+      fill: none;
+      stroke: #002629;
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+
+  <rect id="goal-background" width="1728" height="1650" fill="#002629"/>
+
+  <g id="goal-target" data-animate="target" transform-origin="1570px 900px">
+    <ellipse id="goal-target-body" cx="1570" cy="900" rx="454" ry="770" fill="#94ffe4"/>
+    <ellipse id="goal-target-ring-outer" class="target-line" cx="1542" cy="900" rx="358" ry="650"/>
+    <ellipse id="goal-target-ring-inner" class="target-line" cx="1514" cy="900" rx="238" ry="438"/>
+  </g>
+
+  <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
+    <circle id="goal-target-impact-anchor" cx="1322" cy="785" r="2"/>
+  </g>
+</svg>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1728 1650"
+     width="1728"
+     height="1650"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="goal-mobile-title goal-mobile-desc">
+  <title id="goal-mobile-title">LS Goal — arciere geometrico mobile</title>
+  <desc id="goal-mobile-desc">Versione verticale ed essenziale del pittogramma con arciere, arco, freccia e bersaglio.</desc>
+
+  <style>
+    .aqua-fill { fill: #94ffe4; }
+    .aqua-line {
+      fill: none;
+      stroke: #94ffe4;
+      stroke-width: 5;
+      stroke-linecap: butt;
+      stroke-linejoin: miter;
+      vector-effect: non-scaling-stroke;
+    }
+    .dark-line {
+      fill: none;
+      stroke: #002629;
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+
+  <rect id="goal-background" width="1728" height="1650" fill="#002629"/>
+
+  <g id="goal-target" data-animate="target" transform="translate(820 0)" transform-origin="1570px 900px">
+    <ellipse id="goal-target-body" class="aqua-fill" cx="1570" cy="900" rx="454" ry="770"/>
+    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1542" cy="900" rx="358" ry="650"/>
+    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1514" cy="900" rx="238" ry="438"/>
+  </g>
+
+  <!-- Due sole masse: figura superiore e parte inferiore. -->
+  <g id="goal-archer" data-animate="archer" fill="#94ffe4">
+    <path id="goal-upper-body" data-animate="upper-body"
+          d="M31 754
+             L210 646
+             L286 608
+             L286 438
+             L438 438
+             L438 599
+             L590 631
+             L566 775
+             L682 775
+             L934 721
+             L982 708
+             L1054 644
+             L1143 747
+             L1059 823
+             L799 887
+             L656 920
+             L31 930 Z"/>
+
+    <path id="goal-lower-body" data-animate="lower-body"
+          d="M112 1650 L150 1265 L590 1068 L608 1650 Z"/>
+  </g>
+
+  <path id="goal-bow" data-animate="bow" class="aqua-line"
+        d="M710 206 C1080 498 1244 1200 748 1584"/>
+
+  <g id="goal-string" data-animate="string" class="aqua-line">
+    <line id="goal-string-top" x1="710" y1="206" x2="566" y2="775"/>
+    <line id="goal-string-bottom" x1="748" y1="1584" x2="566" y2="775"/>
+  </g>
+
+  <g id="goal-arrow" data-animate="arrow" transform-origin="566px 775px">
+    <line id="goal-arrow-shaft" class="aqua-line"
+          x1="566" y1="775" x2="1322" y2="785"/>
+  </g>
+
+  <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
+    <circle id="goal-bow-top-anchor" cx="710" cy="206" r="2"/>
+    <circle id="goal-string-hand-anchor" cx="566" cy="775" r="2"/>
+    <circle id="goal-bow-bottom-anchor" cx="748" cy="1584" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1322" cy="785" r="2"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1728 1117"
+     width="1728"
+     height="1117"
+     preserveAspectRatio="xMidYMid slice"
+     role="img"
+     aria-labelledby="target-desktop-title target-desktop-desc">
+  <title id="target-desktop-title">LS Goal — bersaglio desktop</title>
+  <desc id="target-desktop-desc">Bersaglio ellittico verde acqua in posa finale, con due anelli interni.</desc>
+
+  <style>
+    .target-line {
+      fill: none;
+      stroke: #002629;
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+
+  <rect id="goal-background" width="1728" height="1117" fill="#002629"/>
+
+  <g id="goal-target" data-animate="target" transform-origin="1538px 550px">
+    <ellipse id="goal-target-body" cx="1538" cy="550" rx="422" ry="744" fill="#94ffe4"/>
+    <ellipse id="goal-target-ring-outer" class="target-line" cx="1512" cy="550" rx="332" ry="620"/>
+    <ellipse id="goal-target-ring-inner" class="target-line" cx="1485" cy="550" rx="226" ry="432"/>
+  </g>
+
+  <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
+    <circle id="goal-target-impact-anchor" cx="1278" cy="524" r="2"/>
+  </g>
+</svg>

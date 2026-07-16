@@ -21499,7 +21499,17 @@ body.app-page {
   width: 100%;
   height: calc(100% - var(--program-card-art-offset));
   object-fit: cover;
+  mix-blend-mode: multiply;
   z-index: -1;
+}
+
+.page-home #programmi .program-choice-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0));
+  pointer-events: none;
+  z-index: 0;
 }
 
 .page-home #programmi .program-choice-title {
@@ -21546,6 +21556,11 @@ body.app-page {
     height: clamp(10.8rem, 27.8vw, 12.9rem);
     border-radius: 1.35rem;
     box-shadow: none;
+    background: linear-gradient(100deg, #b9ddf7 0%, #b9ddf7 62%, #cdeafd 100%);
+  }
+
+  .page-home #programmi .program-choice-card:nth-child(2) {
+    background: linear-gradient(100deg, #f5b092 0%, #f5b092 62%, #ffc2aa 100%);
   }
 
   .page-home #programmi .program-choice-card:hover,
@@ -21555,8 +21570,16 @@ body.app-page {
   }
 
   .page-home #programmi .program-choice-card img {
-    object-fit: cover;
-    object-position: center 34%;
+    inset: auto -0.85rem -0.95rem auto;
+    top: auto;
+    left: auto;
+    width: min(48%, 11.25rem);
+    height: 118%;
+    object-fit: contain;
+    object-position: right bottom;
+    mix-blend-mode: multiply;
+    opacity: 0.98;
+    z-index: 0;
   }
 
   .page-home #programmi .program-choice-title {
@@ -21567,6 +21590,7 @@ body.app-page {
     font-size: clamp(1.72rem, 7.25vw, 2.15rem);
     line-height: 1.28;
     letter-spacing: -0.06em;
+    z-index: 1;
   }
 
   .page-home #programmi .program-choice-arrow {

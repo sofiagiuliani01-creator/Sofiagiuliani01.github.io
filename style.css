@@ -22251,3 +22251,223 @@ body.app-page {
     min-height: 154px;
   }
 }
+
+/* === 2026-07-16 Theia-like home timeline cards (scoped override) === */
+#come-funziona {
+  --ls-aqua: var(--accent-aqua, #19dad5);
+  --ls-timeline-dark: #141414;
+  --ls-timeline-text-light: #ffffff;
+  --ls-timeline-text-dark: var(--text-dark, #111827);
+  position: relative;
+  isolation: isolate;
+}
+
+#come-funziona .timeline-fixed-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--ls-timeline-dark);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+#come-funziona > .container-wide,
+#come-funziona .timeline-scene {
+  position: relative;
+  z-index: 1;
+}
+
+#come-funziona .section-header.center {
+  margin-bottom: 36px !important;
+  color: var(--ls-timeline-text-dark);
+}
+
+#come-funziona .section-header.center h2 {
+  font-size: 43.2px !important;
+  line-height: 51.84px !important;
+  color: currentColor !important;
+}
+
+#come-funziona .timeline {
+  max-width: 1080px !important;
+  width: calc(100% - 48px) !important;
+  margin-inline: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  position: relative;
+  z-index: 2;
+}
+
+#come-funziona .timeline-steps {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+
+#come-funziona .timeline-line,
+#come-funziona .timeline-line-base,
+#come-funziona .timeline-line-active,
+#come-funziona .timeline-step::before,
+#come-funziona .timeline-step::after { display: none !important; }
+
+#come-funziona .timeline-step,
+#come-funziona .timeline-step.is-active,
+#come-funziona .timeline-step.is-visible,
+#come-funziona .timeline-step:not(.is-visible) {
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  opacity: 1;
+  transform: translate3d(0,0,0);
+  filter: none !important;
+  transition: none !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+#come-funziona .timeline-step .step-content {
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  box-sizing: border-box !important;
+  padding: 20px !important;
+  border: 2px solid var(--ls-aqua) !important;
+  border-radius: 39.6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  column-gap: 126.72px !important;
+  row-gap: 36px !important;
+  overflow: visible !important;
+  color: var(--ls-timeline-text-dark);
+}
+
+#come-funziona .timeline-step .step-row {
+  display: contents !important;
+}
+
+#come-funziona .timeline-step .step-visual {
+  grid-column: 1 !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 456px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#come-funziona .timeline-step .step-meta {
+  grid-column: 2 !important;
+  height: 456px !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 21.6px !important;
+  color: currentColor !important;
+}
+
+#come-funziona .timeline-step .step-meta h3 {
+  margin: 0 !important;
+  font-size: 28.8px !important;
+  line-height: 34.56px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  color: currentColor !important;
+}
+
+#come-funziona .timeline-step .step-meta p {
+  margin: 0 !important;
+  font-size: 15.84px !important;
+  line-height: 23.76px !important;
+  letter-spacing: 0.5px !important;
+  color: currentColor !important;
+}
+
+#come-funziona .timeline-step .step-kicker,
+#come-funziona .timeline-step .step-number { color: currentColor !important; }
+
+#come-funziona .timeline-step .step-number {
+  z-index: 0 !important;
+  pointer-events: none;
+}
+
+#come-funziona .timeline-step .step-content,
+#come-funziona .timeline-step .step-row,
+#come-funziona .timeline-step .step-visual,
+#come-funziona .timeline-step .step-meta { position: relative; z-index: 1; }
+
+#come-funziona .timeline-connector {
+  width: 2px !important;
+  height: 150px !important;
+  flex: none !important;
+  margin-inline: auto !important;
+}
+
+#come-funziona .timeline-connector-line {
+  width: 2px !important;
+  height: 100% !important;
+  background: var(--ls-aqua) !important;
+  transform-origin: top center !important;
+  transform: scaleY(0);
+}
+
+#come-funziona .timeline-cta { position: relative; z-index: 2; }
+
+@media (max-width: 991px) {
+  #come-funziona .timeline-step .step-content { column-gap: clamp(36px, 7vw, 86px) !important; }
+}
+
+@media (max-width: 767px) {
+  #come-funziona .section-header.center h2 { font-size: clamp(32px, 9vw, 43.2px) !important; line-height: 1.2 !important; }
+  #come-funziona .timeline-step,
+  #come-funziona .timeline-step.is-active,
+  #come-funziona .timeline-step.is-visible,
+  #come-funziona .timeline-step:not(.is-visible) { height: auto !important; min-height: 0 !important; }
+  #come-funziona .timeline-step .step-content {
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    padding: 20px !important;
+    border-radius: 28px !important;
+    row-gap: 20px !important;
+  }
+  #come-funziona .timeline-step .step-visual,
+  #come-funziona .timeline-step .step-meta { grid-column: 1 !important; height: auto !important; }
+  #come-funziona .timeline-connector { height: 96px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #come-funziona .timeline-step { opacity: 1 !important; transform: none !important; }
+  #come-funziona .timeline-connector-line { transform: scaleY(1) !important; }
+  #come-funziona .timeline-fixed-bg { opacity: 1; }
+}
+
+#come-funziona .timeline-step.ls-timeline-pending {
+  opacity: 0 !important;
+  transform: translate3d(0, 50px, 0) !important;
+}
+#come-funziona .timeline-step.ls-timeline-pending .step-content {
+  border-color: transparent !important;
+}
+#come-funziona .timeline-step.ls-timeline-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: opacity 1s ease, transform 1s ease !important;
+}
+#come-funziona .timeline-step.ls-timeline-visible .step-content {
+  border-color: var(--ls-aqua) !important;
+  transition: border-color .2s ease .8s !important;
+}
+@media (max-width: 767px) {
+  #come-funziona .timeline-step.ls-timeline-pending {
+    transform: translate3d(0, 30px, 0) !important;
+  }
+}

@@ -22277,6 +22277,14 @@ body.app-page {
   z-index: 1;
 }
 
+#come-funziona .timeline-scene {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 90 !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+}
+
 #come-funziona .section-header.center {
   margin-bottom: 36px !important;
   color: var(--ls-timeline-text-dark);

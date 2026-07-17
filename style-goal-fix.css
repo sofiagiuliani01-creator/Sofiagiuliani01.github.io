@@ -1,0 +1,172 @@
+/* ========================================================
+   GOAL ARCHER SECTION - SVG FALLBACK & VISIBILITY FIX
+   ======================================================== */
+
+/* Sezione principale */
+.goal-sequence {
+  position: relative;
+  width: 100%;
+  padding: 6rem 0;
+}
+
+.goal-sticky {
+  position: relative;
+  width: 100%;
+}
+
+.goal-scene {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Container visivi */
+.goal-visual {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  z-index: 1;
+}
+
+.goal-svg-slot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG inline o fallback images */
+.goal-svg-slot svg,
+.goal-svg-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Assicura che i fallback PNG siano visibili */
+.goal-svg-fallback {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.goal-svg-fallback--desktop {
+  display: none;
+}
+
+.goal-svg-fallback--mobile {
+  display: none;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .goal-svg-fallback--desktop {
+    display: block !important;
+  }
+  
+  .goal-svg-fallback--mobile {
+    display: none !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .goal-svg-fallback--desktop {
+    display: none !important;
+  }
+  
+  .goal-svg-fallback--mobile {
+    display: block !important;
+  }
+}
+
+/* Contenuto della scena */
+.goal-scene__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.goal-scene__text {
+  color: #f7f8fc;
+}
+
+.goal-scene__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: #19dad5;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.goal-scene__title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.2;
+  margin: 0;
+  font-weight: 700;
+}
+
+.goal-scene__line {
+  display: block;
+}
+
+.goal-scene__slanted {
+  font-style: italic;
+}
+
+.goal-scene__char,
+.goal-scene__space {
+  display: inline-block;
+  opacity: 1;
+}
+
+/* Stato statico - fallback visibile */
+.is-goal-static .goal-svg-slot svg,
+.is-goal-static .goal-svg-fallback {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Stato montato dinamicamente - SVG priorizzate */
+.is-goal-mounted .goal-svg-slot svg {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.is-goal-mounted.is-goal-static .goal-svg-fallback {
+  display: none !important;
+}
+
+/* Assicura visibilità anche se il caricamento fallisce */
+[data-goal-archer-svg],
+[data-goal-target-svg] {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fix per le immagini fallback PNG */
+[data-goal-archer-svg] img,
+[data-goal-target-svg] img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

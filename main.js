@@ -3431,9 +3431,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const applyStaticState = ({ cfg, archerSvg, targetSvg }) => {
     const rig = collectRig(archerSvg, targetSvg);
-    [rig.upper, rig.head, rig.lower, rig.bow, rig.string, rig.arrow, rig.target].forEach((node) => {
-      node.removeAttribute('transform');
-      node.removeAttribute('style');
+    const nodes = [
+      archerSvg,
+      targetSvg,
+      rig.upper,
+      rig.head,
+      rig.lower,
+      rig.bow,
+      rig.string,
+      rig.stringTop,
+      rig.stringBottom,
+      rig.arrow,
+      rig.arrowShaft,
+      rig.target,
+      rig.darkArrow
+    ];
+    window.gsap?.killTweensOf(nodes);
+    nodes.forEach((node) => {
+      node?.removeAttribute('transform');
+      node?.removeAttribute('style');
     });
     rig.upper.setAttribute('d', cfg.upperEnd);
     rig.head.setAttribute('d', cfg.head);
@@ -3448,12 +3464,41 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showSafeFallback = (error) => {
-    clearMountedSvgs();
-    section.classList.add('is-goal-static', 'is-goal-fallback');
-    section.classList.remove('is-goal-mounted', 'is-goal-animated');
+    const archerSvg = slots.archer.querySelector('svg');
+    const targetSvg = slots.target.querySelector('svg');
+    window.ScrollTrigger?.getAll?.()
+      .filter((trigger) => trigger.trigger === section)
+      .forEach((trigger) => trigger.kill());
+    if (archerSvg && targetSvg) {
+      const variant =
+        archerSvg.getAttribute('data-goal-svg') === 'mobile'
+          ? 'mobile'
+          : 'desktop';
+      applyStaticState({
+        cfg: PATHS[variant],
+        archerSvg,
+        targetSvg
+      });
+      slots.archer.classList.add('is-svg-mounted');
+      slots.target.classList.add('is-svg-mounted');
+      section.classList.add('is-goal-static', 'is-goal-mounted');
+      section.classList.remove('is-goal-animated', 'is-goal-fallback');
+    } else {
+      section.classList.add('is-goal-static', 'is-goal-fallback');
+      section.classList.remove('is-goal-mounted', 'is-goal-animated');
+      section.querySelectorAll('.goal-svg-fallback').forEach((image) => {
+        image.hidden = false;
+        image.style.opacity = '1';
+        image.style.visibility = 'visible';
+      });
+    }
     section.querySelector('[data-goal-text]')?.removeAttribute('style');
-    section.querySelectorAll('.goal-scene__char').forEach((node) => node.removeAttribute('style'));
-    if (error?.name !== 'AbortError') console.error('[goal sequence]', error);
+    section.querySelectorAll('.goal-scene__char').forEach((node) => {
+      node.removeAttribute('style');
+    });
+    if (error?.name !== 'AbortError') {
+      console.error('[goal sequence]', error);
+    }
   };
 
   const buildTimeline = ({ cfg, archerSvg, targetSvg, mobile = false, reduced = false }, gsapApi) => {
@@ -3557,10 +3602,12 @@ document.addEventListener('DOMContentLoaded', () => {
       media.add(query, () => {
         let active = true;
         let timeline;
+        let mountedState = null;
         const controller = new AbortController();
 
         mountVariant(variant, controller.signal)
           .then(async (mounted) => {
+            mountedState = mounted;
             if (!active) {
               mounted.archerSvg.remove();
               mounted.targetSvg.remove();
@@ -3580,7 +3627,13 @@ document.addEventListener('DOMContentLoaded', () => {
           controller.abort();
           timeline?.scrollTrigger?.kill();
           timeline?.kill();
-          clearMountedSvgs();
+          if (
+            mountedState?.archerSvg?.isConnected &&
+            mountedState?.targetSvg?.isConnected
+          ) {
+            applyStaticState(mountedState);
+            markMounted(true);
+          }
         };
       });
     };

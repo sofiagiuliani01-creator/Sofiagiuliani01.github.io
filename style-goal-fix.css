@@ -179,6 +179,10 @@
 /* Once the inline GSAP rig is mounted, remove every CSS/image duplicate from
    the animated layer. Leaving these fallbacks visible covers the inline SVGs,
    making the archer and bow look frozen even while the timeline is running. */
+.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted {
+  background-image: none;
+}
+
 .goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
   opacity: 0;
   visibility: hidden;
@@ -186,9 +190,11 @@
 }
 
 .goal-sequence.is-goal-animated .goal-svg-slot svg {
+  position: absolute;
+  inset: 0;
   opacity: 1;
   visibility: visible;
-  z-index: 1;
+  z-index: 2;
 }
 
 .goal-sequence.is-goal-static .goal-svg-slot svg,

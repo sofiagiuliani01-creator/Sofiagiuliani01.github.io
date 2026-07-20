@@ -40,6 +40,70 @@
   z-index: 2;
 }
 
+
+/* Hard visibility layer: render the archer/target SVGs as CSS backgrounds too.
+   This survives lazy <img> loading, inline-SVG mount timing, and browsers that
+   temporarily hide the fallback images while GSAP/ScrollTrigger initializes. */
+.goal-visual {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.goal-svg-slot {
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.goal-svg-slot[data-goal-archer-svg] {
+  background-image: url("ls-goal-archer-desktop-simple.svg");
+}
+
+.goal-svg-slot[data-goal-target-svg] {
+  background-image: url("ls-goal-target-desktop.svg");
+}
+
+.goal-svg-slot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  background: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: inherit;
+  transform-origin: center center;
+}
+
+.goal-svg-slot > svg,
+.goal-svg-fallback {
+  z-index: 1;
+}
+
+.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg]::before,
+.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-archer-svg]::before {
+  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg]::before,
+.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg]::before {
+  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot::before {
+  opacity: .92;
+}
+
+.goal-sequence.is-goal-mounted.is-goal-static .goal-svg-slot::before {
+  opacity: 1;
+}
+
 /* CSS fallback animation: subtle draw/release/reframe loop. */
 .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
   animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
@@ -66,6 +130,18 @@
 }
 
 @media (max-width: 767px) {
+  .goal-svg-slot {
+    background-size: contain;
+  }
+
+  .goal-svg-slot[data-goal-archer-svg] {
+    background-image: url("ls-goal-archer-mobile-simple.svg");
+  }
+
+  .goal-svg-slot[data-goal-target-svg] {
+    background-image: url("ls-goal-target-mobile.svg");
+  }
+
   .goal-svg-fallback--desktop {
     display: none;
   }
@@ -74,7 +150,9 @@
     display: block;
   }
 
-  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback,
+  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg]::before,
+  .goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg]::before {
     animation-name: goalFallbackTargetMobile;
   }
 }

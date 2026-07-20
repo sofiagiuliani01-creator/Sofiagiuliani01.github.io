@@ -96,13 +96,13 @@
   animation: none;
 }
 
-/* Once the scroll-driven inline SVG rig is mounted, hide image fallbacks so
-   the target fallback does not sit in its final centered pose while GSAP starts
-   the real target off-canvas and animates it into place. */
-.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-fallback {
-  opacity: 0;
-  visibility: hidden;
-  animation: none;
+/* Keep animated fallbacks visible after the inline SVGs mount. markMounted(false)
+   can run before ScrollTrigger has refreshed and painted the first GSAP frame,
+   so hiding these images here can briefly expose a blank teal panel on slower
+   tablet/Safari starts. Static rigs still hide fallbacks above once mounted. */
+.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
+  opacity: 1;
+  visibility: visible;
 }
 
 .goal-sequence.is-goal-animated .goal-svg-slot svg {

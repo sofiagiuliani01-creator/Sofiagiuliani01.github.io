@@ -41,11 +41,11 @@
 }
 
 /* CSS fallback animation: subtle draw/release/reframe loop. */
-.goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
+.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
   animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
 }
 
-.goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
   animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
 }
 
@@ -74,7 +74,7 @@
     display: block;
   }
 
-  .goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
     animation-name: goalFallbackTargetMobile;
   }
 }
@@ -87,10 +87,11 @@
   72%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 }
 
-/* Once the JS cinematic rig is ready, hide the fallback only for animated mode.
-   Static/reduced/failure modes keep the fallback visible, so there is never a
-   blank archer/target section. */
-.goal-sequence.is-goal-animated .goal-svg-fallback {
+/* Once inline SVGs mount, hide fallback images so static SVG rigs do not
+   duplicate or cover the CSS-only fallback. Failure/no-mounted mode keeps the
+   fallback visible, so there is never a blank archer/target section. */
+.goal-sequence.is-goal-animated .goal-svg-fallback,
+.goal-sequence.is-goal-mounted.is-goal-static .goal-svg-fallback {
   opacity: 0;
   visibility: hidden;
   animation: none;

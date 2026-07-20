@@ -3,8 +3,9 @@
    ========================================================
 
    Keep the original cinematic layout/ScrollTrigger rules in style.css intact.
-   This file only guarantees that the SVG fallback images are visible before the
-   inline SVGs mount, then hidden again once the animated SVG rig is ready.
+   This file guarantees that the SVG fallback images are visible before the
+   inline SVGs mount. If JavaScript/GSAP/fetch fails, the fallback still shows
+   an animated archer + target composition instead of a blank section.
 */
 
 .goal-svg-slot {
@@ -22,10 +23,46 @@
   display: block;
   opacity: 1;
   visibility: visible;
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
 .goal-svg-fallback--mobile {
   display: none;
+}
+
+.goal-svg-slot[data-goal-archer-svg] {
+  z-index: 1;
+}
+
+.goal-svg-slot[data-goal-target-svg] {
+  z-index: 2;
+}
+
+/* CSS fallback animation: subtle draw/release/reframe loop. */
+.goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
+  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+.goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+@keyframes goalFallbackArcher {
+  0%, 18% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  30% { transform: translate3d(-1.2%, .3%, 0) scale(1.006); opacity: 1; }
+  43%, 52% { transform: translate3d(-115%, 0, 0) scale(1); opacity: 1; }
+  52.01% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  62%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes goalFallbackTarget {
+  0%, 42% { transform: translate3d(44%, 0, 0) rotate(0deg); }
+  54% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  58% { transform: translate3d(0, 0, 0) rotate(2.2deg); }
+  64% { transform: translate3d(0, 0, 0) rotate(-1.2deg); }
+  72%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 }
 
 @media (max-width: 767px) {
@@ -36,25 +73,42 @@
   .goal-svg-fallback--mobile {
     display: block;
   }
+
+  .goal-sequence:not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+    animation-name: goalFallbackTargetMobile;
+  }
 }
 
-/* When JavaScript mounts the inline SVGs, remove fallback artwork so the
-   archer animation is no longer covered by the static SVG images. */
-.goal-svg-slot.is-svg-mounted .goal-svg-fallback,
-.goal-sequence.is-goal-mounted:not(.is-goal-static) .goal-svg-fallback {
+@keyframes goalFallbackTargetMobile {
+  0%, 42% { transform: translate3d(32%, 0, 0) rotate(0deg); }
+  54% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  58% { transform: translate3d(0, 0, 0) rotate(2deg); }
+  64% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  72%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+/* Once the JS cinematic rig is ready, hide the fallback only for animated mode.
+   Static/reduced/failure modes keep the fallback visible, so there is never a
+   blank archer/target section. */
+.goal-sequence.is-goal-animated .goal-svg-fallback {
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  animation: none;
 }
 
-.goal-sequence.is-goal-mounted:not(.is-goal-static) .goal-svg-slot svg {
+.goal-sequence.is-goal-animated .goal-svg-slot svg {
   opacity: 1;
   visibility: visible;
 }
 
-/* In static/reduced-motion mode keep the visible, non-animated composition. */
 .goal-sequence.is-goal-static .goal-svg-slot svg,
 .goal-sequence.is-goal-static .goal-svg-fallback {
   opacity: 1;
   visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal-sequence .goal-svg-fallback {
+    animation: none !important;
+  }
 }

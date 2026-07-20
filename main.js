@@ -3348,7 +3348,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       slot.classList.remove('is-svg-mounted');
     });
-    section.classList.remove('is-goal-mounted');
+    section.classList.remove('is-goal-mounted', 'is-goal-animated', 'is-goal-fallback');
   };
 
   const markMounted = (staticMode = false) => {
@@ -3356,6 +3356,8 @@ document.addEventListener('DOMContentLoaded', () => {
     slots.target.classList.add('is-svg-mounted');
     section.classList.add('is-goal-mounted');
     section.classList.toggle('is-goal-static', staticMode);
+    section.classList.toggle('is-goal-animated', !staticMode);
+    section.classList.remove('is-goal-fallback');
   };
 
   const mountVariant = async (variant, signal) => {
@@ -3411,7 +3413,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const showSafeFallback = (error) => {
     clearMountedSvgs();
-    section.classList.add('is-goal-static');
+    section.classList.add('is-goal-static', 'is-goal-fallback');
+    section.classList.remove('is-goal-mounted', 'is-goal-animated');
     section.querySelector('[data-goal-text]')?.removeAttribute('style');
     section.querySelectorAll('.goal-scene__char').forEach((node) => node.removeAttribute('style'));
     if (error?.name !== 'AbortError') console.error('[goal sequence]', error);

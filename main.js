@@ -3208,20 +3208,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const PATHS = {
     desktop: {
-      upperStart: 'M75 500 L245 390 L315 360 L450 365 L570 420 L545 520 L635 555 L790 650 L845 682 L970 770 L1045 865 L950 920 L735 790 L590 690 L80 650 Z',
-      upperEnd: 'M67 511 L247 408 L313 375 L448 367 L579 393 L558 514 L661 514 L892 467 L934 457 L1000 401 L1082 493 L1004 562 L769 616 L644 645 L67 654 Z',
-      head: 'M313 375 L313 243 L448 243 L448 367 Z',
-      bowTense: 'M605 -52 C849 214 957 797 650 1170', bowRelaxed: 'M605 -52 C765 250 820 790 650 1170',
-      arrow: 'M558 514 C912 526 1266 538 1620 550', flexUp: 'M558 514 C912 494 1266 498 1620 550', flexDown: 'M558 514 C912 548 1266 560 1620 550', flexSmall: 'M558 514 C912 514 1266 523 1620 550', flexEnd: 'M558 514 C912 526 1266 538 1620 550',
-      hand: [558, 514], stringRestX: 626, targetX: 895, targetOrigin: '1673 550', archerExit: -1900, arrowFlight: 835, arrowReframe: 435, targetClip: { cx: 1673, cy: 550, rx: 422, ry: 744 }
+      upperStart: 'M75 540 L245 430 L315 400 L450 405 L570 460 L545 560 L635 595 L790 690 L845 722 L970 810 L1045 905 L950 960 L735 830 L590 730 L80 690 Z',
+      upperEnd: 'M67 551 L247 448 L313 415 L448 407 L579 433 L558 554 L661 554 L892 507 L934 497 L1000 441 L1082 533 L1004 602 L769 656 L644 685 L67 694 Z',
+      head: 'M313 415 L313 283 L448 283 L448 407 Z',
+      bowTense: 'M605 -12 C849 254 957 837 650 1210', bowRelaxed: 'M605 -12 C765 290 820 830 650 1210',
+      arrow: 'M558 554 C932 556 1306 558 1680 550', flexUp: 'M558 554 C932 514 1306 518 1680 550', flexDown: 'M558 554 C932 588 1306 590 1680 550', flexSmall: 'M558 554 C932 554 1306 553 1680 550', flexEnd: 'M558 554 C932 556 1306 558 1680 550',
+      hand: [558, 554], stringRestX: 626, targetX: 955, targetOrigin: '1733 550', archerExit: -1900, arrowFlight: 895, arrowReframe: 495, targetClip: { cx: 1733, cy: 550, rx: 422, ry: 744 }
     },
     mobile: {
-      upperStart: 'M35 740 L205 620 L288 590 L440 600 L590 660 L565 775 L680 820 L900 980 L960 1020 L1080 1160 L1170 1280 L1050 1340 L800 1160 L650 970 L35 930 Z',
-      upperEnd: 'M31 754 L210 646 L286 608 L438 599 L590 631 L566 775 L682 775 L934 721 L982 708 L1054 644 L1143 747 L1059 823 L799 887 L656 920 L31 930 Z',
-      head: 'M286 608 L286 438 L438 438 L438 599 Z',
-      bowTense: 'M710 206 C1080 498 1244 1200 748 1584', bowRelaxed: 'M710 206 C930 530 1010 1180 748 1584',
-      arrow: 'M566 775 C932 812 1298 856 1664 900', flexUp: 'M566 775 C932 778 1298 820 1664 900', flexDown: 'M566 775 C932 835 1298 880 1664 900', flexSmall: 'M566 775 C932 798 1298 842 1664 900', flexEnd: 'M566 775 C932 812 1298 856 1664 900',
-      hand: [566, 775], stringRestX: 726, targetX: 970, targetOrigin: '1720 900', archerExit: -1900, arrowFlight: 850, arrowReframe: 450, targetClip: { cx: 1720, cy: 900, rx: 454, ry: 770 }
+      upperStart: 'M35 795 L205 675 L288 645 L440 655 L590 715 L565 830 L680 875 L900 1035 L960 1075 L1080 1215 L1170 1335 L1050 1395 L800 1215 L650 1025 L35 985 Z',
+      upperEnd: 'M31 809 L210 701 L286 663 L438 654 L590 686 L566 830 L682 830 L934 776 L982 763 L1054 699 L1143 802 L1059 878 L799 942 L656 975 L31 985 Z',
+      head: 'M286 663 L286 493 L438 493 L438 654 Z',
+      bowTense: 'M710 261 C1080 553 1244 1255 748 1639', bowRelaxed: 'M710 261 C930 585 1010 1235 748 1639',
+      arrow: 'M566 830 C948 847 1331 874 1714 900', flexUp: 'M566 830 C948 813 1331 838 1714 900', flexDown: 'M566 830 C948 870 1331 898 1714 900', flexSmall: 'M566 830 C948 833 1331 860 1714 900', flexEnd: 'M566 830 C948 847 1331 874 1714 900',
+      hand: [566, 830], stringRestX: 726, targetX: 1020, targetOrigin: '1770 900', archerExit: -1900, arrowFlight: 900, arrowReframe: 500, targetClip: { cx: 1770, cy: 900, rx: 454, ry: 770 }
     }
   };
 
@@ -3370,7 +3370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsapApi.set(rig.darkArrow, { opacity: 0, attr: { d: cfg.arrow } });
     gsapApi.set(rig.arrowShaft, { attr: { d: cfg.arrow } });
     gsapApi.set(rig.upper, { attr: { d: cfg.upperStart }, rotation: 12, x: -35, y: 45, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
-    gsapApi.set(rig.head, { rotation: 29, x: 12, y: 24, svgOrigin: mobile ? '360 599' : '380 367' });
+    gsapApi.set(rig.head, { rotation: 29, x: 12, y: 24, svgOrigin: mobile ? '360 654' : '380 407' });
     gsapApi.set([rig.bow, rig.string], { rotation: 28, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
     gsapApi.set(rig.arrow, { rotation: 37, x: -55, y: 70, svgOrigin: `${cfg.hand[0]} ${cfg.hand[1]}` });
     gsapApi.set(chars, mobile ? { opacity: 1, x: 0, skewX: 0, scaleY: 1 } : { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });

@@ -1,35 +1,51 @@
 /* ========================================================
-   GOAL ARCHER SECTION - SVG FALLBACK & VISIBILITY FIX
+   GOAL ARCHER SECTION - INLINE SVG VISIBILITY FIX
    ========================================================
 
-   Keep the original cinematic layout/ScrollTrigger rules in style.css intact.
-   This file guarantees that the SVG fallback images are visible before the
-   inline SVGs mount. If JavaScript/GSAP/fetch fails, the fallback still shows
-   an animated archer + target composition instead of a blank section.
+   The archer and target SVGs are embedded directly in index.html. This file
+   only controls inline-SVG visibility and intentionally avoids duplicate
+   background images, pseudo-elements, and fallback <img> layers that could
+   cover the GSAP-controlled rig.
 */
+
+.goal-visual,
+.goal-svg-slot {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 
 .goal-svg-slot {
   min-height: 300px;
 }
 
-.goal-svg-slot svg,
-.goal-svg-fallback {
+.goal-svg-slot > svg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
-}
-
-/* Fallback images must be visible while the inline SVGs are still loading. */
-.goal-svg-fallback {
-  display: block;
+  overflow: visible;
   opacity: 1;
   visibility: visible;
   pointer-events: none;
-  transform-origin: center center;
-  will-change: transform, opacity;
 }
 
-.goal-svg-fallback--mobile {
-  display: none;
+.goal-svg-slot > svg[data-goal-inline="mobile"],
+.goal-svg-slot > svg[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .goal-svg-slot > svg[data-goal-inline="desktop"] {
+    display: none !important;
+  }
+
+  .goal-svg-slot > svg[data-goal-inline="mobile"]:not([hidden]) {
+    display: block !important;
+  }
 }
 
 .goal-svg-slot[data-goal-archer-svg] {
@@ -40,192 +56,13 @@
   z-index: 2;
 }
 
-
-/* Hard visibility layer: render the archer/target SVGs as CSS backgrounds too.
-   This survives lazy <img> loading, inline-SVG mount timing, and browsers that
-   temporarily hide the fallback images while GSAP/ScrollTrigger initializes. */
-.goal-visual {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.goal-svg-slot {
-  opacity: 1 !important;
-  visibility: visible !important;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-.goal-svg-slot[data-goal-archer-svg] {
-  background-image: url("ls-goal-archer-desktop-simple.svg");
-}
-
-.goal-svg-slot[data-goal-target-svg] {
-  background-image: url("ls-goal-target-desktop.svg");
-}
-
-.goal-svg-slot::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
+.goal-sequence.is-goal-static .goal-svg-slot > svg {
   opacity: 1;
   visibility: visible;
-  pointer-events: none;
-  background: inherit;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: inherit;
-  transform-origin: center center;
-}
-
-.goal-svg-slot > svg,
-.goal-svg-fallback {
-  z-index: 1;
-}
-
-.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg]::before,
-.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-archer-svg]::before {
-  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg]::before,
-.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg]::before {
-  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot::before {
-  opacity: 0;
-  visibility: hidden;
-  animation: none;
-}
-
-.goal-sequence.is-goal-mounted.is-goal-static .goal-svg-slot::before {
-  opacity: 1;
-}
-
-/* CSS fallback animation: subtle draw/release/reframe loop. */
-.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
-  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-.goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
-  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-@keyframes goalFallbackArcher {
-  0%, 18% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-  30% { transform: translate3d(-1.2%, .3%, 0) scale(1.006); opacity: 1; }
-  43%, 52% { transform: translate3d(-115%, 0, 0) scale(1); opacity: 1; }
-  52.01% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
-  62%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
-}
-
-@keyframes goalFallbackTarget {
-  0%, 42% { transform: translate3d(180%, 0, 0) rotate(0deg); }
-  54% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  58% { transform: translate3d(0, 0, 0) rotate(2.2deg); }
-  64% { transform: translate3d(0, 0, 0) rotate(-1.2deg); }
-  72%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 }
 
 @media (max-width: 767px) {
   .goal-svg-slot {
-    background-size: contain;
-  }
-
-  .goal-svg-slot[data-goal-archer-svg] {
-    background-image: url("ls-goal-archer-mobile-simple.svg");
-  }
-
-  .goal-svg-slot[data-goal-target-svg] {
-    background-image: url("ls-goal-target-mobile.svg");
-  }
-
-  .goal-svg-fallback--desktop {
-    display: none;
-  }
-
-  .goal-svg-fallback--mobile {
-    display: block;
-  }
-
-  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback,
-  .goal-sequence:not(.is-goal-mounted):not(.is-goal-animated) .goal-svg-slot[data-goal-target-svg]::before,
-  .goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg]::before {
-    animation-name: goalFallbackTargetMobile;
-  }
-}
-
-@keyframes goalFallbackTargetMobile {
-  0%, 42% { transform: translate3d(150%, 0, 0) rotate(0deg); }
-  54% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  58% { transform: translate3d(0, 0, 0) rotate(2deg); }
-  64% { transform: translate3d(0, 0, 0) rotate(-1deg); }
-  72%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-}
-
-/* Once inline SVGs mount, hide fallback images so static SVG rigs do not
-   duplicate or cover the CSS-only fallback. Failure/no-mounted mode keeps the
-   fallback visible, so there is never a blank archer/target section. */
-.goal-sequence.is-goal-mounted.is-goal-static .goal-svg-fallback {
-  opacity: 0;
-  visibility: hidden;
-  animation: none;
-}
-
-/* Once the inline GSAP rig is mounted, remove every CSS/image duplicate from
-   the animated layer. Leaving these fallbacks visible covers the inline SVGs,
-   making the archer and bow look frozen even while the timeline is running. */
-.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted {
-  background-image: none;
-}
-
-.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
-  opacity: 0;
-  visibility: hidden;
-  animation: none;
-}
-
-.goal-sequence.is-goal-animated .goal-svg-slot svg {
-  position: absolute;
-  inset: 0;
-  opacity: 1;
-  visibility: visible;
-  z-index: 2;
-}
-
-.goal-sequence.is-goal-static .goal-svg-slot svg,
-.goal-sequence.is-goal-static .goal-svg-fallback {
-  opacity: 1;
-  visibility: visible;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .goal-sequence .goal-svg-fallback {
-    animation: none !important;
-  }
-}
-
-/* 2026-07-20: if the JS explicitly enters safe fallback mode (for example
-   because GSAP/ScrollTrigger was blocked), animate the real fallback <img>
-   layers as well as the background safety layer. */
-.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
-  opacity: 1 !important;
-  visibility: visible !important;
-  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
-  opacity: 1 !important;
-  visibility: visible !important;
-  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
-}
-
-@media (max-width: 767px) {
-  .goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
-    animation-name: goalFallbackTargetMobile;
+    min-height: 0;
   }
 }

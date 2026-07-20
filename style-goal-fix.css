@@ -97,7 +97,9 @@
 }
 
 .goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot::before {
-  opacity: .92;
+  opacity: 0;
+  visibility: hidden;
+  animation: none;
 }
 
 .goal-sequence.is-goal-mounted.is-goal-static .goal-svg-slot::before {
@@ -122,7 +124,7 @@
 }
 
 @keyframes goalFallbackTarget {
-  0%, 42% { transform: translate3d(44%, 0, 0) rotate(0deg); }
+  0%, 42% { transform: translate3d(180%, 0, 0) rotate(0deg); }
   54% { transform: translate3d(0, 0, 0) rotate(0deg); }
   58% { transform: translate3d(0, 0, 0) rotate(2.2deg); }
   64% { transform: translate3d(0, 0, 0) rotate(-1.2deg); }
@@ -158,7 +160,7 @@
 }
 
 @keyframes goalFallbackTargetMobile {
-  0%, 42% { transform: translate3d(32%, 0, 0) rotate(0deg); }
+  0%, 42% { transform: translate3d(150%, 0, 0) rotate(0deg); }
   54% { transform: translate3d(0, 0, 0) rotate(0deg); }
   58% { transform: translate3d(0, 0, 0) rotate(2deg); }
   64% { transform: translate3d(0, 0, 0) rotate(-1deg); }
@@ -174,13 +176,13 @@
   animation: none;
 }
 
-/* Keep animated fallbacks visible after the inline SVGs mount. markMounted(false)
-   can run before ScrollTrigger has refreshed and painted the first GSAP frame,
-   so hiding these images here can briefly expose a blank teal panel on slower
-   tablet/Safari starts. Static rigs still hide fallbacks above once mounted. */
+/* Once the inline GSAP rig is mounted, remove every CSS/image duplicate from
+   the animated layer. Leaving these fallbacks visible covers the inline SVGs,
+   making the archer and bow look frozen even while the timeline is running. */
 .goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
-  opacity: 1;
-  visibility: visible;
+  opacity: 0;
+  visibility: hidden;
+  animation: none;
 }
 
 .goal-sequence.is-goal-animated .goal-svg-slot svg {

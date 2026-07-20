@@ -3218,7 +3218,7 @@ document.addEventListener('DOMContentLoaded', () => {
       head: 'M313 375 L313 243 L448 243 L448 367 Z',
       bowTense: 'M605 -52 C849 214 957 797 650 1170', bowRelaxed: 'M605 -52 C765 250 820 790 650 1170',
       arrow: 'M558 514 C798 517.333 1038 520.667 1278 524', flexUp: 'M558 514 C798 492 1038 490 1278 524', flexDown: 'M558 514 C798 536 1038 538 1278 524', flexSmall: 'M558 514 C798 506 1038 507 1278 524', flexEnd: 'M558 514 C798 516 1038 520 1278 524',
-      hand: [558, 514], stringRestX: 626, targetX: 760, targetOrigin: '1538 550', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1538, cy: 550, rx: 422, ry: 744 }
+      hand: [558, 514], stringRestX: 626, targetX: 3200, targetOrigin: '1538 550', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1538, cy: 550, rx: 422, ry: 744 }
     },
     mobile: {
       upperStart: 'M35 740 L205 620 L288 590 L440 600 L590 660 L565 775 L680 820 L900 980 L960 1020 L1080 1160 L1170 1280 L1050 1340 L800 1160 L650 970 L35 930 Z',
@@ -3226,7 +3226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       head: 'M286 608 L286 438 L438 438 L438 599 Z',
       bowTense: 'M710 206 C1080 498 1244 1200 748 1584', bowRelaxed: 'M710 206 C930 530 1010 1180 748 1584',
       arrow: 'M566 775 C818 778.333 1070 781.667 1322 785', flexUp: 'M566 775 C818 749 1070 751 1322 785', flexDown: 'M566 775 C818 798 1070 800 1322 785', flexSmall: 'M566 775 C818 767 1070 768 1322 785', flexEnd: 'M566 775 C818 777 1070 782 1322 785',
-      hand: [566, 775], stringRestX: 726, targetX: 820, targetOrigin: '1570 900', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1570, cy: 900, rx: 454, ry: 770 }
+      hand: [566, 775], stringRestX: 726, targetX: 2800, targetOrigin: '1570 900', archerExit: -1900, arrowFlight: 700, arrowReframe: 300, targetClip: { cx: 1570, cy: 900, rx: 454, ry: 770 }
     }
   };
 

@@ -90,16 +90,27 @@
 /* Once inline SVGs mount, hide fallback images so static SVG rigs do not
    duplicate or cover the CSS-only fallback. Failure/no-mounted mode keeps the
    fallback visible, so there is never a blank archer/target section. */
-.goal-sequence.is-goal-animated .goal-svg-fallback,
 .goal-sequence.is-goal-mounted.is-goal-static .goal-svg-fallback {
   opacity: 0;
   visibility: hidden;
   animation: none;
 }
 
+/* Keep the image fallbacks visible below the mounted inline SVGs during the
+   scroll-driven version. On tablets (notably iPad Safari) the inline GSAP rig
+   can initialize while its first frame is still off-canvas; hiding the images
+   at that point leaves a blank teal scene. The inline SVGs stay above these
+   fallbacks, so the animated rig remains the primary layer whenever it draws. */
+.goal-sequence.is-goal-animated .goal-svg-fallback {
+  opacity: 1;
+  visibility: visible;
+  animation: none;
+}
+
 .goal-sequence.is-goal-animated .goal-svg-slot svg {
   opacity: 1;
   visibility: visible;
+  z-index: 1;
 }
 
 .goal-sequence.is-goal-static .goal-svg-slot svg,

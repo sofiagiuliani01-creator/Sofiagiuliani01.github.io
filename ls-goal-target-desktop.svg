@@ -18,13 +18,13 @@
     }
   </style>
 
-  <g id="goal-target" data-animate="target" transform-origin="1538px 550px">
-    <ellipse id="goal-target-body" cx="1538" cy="550" rx="422" ry="744" fill="#94ffe4"/>
-    <ellipse id="goal-target-ring-outer" class="target-line" cx="1512" cy="550" rx="332" ry="620"/>
-    <ellipse id="goal-target-ring-inner" class="target-line" cx="1485" cy="550" rx="226" ry="432"/>
+  <g id="goal-target" data-animate="target" transform-origin="1673px 550px">
+    <ellipse id="goal-target-body" cx="1673" cy="550" rx="422" ry="744" fill="#94ffe4"/>
+    <ellipse id="goal-target-ring-outer" class="target-line" cx="1647" cy="550" rx="332" ry="620"/>
+    <ellipse id="goal-target-ring-inner" class="target-line" cx="1620" cy="550" rx="226" ry="432"/>
   </g>
 
   <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
-    <circle id="goal-target-impact-anchor" cx="1278" cy="524" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1413" cy="524" r="2"/>
   </g>
 </svg>

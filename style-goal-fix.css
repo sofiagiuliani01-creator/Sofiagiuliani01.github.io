@@ -96,10 +96,10 @@
   animation: none;
 }
 
-/* Once the GSAP-controlled inline SVGs mount, keep the fallback art hidden.
-   This prevents the static archer/target images from showing underneath the
-   transparent animated SVG rig while ScrollTrigger moves elements off-canvas. */
-.goal-sequence.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
+/* Once the scroll-driven inline SVG rig is mounted, hide image fallbacks so
+   the target fallback does not sit in its final centered pose while GSAP starts
+   the real target off-canvas and animates it into place. */
+.goal-sequence.is-goal-mounted.is-goal-animated .goal-svg-fallback {
   opacity: 0;
   visibility: hidden;
   animation: none;

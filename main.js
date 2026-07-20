@@ -3586,6 +3586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeof window.gsap !== "undefined" &&
     typeof window.ScrollTrigger !== "undefined";
   if (!canAnimate) {
+    showSafeFallback(new Error('[GoalArcher] GSAP o ScrollTrigger non caricati'));
     console.error("[GoalArcher] GSAP o ScrollTrigger non caricati", {
       gsap: typeof window.gsap,
       scrollTrigger: typeof window.ScrollTrigger

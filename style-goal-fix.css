@@ -208,3 +208,24 @@
     animation: none !important;
   }
 }
+
+/* 2026-07-20: if the JS explicitly enters safe fallback mode (for example
+   because GSAP/ScrollTrigger was blocked), animate the real fallback <img>
+   layers as well as the background safety layer. */
+.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-archer-svg] .goal-svg-fallback {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: goalFallbackArcher 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+.goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: goalFallbackTarget 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+@media (max-width: 767px) {
+  .goal-sequence.is-goal-fallback .goal-svg-slot[data-goal-target-svg] .goal-svg-fallback {
+    animation-name: goalFallbackTargetMobile;
+  }
+}

@@ -71,7 +71,8 @@ if (burger && mainNav) {
 // Mostra tutti gli elementi marcati con data-animate (tra cui la CTA del questionario)
 // aggiungendo la classe usata dal CSS per renderli visibili.
 document.addEventListener('DOMContentLoaded', () => {
-  const animatedItems = Array.from(document.querySelectorAll('[data-animate]'));
+  const animatedItems = Array.from(document.querySelectorAll('[data-animate]'))
+    .filter((element) => !element.closest('[data-goal-archer-section]'));
   if (!animatedItems.length) return;
 
   const showItem = (item) => item.classList.add('in-view');

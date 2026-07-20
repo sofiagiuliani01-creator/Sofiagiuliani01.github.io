@@ -3206,11 +3206,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   if (!slots.archer || !slots.target) return;
 
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  const ASSETS = {
-    desktop: { archer: 'ls-goal-archer-desktop-simple.svg', target: 'ls-goal-target-desktop.svg' },
-    mobile: { archer: 'ls-goal-archer-mobile-simple.svg', target: 'ls-goal-target-mobile.svg' }
-  };
   const PATHS = {
     desktop: {
       upperStart: 'M75 500 L245 390 L315 360 L450 365 L570 420 L545 520 L635 555 L790 650 L845 682 L970 770 L1045 865 L950 920 L735 790 L590 690 L80 650 Z',
@@ -3252,136 +3247,34 @@ document.addEventListener('DOMContentLoaded', () => {
     return node;
   };
 
-  const abortError = () => {
-    const error = new Error('Caricamento SVG annullato');
-    error.name = 'AbortError';
-    return error;
+  const inlineSvgs = {
+    archer: {
+      desktop: slots.archer.querySelector('svg[data-goal-inline="desktop"]'),
+      mobile: slots.archer.querySelector('svg[data-goal-inline="mobile"]')
+    },
+    target: {
+      desktop: slots.target.querySelector('svg[data-goal-inline="desktop"]'),
+      mobile: slots.target.querySelector('svg[data-goal-inline="mobile"]')
+    }
   };
 
-  const loadSvg = (asset, signal) => new Promise((resolve, reject) => {
-    const url = new URL(asset, document.baseURI);
-    const request = new XMLHttpRequest();
-    const abort = () => {
-      request.abort();
-      reject(abortError());
-    };
-    if (signal?.aborted) {
-      reject(abortError());
-      return;
-    }
-    request.open('GET', url.href, true);
-    request.onload = () => {
-      signal?.removeEventListener('abort', abort);
-      if (request.status >= 200 && request.status < 300) {
-        resolve(request.responseText);
-      } else {
-        reject(new Error(`Impossibile caricare ${asset} (${request.status})`));
-      }
-    };
-    request.onerror = () => {
-      signal?.removeEventListener('abort', abort);
-      reject(new Error(`Impossibile caricare ${asset}`));
-    };
-    request.onabort = () => signal?.removeEventListener('abort', abort);
-    signal?.addEventListener('abort', abort, { once: true });
-    request.send();
-  });
-
-  const parseSvg = (source, asset) => {
-    const documentNode = new DOMParser().parseFromString(source, 'image/svg+xml');
-    const svg = documentNode.documentElement;
-    if (documentNode.querySelector('parsererror') || svg.localName !== 'svg') {
-      throw new Error(`SVG non valido: ${asset}`);
-    }
-    return svg;
-  };
-
-  const prepareSvg = (svg, kind, variant, cfg) => {
-    svg.setAttribute('aria-hidden', 'true');
-    svg.setAttribute('focusable', 'false');
-    svg.removeAttribute('role');
-    svg.removeAttribute('aria-labelledby');
-    svg.querySelector('title')?.remove();
-    svg.querySelector('desc')?.remove();
-    svg.querySelector('#goal-background')?.remove();
-    svg.querySelector('#goal-rig-guides')?.remove();
-
-    if (kind === 'archer') {
-      svg.querySelector('#goal-target')?.remove();
-      const upper = requireNode(svg, '#goal-upper-body');
-      upper.setAttribute('data-goal-part', 'upper');
-      const oldArrow = requireNode(svg, '#goal-arrow-shaft');
-      const lower = requireNode(svg, '#goal-lower-body');
-      const bow = requireNode(svg, '#goal-bow');
-      const string = requireNode(svg, '#goal-string');
-      const stringTop = requireNode(svg, '#goal-string-top');
-      const stringBottom = requireNode(svg, '#goal-string-bottom');
-      const arrowGroup = requireNode(svg, '#goal-arrow');
-      lower.setAttribute('data-goal-part', 'lower');
-      bow.setAttribute('data-goal-part', 'bow');
-      string.setAttribute('data-goal-part', 'string');
-      stringTop.setAttribute('data-goal-part', 'string-top');
-      stringBottom.setAttribute('data-goal-part', 'string-bottom');
-      arrowGroup.setAttribute('data-goal-part', 'arrow');
-
-      const head = document.createElementNS(SVG_NS, 'path');
-      head.setAttribute('id', 'goal-head');
-      head.setAttribute('data-animate', 'head');
-      head.setAttribute('data-goal-part', 'head');
-      head.setAttribute('fill', '#94ffe4');
-      head.setAttribute('d', cfg.head);
-      upper.setAttribute('d', cfg.upperEnd);
-      upper.after(head);
-
-      const arrow = document.createElementNS(SVG_NS, 'path');
-      Array.from(oldArrow.attributes).forEach((attribute) => {
-        if (!['x1', 'y1', 'x2', 'y2'].includes(attribute.name)) arrow.setAttribute(attribute.name, attribute.value);
+  const setInlineVariantVisibility = (variant) => {
+    Object.entries(inlineSvgs).forEach(([, variants]) => {
+      Object.entries(variants).forEach(([name, svg]) => {
+        if (!svg) return;
+        const active = name === variant;
+        svg.hidden = !active;
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('focusable', 'false');
+        svg.style.display = active ? 'block' : 'none';
       });
-      arrow.setAttribute('d', cfg.arrow);
-      arrow.setAttribute('data-goal-part', 'arrow-shaft');
-      oldArrow.replaceWith(arrow);
-    } else {
-      const target = requireNode(svg, '#goal-target');
-      target.setAttribute('data-goal-part', 'target');
-      requireNode(svg, '#goal-target-body');
-      requireNode(svg, '#goal-target-ring-outer');
-      requireNode(svg, '#goal-target-ring-inner');
-
-      const clipId = `goal-arrow-target-clip-${variant}`;
-      const defs = document.createElementNS(SVG_NS, 'defs');
-      const clipPath = document.createElementNS(SVG_NS, 'clipPath');
-      const ellipse = document.createElementNS(SVG_NS, 'ellipse');
-      clipPath.setAttribute('id', clipId);
-      ellipse.setAttribute('cx', cfg.targetClip.cx);
-      ellipse.setAttribute('cy', cfg.targetClip.cy);
-      ellipse.setAttribute('rx', cfg.targetClip.rx);
-      ellipse.setAttribute('ry', cfg.targetClip.ry);
-      clipPath.append(ellipse);
-      defs.append(clipPath);
-      svg.prepend(defs);
-
-      const dark = document.createElementNS(SVG_NS, 'path');
-      dark.setAttribute('id', 'goal-arrow-shaft-dark');
-      dark.setAttribute('data-goal-part', 'arrow-dark');
-      dark.setAttribute('d', cfg.arrow);
-      dark.setAttribute('stroke', '#002629');
-      dark.setAttribute('stroke-width', '5');
-      dark.setAttribute('fill', 'none');
-      dark.setAttribute('clip-path', `url(#${clipId})`);
-      dark.setAttribute('opacity', '0');
-      dark.setAttribute('vector-effect', 'non-scaling-stroke');
-      target.after(dark);
-    }
-    return svg;
+    });
   };
 
   const clearMountedSvgs = () => {
-    Object.values(slots).forEach((slot) => {
-      Array.from(slot.children).forEach((child) => {
-        if (child.localName === 'svg') child.remove();
-      });
-      slot.classList.remove('is-svg-mounted');
-    });
+    setInlineVariantVisibility('desktop');
+    slots.archer.classList.remove('is-svg-mounted');
+    slots.target.classList.remove('is-svg-mounted');
     section.classList.remove('is-goal-mounted', 'is-goal-animated', 'is-goal-fallback');
   };
 
@@ -3394,24 +3287,15 @@ document.addEventListener('DOMContentLoaded', () => {
     section.classList.remove('is-goal-fallback');
   };
 
-  const mountVariant = async (variant, signal) => {
+  const mountVariant = (variant) => {
     const cfg = PATHS[variant];
-    const assets = ASSETS[variant];
-    const [archerRaw, targetRaw] = await Promise.all([
-      loadSvg(assets.archer, signal),
-      loadSvg(assets.target, signal)
-    ]);
-    if (signal?.aborted) throw abortError();
-
-    const archerSvg = prepareSvg(parseSvg(archerRaw, assets.archer), 'archer', variant, cfg);
-    const targetSvg = prepareSvg(parseSvg(targetRaw, assets.target), 'target', variant, cfg);
-    archerSvg.setAttribute('data-goal-svg', variant);
-    targetSvg.setAttribute('data-goal-svg', variant);
-    if (signal?.aborted) throw abortError();
-
+    const archerSvg = inlineSvgs.archer[variant];
+    const targetSvg = inlineSvgs.target[variant];
+    if (!cfg || !archerSvg || !targetSvg) {
+      throw new Error(`SVG inline obiettivo incompleti per variante ${variant}`);
+    }
     clearMountedSvgs();
-    slots.archer.append(archerSvg);
-    slots.target.append(targetSvg);
+    setInlineVariantVisibility(variant);
     return { cfg, archerSvg, targetSvg };
   };
 
@@ -3464,8 +3348,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showSafeFallback = (error) => {
-    const archerSvg = slots.archer.querySelector('svg');
-    const targetSvg = slots.target.querySelector('svg');
+    const archerSvg = slots.archer.querySelector('svg:not([hidden])') || slots.archer.querySelector('svg');
+    const targetSvg = slots.target.querySelector('svg:not([hidden])') || slots.target.querySelector('svg');
     window.ScrollTrigger?.getAll?.()
       .filter((trigger) => trigger.trigger === section)
       .forEach((trigger) => trigger.kill());
@@ -3484,13 +3368,8 @@ document.addEventListener('DOMContentLoaded', () => {
       section.classList.add('is-goal-static', 'is-goal-mounted');
       section.classList.remove('is-goal-animated', 'is-goal-fallback');
     } else {
-      section.classList.add('is-goal-static', 'is-goal-fallback');
-      section.classList.remove('is-goal-mounted', 'is-goal-animated');
-      section.querySelectorAll('.goal-svg-fallback').forEach((image) => {
-        image.hidden = false;
-        image.style.opacity = '1';
-        image.style.visibility = 'visible';
-      });
+      section.classList.add('is-goal-static');
+      section.classList.remove('is-goal-mounted', 'is-goal-animated', 'is-goal-fallback');
     }
     section.querySelector('[data-goal-text]')?.removeAttribute('style');
     section.querySelectorAll('.goal-scene__char').forEach((node) => {
@@ -3608,16 +3487,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let active = true;
         let timeline;
         let mountedState = null;
-        const controller = new AbortController();
-
-        mountVariant(variant, controller.signal)
-          .then(async (mounted) => {
-            mountedState = mounted;
-            if (!active) {
-              mounted.archerSvg.remove();
-              mounted.targetSvg.remove();
-              return;
-            }
+        try {
+          const mounted = mountVariant(variant);
+          mountedState = mounted;
+          if (active) {
             timeline = buildTimeline({ ...mounted, mobile, reduced }, gsapApi);
             if (timeline) {
               console.log("[GoalArcher] timeline avviata", {
@@ -3626,16 +3499,16 @@ document.addEventListener('DOMContentLoaded', () => {
               });
             }
             markMounted(reduced);
-            await (document.fonts?.ready || Promise.resolve());
-            if (active && !reduced) requestAnimationFrame(() => ScrollTriggerApi.refresh());
-          })
-          .catch((error) => {
-            if (active && error?.name !== 'AbortError') showSafeFallback(error);
-          });
+            Promise.resolve(document.fonts?.ready || undefined).then(() => {
+              if (active && !reduced) requestAnimationFrame(() => ScrollTriggerApi.refresh());
+            });
+          }
+        } catch (error) {
+          if (active) showSafeFallback(error);
+        }
 
         return () => {
           active = false;
-          controller.abort();
           timeline?.scrollTrigger?.kill();
           timeline?.kill();
           if (

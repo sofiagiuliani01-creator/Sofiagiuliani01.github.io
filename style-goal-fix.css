@@ -96,14 +96,12 @@
   animation: none;
 }
 
-/* Keep the image fallbacks visible below the mounted inline SVGs during the
-   scroll-driven version. On tablets (notably iPad Safari) the inline GSAP rig
-   can initialize while its first frame is still off-canvas; hiding the images
-   at that point leaves a blank teal scene. The inline SVGs stay above these
-   fallbacks, so the animated rig remains the primary layer whenever it draws. */
-.goal-sequence.is-goal-animated .goal-svg-fallback {
-  opacity: 1;
-  visibility: visible;
+/* Once the GSAP-controlled inline SVGs mount, keep the fallback art hidden.
+   This prevents the static archer/target images from showing underneath the
+   transparent animated SVG rig while ScrollTrigger moves elements off-canvas. */
+.goal-sequence.is-goal-animated .goal-svg-slot.is-svg-mounted .goal-svg-fallback {
+  opacity: 0;
+  visibility: hidden;
   animation: none;
 }
 

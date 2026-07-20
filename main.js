@@ -3212,16 +3212,16 @@ document.addEventListener('DOMContentLoaded', () => {
       upperEnd: 'M67 551 L247 448 L313 415 L448 407 L579 433 L558 554 L661 554 L892 507 L934 497 L1000 441 L1082 533 L1004 602 L769 656 L644 685 L67 694 Z',
       head: 'M313 415 L313 283 L448 283 L448 407 Z',
       bowTense: 'M605 -12 C849 254 957 837 650 1210', bowRelaxed: 'M605 -12 C765 290 820 830 650 1210',
-      arrow: 'M558 554 C932 556 1306 558 1680 550', flexUp: 'M558 554 C932 514 1306 518 1680 550', flexDown: 'M558 554 C932 588 1306 590 1680 550', flexSmall: 'M558 554 C932 554 1306 553 1680 550', flexEnd: 'M558 554 C932 556 1306 558 1680 550',
-      hand: [558, 554], stringRestX: 626, targetX: 955, targetOrigin: '1733 550', archerExit: -1900, arrowFlight: 895, arrowReframe: 495, targetClip: { cx: 1733, cy: 550, rx: 422, ry: 744 }
+      arrow: 'M558 554 C885 556 1213 558 1540 550', flexUp: 'M558 554 C885 514 1213 518 1540 550', flexDown: 'M558 554 C885 588 1213 590 1540 550', flexSmall: 'M558 554 C885 554 1213 553 1540 550', flexEnd: 'M558 554 C885 556 1213 558 1540 550',
+      hand: [558, 554], stringRestX: 626, targetX: 955, targetOrigin: '1733 550', archerExit: -1900, arrowFlight: 1035, arrowReframe: 635, targetClip: { cx: 1733, cy: 550, rx: 422, ry: 744 }
     },
     mobile: {
       upperStart: 'M35 795 L205 675 L288 645 L440 655 L590 715 L565 830 L680 875 L900 1035 L960 1075 L1080 1215 L1170 1335 L1050 1395 L800 1215 L650 1025 L35 985 Z',
       upperEnd: 'M31 809 L210 701 L286 663 L438 654 L590 686 L566 830 L682 830 L934 776 L982 763 L1054 699 L1143 802 L1059 878 L799 942 L656 975 L31 985 Z',
       head: 'M286 663 L286 493 L438 493 L438 654 Z',
       bowTense: 'M710 261 C1080 553 1244 1255 748 1639', bowRelaxed: 'M710 261 C930 585 1010 1235 748 1639',
-      arrow: 'M566 830 C948 847 1331 874 1714 900', flexUp: 'M566 830 C948 813 1331 838 1714 900', flexDown: 'M566 830 C948 870 1331 898 1714 900', flexSmall: 'M566 830 C948 833 1331 860 1714 900', flexEnd: 'M566 830 C948 847 1331 874 1714 900',
-      hand: [566, 830], stringRestX: 726, targetX: 1020, targetOrigin: '1770 900', archerExit: -1900, arrowFlight: 900, arrowReframe: 500, targetClip: { cx: 1770, cy: 900, rx: 454, ry: 770 }
+      arrow: 'M566 830 C906 845 1239 871 1574 900', flexUp: 'M566 830 C906 813 1239 838 1574 900', flexDown: 'M566 830 C906 870 1239 898 1574 900', flexSmall: 'M566 830 C906 833 1239 860 1574 900', flexEnd: 'M566 830 C906 847 1239 874 1574 900',
+      hand: [566, 830], stringRestX: 726, targetX: 1020, targetOrigin: '1770 900', archerExit: -1900, arrowFlight: 1040, arrowReframe: 640, targetClip: { cx: 1770, cy: 900, rx: 454, ry: 770 }
     }
   };
 
@@ -3400,20 +3400,20 @@ document.addEventListener('DOMContentLoaded', () => {
       .to([rig.stringTop, rig.stringBottom], { attr: { x2: cfg.stringRestX, y2: cfg.hand[1] }, ease: 'power3.in', duration: 0.015 }, 0.300)
       .to(rig.bow, { attr: { d: cfg.bowRelaxed }, ease: 'power3.in', duration: 0.015 }, 0.300)
       .to(rig.upper, { x: -10, rotation: 0.6, duration: 0.015 }, 0.300)
-      .to(rig.arrow, { x: cfg.arrowFlight, ease: 'power3.in', duration: 0.085 }, 0.315)
-      .to(archerParts, { x: cfg.archerExit, ease: 'power2.in', duration: 0.080 }, 0.405)
-      .to(rig.arrow, { x: cfg.arrowReframe, ease: 'power2.inOut', duration: 0.050 }, 0.400)
-      .to(rig.target, { x: 0, ease: 'power2.inOut', duration: 0.090 }, 0.405)
-      .to(rig.arrow, { x: 0, ease: 'power2.inOut', duration: 0.050 }, 0.445)
-      .set(rig.darkArrow, { opacity: 1 }, 0.500)
-      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexUp }, duration: 0.020 }, 0.500)
-      .to(rig.target, { rotation: 3, svgOrigin: cfg.targetOrigin, duration: 0.020 }, 0.500)
-      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexDown }, duration: 0.020 }, 0.520)
-      .to(rig.target, { rotation: 2.3, duration: 0.020 }, 0.520)
-      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexSmall }, duration: 0.020 }, 0.540)
-      .to(rig.target, { rotation: 1.2, duration: 0.020 }, 0.540)
-      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.560)
-      .to(rig.target, { rotation: 0, duration: 0.040 }, 0.560);
+      .to(rig.arrow, { x: cfg.arrowFlight, ease: 'power3.in', duration: 0.145 }, 0.315)
+      .to(archerParts, { x: cfg.archerExit, ease: 'power2.in', duration: 0.080 }, 0.465)
+      .to(rig.arrow, { x: cfg.arrowReframe, ease: 'power2.inOut', duration: 0.050 }, 0.460)
+      .to(rig.target, { x: 0, ease: 'power2.inOut', duration: 0.090 }, 0.465)
+      .to(rig.arrow, { x: 0, ease: 'power2.inOut', duration: 0.050 }, 0.505)
+      .set(rig.darkArrow, { opacity: 1 }, 0.560)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexUp }, duration: 0.020 }, 0.560)
+      .to(rig.target, { rotation: 3, svgOrigin: cfg.targetOrigin, duration: 0.020 }, 0.560)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexDown }, duration: 0.020 }, 0.580)
+      .to(rig.target, { rotation: 2.3, duration: 0.020 }, 0.580)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexSmall }, duration: 0.020 }, 0.600)
+      .to(rig.target, { rotation: 1.2, duration: 0.020 }, 0.600)
+      .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.620)
+      .to(rig.target, { rotation: 0, duration: 0.040 }, 0.620);
 
     if (!mobile) {
       timeline

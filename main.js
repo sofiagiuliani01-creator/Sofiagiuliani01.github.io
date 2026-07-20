@@ -3445,9 +3445,16 @@ document.addEventListener('DOMContentLoaded', () => {
     gsapApi.set(chars, mobile ? { opacity: 1, x: 0, skewX: 0, scaleY: 1 } : { opacity: 0, x: -80, skewX: 14, scaleY: 0.95 });
     gsapApi.set(textBlock, mobile ? { x: 0, y: 0 } : { x: '-6vw', y: '2vh' });
 
-    const timeline = gsapApi.timeline(mobile
-      ? { repeat: -1, repeatDelay: 0, defaults: { ease: 'none' } }
-      : { defaults: { ease: 'none' }, scrollTrigger: { trigger: section, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true } });
+    const timeline = gsapApi.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: mobile ? 0.65 : 1,
+        invalidateOnRefresh: true
+      }
+    });
 
     timeline.to({ clock: 0 }, { clock: 1, duration: 1 }, 0)
       .to(rig.upper, { attr: { d: cfg.upperEnd }, rotation: 0, x: 0, y: 0, ease: 'power2.out', duration: 0.08 }, 0)
@@ -3477,7 +3484,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .to([rig.arrowShaft, rig.darkArrow], { attr: { d: cfg.flexEnd }, duration: 0.040 }, 0.560)
       .to(rig.target, { rotation: 0, duration: 0.040 }, 0.560);
 
-    if (mobile) timeline.duration(4.037);
     return timeline;
   };
 

@@ -22596,21 +22596,22 @@ body.app-page {
 .goal-sequence.is-goal-static .goal-scene__char { opacity:1!important; transform:none!important; }
 
 @media (max-width:767px) {
-  .goal-sequence { height:auto; min-height:0; padding:clamp(64px,10vw,96px) 24px; overflow:hidden; }
-  .goal-sticky { position:relative; top:auto; height:auto; overflow:visible; }
-  .goal-scene { height:auto; min-height:0; display:flex; flex-direction:column; overflow:visible; }
+  .goal-sequence { height:420svh; min-height:100svh; padding:0 24px; overflow:clip; }
+  .goal-sticky { position:sticky; top:0; height:100svh; overflow:hidden; }
+  .goal-scene { height:100svh; min-height:100svh; display:flex; flex-direction:column; overflow:hidden; justify-content:center; }
   .goal-scene__content { position:relative; inset:auto; order:1; }
   .goal-scene__text { position:relative; left:auto; bottom:auto; width:100%; }
   .goal-scene__eyebrow { font-size:clamp(30px,8vw,42px); line-height:.9; }
   .goal-scene__title { font-size:clamp(68px,18vw,112px); line-height:.8; letter-spacing:-.065em; }
   .goal-scene__char { opacity:1; transform:none; }
-  .goal-visual { position:relative; inset:auto; order:2; width:100%; height:clamp(520px,125vw,760px); margin-top:24px; overflow:hidden; }
+  .goal-visual { position:relative; inset:auto; order:2; width:100%; height:min(62svh, clamp(520px,125vw,760px)); margin-top:24px; overflow:hidden; flex:0 0 auto; }
   .goal-svg-slot { position:absolute; inset:0; width:100%; height:100%; overflow:hidden; }
   .goal-svg-slot > svg, .goal-svg-fallback { position:absolute; inset:0; }
   .goal-svg-fallback--desktop { display:none; }
   .goal-svg-fallback--mobile { display:block; object-fit:contain; }
-  .goal-sequence.is-goal-static .goal-sticky,
-  .goal-sequence.is-goal-static .goal-scene { min-height:0; }
+  .goal-sequence.is-goal-static { height:auto; min-height:100svh; padding:clamp(64px,10vw,96px) 24px; overflow:hidden; }
+  .goal-sequence.is-goal-static .goal-sticky { position:relative; top:auto; height:auto; overflow:visible; }
+  .goal-sequence.is-goal-static .goal-scene { height:auto; min-height:0; overflow:visible; }
 }
 @media (prefers-reduced-motion:reduce) {
   .goal-sequence { height:auto; min-height:100svh; }

@@ -68,13 +68,13 @@
 
   <g id="goal-arrow" data-animate="arrow" transform-origin="566px 775px">
     <line id="goal-arrow-shaft" class="aqua-line"
-          x1="566" y1="775" x2="1472" y2="785"/>
+          x1="566" y1="775" x2="1664" y2="900"/>
   </g>
 
   <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
     <circle id="goal-bow-top-anchor" cx="710" cy="206" r="2"/>
     <circle id="goal-string-hand-anchor" cx="566" cy="775" r="2"/>
     <circle id="goal-bow-bottom-anchor" cx="748" cy="1584" r="2"/>
-    <circle id="goal-target-impact-anchor" cx="1472" cy="785" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1664" cy="900" r="2"/>
   </g>
 </svg>

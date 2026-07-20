@@ -3576,16 +3576,20 @@ document.addEventListener('DOMContentLoaded', () => {
     return timeline;
   };
 
-  const canAnimate = Boolean(window.gsap && window.ScrollTrigger);
+  console.log("[GoalArcher dependencies]", {
+    gsap: typeof window.gsap,
+    scrollTrigger: typeof window.ScrollTrigger,
+    gsapVersion: window.gsap?.version || null
+  });
+
+  const canAnimate =
+    typeof window.gsap !== "undefined" &&
+    typeof window.ScrollTrigger !== "undefined";
   if (!canAnimate) {
-    section.classList.add('is-goal-static');
-    const variant = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
-    mountVariant(variant)
-      .then((mounted) => {
-        applyStaticState(mounted);
-        markMounted(true);
-      })
-      .catch(showSafeFallback);
+    console.error("[GoalArcher] GSAP o ScrollTrigger non caricati", {
+      gsap: typeof window.gsap,
+      scrollTrigger: typeof window.ScrollTrigger
+    });
     return;
   }
 
@@ -3614,6 +3618,12 @@ document.addEventListener('DOMContentLoaded', () => {
               return;
             }
             timeline = buildTimeline({ ...mounted, mobile, reduced }, gsapApi);
+            if (timeline) {
+              console.log("[GoalArcher] timeline avviata", {
+                mobile,
+                duration: timeline.duration()
+              });
+            }
             markMounted(reduced);
             await (document.fonts?.ready || Promise.resolve());
             if (active && !reduced) requestAnimationFrame(() => ScrollTriggerApi.refresh());

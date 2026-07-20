@@ -2,8 +2,9 @@
    GOAL ARCHER SECTION - INLINE SVG VISIBILITY FIX
    ========================================================
 
-   The archer and target SVGs are embedded directly in index.html. This file
-   only controls inline-SVG visibility and intentionally avoids duplicate
+   The desktop and mobile SVGs are embedded directly in index.html, and each
+   SVG contains both the archer and target. This file only controls inline-SVG
+   visibility and intentionally avoids duplicate
    background images, pseudo-elements, and fallback <img> layers that could
    cover the GSAP-controlled rig.
 */
@@ -33,8 +34,7 @@
   pointer-events: none;
 }
 
-.goal-svg-slot > svg[data-goal-inline="mobile"],
-.goal-svg-slot > svg[hidden] {
+.goal-svg-slot > svg[data-goal-inline="mobile"] {
   display: none !important;
 }
 
@@ -43,17 +43,13 @@
     display: none !important;
   }
 
-  .goal-svg-slot > svg[data-goal-inline="mobile"]:not([hidden]) {
+  .goal-svg-slot > svg[data-goal-inline="mobile"] {
     display: block !important;
   }
 }
 
 .goal-svg-slot[data-goal-archer-svg] {
   z-index: 1;
-}
-
-.goal-svg-slot[data-goal-target-svg] {
-  z-index: 2;
 }
 
 .goal-sequence.is-goal-static .goal-svg-slot > svg {

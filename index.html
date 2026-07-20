@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Leonardo Santini | Online Fitness Coaching</title>
 <link href="style.css" rel="stylesheet"/>
-<link href="style-goal-fix.css" rel="stylesheet"/>
+<link href="style-goal-fix.css?v=20260720-2" rel="stylesheet"/>
 <link href="trustpilot.css" rel="stylesheet"/>
 <!-- Trustpilot TrustBox -->
 <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
@@ -661,6 +661,7 @@
       <div class="goal-visual" aria-hidden="true">
         <div class="goal-svg-slot" data-goal-archer-svg>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1728 1117" width="1728" height="1117" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" data-goal-svg="desktop" data-goal-inline="desktop">
+  <defs><clipPath id="goal-arrow-target-clip-desktop"><ellipse cx="1538" cy="550" rx="422" ry="744" /></clipPath></defs>
   <style>
     .aqua-fill { fill: #94ffe4; }
     .aqua-line {
@@ -699,8 +700,17 @@
   <g id="goal-arrow" data-animate="arrow" transform-origin="558px 514px" data-goal-part="arrow">
     <path id="goal-arrow-shaft" class="aqua-line" d="M558 514 C798 517.333 1038 520.667 1278 524" data-goal-part="arrow-shaft" /></g>
 
+  <g id="goal-target" data-animate="target" transform-origin="1538px 550px" data-goal-part="target">
+    <ellipse id="goal-target-body" cx="1538" cy="550" rx="422" ry="744" fill="#94ffe4" />
+    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1512" cy="550" rx="332" ry="620" />
+    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1485" cy="550" rx="226" ry="432" />
+  </g>
+
+  <path id="goal-arrow-shaft-dark" data-goal-part="arrow-dark" d="M558 514 C798 517.333 1038 520.667 1278 524" stroke="#002629" stroke-width="5" fill="none" clip-path="url(#goal-arrow-target-clip-desktop)" opacity="0" vector-effect="non-scaling-stroke" />
+
   </svg>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1728 1650" width="1728" height="1650" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" data-goal-svg="mobile" data-goal-inline="mobile">
+  <defs><clipPath id="goal-arrow-target-clip-mobile"><ellipse cx="1570" cy="900" rx="454" ry="770" /></clipPath></defs>
   <style>
     .aqua-fill { fill: #94ffe4; }
     .aqua-line {
@@ -735,43 +745,15 @@
   <g id="goal-arrow" data-animate="arrow" transform-origin="566px 775px" data-goal-part="arrow">
     <path id="goal-arrow-shaft" class="aqua-line" d="M566 775 C818 778.333 1070 781.667 1322 785" data-goal-part="arrow-shaft" /></g>
 
-  </svg>
-        </div>
-        <div class="goal-svg-slot" data-goal-target-svg>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1728 1117" width="1728" height="1117" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" data-goal-svg="desktop" data-goal-inline="desktop">
-  <defs><clipPath id="goal-arrow-target-clip-desktop"><ellipse cx="1538" cy="550" rx="422" ry="744" /></clipPath></defs><style>
-    .target-line {
-      fill: none;
-      stroke: #002629;
-      stroke-width: 3;
-      vector-effect: non-scaling-stroke;
-    }
-  </style>
-
-  <g id="goal-target" data-animate="target" transform-origin="1538px 550px" data-goal-part="target">
-    <ellipse id="goal-target-body" cx="1538" cy="550" rx="422" ry="744" fill="#94ffe4" />
-    <ellipse id="goal-target-ring-outer" class="target-line" cx="1512" cy="550" rx="332" ry="620" />
-    <ellipse id="goal-target-ring-inner" class="target-line" cx="1485" cy="550" rx="226" ry="432" />
-  </g>
-
-  <path id="goal-arrow-shaft-dark" data-goal-part="arrow-dark" d="M558 514 C798 517.333 1038 520.667 1278 524" stroke="#002629" stroke-width="5" fill="none" clip-path="url(#goal-arrow-target-clip-desktop)" opacity="0" vector-effect="non-scaling-stroke" /></svg>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1728 1650" width="1728" height="1650" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" data-goal-svg="mobile" data-goal-inline="mobile">
-  <defs><clipPath id="goal-arrow-target-clip-mobile"><ellipse cx="1570" cy="900" rx="454" ry="770" /></clipPath></defs><style>
-    .target-line {
-      fill: none;
-      stroke: #002629;
-      stroke-width: 3;
-      vector-effect: non-scaling-stroke;
-    }
-  </style>
-
   <g id="goal-target" data-animate="target" transform-origin="1570px 900px" data-goal-part="target">
     <ellipse id="goal-target-body" cx="1570" cy="900" rx="454" ry="770" fill="#94ffe4" />
-    <ellipse id="goal-target-ring-outer" class="target-line" cx="1542" cy="900" rx="358" ry="650" />
-    <ellipse id="goal-target-ring-inner" class="target-line" cx="1514" cy="900" rx="238" ry="438" />
+    <ellipse id="goal-target-ring-outer" class="dark-line" cx="1542" cy="900" rx="358" ry="650" />
+    <ellipse id="goal-target-ring-inner" class="dark-line" cx="1514" cy="900" rx="238" ry="438" />
   </g>
 
-  <path id="goal-arrow-shaft-dark" data-goal-part="arrow-dark" d="M566 775 C818 778.333 1070 781.667 1322 785" stroke="#002629" stroke-width="5" fill="none" clip-path="url(#goal-arrow-target-clip-mobile)" opacity="0" vector-effect="non-scaling-stroke" /></svg>
+  <path id="goal-arrow-shaft-dark" data-goal-part="arrow-dark" d="M566 775 C818 778.333 1070 781.667 1322 785" stroke="#002629" stroke-width="5" fill="none" clip-path="url(#goal-arrow-target-clip-mobile)" opacity="0" vector-effect="non-scaling-stroke" />
+
+  </svg>
         </div>
       </div>
       <div class="goal-scene__content">

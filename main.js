@@ -3201,10 +3201,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!section) return;
 
   const slots = {
-    archer: section.querySelector('[data-goal-archer-svg]'),
-    target: section.querySelector('[data-goal-target-svg]')
+    archer: section.querySelector('[data-goal-archer-svg]')
   };
-  if (!slots.archer || !slots.target) return;
+  if (!slots.archer) return;
 
   const PATHS = {
     desktop: {
@@ -3248,39 +3247,12 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const inlineSvgs = {
-    archer: {
-      desktop: slots.archer.querySelector('svg[data-goal-inline="desktop"]'),
-      mobile: slots.archer.querySelector('svg[data-goal-inline="mobile"]')
-    },
-    target: {
-      desktop: slots.target.querySelector('svg[data-goal-inline="desktop"]'),
-      mobile: slots.target.querySelector('svg[data-goal-inline="mobile"]')
-    }
-  };
-
-  const setInlineVariantVisibility = (variant) => {
-    Object.entries(inlineSvgs).forEach(([, variants]) => {
-      Object.entries(variants).forEach(([name, svg]) => {
-        if (!svg) return;
-        const active = name === variant;
-        svg.hidden = !active;
-        svg.setAttribute('aria-hidden', 'true');
-        svg.setAttribute('focusable', 'false');
-        svg.style.display = active ? 'block' : 'none';
-      });
-    });
-  };
-
-  const clearMountedSvgs = () => {
-    setInlineVariantVisibility('desktop');
-    slots.archer.classList.remove('is-svg-mounted');
-    slots.target.classList.remove('is-svg-mounted');
-    section.classList.remove('is-goal-mounted', 'is-goal-animated', 'is-goal-fallback');
+    desktop: slots.archer.querySelector('svg[data-goal-inline="desktop"]'),
+    mobile: slots.archer.querySelector('svg[data-goal-inline="mobile"]')
   };
 
   const markMounted = (staticMode = false) => {
     slots.archer.classList.add('is-svg-mounted');
-    slots.target.classList.add('is-svg-mounted');
     section.classList.add('is-goal-mounted');
     section.classList.toggle('is-goal-static', staticMode);
     section.classList.toggle('is-goal-animated', !staticMode);
@@ -3289,14 +3261,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const mountVariant = (variant) => {
     const cfg = PATHS[variant];
-    const archerSvg = inlineSvgs.archer[variant];
-    const targetSvg = inlineSvgs.target[variant];
-    if (!cfg || !archerSvg || !targetSvg) {
-      throw new Error(`SVG inline obiettivo incompleti per variante ${variant}`);
+    const archerSvg = inlineSvgs[variant];
+    if (!cfg || !archerSvg) {
+      throw new Error(`SVG inline obiettivo incompleto per variante ${variant}`);
     }
-    clearMountedSvgs();
-    setInlineVariantVisibility(variant);
-    return { cfg, archerSvg, targetSvg };
+    return { cfg, archerSvg, targetSvg: archerSvg };
   };
 
   const collectRig = (archerSvg, targetSvg) => ({
@@ -3348,8 +3317,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showSafeFallback = (error) => {
-    const archerSvg = slots.archer.querySelector('svg:not([hidden])') || slots.archer.querySelector('svg');
-    const targetSvg = slots.target.querySelector('svg:not([hidden])') || slots.target.querySelector('svg');
+    const archerSvg = window.matchMedia('(max-width: 767px)').matches
+      ? inlineSvgs.mobile
+      : inlineSvgs.desktop;
+    const targetSvg = archerSvg;
     window.ScrollTrigger?.getAll?.()
       .filter((trigger) => trigger.trigger === section)
       .forEach((trigger) => trigger.kill());
@@ -3364,7 +3335,6 @@ document.addEventListener('DOMContentLoaded', () => {
         targetSvg
       });
       slots.archer.classList.add('is-svg-mounted');
-      slots.target.classList.add('is-svg-mounted');
       section.classList.add('is-goal-static', 'is-goal-mounted');
       section.classList.remove('is-goal-animated', 'is-goal-fallback');
     } else {
@@ -3394,7 +3364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const archerParts = [rig.upper, rig.head, rig.lower, rig.bow, rig.string];
-    gsapApi.set([archerSvg, targetSvg], { clearProps: 'all' });
+    gsapApi.set(archerSvg, { clearProps: 'transform,opacity,visibility' });
     gsapApi.set(rig.target, { x: cfg.targetX, rotation: 0, svgOrigin: cfg.targetOrigin });
     gsapApi.set(rig.darkArrow, { opacity: 0, attr: { d: cfg.arrow } });
     gsapApi.set(rig.arrowShaft, { attr: { d: cfg.arrow } });
@@ -3512,8 +3482,7 @@ document.addEventListener('DOMContentLoaded', () => {
           timeline?.scrollTrigger?.kill();
           timeline?.kill();
           if (
-            mountedState?.archerSvg?.isConnected &&
-            mountedState?.targetSvg?.isConnected
+            mountedState?.archerSvg?.isConnected
           ) {
             applyStaticState(mountedState);
             markMounted(true);

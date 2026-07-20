@@ -75,13 +75,13 @@
   <!-- Freccia originale: soltanto una linea, senza punta né piume. -->
   <g id="goal-arrow" data-animate="arrow" transform-origin="558px 514px">
     <line id="goal-arrow-shaft" class="aqua-line"
-          x1="558" y1="514" x2="1620" y2="550"/>
+          x1="558" y1="514" x2="1673" y2="550"/>
   </g>
 
   <g id="goal-rig-guides" fill="none" opacity="0" pointer-events="none">
     <circle id="goal-bow-top-anchor" cx="605" cy="-52" r="2"/>
     <circle id="goal-string-hand-anchor" cx="558" cy="514" r="2"/>
     <circle id="goal-bow-bottom-anchor" cx="650" cy="1170" r="2"/>
-    <circle id="goal-target-impact-anchor" cx="1620" cy="550" r="2"/>
+    <circle id="goal-target-impact-anchor" cx="1673" cy="550" r="2"/>
   </g>
 </svg>

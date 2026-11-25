@@ -1,42 +1,9 @@
 (() => {
   const page = document.querySelector('.base-page');
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
-  const journey = page.querySelector('[data-base-tabs]');
-  const tablist = journey.querySelector('[role="tablist"]');
-  const tabs = [...tablist.querySelectorAll('[role="tab"]')];
-  const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
-
-  function selectTab(active, animate = false) {
-    tabs.forEach((tab, index) => {
-      const selected = index === active;
-      tab.setAttribute('aria-selected', String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-      panels[index].hidden = !selected;
-      panels[index].classList.toggle('is-switching', selected && animate);
-    });
-  }
-
-  tabs.forEach((tab, index) => {
-    const panel = panels[index];
-    panel.setAttribute('role', 'tabpanel');
-    panel.setAttribute('aria-labelledby', tab.id);
-    panel.tabIndex = 0;
-    tab.addEventListener('click', () => selectTab(index, true));
-    tab.addEventListener('keydown', event => {
-      const next = {
-        ArrowLeft: (index + tabs.length - 1) % tabs.length,
-        ArrowRight: (index + 1) % tabs.length,
-        Home: 0,
-        End: tabs.length - 1,
-      }[event.key];
-      if (next === undefined) return;
-      event.preventDefault();
-      selectTab(next, true);
-      tabs[next].focus();
-    });
-  });
-  selectTab(0);
-  tablist.hidden = false;
+  const journey = page.querySelector('[data-base-journey]');
+  const steps = [...journey.querySelectorAll('.base-step')];
+  const markers = steps.map(step => step.querySelector('.base-step-marker'));
 
   const app = page.querySelector('[data-base-app]');
   const preview = app.querySelector('img');
@@ -87,6 +54,19 @@
   function updateScroll() {
     frame = null;
     const bounds = hero.getBoundingClientRect();
+    const centers = markers.map(marker => {
+      const box = marker.getBoundingClientRect();
+      return box.top + box.height / 2;
+    });
+    const first = centers[0];
+    const length = centers[centers.length - 1] - first;
+    const readingLine = innerHeight * .62;
+    const progress = Math.max(0, Math.min(1, (readingLine - first) / length));
+    const active = centers.findLastIndex(center => center <= readingLine);
+
+    journey.style.setProperty('--base-rail-length', `${length}px`);
+    journey.style.setProperty('--base-rail-progress', progress);
+    steps.forEach((step, index) => step.classList.toggle('is-active', index === active));
     dock.hidden = bounds.bottom > innerHeight * .65;
     if (motion.matches) art.style.setProperty('--base-art-offset', `${Math.min(20, Math.max(0, -bounds.top * .08))}px`);
   }

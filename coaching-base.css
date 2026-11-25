@@ -12,6 +12,7 @@
   padding-bottom: 4rem;
 }
 .base-page [id] {scroll-margin-top: 110px}
+.base-page [hidden] {display: none}
 .base-wrap {width: min(1160px,calc(100% - 2 * clamp(16px,5vw,56px))); margin-inline: auto}
 .base-section {padding-block: clamp(3.2rem,7vw,6rem)}
 .base-page :is(h1,h2,h3,p,figure,blockquote) {margin: 0}
@@ -86,17 +87,97 @@
   .base-trio article:nth-child(2) {--base-card-y: -16px}
 }
 .base-trio p,.base-step p,.base-offers p {margin-top: .8rem}
-.base-method {background: #11212d}
-.base-journey {margin-top: 1.75rem}
-.base-tablist {display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .5rem; margin-bottom: 1.2rem}
-.base-page [hidden] {display: none}
-.base-tablist button {font: inherit; font-size: .95rem; font-weight: 660; line-height: 1.2; cursor: pointer; min-height: 50px; padding: .65rem .45rem; background: #192b3a; color: #ddeaf5; border: 1px solid #7f9db246; border-radius: .65rem; transition: background .25s,color .25s}
-.base-tablist button[aria-selected="true"] {background: #b5ede2; color: #0b3032; border-color: #b5ede2}
-.base-step {display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1rem,4vw,3.7rem); align-items: center; padding: clamp(1.1rem,3vw,2rem); border: 1px solid #94c8c53d; border-radius: 1.1rem; background: #0d1925}
-.base-step + .base-step:not([hidden]) {margin-top: .8rem}
-.base-step p {max-width: 43ch}
+.base-method {
+  background: linear-gradient(150deg,#142630,#0b1621 62%);
+  border-block: 1px solid #365562;
+}
+.base-method-intro {text-align: center}
+.base-method-intro h2,.base-method-intro .base-section-lead {margin-inline: auto}
+.base-method-intro h2 em {display: block; color: var(--base-mint); font-style: normal}
+.base-journey {
+  --base-rail-x: 9px;
+  --base-marker-top: .68rem;
+  --base-marker-size: 18px;
+  position: relative;
+  display: grid;
+  gap: clamp(2rem,5.6vw,4.5rem);
+  list-style: none;
+  padding: 0;
+  margin: clamp(2rem,5vw,4.5rem) 0 0;
+}
+.base-journey::before,.base-journey::after {
+  position: absolute;
+  content: '';
+  top: calc(var(--base-marker-top) + var(--base-marker-size) / 2);
+  left: var(--base-rail-x);
+  width: 2px;
+  height: var(--base-rail-length,calc(100% - 240px));
+  translate: -50% 0;
+  background: #4c6978;
+}
+.base-journey::after {
+  background: linear-gradient(#adf2e7,#57c6cb);
+  transform: scaleY(var(--base-rail-progress,0));
+  transform-origin: top;
+}
+.base-step {
+  --base-step-color: #94e5d6;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: clamp(1.3rem,6vw,6rem);
+  align-items: start;
+  padding-inline-start: clamp(2rem,5vw,4rem);
+}
+.base-step:nth-child(2) {--base-step-color: #a9d8ec}
+.base-step:nth-child(3) {--base-step-color: #c4c1fc}
+.base-step-marker {
+  position: absolute;
+  z-index: 1;
+  top: var(--base-marker-top);
+  left: var(--base-rail-x);
+  translate: -50% 0;
+  width: var(--base-marker-size);
+  height: var(--base-marker-size);
+  border: 3px solid #19313c;
+  border-radius: 50%;
+  background: #74939e;
+  box-shadow: 0 0 0 1px #75939d;
+}
+.base-step-index {
+  display: inline-block;
+  margin: .15rem 0 .7rem;
+  color: var(--base-step-color);
+  font-size: .82rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .09em;
+}
+.base-step p {max-width: 46ch}
 .base-step .base-link,.base-app .base-link {display: inline-block; margin-top: .85rem}
-.base-board {display: grid; align-content: center; justify-items: center; gap: .8rem; min-height: 245px; padding: 1rem; border-radius: .75rem; background: linear-gradient(145deg,#c7f0e7,#83c6d0); color: #10303d; overflow: hidden}
+.base-board {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: .85rem;
+  min-height: 226px;
+  aspect-ratio: 1.8;
+  padding: clamp(.8rem,2vw,1.4rem);
+  border: 1px solid #b6e5e680;
+  border-radius: 1.05rem;
+  background: radial-gradient(circle at 16% 10%,#f4fdf4,#b5e6dc 63%,#91cfc5);
+  color: #10303d;
+  overflow: hidden;
+}
+.base-board-plan {background: radial-gradient(circle at 93% 5%,#edf7ff,#b1d8ef 70%,#9dc7dc)}
+.base-board-chat {background: radial-gradient(circle at 20% 5%,#ecf4ff,#c9c5f0 65%,#a6b8da)}
+.base-step.is-active .base-step-marker,
+.base-step:focus-within .base-step-marker {
+  background: var(--base-step-color);
+  box-shadow: 0 0 0 1px var(--base-step-color),0 0 0 7px #a4e9e524;
+}
+.base-step.is-active .base-board,
+.base-step:focus-within .base-board {border-color: var(--base-step-color); box-shadow: 0 18px 46px -22px #03111a}
 .base-profile,.base-note,.base-sheet,.base-chat {background: #fbfffd; border-radius: .7rem; padding: .75rem; box-shadow: 0 14px 26px #23434c24}
 .base-profile {display: flex; align-items: center; gap: .7rem; transform: rotate(-3deg)}
 .base-profile img {width: 58px; height: 58px; object-fit: cover; object-position: center 14%; background: #d9eee8; border-radius: .45rem}
@@ -152,16 +233,20 @@
     .base-motion .base-trio article:first-child:not(.is-visible) {rotate: -3deg}
     .base-motion .base-trio article:last-child:not(.is-visible) {rotate: 3deg}
   }
-  .base-step.is-switching,.base-app-preview img.is-switching {animation: base-enter .5s cubic-bezier(.2,.75,.25,1) both}
-  .base-step.is-switching .base-board > * {animation: base-enter .62s .1s cubic-bezier(.2,.75,.25,1) both}
+  .base-journey::after {transition: transform .24s ease-out}
+  .base-step-marker,.base-board {transition: background-color .5s,border-color .5s,box-shadow .5s}
+  .base-motion .base-step .base-board > * {transition: translate .65s cubic-bezier(.2,.75,.25,1)}
+  .base-motion .base-step:not(.is-active):not(:focus-within) .base-board > :first-child {translate: 0 7px}
+  .base-motion .base-step:not(.is-active):not(:focus-within) .base-note {translate: 0 -5px}
+  .base-app-preview img.is-switching {animation: base-enter .5s cubic-bezier(.2,.75,.25,1) both}
   @keyframes base-enter {from {opacity: .35; translate: 0 9px}}
 }
 @media (max-width: 730px) {
   .base-hero,.base-step,.base-app-grid,.base-coach,.base-offers,.base-trio {grid-template-columns: minmax(0,1fr)}
   .base-hero-visual {max-width: 470px; width: 100%; aspect-ratio: 1.2}
+  .base-journey {--base-rail-x: 6px; --base-marker-size: 12px}
+  .base-step {padding-inline-start: 1.5rem}
   .base-board {min-height: 175px}
-  .base-tablist {gap: .28rem}
-  .base-tablist button {font-size: .81rem}
   .base-coach-visual {max-width: 430px; width: 100%}
   .base-app-preview {min-height: 290px}
   .base-app-preview img {height: 260px}

@@ -6,14 +6,41 @@
   const markers = steps.map(step => step.querySelector('.base-step-marker'));
 
   const app = page.querySelector('[data-base-app]');
-  const preview = app.querySelector('img');
-  app.querySelectorAll('details').forEach(detail => detail.addEventListener('toggle', () => {
-    if (!detail.open || preview.getAttribute('src') === detail.dataset.image) return;
-    preview.src = detail.dataset.image;
-    preview.alt = detail.dataset.alt;
-    preview.classList.remove('is-switching');
-    requestAnimationFrame(() => requestAnimationFrame(() => preview.classList.add('is-switching')));
-  }));
+  const features = [...app.querySelectorAll('[data-app-feature]')];
+  const screens = [...app.querySelectorAll('[data-app-screen]')];
+  const dots = [...app.querySelectorAll('[data-app-dot]')];
+  const count = app.querySelector('[data-app-count]');
+  const setDemo = app.querySelector('[data-app-set]');
+  let featureIndex = 0;
+
+  function showFeature(index) {
+    if (featureIndex === index) return;
+    featureIndex = index;
+    features.forEach((feature, position) => {
+      const selected = position === index;
+      feature.open = selected;
+      screens[position].hidden = !selected;
+      screens[position].classList.toggle('is-switching', selected);
+      dots[position].setAttribute('aria-pressed', String(selected));
+    });
+    count.textContent = `${index + 1} di ${features.length}`;
+  }
+
+  features.forEach((feature, index) => {
+    feature.querySelector('summary').addEventListener('click', event => {
+      event.preventDefault();
+      showFeature(index);
+    });
+    dots[index].addEventListener('click', () => showFeature(index));
+  });
+  setDemo.addEventListener('submit', event => {
+    event.preventDefault();
+    const values = new FormData(setDemo);
+    const weight = Number(values.get('carico')).toLocaleString('it-IT');
+    setDemo.querySelector('output').textContent = `Set registrato nella demo: ${weight} kg × ${values.get('ripetizioni')} ripetizioni.`;
+  });
+  setDemo.hidden = false;
+  app.querySelector('[data-app-controls]').hidden = false;
 
   const reviews = page.querySelector('[data-base-reviews]');
   const controls = page.querySelector('[data-base-review-controls]');

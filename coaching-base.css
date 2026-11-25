@@ -186,11 +186,122 @@
 .base-sheet,.base-chat {display: grid; gap: .45rem; max-width: 320px; width: 100%}
 .base-sheet span,.base-chat span {padding: .4rem .58rem; border-radius: .4rem; background: #e4eff4; font-size: .83rem}
 .base-chat span:last-child {background: #d5eee7; justify-self: end}
-.base-app {background: #151d2b}
-.base-app-grid,.base-coach {display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: center; gap: clamp(1.4rem,5vw,4.5rem)}
-.base-app-preview {min-height: 390px; background: linear-gradient(145deg,#e5f4fa,#b6e4dc); color: #1c3b4c; border-radius: 1.25rem; display: grid; align-content: center; justify-items: center; padding: 1.1rem; text-align: center}
-.base-app-preview img {display: block; width: min(100%,310px); height: 345px; object-fit: contain}
-.base-app-preview figcaption {font-size: .8rem; margin-top: .6rem}
+.base-app {
+  --base-ink: #132536;
+  --base-muted: #3e5666;
+  --base-mint: #08766c;
+  --base-line: #b4cec9;
+  color: var(--base-ink);
+  background: #f1f7f5;
+}
+.base-app-grid,.base-coach {display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.4rem,5vw,4.5rem)}
+.base-coach {align-items: center}
+.base-app-grid {align-items: start; grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr)}
+.base-app-copy h2 em {display: block; color: var(--base-mint); font-style: normal}
+.base-app-features {margin: 1.6rem 0 .4rem}
+.base-page .base-app-features details {padding: .25rem 0}
+.base-page .base-app-features details:first-of-type {margin: 0}
+.base-page .base-app-features summary {
+  display: grid;
+  grid-template-columns: 2.15rem minmax(0,1fr) 1rem;
+  align-items: center;
+  gap: .75rem;
+  padding: .9rem 0;
+  list-style: none;
+  font-size: clamp(1rem,1.5vw,1.18rem);
+  line-height: 1.25;
+}
+.base-app-features summary::-webkit-details-marker {display: none}
+.base-app-features summary::marker {content: ''}
+.base-app-number {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  aspect-ratio: 1;
+  border-radius: .65rem;
+  background: #e0eeea;
+  color: #2b5559;
+  font-size: .74rem;
+  font-variant-numeric: tabular-nums;
+}
+.base-app-features details[open] .base-app-number {background: #bfeade; color: #0e544c}
+.base-app-toggle {position: relative; width: .85rem; height: 2px; background: var(--base-mint); border-radius: 2px}
+.base-app-toggle::after {position: absolute; inset: 0; border-radius: inherit; background: inherit; content: ''; rotate: 90deg; transition: rotate .24s}
+.base-app-features details[open] .base-app-toggle::after {rotate: 0deg}
+.base-page .base-app-features details p {margin: 0 1rem .9rem 2.9rem}
+.base-app-preview {text-align: center}
+.base-app-stage {
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem,3.6vw,2.6rem);
+  border: 1px solid #bbddd5;
+  border-radius: 1.65rem;
+  background: radial-gradient(ellipse at 33% 18%,#c7ede4,transparent 78%),#dcece9;
+}
+.base-app-phone {
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto;
+  width: min(100%,290px);
+  min-height: 480px;
+  overflow: hidden;
+  color: #f3f8fa;
+  border: 5px solid #243242;
+  border-radius: 1.75rem;
+  background: #101a25;
+  box-shadow: 0 20px 42px -22px #1e494caa;
+  text-align: left;
+}
+.base-app-phone-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .4rem;
+  padding: 1rem .85rem .6rem;
+  font-size: .7rem;
+  font-weight: 750;
+  letter-spacing: .05em;
+}
+.base-app-phone-top i {width: 22px; height: 7px; border-radius: 8px; background: #71d7cb}
+.base-app-screen {display: grid; align-content: start; gap: .66rem; padding: .7rem .8rem 1rem}
+.base-app-screen > small {color: #a1b9c8; font-size: .74rem}
+.base-app-screen-title {font-size: 1.27rem; line-height: 1.15}
+.base-app-exercise-art {overflow: hidden; border-radius: .75rem}
+.base-app-exercise-art img {display: block; width: 100%; height: auto; aspect-ratio: 1.7; object-fit: cover}
+.base-app-phone-card {display: grid; gap: .28rem; border: 1px solid #3a586a; border-radius: .62rem; background: #172936; padding: .7rem}
+.base-app-phone-card span {color: #c5d7e2; font-size: .74rem}
+.base-app-phone-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .35rem;
+  padding: .8rem .62rem;
+  border-top: 1px solid #355064;
+  background: #142330;
+  font-size: .63rem;
+}
+.base-app-phone-nav span:first-child {color: #7fe7d7}
+.base-app-set {display: grid; gap: .65rem}
+.base-app-set label {display: grid; gap: .3rem; color: #d6e8f4; font-size: .77rem}
+.base-app-set input,.base-app-set button {
+  min-width: 0;
+  min-height: 2.45rem;
+  padding: .35rem .55rem;
+  border: 1px solid #557483;
+  border-radius: .52rem;
+  background: #172936;
+  color: #eff8fe;
+  font: inherit;
+}
+.base-app-set button {background: #83e4d3; color: #092e32; font-weight: 700; font-size: .82rem; cursor: pointer}
+.base-app-set output {font-size: .77rem; color: #9be6d8}
+.base-app-history {padding: 0; margin: .25rem 0 0; list-style: none}
+.base-app-history li {display: flex; justify-content: space-between; gap: .4rem; padding: .45rem 0; border-top: 1px solid #365367; font-size: .75rem}
+.base-app-preview figcaption {display: grid; justify-content: center; gap: .3rem; margin: .65rem 0 0; color: #405968; font-size: .82rem}
+.base-app-preview-nav {display: flex; justify-content: center; align-items: center; gap: .3rem}
+.base-app-preview-nav button {display: grid; place-items: center; width: 28px; height: 32px; border: 0; background: transparent; cursor: pointer}
+.base-app-preview-nav button::before {content: ''; width: 8px; height: 8px; border-radius: 50%; background: #7a9a99}
+.base-app-preview-nav button[aria-pressed="true"]::before {width: 16px; border-radius: 8px; background: #11695f}
+.base-app-preview-nav span {margin-inline-start: .4rem; font-variant-numeric: tabular-nums}
 .base-page details {color: var(--base-ink); border-bottom: 1px solid var(--base-line); padding: .85rem 0}
 .base-page details:first-of-type {margin-top: 1.15rem; border-top: 1px solid var(--base-line)}
 .base-page summary {font-weight: 700; cursor: pointer; padding: .25rem .1rem}
@@ -238,7 +349,7 @@
   .base-motion .base-step .base-board > * {transition: translate .65s cubic-bezier(.2,.75,.25,1)}
   .base-motion .base-step:not(.is-active):not(:focus-within) .base-board > :first-child {translate: 0 7px}
   .base-motion .base-step:not(.is-active):not(:focus-within) .base-note {translate: 0 -5px}
-  .base-app-preview img.is-switching {animation: base-enter .5s cubic-bezier(.2,.75,.25,1) both}
+  .base-app-screen.is-switching,.base-app-features details[open] p {animation: base-enter .45s cubic-bezier(.2,.75,.25,1) both}
   @keyframes base-enter {from {opacity: .35; translate: 0 9px}}
 }
 @media (max-width: 730px) {
@@ -248,9 +359,13 @@
   .base-step {padding-inline-start: 1.5rem}
   .base-board {min-height: 175px}
   .base-coach-visual {max-width: 430px; width: 100%}
-  .base-app-preview {min-height: 290px}
-  .base-app-preview img {height: 260px}
+  .base-app-stage {padding: 1rem}
+  .base-app-phone {min-height: 414px}
   .base-review-list {grid-auto-columns: min(86%,360px)}
   .base-dock {right: .55rem; left: .55rem; justify-content: center}
   .base-dock .base-btn,.base-dock .base-link {font-size: .78rem}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base-app-toggle::after {transition: none}
 }

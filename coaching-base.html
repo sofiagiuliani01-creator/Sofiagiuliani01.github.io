@@ -114,17 +114,67 @@
     </div>
   </section>
 
-  <section class="base-section base-app" aria-labelledby="base-app-title" data-base-reveal>
-    <div class="base-wrap base-app-grid" data-base-app>
-      <div>
-        <h2 id="base-app-title">La tua seduta, nell’app LS Coaching.</h2>
-        <p class="base-section-lead">Apri la scheda, guarda gli esercizi e tieni traccia di come è andata.</p>
-        <details name="base-app-feature" data-image="mockup-01.png" data-alt="Anteprima della scheda nell’app LS Coaching" open><summary>Guarda come eseguire gli esercizi</summary><p>La scheda rimane a portata di mano, con video e indicazioni per preparare ogni seduta.</p></details>
-        <details name="base-app-feature" data-image="mockup-04.png" data-alt="Anteprima degli esercizi nell’app LS Coaching"><summary>Registra la seduta</summary><p>Salva le serie, le ripetizioni e i carichi. Al prossimo allenamento sai da dove ripartire.</p></details>
-        <details name="base-app-feature" data-image="mockup-03.png" data-alt="Un’altra schermata dell’app LS Coaching"><summary>Rivedi i progressi ai check</summary><p>Uso lo storico e i tuoi feedback per aggiornare il programma quando serve.</p></details>
+  <section class="base-section base-app" id="app-coaching-base" aria-labelledby="base-app-title">
+    <div class="base-wrap base-app-grid" data-base-app data-base-reveal>
+      <div class="base-app-copy">
+        <h2 id="base-app-title">La scheda è nell’app. <em>I progressi li vediamo insieme.</em></h2>
+        <p class="base-section-lead">Apri l’allenamento, guarda le indicazioni e registra ogni serie. Ai check usiamo lo storico per capire cosa tenere e cosa aggiornare.</p>
+        <div class="base-app-features">
+          <details name="base-app-feature" data-app-feature open>
+            <summary><span class="base-app-number" aria-hidden="true">01</span>La tua scheda, esercizio per esercizio<span class="base-app-toggle" aria-hidden="true"></span></summary>
+            <p>Apri la seduta e consulta serie, ripetizioni e recuperi. Quando hai un dubbio, puoi rivedere il video dell’esercizio e leggere le indicazioni tecniche.</p>
+          </details>
+          <details name="base-app-feature" data-app-feature>
+            <summary><span class="base-app-number" aria-hidden="true">02</span>Serie, ripetizioni e carichi<span class="base-app-toggle" aria-hidden="true"></span></summary>
+            <p>Con «Registra set» segni il peso usato e le ripetizioni completate. Alla seduta dopo ritrovi quello che hai fatto e sai da dove ripartire.</p>
+          </details>
+          <details name="base-app-feature" data-app-feature>
+            <summary><span class="base-app-number" aria-hidden="true">03</span>Lo storico, al check<span class="base-app-toggle" aria-hidden="true"></span></summary>
+            <p>Ogni due settimane guardiamo i carichi registrati e i tuoi feedback. Da lì decidiamo insieme se progredire o adattare la scheda.</p>
+          </details>
+        </div>
         <a class="base-link" href="app.html">Esplora l’app LS Coaching</a>
       </div>
-      <figure class="base-app-preview"><img src="mockup-01.png" alt="Anteprima della scheda nell’app LS Coaching" loading="lazy"><figcaption>Anteprima di LS Coaching</figcaption></figure>
+
+      <figure class="base-app-preview">
+        <div class="base-app-stage">
+          <div class="base-app-phone">
+            <div class="base-app-phone-top" aria-hidden="true"><span>LS COACHING</span><i></i></div>
+            <div class="base-app-screen" data-app-screen aria-label="Esempio di scheda di allenamento">
+              <small>Allenamenti / Oggi</small>
+              <strong class="base-app-screen-title">Gambe e glutei</strong>
+              <div class="base-app-exercise-art"><img src="coaching-base-tecnica.webp" width="960" height="640" alt="" loading="lazy"></div>
+              <div class="base-app-phone-card"><strong>Squat</strong><span>3 serie · 10 ripetizioni · 90 s recupero</span></div>
+            </div>
+            <div class="base-app-screen" data-app-screen aria-label="Esempio di registrazione di una serie" hidden>
+              <small>Allenamenti / Squat</small>
+              <strong class="base-app-screen-title">Registra set</strong>
+              <form class="base-app-set" data-app-set hidden>
+                <label>Carico (kg)<input name="carico" type="number" min="0" max="1000" step="0.5" value="30" required></label>
+                <label>Ripetizioni<input name="ripetizioni" type="number" min="1" max="100" value="10" required></label>
+                <button type="submit">Salva set di esempio</button>
+                <output aria-live="polite"></output>
+              </form>
+            </div>
+            <div class="base-app-screen" data-app-screen aria-label="Esempio di storico dello squat" hidden>
+              <small>Storico / Squat</small>
+              <strong class="base-app-screen-title">Andamento carichi</strong>
+              <div class="base-app-phone-card"><strong>Ultime tre sedute</strong><ul class="base-app-history"><li><span>Prima seduta</span><b>25 kg</b></li><li><span>Seconda seduta</span><b>27,5 kg</b></li><li><span>Terza seduta</span><b>30 kg</b></li></ul></div>
+              <div class="base-app-phone-card"><strong>Check ogni due settimane</strong><span>Rivediamo tecnica, carichi e recupero.</span></div>
+            </div>
+            <div class="base-app-phone-nav" aria-hidden="true"><span>Allenamenti</span><span>Check</span><span>Video</span><span>Profilo</span></div>
+          </div>
+        </div>
+        <figcaption>
+          <div class="base-app-preview-nav" role="group" aria-label="Scegli la schermata dell’app" data-app-controls hidden>
+            <button type="button" data-app-dot aria-label="Scheda di allenamento" aria-pressed="true"></button>
+            <button type="button" data-app-dot aria-label="Registra set" aria-pressed="false"></button>
+            <button type="button" data-app-dot aria-label="Storico dei carichi" aria-pressed="false"></button>
+            <span data-app-count>1 di 3</span>
+          </div>
+          <span>Anteprima dimostrativa di LS Coaching</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 

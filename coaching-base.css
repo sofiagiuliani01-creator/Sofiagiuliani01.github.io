@@ -52,8 +52,39 @@
 .base-points li {border: 1px solid var(--base-line); background: #111a28; color: #dce7f4; border-radius: .5rem; padding: .38rem .62rem; font-size: .82rem}
 .base-hero-visual {isolation: isolate; overflow: hidden; display: grid; place-items: center; aspect-ratio: 1.06; border-radius: clamp(1.15rem,3vw,2.2rem); border: 1px solid #d8f6ee; background: radial-gradient(ellipse at 24% 18%,#eefaf6 3%,#a7dfd4 100%)}
 .base-hero-visual img {width: min(88%,500px); height: 88%; object-fit: contain; transform: translateY(var(--base-art-offset,0px))}
-.base-trio {display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin-top: 1.7rem}
-.base-trio article {padding: clamp(1.15rem,2.5vw,1.75rem); border: 1px solid var(--base-line); border-top-color: #559e98; border-radius: .8rem; background: #132030}
+.base-obstacles {
+  --base-ink: #112735;
+  --base-muted: #384f5c;
+  --base-mint: #08746d;
+  background: linear-gradient(155deg,#f5f9f8,#e4f4f0);
+}
+.base-obstacles h2 {
+  margin-inline: auto;
+  max-width: 22ch;
+  text-align: center;
+}
+.base-obstacles h2 em {display: block; color: var(--base-mint); font-style: normal}
+.base-trio {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: clamp(.8rem,2.3vw,1.45rem);
+  margin-top: clamp(1.65rem,4vw,3.75rem);
+}
+.base-trio article {
+  --base-card-y: 0px;
+  padding: .55rem;
+  border: 1px solid #cbded9;
+  border-radius: 1.35rem;
+  background: #fff;
+  box-shadow: 0 18px 35px -24px #1738478c;
+  translate: 0 var(--base-card-y);
+}
+.base-trio article img {display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; border-radius: .95rem}
+.base-trio article > div {padding: clamp(.8rem,2vw,1.25rem) .65rem .9rem}
+.base-trio h3 {font-size: clamp(1.2rem,2.15vw,1.65rem)}
+@media (min-width: 731px) {
+  .base-trio article:nth-child(2) {--base-card-y: -16px}
+}
 .base-trio p,.base-step p,.base-offers p {margin-top: .8rem}
 .base-method {background: #11212d}
 .base-journey {margin-top: 1.75rem}
@@ -111,6 +142,16 @@
 @media (prefers-reduced-motion: no-preference) {
   .base-motion [data-base-reveal] {transition: opacity .65s ease,translate .75s cubic-bezier(.2,.7,.25,1)}
   .base-motion [data-base-reveal]:not(.is-visible) {opacity: .48; translate: 0 17px}
+  .base-motion .base-trio article {
+    transition: opacity .65s ease, translate .8s cubic-bezier(.24,.75,.28,1), rotate .8s cubic-bezier(.24,.75,.28,1);
+  }
+  .base-motion .base-trio article:not(.is-visible) {opacity: .25; translate: 0 calc(var(--base-card-y) + 30px)}
+  @media (min-width: 731px) {
+    .base-motion .base-trio article:first-child {transition-delay: .12s}
+    .base-motion .base-trio article:last-child {transition-delay: .22s}
+    .base-motion .base-trio article:first-child:not(.is-visible) {rotate: -3deg}
+    .base-motion .base-trio article:last-child:not(.is-visible) {rotate: 3deg}
+  }
   .base-step.is-switching,.base-app-preview img.is-switching {animation: base-enter .5s cubic-bezier(.2,.75,.25,1) both}
   .base-step.is-switching .base-board > * {animation: base-enter .62s .1s cubic-bezier(.2,.75,.25,1) both}
   @keyframes base-enter {from {opacity: .35; translate: 0 9px}}

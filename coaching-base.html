@@ -8,9 +8,11 @@
 
   <link rel="stylesheet" href="ls-navigation.css">
   <script src="ls-navigation.js" defer></script>
+  <meta name="description" content="Coaching Base con Leonardo Santini: personal trainer online, allenamento su misura, feedback video e check ogni due settimane.">
+  <link rel="stylesheet" href="coaching-base.css">
+  <script src="coaching-base.js" defer></script>
 </head>
-<body class="page-program page-theia-inspired page-program-base">
-  <div class="program-scroll-progress" aria-hidden="true"><span></span></div>
+<body class="base-site">
   <header class="site-header ls-site-nav">
   <div class="ls-nav-shell">
     <a class="ls-nav-brand" href="index.html">
@@ -30,185 +32,111 @@
   </div>
 </header>
 
-  <main>
-    <section class="tp-hero" aria-labelledby="base-title">
-      <div class="tp-product-nav container" data-tp-reveal>
-        <a href="coaching-premium.html">Coaching Premium</a>
-        <a href="coaching-base.html" class="is-active">Coaching Base</a>
-        <a href="app.html">App dedicata</a>
-        <a href="consulenza.html">Incontro gratuito</a>
-      </div>
-      <div class="container tp-hero-grid">
-        <div class="tp-hero-copy" data-tp-reveal>
-          <h1 id="base-title">Personal Trainer Online</h1>
-          <p class="tp-lead">Il tuo prossimo <strong>personal trainer</strong> è online. Inizia con un incontro gratuito: capiamo obiettivi, livello, attrezzatura e tempo a disposizione, poi decidi se continuare.</p>
-          <div class="tp-hero-points" aria-label="Punti chiave del percorso">
-            <div class="tp-point-card tp-point-hybrid"><i aria-hidden="true">⚖</i><strong>Figure ibride</strong><span>Allenamento costruito sul tuo livello reale</span></div>
-            <div class="tp-point-card tp-point-check"><i aria-hidden="true">▣</i><strong>2 check al mese</strong><span>online, direttamente da casa tua</span></div>
-            <div class="tp-point-card tp-point-rating"><i aria-hidden="true">★</i><strong><a href="consulenza.html">4,9/5 su Trustpilot</a></strong><span class="tp-stars" role="img" aria-label="5 stelle su 5">★★★★★</span></div>
-            <div class="tp-point-card tp-point-price"><i aria-hidden="true">€</i><strong><a href="consulenza.html">Coaching Base</a></strong><span>allenamento, tecnica e progressioni</span></div>
-          </div>
-          <a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a>
-        </div>
-        <div class="tp-hero-visual" aria-label="Anteprima Personal Trainer Online" data-tp-reveal>
-          <div class="tp-doctor-card"><img src="coaching-base-trasparente.png" alt="Illustrazione Coaching Base Personal Trainer Online" loading="eager" decoding="async"></div>
-        </div>
-      </div>
-    </section>
+  <main class="base-page" id="base-page">
+  <section class="base-hero base-wrap" aria-labelledby="base-title">
+    <div class="base-hero-copy" data-base-reveal>
+      <p class="base-breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Coaching Base</p>
+      <h1 id="base-title">Personal trainer <em>online.</em></h1>
+      <p class="base-lead">Allenati con un piano costruito sui tuoi obiettivi, sul tempo che hai e sull’attrezzatura che usi. In palestra o a casa, con me al tuo fianco.</p>
+      <div class="base-actions"><a class="base-btn" href="consulenza.html">Prenota la consulenza gratuita</a><a class="base-link" href="#recensioni-base">Recensioni su Trustpilot</a></div>
+      <ul class="base-points" aria-label="Cosa include il Coaching Base"><li>Scheda su misura nell’app</li><li>Feedback video sulla tecnica</li><li>Check ogni due settimane</li></ul>
+    </div>
+    <div class="base-hero-visual" data-base-reveal>
+      <img src="coaching-base-trasparente.png" alt="Illustrazione di un allenamento con manubrio e scheda digitale" fetchpriority="high">
+    </div>
+  </section>
 
-    <section class="tp-review-strip" aria-label="Statistiche Coaching Base"><div class="container tp-strip-inner"><div><i aria-hidden="true">↻</i><strong>2</strong><span>check al mese inclusi</span></div><div><i aria-hidden="true">✦</i><strong>24/7</strong><span>supporto tecnico tra i controlli</span></div><div><i aria-hidden="true">✓</i><strong>1</strong><span>metodo per tecnica e progressione</span></div></div></section>
+  <section class="base-section base-wrap" aria-labelledby="base-difficolta" data-base-reveal>
+    <h2 id="base-difficolta">Dove si blocca il tuo allenamento?</h2>
+    <div class="base-trio">
+      <article><h3>La scheda non entra nella tua settimana</h3><p>Gli esercizi e il numero di sedute partono dal tempo e dagli attrezzi che hai davvero a disposizione.</p></article>
+      <article><h3>Hai dubbi sulla tecnica</h3><p>Guardi i video degli esercizi nell’app e puoi inviarmi le tue esecuzioni per ricevere indicazioni specifiche.</p></article>
+      <article><h3>Non sai quando cambiare carico</h3><p>Ai check rivediamo carichi, ripetizioni e recuperi per capire quando progredire e quando adattare la scheda.</p></article>
+    </div>
+  </section>
 
-    <section class="tp-reviews">
-      <div class="container">
-        <div class="tp-section-intro center" data-tp-reveal>
-          <p class="tp-kicker">Cosa pensano i clienti</p>
-          <h2>Persone allenate, non schede consegnate.</h2>
+  <section class="base-section base-method" id="come-funziona-base" aria-labelledby="base-method-title">
+    <div class="base-wrap" data-base-reveal>
+      <h2 id="base-method-title">Come funziona il Coaching Base</h2>
+      <p class="base-section-lead">Dalla prima videochiamata ai check, sai sempre qual è il prossimo passo.</p>
+      <div class="base-journey" data-base-tabs>
+        <div class="base-tablist" role="tablist" aria-label="Tappe del Coaching Base" hidden>
+          <button id="base-tab-call" type="button" role="tab" aria-controls="base-call" aria-selected="true">Consulenza</button>
+          <button id="base-tab-plan" type="button" role="tab" aria-controls="base-plan" aria-selected="false">Scheda su misura</button>
+          <button id="base-tab-check" type="button" role="tab" aria-controls="base-check" aria-selected="false">Check e supporto</button>
         </div>
-        <div class="tp-review-grid">
-          <article data-tp-reveal><div class="tp-stars" role="img" aria-label="5 stelle su 5">★★★★★</div><p>“Finalmente ho una scheda chiara: so cosa fare, come progredire e quando correggere la tecnica.”</p><strong>Scheda chiara</strong></article>
-          <article data-tp-reveal><div class="tp-stars" role="img" aria-label="5 stelle su 5">★★★★★</div><p>“I check mi aiutano a capire carichi, ripetizioni, recuperi e tecnica senza improvvisare.”</p><strong>Progressioni vere</strong></article>
-          <article data-tp-reveal><div class="tp-stars" role="img" aria-label="5 stelle su 5">★★★★★</div><p>“Il programma resta sostenibile anche quando ho poco tempo, perché viene adattato alla mia settimana.”</p><strong>Supporto pratico</strong></article>
+        <div id="base-call" class="base-step">
+          <div><h3>Ci conosciamo in videochiamata.</h3><p>Mi racconti cosa vuoi ottenere, come ti alleni oggi e cosa ti ha frenato finora. Ti spiego come lavorerei con te. Poi scegli se partire.</p><a class="base-link" href="consulenza.html">Come prenotare l’incontro</a></div>
+          <div class="base-board" aria-hidden="true"><div class="base-profile"><img src="tua-foto-chi-sono.png" alt="" loading="lazy"><div><small>La tua prima videochiamata</small><strong>Leonardo Santini</strong></div></div><div class="base-note">Obiettivi · Livello · Tempo disponibile</div></div>
         </div>
-        <p class="tp-trust">Tecnica, costanza e progressione: la differenza è nel percorso.</p>
-      </div>
-    </section>
-
-    <section class="tp-process" id="come-funziona-base">
-      <div class="container tp-process-grid">
-        <div class="tp-section-intro" data-tp-reveal>
-          <p class="tp-kicker">Come funziona il percorso?</p>
-          <h2>Dal primo incontro alla progressione: tutto è guidato.</h2>
-          <p>Prima capiamo come ti alleni, poi costruiamo una scheda sostenibile, poi la aggiorniamo in base ai tuoi feedback.</p>
+        <div id="base-plan" class="base-step">
+          <div><h3>Mettiamo il tuo piano nell’app.</h3><p>Definiamo le priorità e monitoriamo la partenza. Da lì costruiamo una scheda con esercizi, serie, ripetizioni e recuperi che puoi seguire nella tua settimana.</p></div>
+          <div class="base-board" aria-hidden="true"><div class="base-sheet"><strong>La tua scheda</strong><span>Esercizi con video</span><span>Serie e ripetizioni</span><span>Recuperi e carichi</span></div></div>
         </div>
-        <div class="tp-steps tp-timeline" aria-label="Timeline del percorso Base">
-          <article data-tp-reveal style="--step-color:#0a5c4c"><span><i aria-hidden="true">☕</i><b>01</b></span><div class="tp-step-copy"><h3>Consulenza</h3><p>Parlerai direttamente con me. Serve a capire obiettivi, routine, esperienza, eventuali limiti, attrezzatura e tempo reale per allenarti.</p></div></article>
-          <article data-tp-reveal style="--step-color:#16b8ad"><span><i aria-hidden="true">↔</i><b>02</b></span><div class="tp-step-copy"><h3>Accoppiamento</h3><p>Costruiamo la direzione del lavoro: frequenza, esercizi principali, varianti, volume e priorità tecniche su cui concentrarci.</p></div></article>
-          <article data-tp-reveal style="--step-color:#86c76f"><span><i aria-hidden="true">◷</i><b>03</b></span><div class="tp-step-copy"><h3>Monitoraggio</h3><p>Raccogliamo informazioni su sedute, carichi, esercizi che sai eseguire, recupero, preferenze e organizzazione della settimana.</p></div></article>
-          <article data-tp-reveal style="--step-color:#0f6b66"><span><i aria-hidden="true">✍</i><b>04</b></span><div class="tp-step-copy"><h3>Prima visita</h3><p>Costruiamo insieme il programma: tu mi dici cosa è sostenibile nella tua vita, io lo rendo efficace, tecnico e progressivo.</p></div></article>
-          <article data-tp-reveal style="--step-color:#0a4f4b"><span><i aria-hidden="true">💬</i><b>05</b></span><div class="tp-step-copy"><h3>Supporto quotidiano</h3><p>Hai un riferimento per dubbi su esercizi, recuperi, carichi, doloretti, video esecuzioni e organizzazione delle sedute.</p></div></article>
-          <article data-tp-reveal style="--step-color:#7f71d9"><span><i aria-hidden="true">↻</i><b>06</b></span><div class="tp-step-copy"><h3>Due controlli al mese</h3><p>Valutiamo carichi, ripetizioni, tecnica, sensazioni, recupero e costanza per aggiornare il programma nel modo più efficace.</p></div></article>
-          <article data-tp-reveal style="--step-color:#10231e"><span><i aria-hidden="true">✓</i><b>07</b></span><div class="tp-step-copy"><h3>Fine percorso</h3><p>Ti insegno ad allenarti con criterio: l’obiettivo è farti uscire dal percorso sapendo gestire tecnica, progressioni e routine.</p></div></article>
+        <div id="base-check" class="base-step">
+          <div><h3>Aggiorniamo il piano insieme.</h3><p>Ogni due settimane rivediamo i tuoi dati e aggiorniamo la scheda. Tra un check e l’altro, puoi inviarmi i video delle esecuzioni su WhatsApp. L’obiettivo è renderti sempre più autonomo.</p></div>
+          <div class="base-board base-board-chat" aria-hidden="true"><div class="base-chat"><span>Ti mando un video dell’ultima serie?</span><span>Sì, così rivediamo insieme la tecnica.</span></div><div class="base-note">✓ Check ogni due settimane</div></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="tp-coaches tp-coach-profile" aria-labelledby="coach-profile-title">
-      <div class="container">
-        <div class="tp-section-intro center" data-tp-reveal>
-          <p class="tp-kicker">Ma chi sarà il tuo personal trainer online?</p>
-          <h2 id="coach-profile-title">Leonardo Santini ti segue in prima persona.</h2>
-          <p>Una guida diretta per costruire allenamento, tecnica, progressioni e adattamenti sulla tua vita reale. Il Base nasce per smettere di usare schede copia-incolla.</p>
-        </div>
-        <article class="tp-profile-card" data-tp-reveal>
-          <div class="tp-profile-photo"><img src="tua-foto-chi-sono.png" alt="Leonardo Santini, personal trainer online" loading="lazy" decoding="async"><span>Personal trainer online</span></div>
-          <div class="tp-profile-copy">
-            <p class="tp-kicker">Il tuo referente</p>
-            <h3>Leonardo</h3>
-            <p class="tp-profile-role">Personal trainer online con 2 lauree, certificazioni professionali e circa 10 anni di esperienza: coordino programma di allenamento, tecnica, progressioni, check e modifiche dentro un unico metodo.</p>
-            <p>Non lavoro consegnando una scheda generica e sparendo. Prima analizzo la persona: condizione iniziale, esperienza, obiettivi, routine, attrezzatura, disponibilità reale e ostacoli che potrebbero rendere difficile essere costante.</p>
-            <p>Il mio metodo traduce i dati in scelte pratiche: esercizi, volumi, recuperi e progressioni vengono costruiti su di te e aggiornati in base a feedback, video, carichi e risultati, così il programma evolve invece di restare fermo.</p>
-            <div class="tp-profile-tags" aria-label="Competenze di Leonardo Santini"><span>2 lauree</span><span>Certificazioni professionali</span><span>~10 anni di esperienza</span><span>Allenamento personalizzato</span><span>Video-feedback tecnico</span><span>Check ogni 2 settimane</span><span>Supporto diretto</span></div>
-          </div>
-        </article>
+  <section class="base-section base-app" aria-labelledby="base-app-title" data-base-reveal>
+    <div class="base-wrap base-app-grid" data-base-app>
+      <div>
+        <h2 id="base-app-title">La tua seduta, nell’app LS Coaching.</h2>
+        <p class="base-section-lead">Apri la scheda, guarda gli esercizi e tieni traccia di come è andata.</p>
+        <details name="base-app-feature" data-image="mockup-01.png" data-alt="Anteprima della scheda nell’app LS Coaching" open><summary>Guarda come eseguire gli esercizi</summary><p>La scheda rimane a portata di mano, con video e indicazioni per preparare ogni seduta.</p></details>
+        <details name="base-app-feature" data-image="mockup-04.png" data-alt="Anteprima degli esercizi nell’app LS Coaching"><summary>Registra la seduta</summary><p>Salva le serie, le ripetizioni e i carichi. Al prossimo allenamento sai da dove ripartire.</p></details>
+        <details name="base-app-feature" data-image="mockup-03.png" data-alt="Un’altra schermata dell’app LS Coaching"><summary>Rivedi i progressi ai check</summary><p>Uso lo storico e i tuoi feedback per aggiornare il programma quando serve.</p></details>
+        <a class="base-link" href="app.html">Esplora l’app LS Coaching</a>
       </div>
-    </section>
+      <figure class="base-app-preview"><img src="mockup-01.png" alt="Anteprima della scheda nell’app LS Coaching" loading="lazy"><figcaption>Anteprima di LS Coaching</figcaption></figure>
+    </div>
+  </section>
 
-    <section class="tp-medical">
-      <div class="container tp-medical-grid">
-        <div data-tp-reveal><p class="tp-kicker">Sì, ma il metodo cosa fa?</p><h2>Rende semplice progredire.</h2><p>Ogni scelta viene valutata con criterio: esercizi, serie, ripetizioni, recuperi e carichi vengono aggiornati quando cambiano i tuoi dati o la tua routine.</p><a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a></div>
-        <div class="tp-medical-card" data-tp-reveal><img src="analisi.png" alt="Analisi dell’allenamento"><strong>Analisi continua</strong><span>Allenamento, tecnica e progressioni nello stesso quadro.</span></div>
+  <section class="base-section base-wrap base-coach" aria-labelledby="coach-profile-title" data-base-reveal>
+    <div class="base-coach-visual"><img src="tua-foto-chi-sono.png" alt="Leonardo Santini, personal trainer" loading="lazy"></div>
+    <div><h2 id="coach-profile-title">Ti seguo io, Leonardo Santini.</h2><p class="base-section-lead">Sono il tuo riferimento per il programma, la tecnica e le progressioni. Ai check ti spiego cosa cambiamo e perché, così impari a gestire il tuo allenamento con più autonomia.</p><a class="base-btn" href="consulenza.html">Conosciamoci in videochiamata</a></div>
+  </section>
+
+  <section class="base-section base-reviews" id="recensioni-base" aria-labelledby="base-reviews-title">
+    <div class="base-wrap" data-base-reveal>
+      <h2 id="base-reviews-title">Le esperienze di chi si allena con me.</h2>
+      <div class="base-review-list" data-base-reviews tabindex="0" aria-label="Estratti delle recensioni">
+        <article class="base-review"><p class="base-stars" aria-label="5 stelle su 5">★★★★★</p><blockquote>«Ti segue a 360 gradi»</blockquote><p>Lorenzo · Trustpilot</p></article>
+        <article class="base-review"><p class="base-stars" aria-label="5 stelle su 5">★★★★★</p><blockquote>«Ho iniziato a vedere dei miglioramenti dopo mesi di stallo»</blockquote><p>Giuseppe · Trustpilot</p></article>
+        <article class="base-review"><p class="base-stars" aria-label="5 stelle su 5">★★★★★</p><blockquote>«Gli esercizi sono personalizzati e chiari da seguire»</blockquote><p>Antonio · Trustpilot</p></article>
       </div>
-    </section>
+      <div class="base-review-actions"><a class="base-link" href="https://it.trustpilot.com/review/leonardosantinifitcoach.com">Leggi le recensioni su Trustpilot</a><div data-base-review-controls hidden><button type="button" aria-label="Recensioni precedenti" data-base-prev>←</button><button type="button" aria-label="Recensioni successive" data-base-next>→</button></div></div>
+    </div>
+  </section>
 
-    <section class="tp-support tp-theia-support">
-      <div class="container tp-support-grid">
-        <div data-tp-reveal><h2>Con me non sei<br><strong>mai solo</strong></h2><p>Lasciarti con una scheda senza risposte non ha senso. Per questo puoi scrivermi quando ti serve: basta un messaggio su <strong>WhatsApp</strong>.</p></div>
-        <div class="tp-channel-card tp-theia-channel-card" data-tp-reveal aria-label="Canali di supporto"><div class="tp-channel-track"><span class="is-muted"><i>✉</i>Mail</span><span><i>➤</i>Telegram</span><span><i>▣</i>Fax</span><span><i>🕊</i>Piccione viaggiatore</span><span class="is-active"><i>☏</i>WhatsApp</span><span class="is-muted"><i>✉</i>Mail</span><span><i>➤</i>Telegram</span><span><i>▣</i>Fax</span><span><i>🕊</i>Piccione viaggiatore</span><span class="is-active"><i>☏</i>WhatsApp</span></div></div>
+  <section class="base-section base-compare" id="confronta" aria-labelledby="comparison-title">
+    <div class="base-wrap" data-base-reveal>
+      <h2 id="comparison-title">Scegli il percorso per te.</h2>
+      <p class="base-section-lead">In consulenza ti spiego costi e opzioni del percorso.</p>
+      <div class="base-offers">
+        <article><h3>Coaching Base</h3><p>Per allenarti con un programma su misura e sapere come farlo progredire.</p><ul><li>Scheda e video degli esercizi nell’app</li><li>Feedback tecnico sui tuoi video</li><li>Check ogni due settimane</li></ul><a class="base-btn" href="consulenza.html">Prenota la consulenza gratuita</a></article>
+        <article><h3>Coaching Premium</h3><p>Per coordinare allenamento e alimentazione nello stesso percorso.</p><ul><li>Allenamento personalizzato con check</li><li>Piano alimentare su misura</li><li>App con allenamento, nutrizione e ricettario</li></ul><a class="base-link" href="coaching-premium.html">Scopri Coaching Premium</a></article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="tp-comparison tp-theia-comparison" aria-labelledby="comparison-title">
-      <div class="container tp-theia-comparison-grid">
-        <div class="tp-comparison-panel" data-tp-reveal><h2 id="comparison-title">Non è il solito<br>coaching online</h2><div><strong>Ci siamo sempre.</strong><p>Creo la combinazione giusta di metodo, semplicità e tecnologia per ridurre ogni ostacolo lungo il tuo percorso, mettendoti al centro e aiutandoti a raggiungere i tuoi obiettivi.</p></div></div>
-        <div class="tp-compare-matrix" data-tp-reveal>
-          <div class="tp-matrix-labels"><span>Professionisti qualificati</span><span>Visite in studio</span><span>Programma davvero personalizzato</span><span>Check da dove vuoi</span><span>Supporto tecnico</span><span>Progressioni incluse</span><span>App dedicata</span></div>
-          <div class="tp-matrix-col tp-matrix-premium"><strong>LS</strong><span class="yes">✓</span><span class="no">×</span><span class="yes">✓</span><span class="yes">✓</span><span class="yes">✓</span><span class="yes">✓</span><span class="yes">✓</span></div>
-          <div class="tp-matrix-col tp-matrix-traditional"><strong>Coaching<br>tradizionale</strong><span class="yes">✓</span><span class="yes">✓</span><span class="no">×</span><span class="no">×</span><span class="no">×</span><span class="no">×</span><span class="no">×</span></div>
-        </div>
-      </div>
-    </section>
+  <section class="base-section base-wrap base-faq" aria-labelledby="base-faq-title" data-base-reveal>
+    <h2 id="base-faq-title">Domande sul Coaching Base</h2>
+    <details><summary>Devo allenarmi in palestra?</summary><p>Puoi allenarti a casa o in palestra. Impostiamo la scheda sugli attrezzi che hai e sul tuo livello.</p></details>
+    <details><summary>Come correggi la mia tecnica a distanza?</summary><p>Puoi mandarmi un video dell’esecuzione su WhatsApp. Lo rivedo e ti indico cosa modificare nella prossima seduta.</p></details>
+    <details><summary>Le modifiche alla scheda sono incluse?</summary><p>Sì. Rivediamo il programma ai check tenendo conto dei progressi, dei tuoi feedback e di eventuali cambiamenti nella settimana.</p></details>
+    <details><summary>Il Base include un piano alimentare?</summary><p>Il Base è dedicato all’allenamento. Se vuoi coordinare anche l’alimentazione, puoi scegliere il <a href="coaching-premium.html">Coaching Premium</a>.</p></details>
+    <a class="base-btn" href="consulenza.html">Parliamone in consulenza gratuita</a>
+  </section>
 
-
-    <section class="tp-video-coaching" aria-labelledby="video-coaching-title">
-      <div class="container tp-video-coaching-grid">
-        <div class="tp-video-coaching-copy" data-tp-reveal>
-          <p class="tp-kicker">Tecnica guidata</p>
-          <h2 id="video-coaching-title">Un Personal Trainer online? È meglio di quanto pensi</h2>
-          <p>Ogni esercizio della tua scheda avrà un <strong>video dettagliato</strong> che ti spiega come eseguirlo nel modo corretto. Ma non basta.</p>
-          <p>Mi invierai i <strong>video delle esecuzioni dei tuoi esercizi</strong>: li analizzerò per darti feedback precisi, pratici e subito applicabili.</p>
-          <p>Passo dopo passo rivediamo insieme la tecnica, finché il movimento diventa più sicuro, pulito e adatto al tuo livello.</p>
-          <a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a>
-        </div>
-        <div class="tp-video-coaching-visual" data-tp-reveal>
-          <img src="coaching.svg" alt="Personal trainer online con video e feedback tecnico" loading="lazy" decoding="async">
-        </div>
-      </div>
-    </section>
-
-    <section class="tp-app-spotlight" aria-labelledby="base-app-title">
-      <div class="container tp-app-spotlight-grid">
-        <div class="tp-app-spotlight-copy" data-tp-reveal>
-          <p class="tp-kicker">App per l’allenamento</p>
-          <h2 id="base-app-title">La scheda ti segue anche in palestra.</h2>
-          <p>Nel Coaching Base hai accesso all’app dedicata: allenamenti ordinati, esercizi spiegati, video dimostrativi e progressi sempre sotto controllo.</p>
-          <ul>
-            <li>Schede consultabili da smartphone durante ogni seduta.</li>
-            <li>Video e note tecniche per sapere cosa fare prima di iniziare.</li>
-            <li>Storico di carichi, ripetizioni e feedback per aggiornare il lavoro.</li>
-          </ul>
-          <div class="tp-app-spotlight-actions">
-            <a href="app.html" class="tp-btn">Scopri la pagina App</a>
-            <a href="consulenza.html" class="tp-app-text-link">Parti da un incontro gratuito</a>
-          </div>
-        </div>
-        <div class="tp-app-spotlight-phone" data-tp-reveal aria-label="Anteprime dell’app di allenamento">
-          <img src="mockup-01.png" alt="Anteprima app allenamento con scheda" loading="lazy" decoding="async">
-          <img src="mockup-04.png" alt="Anteprima app allenamento con esercizi" loading="lazy" decoding="async">
-        </div>
-      </div>
-    </section>
-
-    <section class="tp-pricing tp-theia-pricing">
-      <div class="container">
-        <div class="tp-section-intro center" data-tp-reveal><p class="tp-kicker">Sì, ma quanto costa?</p><h2>Coaching Base</h2></div>
-        <div class="tp-price-grid">
-          <div class="tp-price-card tp-theia-price-card is-featured" data-tp-reveal><span class="tp-popular">per iniziare</span><h3>Personal Trainer<br>Online</h3><p class="tp-price"><span>Base</span></p><p class="tp-price-sub"><strong>Allenamento online</strong><br>Per chi vuole iniziare con una guida tecnica.</p><ul><li>Personal trainer online dedicato</li><li>Programma di allenamento personalizzato</li><li>Progressioni ogni 2 settimane</li><li>Check e feedback</li><li>Accesso all’app dedicata</li></ul><div class="tp-addon tp-addon-purple">+ App dedicata</div><a href="consulenza.html" class="tp-btn tp-btn-light">Prenota la consulenza gratuita</a><small>Consulenza iniziale gratuita.</small></div>
-          <div class="tp-price-card tp-theia-price-card" data-tp-reveal><h3>Allenamento +<br>Nutrizione Online</h3><p class="tp-price"><span>Premium</span></p><p class="tp-price-sub"><strong>Percorso completo</strong><br>Per coordinare dieta, training e controlli.</p><ul><li>Personal trainer online dedicato</li><li>Programma di allenamento personalizzato</li><li>Progressioni e controlli ogni 2 settimane</li><li>Piano nutrizionale pratico</li><li>Video-feedback sulla tecnica di esecuzione</li></ul><div class="tp-addon tp-addon-peach">+ Nutrizione Online</div><div class="tp-addon tp-addon-purple">+ Ricettario e app</div><a href="coaching-premium.html" class="tp-btn">Scopri il Premium</a><small>Consulenza iniziale gratuita,<br><strong>senza obbligo di proseguire</strong></small></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="tp-gallery" aria-label="Anteprima del percorso">
-      <div class="tp-marquee" data-tp-reveal><img src="mockup-01.png" alt="Anteprima app 1"><img src="mockup-02.png" alt="Anteprima app 2"><img src="mockup-03.png" alt="Anteprima app 3"><img src="mockup-04.png" alt="Anteprima app 4"><img src="mockup-05.png" alt="Anteprima app 5"><img src="mockup-06.png" alt="Anteprima app 6"><img src="mockup-08.png" alt="Anteprima app 7"><img src="mockup-01.png" alt="Anteprima app 1 duplicata"><img src="mockup-02.png" alt="Anteprima app 2 duplicata"><img src="mockup-03.png" alt="Anteprima app 3 duplicata"><img src="mockup-04.png" alt="Anteprima app 4 duplicata"></div>
-    </section>
-
-    <section class="tp-final-cta"><div class="container tp-final-card" data-tp-reveal><h2>Non sei ancora sicuro?</h2><p>Parla con me: capiamo se il Base è sufficiente o se ha senso integrare anche la nutrizione con il Premium.</p><a href="consulenza.html" class="tp-btn">Prenota un incontro gratuito</a></div></section>
-
-    <section class="tp-discover">
-      <div class="container"><div class="tp-section-intro center" data-tp-reveal><p class="tp-kicker">Scopri anche</p><h2>Altri percorsi</h2></div><div class="tp-discover-grid"><a href="coaching-premium.html" data-tp-reveal>Coaching Premium</a><a href="app.html" data-tp-reveal>App</a><a href="questionario.html" data-tp-reveal>Questionario</a></div></div>
-    </section>
-
-    <section class="tp-faq" aria-labelledby="base-faq-title">
-      <div class="container">
-        <div class="tp-section-intro center" data-tp-reveal><p class="tp-kicker">Ce lo chiedono spesso</p><h2 id="base-faq-title">Domande sul Coaching Base.</h2></div>
-        <div class="faq-list">
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Come funziona il Coaching Base online?</span><span class="faq-icon">+</span></button><div class="faq-answer"><p>Partiamo da una consulenza gratuita, raccogliamo livello, obiettivi, attrezzatura, disponibilità e video utili, poi costruisco una scheda con check ogni due settimane.</p></div></div>
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Le modifiche alla scheda sono incluse?</span><span class="faq-icon">+</span></button><div class="faq-answer"><p>Sì. Gli aggiornamenti fanno parte del percorso: il programma cambia quando cambiano tecnica, carichi, recupero, performance o routine.</p></div></div>
-          <div class="faq-item" data-faq-item><button class="faq-question" type="button"><span class="faq-q-text">Se non so se mi serve anche la nutrizione?</span><span class="faq-icon">+</span></button><div class="faq-answer"><p>Lo capiamo in consulenza. Se ti basta allenarti meglio partiamo dal Base; se alimentazione e allenamento devono essere coordinati, allora ha senso il Premium.</p></div></div>
-        </div>
-      </div>
-    </section>
-  </main>
+  <aside class="base-dock" aria-label="Azioni Coaching Base" hidden>
+    <a class="base-btn" href="consulenza.html">Consulenza gratuita</a>
+    <a class="base-link" href="#confronta">Confronta i percorsi</a>
+  </aside>
+</main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
@@ -216,7 +144,6 @@
       <div class="footer-links"><a href="index.html#come-funziona">Come funziona</a><a href="index.html#programmi">Programmi</a></div>
     </div>
   </footer>
-  <script src="main.js"></script>
 </body>
 </html>
 

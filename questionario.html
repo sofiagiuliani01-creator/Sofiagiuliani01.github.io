@@ -7,30 +7,28 @@
 <meta name="description" content="Questionario guidato per capire se è più adatto il Coaching Base o il Coaching Premium con allenamento e nutrizione."/>
 <link href="style.css" rel="stylesheet"/>
 <link href="trustpilot.css" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="ls-navigation.css">
+  <script src="ls-navigation.js" defer></script>
 </head>
 <body class="page-questionario">
-<header class="site-header">
-<div class="container header-inner">
-<a class="logo header-logo-real" href="index.html">
-<div class="logo-image-wrapper">
-<img alt="Leonardo Santini Logo" class="logo-image" src="logo-ls.png"/>
-</div>
-<div class="logo-text-group">
-<span class="logo-text">Leonardo Santini</span>
-<span class="logo-sub">Online Fitness Coaching</span>
-</div>
-</a>
-<nav class="main-nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="index.html#come-funziona">Come funziona</a></li>
-<li><a href="index.html#programmi">Programmi</a></li>
-<li><a href="app.html">App</a></li>
-<li><a class="btn-nav" href="consulenza.html">Consulenza gratuita</a></li>
-</ul>
-</nav>
-<button aria-label="Apri menù" class="burger"><span></span><span></span><span></span></button>
-</div>
+<header class="site-header ls-site-nav">
+  <div class="ls-nav-shell">
+    <a class="ls-nav-brand" href="index.html">
+      <img src="logo-ls.png" width="88" height="48" alt="">
+      <span class="ls-nav-brand-text"><strong>Leonardo Santini</strong><small>Online Fitness Coaching</small></span>
+    </a>
+    <nav class="ls-nav-links" id="ls-primary-nav" aria-label="Navigazione principale">
+      <a href="index.html">Home</a>
+      <a href="index.html#come-funziona">Come funziona</a>
+      <a href="index.html#programmi">Programmi</a>
+      <a href="app.html">App</a>
+    </nav>
+    <div class="ls-nav-actions">
+      <a class="ls-nav-consult" href="consulenza.html">Consulenza gratuita</a>
+      <button class="ls-nav-toggle" type="button" aria-controls="ls-primary-nav" aria-expanded="false" aria-label="Apri menù"><span class="ls-nav-toggle-icon" aria-hidden="true"></span></button>
+    </div>
+  </div>
 </header>
 <main class="page-content">
 <section class="questionnaire-hero">
@@ -267,3 +265,4 @@
 <script src="questionario.js"></script>
 </body>
 </html>
+

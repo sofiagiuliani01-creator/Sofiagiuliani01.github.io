@@ -10,34 +10,30 @@
 <link href="trustpilot.css" rel="stylesheet"/>
 <!-- Trustpilot TrustBox -->
 <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+
+  <link rel="stylesheet" href="ls-navigation.css">
+  <script src="ls-navigation.js" defer></script>
 </head>
 <body class="page-home">
 
 <!-- HEADER (IDENTICO AL TUO) -->
-<header class="site-header site-header-home">
-<div class="container header-inner">
-<a class="logo header-logo-real" href="index.html">
-<div class="logo-image-wrapper">
-<img alt="Leonardo Santini Logo" class="logo-image" src="logo-ls.png"/>
-</div>
-<div class="logo-text-group">
-<span class="logo-text">Leonardo Santini</span>
-<span class="logo-sub">Online Fitness Coaching</span>
-</div>
-</a>
-<nav class="main-nav">
-<ul>
-<li><a class="active" href="index.html">Home</a></li>
-<li><a href="#come-funziona">Come funziona</a></li>
-<li><a href="#programmi">Programmi</a></li>
-<li><a href="app.html">App</a></li>
-<li><a class="btn-nav" href="consulenza.html">Consulenza gratuita</a></li>
-</ul>
-</nav>
-<button aria-label="Apri menù" class="burger">
-<span></span><span></span><span></span>
-</button>
-</div>
+<header class="site-header ls-site-nav">
+  <div class="ls-nav-shell">
+    <a class="ls-nav-brand" href="index.html">
+      <img src="logo-ls.png" width="88" height="48" alt="">
+      <span class="ls-nav-brand-text"><strong>Leonardo Santini</strong><small>Online Fitness Coaching</small></span>
+    </a>
+    <nav class="ls-nav-links" id="ls-primary-nav" aria-label="Navigazione principale">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#programmi">Programmi</a>
+      <a href="app.html">App</a>
+    </nav>
+    <div class="ls-nav-actions">
+      <a class="ls-nav-consult" href="consulenza.html">Consulenza gratuita</a>
+      <button class="ls-nav-toggle" type="button" aria-controls="ls-primary-nav" aria-expanded="false" aria-label="Apri menù"><span class="ls-nav-toggle-icon" aria-hidden="true"></span></button>
+    </div>
+  </div>
 </header>
 <main class="page-content">
 <section class="hero-cinematic" id="hero-cinematic" aria-label="Hero narrativa LS Coaching">
@@ -858,3 +854,4 @@
 <script src="main.js?v=20260720-restore-archer-motion"></script>
 </body>
 </html>
+

@@ -1,0 +1,118 @@
+/* Shared navigation on the LS Coaching website. */
+.site-header.ls-site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999999;
+  margin: 0;
+  padding: 12px clamp(12px,3vw,24px) 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.ls-site-nav .ls-nav-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  min-height: 76px;
+  margin-inline: auto;
+  padding: 8px clamp(14px,2vw,24px);
+  gap: clamp(10px,2vw,24px);
+  border: 1px solid #a8b7d12e;
+  border-radius: 18px;
+  background: #101522ef;
+  color: #f7f8fc;
+  box-shadow: 0 12px 30px #05060a20;
+  backdrop-filter: blur(18px);
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.ls-site-nav .ls-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  color: inherit;
+  text-decoration: none;
+}
+.ls-site-nav .ls-nav-brand img {display: block; width: 88px; height: 48px; object-fit: contain}
+.ls-site-nav .ls-nav-brand-text {display: grid; gap: 2px; line-height: 1.15}
+.ls-site-nav .ls-nav-brand-text strong {font-size: 11px; font-weight: 650; letter-spacing: .09em; text-transform: uppercase}
+.ls-site-nav .ls-nav-brand-text small {font-size: 10px; color: #abb4c6}
+.ls-site-nav .ls-nav-links {display: flex; align-items: center; gap: clamp(16px,2.4vw,32px); margin: 0}
+.ls-site-nav .ls-nav-links a {
+  padding-block: 7px;
+  color: #d4d9e7;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ls-site-nav .ls-nav-links a:hover,
+.ls-site-nav .ls-nav-links [aria-current] {color: #80f4e8}
+.ls-site-nav .ls-nav-actions {display: flex; justify-self: end; align-items: center; gap: 8px}
+.ls-site-nav .ls-nav-consult,
+.ls-site-nav .ls-nav-toggle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  border: 1px solid #287a75;
+  border-radius: 12px;
+  background: #0d4c4a;
+  color: #f7f8fc;
+  font: 600 14px/1.15 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.ls-site-nav .ls-nav-consult {padding: 9px 16px; text-decoration: none; text-align: center; white-space: nowrap}
+.ls-site-nav .ls-nav-consult:is(:hover,[aria-current="page"]) {background: #14605c}
+.ls-site-nav .ls-nav-toggle {display: none; width: 42px; padding: 0; cursor: pointer}
+.ls-site-nav .ls-nav-toggle-icon,
+.ls-site-nav .ls-nav-toggle-icon::before,
+.ls-site-nav .ls-nav-toggle-icon::after {display: block; width: 16px; height: 2px; border-radius: 2px; background: currentColor}
+.ls-site-nav .ls-nav-toggle-icon {position: relative}
+.ls-site-nav .ls-nav-toggle-icon::before,
+.ls-site-nav .ls-nav-toggle-icon::after {position: absolute; content: ''}
+.ls-site-nav .ls-nav-toggle-icon::before {top: -5px}
+.ls-site-nav .ls-nav-toggle-icon::after {top: 5px}
+.ls-site-nav .ls-nav-toggle[aria-expanded="true"] .ls-nav-toggle-icon {background: transparent}
+.ls-site-nav .ls-nav-toggle[aria-expanded="true"] .ls-nav-toggle-icon::before {top: 0; rotate: 45deg}
+.ls-site-nav .ls-nav-toggle[aria-expanded="true"] .ls-nav-toggle-icon::after {top: 0; rotate: -45deg}
+.ls-site-nav :is(a,button):focus-visible {outline: 2px solid #80f4e8; outline-offset: 3px}
+@media (max-width: 1040px) {
+  .ls-site-nav .ls-nav-brand-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+@media (max-width: 767px) {
+  .ls-site-nav .ls-nav-shell {grid-template-columns: 1fr auto; min-height: 68px; border-radius: 15px}
+  .ls-site-nav .ls-nav-brand img {width: 76px; height: 44px}
+  .ls-site-nav .ls-nav-consult {padding-inline: 10px; font-size: 12px}
+  .ls-site-nav .ls-nav-links {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 4px 10px;
+  }
+  .ls-site-nav[data-menu-ready] .ls-nav-toggle {display: inline-flex}
+  .ls-site-nav[data-menu-ready] .ls-nav-links {
+    position: absolute;
+    inset: calc(100% + 7px) 0 auto;
+    padding: 9px;
+    border: 1px solid #a8b7d12e;
+    border-radius: 13px;
+    background: #101522;
+    box-shadow: 0 14px 28px #05060a66;
+  }
+  .ls-site-nav[data-menu-ready] .ls-nav-links:not(.is-open) {display: none}
+  .ls-site-nav .ls-nav-links a {padding: 10px; white-space: normal}
+  .ls-site-nav .ls-nav-toggle {width: 37px; min-height: 37px}
+}

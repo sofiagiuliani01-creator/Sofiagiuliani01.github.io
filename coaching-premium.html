@@ -5,32 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coaching Premium | Leonardo Santini</title>
   <link rel="stylesheet" href="style.css?v=20260715-mobile-coaching" />
+
+  <link rel="stylesheet" href="ls-navigation.css">
+  <script src="ls-navigation.js" defer></script>
 </head>
 <body class="page-program page-theia-inspired page-program-premium">
   <div class="program-scroll-progress" aria-hidden="true"><span></span></div>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-image-wrapper">
-          <img src="logo-ls.png" alt="Leonardo Santini Logo" class="logo-image">
-        </div>
-        <div class="logo-text-group">
-          <span class="logo-text">Leonardo Santini</span>
-          <span class="logo-sub">Online Fitness Coaching</span>
-        </div>
-      </a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#come-funziona">Come funziona</a></li>
-          <li><a href="index.html#programmi">Programmi</a></li>
-          <li><a href="app.html">App</a></li>
-          <li><a href="consulenza.html" class="btn-nav active">Consulenza gratuita</a></li>
-        </ul>
-      </nav>
-      <button class="burger" aria-label="Apri menù"><span></span><span></span><span></span></button>
+  <header class="site-header ls-site-nav">
+  <div class="ls-nav-shell">
+    <a class="ls-nav-brand" href="index.html">
+      <img src="logo-ls.png" width="88" height="48" alt="">
+      <span class="ls-nav-brand-text"><strong>Leonardo Santini</strong><small>Online Fitness Coaching</small></span>
+    </a>
+    <nav class="ls-nav-links" id="ls-primary-nav" aria-label="Navigazione principale">
+      <a href="index.html">Home</a>
+      <a href="index.html#come-funziona">Come funziona</a>
+      <a href="index.html#programmi" aria-current="true">Programmi</a>
+      <a href="app.html">App</a>
+    </nav>
+    <div class="ls-nav-actions">
+      <a class="ls-nav-consult" href="consulenza.html">Consulenza gratuita</a>
+      <button class="ls-nav-toggle" type="button" aria-controls="ls-primary-nav" aria-expanded="false" aria-label="Apri menù"><span class="ls-nav-toggle-icon" aria-hidden="true"></span></button>
     </div>
-  </header>
+  </div>
+</header>
 
   <main>
     <section class="tp-hero" aria-labelledby="premium-title">
@@ -181,3 +179,4 @@
   <script src="main.js"></script>
 </body>
 </html>
+
